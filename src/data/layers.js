@@ -7,7 +7,7 @@
 
 export const LAYERS = {
   aurora:    true,  // L1  hero, page-hero and footer aurora (texture pack, 21s colour cycle)
-  codeRain:  false, // L2  falling code behind the AI product sections (texture pack)
+  codeRain:  true,  // L2  falling code behind the AI product sections (texture pack)
   galaxy:    false, // L3  breathing nebula with glowing stars and shooting star (texture pack)
   globe:     false, // L4  rotating dotted globe in Firm Highlights (motion system 03)
   marquee:   false, // L5  industries marquee, 50px/s (motion system 05)
