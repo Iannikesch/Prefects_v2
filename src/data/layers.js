@@ -6,7 +6,7 @@
 // texture pack, and it's always on.
 
 export const LAYERS = {
-  aurora:    false, // L1  hero, page-hero and footer aurora (texture pack, 21s colour cycle)
+  aurora:    true,  // L1  hero, page-hero and footer aurora (texture pack, 21s colour cycle)
   codeRain:  false, // L2  falling code behind the AI product sections (texture pack)
   galaxy:    false, // L3  breathing nebula with glowing stars and shooting star (texture pack)
   globe:     false, // L4  rotating dotted globe in Firm Highlights (motion system 03)
