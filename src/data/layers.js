@@ -17,7 +17,7 @@ export const LAYERS = {
   lag:       true,  // L9  spring-lagged capability tiles (motion system 09)
   rise:      true,  // L10 footer heading fade-up (motion system 11)
   cursor:    true,  // L11 cursor ring (motion system 10)
-  navHide:   false, // L12 header hides on scroll down, returns on scroll up (Deloitte)
+  navHide:   true,  // L12 header hides on scroll down, returns on scroll up (Deloitte)
 };
 
 // Class names pages use. Empty string when the layer is off, so the motion
