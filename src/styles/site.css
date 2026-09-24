@@ -246,6 +246,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
     radial-gradient(55% 80% at 15% 0%, var(--pf-g-deep) 0%, transparent 62%),
     radial-gradient(70% 100% at 50% 50%, var(--pf-g-navy) 0%, transparent 70%),
     var(--pf-black); }
+@media (max-width: 760px) { .mood { min-height: 88svh; display: grid; align-content: center; } }  /* keeps the movers either side a screen apart */
 .mood__inner { position: relative; z-index: 2; display: grid; justify-items: center; gap: 24px; }
 .mood .t-h1 { max-width: 16em; font-size: clamp(36px, 24px + 2.6vw, 64px); }
 
