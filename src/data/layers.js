@@ -10,7 +10,7 @@ export const LAYERS = {
   codeRain:  true,  // L2  falling code behind the AI product sections (texture pack)
   galaxy:    true,  // L3  breathing nebula with glowing stars and shooting star (texture pack)
   globe:     true,  // L4  rotating dotted globe in Firm Highlights (motion system 03)
-  marquee:   false, // L5  industries marquee, 50px/s (motion system 05)
+  marquee:   true,  // L5  industries marquee, 50px/s (motion system 05)
   smooth:    false, // L6  smooth scroll with Lenis (motion system 01)
   scrub:     false, // L7  word-by-word scroll-scrubbed headline (motion system 08)
   parallax:  false, // L8  parallax photo bands (motion system 07)
