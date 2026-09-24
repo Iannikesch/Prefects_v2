@@ -1,0 +1,6 @@
+---
+// L2 · Falling code (texture pack code-rain.js). Off: nothing.
+import { LAYERS } from '../data/layers.js';
+const { ramp = 'violet', class: cls = '' } = Astro.props;
+---
+{LAYERS.codeRain && <div class:list={['pf-rain', cls]} data-ramp={ramp} aria-hidden="true"></div>}

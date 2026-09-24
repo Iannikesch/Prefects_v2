@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Profectus Motion System</title>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=erode@400,500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Instrument+Serif:ital@1&family=PT+Mono&display=swap">
+<link rel="stylesheet" href="../texture-pack/profectus-texture.css">
+<link rel="stylesheet" href="motion-system.css">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  html { background: var(--pf-black); }
+  body { background: var(--pf-black); color: var(--pf-text); font-family: var(--pf-sans); }
+  .wrap { max-width: 1376px; margin: 0 auto; padding: 0 var(--pf-gutter); }
+  @media (max-width: 600px) { .wrap { padding: 0 16px; } }
+
+  /* hero */
+  .hero { position: relative; height: 100vh; min-height: 720px; overflow: hidden; display: grid; place-items: center; text-align: center; }
+  .hero .inner { position: relative; z-index: 2; display: grid; justify-items: center; gap: 24px; padding: 0 16px; }
+  .hero .lead { font-size: var(--pf-fs-lead); letter-spacing: var(--pf-ls-lead); color: var(--pf-white); max-width: 460px; line-height: 1.3; }
+
+  /* the four triggers */
+  .triggers { padding: 160px 0 40px; }
+  .triggers h2 { margin: 16px 0 48px; max-width: 760px; }
+  .tgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--pf-gap-grid); }
+  .tcard { background: var(--pf-surface); padding: 28px 24px 32px; }
+  .tcard h3 { font: 400 var(--pf-fs-h3)/1.2 var(--pf-sans); letter-spacing: var(--pf-ls-h3); color: var(--pf-white); margin: 14px 0 10px; }
+  .tcard p { font-size: 15px; line-height: 1.4; letter-spacing: -0.02em; }
+  .tcard b { color: var(--pf-white); font-weight: 500; }
+  .legend { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 40px; align-items: center; }
+
+  /* status chips */
+  .st { display: inline-block; padding: 3px 7px; border-radius: var(--pf-r-chip); font: 400 11px/1.3 var(--pf-mono); text-transform: uppercase; letter-spacing: 0; vertical-align: 1px; }
+  .st.m { background: rgba(142,132,247,.22); color: #cdc8ff; }
+  .st.f { background: rgba(72,121,142,.3); color: #b8dbe6; }
+  .st.r { background: rgba(255,255,255,.08); color: var(--pf-text); }
+
+  /* movement plates */
+  .group { padding: 140px 0 0; }
+  .group > .wrap > .pf-eyebrow { padding-bottom: 20px; border-bottom: 1px solid var(--pf-hairline); }
+  .mv { display: grid; grid-template-columns: 5fr 7fr; gap: 48px; padding: 72px 0; border-bottom: 1px solid var(--pf-hairline); align-items: start; }
+  .mv h2 { margin: 12px 0 10px; }
+  .aka { font: 400 var(--pf-fs-mono)/1.5 var(--pf-mono); color: var(--pf-text); text-transform: uppercase; letter-spacing: -0.02em; }
+  .aka span { color: var(--pf-white); }
+  .notes { display: grid; gap: 22px; margin-top: 28px; }
+  .notes h4 { font: 400 var(--pf-fs-mono)/1.2 var(--pf-mono); text-transform: uppercase; color: var(--pf-text); margin-bottom: 6px; }
+  .notes p { font-size: 16px; line-height: 1.4; letter-spacing: -0.03em; color: var(--pf-text-soft); }
+  .vals { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .vals td { padding: 8px 0; border-top: 1px solid var(--pf-hairline); vertical-align: top; }
+  .vals td:first-child { color: var(--pf-text); width: 44%; padding-right: 12px; }
+  .vals td:nth-child(2) { color: var(--pf-white); font-family: var(--pf-mono); font-size: 13px; }
+  .vals td:last-child { text-align: right; white-space: nowrap; padding-left: 8px; }
+  details { background: #0a0a0a; }
+  summary { cursor: pointer; padding: 12px 16px; font: 400 var(--pf-fs-mono)/1.2 var(--pf-mono); text-transform: uppercase; color: var(--pf-white); list-style: none; }
+  summary::before { content: "+ "; color: var(--pf-violet); }
+  details[open] summary::before { content: "− "; }
+  pre { padding: 0 16px 16px; overflow-x: auto; font: 400 12.5px/1.55 var(--pf-mono); color: var(--pf-text); }
+  .stage { position: relative; background: var(--pf-surface); min-height: 440px; overflow: hidden; }
+  .stage-cap { position: absolute; left: 20px; bottom: 16px; z-index: 3; }
+  @media (max-width: 900px) { .mv { grid-template-columns: 1fr; gap: 32px; } .stage { order: -1; } }
+
+  /* stage contents */
+  .chart { display: block; width: 100%; height: auto; padding: 32px 24px 48px; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; height: 440px; }
+  .split > div { position: relative; overflow: hidden; }
+  .disc { position: absolute; left: 50%; top: 50%; width: 260px; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%;
+    background: var(--pf-gradient-ring); animation: pm-cycle var(--pm-aurora-cycle) linear infinite; }
+  .split .pm-aurora { width: 520px; top: 90px; }
+  .split .pf-aurora-fade { position: absolute; inset: 0; background: var(--pf-fade-bottom); }
+  canvas.fill { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .flow-stage { background: #000; }
+  .flow-stage canvas { opacity: .8; }
+  .marq-stage, .step-stage { display: grid; align-content: center; gap: 0; }
+  .ticker span { display: flex; align-items: center; gap: 12px; padding: 0 28px; font: 400 var(--pf-fs-mono)/1 var(--pf-mono); text-transform: uppercase; color: var(--pf-text); white-space: nowrap; }
+  .ticker span::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--pf-violet); }
+  .tiles .pm-marquee__track { gap: 4px; padding: 0 2px; }
+  .tile { width: 220px; height: 150px; background: #0b0b0b; box-shadow: 0 0 0 1px rgba(255,255,255,.03); padding: 18px; display: flex; flex-direction: column; justify-content: space-between; }
+  .tile b { font: 400 18.4px/1.2 var(--pf-sans); letter-spacing: -0.04em; color: var(--pf-white); }
+  .stat { width: 373px; padding: 0 32px; flex: none; }
+  .stat .pf-stat { display: block; margin-bottom: 14px; }
+  .step-dots { display: flex; gap: 6px; padding: 28px 32px 0; }
+  .parallax-stage { height: 640px; display: grid; place-items: center; text-align: center; }
+  .facade { background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.12) 0 2px, transparent 2px 64px),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.08) 0 2px, transparent 2px 44px),
+      linear-gradient(160deg, #6d7a86 0%, #2a323a 45%, #0e1216 100%); }
+  .parallax-stage h3 { position: relative; z-index: 2; font: 400 var(--pf-fs-h1)/var(--pf-lh-display) var(--pf-serif); letter-spacing: -0.08em; color: var(--pf-white); max-width: 11em; padding: 0 16px; }
+  .scrub-stage { min-height: 520px; display: grid; place-items: center; text-align: center; padding: 48px 24px; }
+  .scrub-stage .pf-h2 { max-width: 13em; }
+  .lag-stage { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 120px 4px; min-height: 620px; align-items: start; }
+  .lag-card { height: 280px; border-radius: var(--pf-r-pill); background: #0b0b0b; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; }
+  .lag-card b { font: 400 var(--pf-fs-h3)/1.2 var(--pf-sans); letter-spacing: -0.05em; color: var(--pf-white); }
+  .rise-stage { min-height: 520px; display: grid; place-items: center; text-align: center; padding: 48px 24px; }
+  .rise-stage h3 { font: 400 var(--pf-fs-h3-serif)/var(--pf-lh-h3-serif) var(--pf-serif); letter-spacing: var(--pf-ls-h3-serif); color: var(--pf-white); margin-bottom: 24px; }
+  .cursor-stage { min-height: 440px; display: grid; place-items: center; text-align: center; }
+  .still { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--pf-gap-grid); margin-top: 48px; }
+  .still > div { background: var(--pf-surface); padding: 28px 24px 32px; }
+  .still h3 { font: 400 var(--pf-fs-h3)/1.2 var(--pf-sans); letter-spacing: -0.05em; color: var(--pf-white); margin: 14px 0 10px; }
+  .still p { font-size: 15px; line-height: 1.4; letter-spacing: -0.02em; }
+  .gloss { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0 48px; margin-top: 40px; }
+  .gloss div { padding: 18px 0; border-top: 1px solid var(--pf-hairline); }
+  .gloss dt { font: 400 20px/1.2 var(--pf-serif); letter-spacing: -0.03em; color: var(--pf-white); margin-bottom: 6px; }
+  .gloss dd { font-size: 15px; line-height: 1.4; letter-spacing: -0.02em; }
+  footer { padding: 160px 0 80px; }
+</style>
+</head>
+<body data-pm-cursor>
+
+<header class="hero">
+  <div class="pm-aurora"></div><div class="pf-aurora-fade"></div>
+  <div class="inner">
+    <span class="pf-pill pf-pill--tag">Profectus Motion System</span>
+    <h1 class="pf-display"><em>Every</em> Movement,<br>Named.</h1>
+    <p class="lead">All eleven movements on profectusagency.com, rebuilt from measurements, with the proper name for each. Scroll slowly.</p>
+  </div>
+</header>
+
+<!-- ================= How to read motion ================= -->
+<section class="triggers"><div class="wrap">
+  <p class="pf-eyebrow">How to read any motion</p>
+  <h2 class="pf-h2">First ask what makes it move. That's the trigger, and it names the whole family.</h2>
+  <div class="tgrid">
+    <div class="tcard"><p class="pf-eyebrow">A · Time</p><h3>Ambient loop</h3><p>Runs on a clock whether you do anything or not. <b>Here:</b> aurora, globe, nebula, both marquees.</p></div>
+    <div class="tcard"><p class="pf-eyebrow">B · Scroll position</p><h3>Scroll-scrubbed</h3><p>Tied to how far you've scrolled. Stop scrolling and it stops; scroll back and it rewinds. <b>Here:</b> parallax, word reveal, card lag.</p></div>
+    <div class="tcard"><p class="pf-eyebrow">C · Scroll event</p><h3>Scroll-triggered</h3><p>Fires once when something enters view, then plays on its own clock. <b>Here:</b> the footer heading.</p></div>
+    <div class="tcard"><p class="pf-eyebrow">D · Pointer</p><h3>Pointer-driven</h3><p>Follows the mouse. <b>Here:</b> the cursor ring. Hover effects would also live here, and Profectus has none.</p></div>
+  </div>
+  <div class="legend">
+    <span class="pf-eyebrow">Every value is tagged:</span>
+    <span><span class="st m">Measured</span> read off the live page</span>
+    <span><span class="st f">Fitted</span> calculated from logged samples</span>
+    <span><span class="st r">Reconstructed</span> couldn't be measured; chosen to match</span>
+  </div>
+</div></section>
+
+<!-- ================= Global ================= -->
+<section class="group"><div class="wrap">
+  <p class="pf-eyebrow">Under everything</p>
+
+  <article class="mv" id="m01">
+    <div>
+      <p class="pf-eyebrow">01 · Smoothing layer</p>
+      <h2 class="pf-h2">Smooth scroll</h2>
+      <p class="aka">Also called <span>inertial scrolling · momentum scrolling · scroll smoothing · "Lenis"</span></p>
+      <div class="notes">
+        <div><h4>How it works</h4><p>Your scroll wheel doesn't move the page directly. It sets a target, and every frame the page covers 13.5% of the distance left to it. Big steps first, then smaller and smaller, so it glides to a stop instead of jumping. Profectus uses a library called Lenis for this, and it's running on this page now.</p></div>
+        <div><h4>Use it when</h4><p>You have scroll-scrubbed effects (07–09). Smoothing makes them glide instead of stutter. It also sets the calm, expensive tone before anything else moves.</p></div>
+        <div><h4>Avoid</h4><p>Making it slow or floaty; that reads as lag. Never change how far a scroll goes or snap to sections with it.</p></div>
+        <table class="vals">
+          <tr><td>Lerp (share per frame)</td><td>0.135</td><td><span class="st f">Fitted</span></td></tr>
+          <tr><td>Settles after</td><td>~830ms</td><td><span class="st m">Measured</span></td></tr>
+          <tr><td>Wheel multiplier</td><td>≈2 on source, 1 here</td><td><span class="st m">Measured</span></td></tr>
+        </table>
+        <details><summary>Code</summary><pre>&lt;script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"&gt;&lt;/script&gt;
+&lt;script src="motion-system.js"&gt;&lt;/script&gt;
+&lt;!-- motion-system.js starts Lenis with
+     lerp: var(--pm-scroll-lerp) = 0.135 --&gt;</pre></details>
+      </div>
+    </div>
+    <div class="stage">
+      <svg class="chart" id="scrollChart" viewBox="0 0 640 300" role="img" aria-label="Scroll position over time after one wheel flick: measured points and the fitted curve"></svg>
+      <p class="pf-eyebrow stage-cap">One wheel flick: scroll position over 900ms · dots measured, line fitted</p>
+    </div>
+  </article>
+</div></section>
+
+<!-- ================= Time loops ================= -->
+<section class="group"><div class="wrap">
+  <p class="pf-eyebrow">Trigger A · Time: ambient loops</p>
+
+  <article class="mv" id="m02">
+    <div>
+      <p class="pf-eyebrow">02 · Ambient loop</p>
+      <h2 class="pf-h2">Colour cycling</h2>
+      <p class="aka">Also called <span>hue flow · gradient animation · aurora gradient</span></p>
+      <div class="notes">
+        <div><h4>How it works</h4><p>The ring never moves. The colours travel along it, clockwise over the top: violet appears on the left, crosses the crown and exits right. The trick is a colour wheel (a conic gradient) turning slowly behind a ring-shaped cut-out. The left panel shows the wheel; the right shows what the cut-out lets through. When the pale "mist" part of the wheel passes the visible arc, the whole glow seems to breathe brighter.</p></div>
+        <div><h4>Use it when</h4><p>A hero or closing section needs life without distracting from the headline. It is light, not paint.</p></div>
+        <div><h4>Avoid</h4><p>Speeding it up; under 15 seconds a cycle it starts to look like a loading spinner. One per screen.</p></div>
+        <table class="vals">
+          <tr><td>One full cycle</td><td>21s</td><td><span class="st f">Fitted</span></td></tr>
+          <tr><td>Direction</td><td>clockwise (left → right over the top)</td><td><span class="st m">Measured</span></td></tr>
+          <tr><td>Brightness swing</td><td>≈1.8× per cycle</td><td><span class="st f">Fitted</span></td></tr>
+          <tr><td>Easing</td><td>linear, never stops</td><td><span class="st m">Measured</span></td></tr>
+        </table>
+        <details><summary>Code</summary><pre>&lt;section style="position:relative;overflow:hidden"&gt;
+  &lt;div class="pm-aurora"&gt;&lt;/div&gt;
+  &lt;div class="pf-aurora-fade"&gt;&lt;/div&gt;
+  …content, z-index 2…
+&lt;/section&gt;
+/* speed: --pm-aurora-cycle: 21s */</pre></details>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="split">
+        <div><div class="disc"></div></div>
+        <div><div class="pm-aurora"></div><div class="pf-aurora-fade"></div></div>
+      </div>
+      <p class="pf-eyebrow stage-cap">Left: the turning wheel · Right: the same wheel behind the ring mask</p>
+    </div>
+  </article>
+
+  <article class="mv" id="m03">
+    <div>
+      <p class="pf-eyebrow">03 · Ambient loop</p>
+      <h2 class="pf-h2">Continuous rotation</h2>
+      <p class="aka">Also called <span>idle spin · auto-rotate · turntable</span></p>
+      <div class="notes">
+        <div><h4>How it works</h4><p>A dotted globe turns at a constant speed and never stops. It's drawn one dot at a time, so the dots near the edge dim and the surface looks curved. Profectus renders it in WebGL; this is a lighter 2D canvas version. The continents here are rough, simplified shapes, not an accurate map.</p></div>
+        <div><h4>Use it when</h4><p>An object stands for something big and ongoing ("global reach", "always on"). Slow and steady reads as confident.</p></div>
+        <div><h4>Avoid</h4><p>Spinning faster than about one turn every 30s, or letting the user drag it unless dragging does something useful.</p></div>
+        <table class="vals">
+          <tr><td>One revolution</td><td>≈55s (±10%)</td><td><span class="st f">Fitted</span></td></tr>
+          <tr><td>Surface speed at the face</td><td>~29px/s, left → right</td><td><span class="st f">Fitted</span></td></tr>
+          <tr><td>Easing</td><td>linear</td><td><span class="st m">Measured</span></td></tr>
+        </table>
+        <details><summary>Code</summary><pre>&lt;canvas data-pm-globe style="width:100%;height:440px"&gt;&lt;/canvas&gt;
+/* speed: --pm-globe-rev: 55s */</pre></details>
+      </div>
+    </div>
+    <div class="stage"><canvas class="fill" data-pm-globe aria-hidden="true"></canvas></div>
+  </article>
+
+  <article class="mv" id="m04">
+    <div>
+      <p class="pf-eyebrow">04 · Ambient loop</p>
+      <h2 class="pf-h2">Flow field</h2>
+      <p class="aka">Also called <span>noise drift · particle flow · Perlin field</span></p>
+      <div class="notes">
+        <div><h4>How it works</h4><p>Thousands of specks drift along invisible currents. Every point on the screen has a direction (the "field"), and the field slowly shifts over time, so the specks trace faint strands that never repeat. On Profectus it sits behind "Why Profectus" and runs down into the footer at 37% opacity. Its overall shape barely changes; the motion is a fine shimmer inside the strands.</p></div>
+        <div><h4>Use it when</h4><p>A long section needs texture that feels alive but asks for no attention at all.</p></div>
+        <div><h4>Avoid</h4><p>Raising the opacity until it competes with text. If you notice it while reading, it's too strong.</p></div>
+        <table class="vals">
+          <tr><td>Layer opacity on source</td><td>0.37</td><td><span class="st m">Measured</span></td></tr>
+          <tr><td>Overall change</td><td>near-static over 30s</td><td><span class="st m">Measured</span></td></tr>
+          <tr><td>Speck speed here</td><td>9px/s</td><td><span class="st r">Reconstructed</span></td></tr>
+        </table>
+        <details><summary>Code</summary><pre>&lt;canvas data-pm-flow style="width:100%;height:100%;opacity:.37"&gt;&lt;/canvas&gt;</pre></details>
+      </div>
+    </div>
+    <div class="stage flow-stage"><canvas class="fill" data-pm-flow aria-hidden="true"></canvas></div>
+  </article>
+
+  <article class="mv" id="m05">
+    <div>
+      <p class="pf-eyebrow">05 · Ambient loop</p>
+      <h2 class="pf-h2">Infinite marquee</h2>
+      <p class="aka">Also called <span>ticker · logo loop · scrolling banner · crawl</span></p>
+      <div class="notes">
+        <div><h4>How it works</h4><p>A row of items slides left at a constant speed. The row is duplicated, so when the first copy has slid fully out, the second copy is exactly where the first started and the loop restarts invisibly. It pauses when scrolled off screen to save battery. It doesn't pause on hover.</p></div>
+        <div><h4>Use it when</h4><p>You have many equal items (clients, industries, logos) and want to show breadth without a grid.</p></div>
+        <div><h4>Avoid</h4><p>Putting anything in it that must be read or clicked. People read at their own pace, not the marquee's.</p></div>
+        <table class="vals">
+          <tr><td>Speed</td><td>50px/s</td><td><span class="st m">Measured</span></td></tr>
+          <tr><td>Easing</td><td>linear, right → left</td><td><span class="st m">Measured</span></td></tr>
+          <tr><td>Pauses off screen</td><td>yes</td><td><span class="st m">Measured</span></td></tr>
+          <tr><td>Pauses on hover</td><td>no</td><td><span class="st m">Measured</span></td></tr>
+        </table>
+        <details><summary>Code</summary><pre>&lt;div class="pm-marquee"&gt;
+  &lt;div class="pm-marquee__track"&gt;
+    …items… …the same items again…
+  &lt;/div&gt;
+&lt;/div&gt;</pre></details>
+      </div>
+    </div>
+    <div class="stage marq-stage">
+      <div class="pm-marquee tiles"><div class="pm-marquee__track">
+        <div class="tile"><span class="pf-eyebrow">01</span><b>Retail &amp; eCommerce</b></div><div class="tile"><span class="pf-eyebrow">02</span><b>Healthcare</b></div><div class="tile"><span class="pf-eyebrow">03</span><b>Financial Services</b></div><div class="tile"><span class="pf-eyebrow">04</span><b>Media &amp; Entertainment</b></div><div class="tile"><span class="pf-eyebrow">05</span><b>Automotive</b></div><div class="tile"><span class="pf-eyebrow">06</span><b>Hospitality</b></div>
+        <div class="tile" aria-hidden="true"><span class="pf-eyebrow">01</span><b>Retail &amp; eCommerce</b></div><div class="tile" aria-hidden="true"><span class="pf-eyebrow">02</span><b>Healthcare</b></div><div class="tile" aria-hidden="true"><span class="pf-eyebrow">03</span><b>Financial Services</b></div><div class="tile" aria-hidden="true"><span class="pf-eyebrow">04</span><b>Media &amp; Entertainment</b></div><div class="tile" aria-hidden="true"><span class="pf-eyebrow">05</span><b>Automotive</b></div><div class="tile" aria-hidden="true"><span class="pf-eyebrow">06</span><b>Hospitality</b></div>
+      </div></div>
+    </div>
+  </article>
+
+  <article class="mv" id="m06">
+    <div>
+      <p class="pf-eyebrow">06 · Ambient loop</p>
+      <h2 class="pf-h2">Stepped carousel</h2>
+      <p class="aka">Also called <span>auto-advancing carousel · autoplay slider · step-and-hold</span></p>
+      <div class="notes">
+        <div><h4>How it works</h4><p>It looks like a marquee, but it isn't one. It holds still for about two seconds, jumps exactly one item to the left in 0.6s, and holds again. The jump starts fast and brakes hard (expo-out easing), so it feels decisive. Holding still is what lets each number be read.</p></div>
+        <div><h4>Use it when</h4><p>Items need to be read one at a time: stats, quotes, results. That's the difference from 05.</p></div>
+        <div><h4>Avoid</h4><p>Holds shorter than about 2 seconds, or a bouncy easing. Both make numbers hard to read.</p></div>
+        <table class="vals">
+          <tr><td>Step every</td><td>2531ms</td><td><span class="st m">Measured</span></td></tr>
+          <tr><td>Move duration</td><td>600ms</td><td><span class="st m">Measured</span></td></tr>
+          <tr><td>Step distance</td><td>373px (one item)</td><td><span class="st m">Measured</span></td></tr>
+          <tr><td>Easing</td><td>cubic-bezier(.16,1,.3,1)</td><td><span class="st f">Fitted</span></td></tr>
+        </table>
+        <details><summary>Code</summary><pre>&lt;div class="pm-stepper"&gt;
+  &lt;div class="pm-stepper__track"&gt;
+    …items… …the same items again…
+  &lt;/div&gt;
+&lt;/div&gt;
+/* the step is one item's width + gap, read from layout */</pre></details>
+      </div>
+    </div>
+    <div class="stage step-stage">
+      <div class="pm-stepper"><div class="pm-stepper__track">
+        <div class="stat"><span class="pf-stat">94%</span><span class="pf-eyebrow">Domestic coverage</span></div><div class="stat"><span class="pf-stat">500+</span><span class="pf-eyebrow">Brands served</span></div><div class="stat"><span class="pf-stat">22:1</span><span class="pf-eyebrow">Return on spend</span></div><div class="stat"><span class="pf-stat">85%</span><span class="pf-eyebrow">Match rate</span></div><div class="stat"><span class="pf-stat">32%</span><span class="pf-eyebrow">Lower cost per lead</span></div>
+        <div class="stat" aria-hidden="true"><span class="pf-stat">94%</span><span class="pf-eyebrow">Domestic coverage</span></div><div class="stat" aria-hidden="true"><span class="pf-stat">500+</span><span class="pf-eyebrow">Brands served</span></div><div class="stat" aria-hidden="true"><span class="pf-stat">22:1</span><span class="pf-eyebrow">Return on spend</span></div><div class="stat" aria-hidden="true"><span class="pf-stat">85%</span><span class="pf-eyebrow">Match rate</span></div><div class="stat" aria-hidden="true"><span class="pf-stat">32%</span><span class="pf-eyebrow">Lower cost per lead</span></div>
+      </div></div>
+      <p class="pf-eyebrow stage-cap">Placeholder labels: the stat captions aren't the source's</p>
+    </div>
+  </article>
+</div></section>
+
+<!-- ================= Scroll-scrubbed ================= -->
+<section class="group"><div class="wrap">
+  <p class="pf-eyebrow">Trigger B · Scroll position: scrubbed</p>
+
+  <article class="mv" id="m07">
+    <div>
+      <p class="pf-eyebrow">07 · Scroll-scrubbed</p>
+      <h2 class="pf-h2">Parallax</h2>
+      <p class="aka">Also called <span>parallax scrolling · scroll-linked translate · depth scrolling</span></p>
+      <div class="notes">
+        <div><h4>How it works</h4><p>The photo behind the band moves at a different speed from the page, so it seems to sit further back. Profectus starts it only when the band begins leaving through the top of the screen (its "exit"). Over the band's own height the photo slides 133px, from 60px up to 73px down. The photo is enlarged 1.2× so its edges never show.</p></div>
+        <div><h4>Use it when</h4><p>A full-width photo band needs depth. Keep the ratio small; Profectus moves the photo about one pixel for every five scrolled.</p></div>
+        <div><h4>Avoid</h4><p>Parallax on text, or big ratios. Both make pages feel seasick.</p></div>
+        <table class="vals">
+          <tr><td>Travel</td><td>−60px → +73px</td><td><span class="st m">Measured</span></td></tr>
+          <tr><td>Ratio on a 640px band</td><td>0.2078px per px scrolled</td><td><span class="st m">Measured</span></td></tr>
+          <tr><td>Runs during</td><td>the band's exit</td><td><span class="st m">Measured</span></td></tr>
+          <tr><td>Photo</td><td>scale 1.2 · brightness .45</td><td><span class="st m">Measured</span></td></tr>
+          <tr><td>Easing</td><td>linear, no lag</td><td><span class="st m">Measured</span></td></tr>
+        </table>
+        <details><summary>Code</summary><pre>&lt;section class="pm-parallax"&gt;
+  &lt;div class="pm-parallax__plate"
+       style="background-image:url(photo.jpg)"&gt;&lt;/div&gt;
+  …content…
+&lt;/section&gt;</pre></details>
+      </div>
+    </div>
+    <div class="stage pm-parallax parallax-stage">
+      <div class="pm-parallax__plate facade"></div>
+      <h3>We built the infrastructure<span class="pf-accent-dot">.</span></h3>
+      <p class="pf-eyebrow stage-cap">Scroll until this band starts leaving the top of the screen</p>
+    </div>
+  </article>
+
+  <article class="mv" id="m08">
+    <div>
+      <p class="pf-eyebrow">08 · Scroll-scrubbed</p>
+      <h2 class="pf-h2">Scroll-scrubbed text reveal</h2>
+      <p class="aka">Also called <span>word-by-word reveal · text scrub · scroll-driven highlight</span></p>
+      <div class="notes">
+        <div><h4>How it works</h4><p>Every word starts at 20% opacity. As you scroll, the words fill in one at a time, as if the page is reading along with you. Each word takes 100px of scroll to fill, and the next starts 50px after the one before, so about two words are filling at any moment. Scroll back up and they dim again.</p></div>
+        <div><h4>Use it when</h4><p>A single statement headline should be read slowly and land with weight. Once per page.</p></div>
+        <div><h4>Avoid</h4><p>Body copy, and forgetting reduced motion. The source leaves the words stuck at 20% for users who turn motion off; this version shows them in full.</p></div>
+        <table class="vals">
+          <tr><td>Resting opacity</td><td>0.2</td><td><span class="st m">Measured</span></td></tr>
+          <tr><td>Scroll per word</td><td>100px</td><td><span class="st m">Measured</span></td></tr>
+          <tr><td>Stagger</td><td>50px of scroll</td><td><span class="st m">Measured</span></td></tr>
+          <tr><td>Easing</td><td>ease-out cubic</td><td><span class="st f">Fitted</span></td></tr>
+          <tr><td>Starts when</td><td>heading top is 45% down the screen</td><td><span class="st r">Reconstructed</span></td></tr>
+        </table>
+        <details><summary>Code</summary><pre>&lt;h2 class="pf-h2 pm-scrub"&gt;Everything You Need to Move
+Forward. Nothing You Don't.&lt;/h2&gt;</pre></details>
+      </div>
+    </div>
+    <div class="stage scrub-stage">
+      <div>
+        <p class="pf-eyebrow" style="margin-bottom:20px">Services overview</p>
+        <h3 class="pf-h2 pm-scrub">Everything You Need to Move Forward. Nothing You Don't.</h3>
+      </div>
+    </div>
+  </article>
+
+  <article class="mv" id="m09">
+    <div>
+      <p class="pf-eyebrow">09 · Scroll-scrubbed + spring</p>
+      <h2 class="pf-h2">Spring-smoothed parallax</h2>
+      <p class="aka">Also called <span>lagged parallax · smooth follow · inertia parallax</span></p>
+      <div class="notes">
+        <div><h4>How it works</h4><p>Like 07, each card's position depends on scroll, but a spring sits in between. The card doesn't jump to where scroll says it should be; it's pulled there, as if on a soft elastic band, and arrives a moment late. Give each card a different pull and the grid loosens as you scroll, then settles. Profectus's spring is tuned so it never overshoots (no bounce).</p></div>
+        <div><h4>Use it when</h4><p>A grid of cards should feel physical and loose rather than locked to the page.</p></div>
+        <div><h4>Avoid</h4><p>Bouncy springs (low damping); they feel like a toy. Keep the pull differences small.</p></div>
+        <table class="vals">
+          <tr><td>Spring stiffness / damping</td><td>80 / 20 (mass 1)</td><td><span class="st f">Fitted</span></td></tr>
+          <tr><td>Settles in</td><td>~1s, no overshoot</td><td><span class="st m">Measured</span></td></tr>
+          <tr><td>Target per card</td><td>data-speed 0.08–0.2</td><td><span class="st r">Reconstructed</span></td></tr>
+        </table>
+        <details><summary>Code</summary><pre>&lt;div class="pm-lag" data-speed="0.12"&gt;…card…&lt;/div&gt;
+&lt;div class="pm-lag" data-speed="0.2"&gt;…card…&lt;/div&gt;</pre></details>
+      </div>
+    </div>
+    <div class="stage lag-stage">
+      <div class="lag-card pm-lag" data-speed="0.08"><b>Lifecycle &amp; Loyalty</b><span class="pf-eyebrow">speed .08</span></div>
+      <div class="lag-card pm-lag" data-speed="0.2"><b>Paid Media</b><span class="pf-eyebrow">speed .20</span></div>
+      <div class="lag-card pm-lag" data-speed="0.13"><b>Creative &amp; Brand</b><span class="pf-eyebrow">speed .13</span></div>
+    </div>
+  </article>
+</div></section>
+
+<!-- ================= Pointer + triggered ================= -->
+<section class="group"><div class="wrap">
+  <p class="pf-eyebrow">Trigger D · Pointer · and Trigger C · Scroll event</p>
+
+  <article class="mv" id="m10">
+    <div>
+      <p class="pf-eyebrow">10 · Pointer-driven</p>
+      <h2 class="pf-h2">Cursor follower</h2>
+      <p class="aka">Also called <span>custom cursor · trailing cursor · cursor ring</span></p>
+      <div class="notes">
+        <div><h4>How it works</h4><p>A thin ring with a violet dot chases your pointer on a spring, the same kind of spring as 09 but stiffer. Move fast and it trails behind, then catches up and settles without bouncing. It's on for this whole page; the normal cursor stays visible, so nothing is lost. It hides on touch screens.</p></div>
+        <div><h4>Use it when</h4><p>A site wants one small, constant signal of craft. It's cheap to run.</p></div>
+        <div><h4>Avoid</h4><p>Hiding the real cursor, or a ring that changes size on every hover. Profectus's ring doesn't react to anything.</p></div>
+        <table class="vals">
+          <tr><td>Spring stiffness / damping</td><td>150 / 30</td><td><span class="st f">Fitted</span></td></tr>
+          <tr><td>Ring</td><td>28px · 1px · 45% white</td><td><span class="st m">Measured</span></td></tr>
+          <tr><td>Dot</td><td>3px · #8E84F7</td><td><span class="st m">Measured</span></td></tr>
+        </table>
+        <details><summary>Code</summary><pre>&lt;body data-pm-cursor&gt;</pre></details>
+      </div>
+    </div>
+    <div class="stage cursor-stage"><p class="pf-eyebrow">Move your mouse quickly across this panel</p></div>
+  </article>
+
+  <article class="mv" id="m11">
+    <div>
+      <p class="pf-eyebrow">11 · Scroll-triggered</p>
+      <h2 class="pf-h2">Fade-up reveal</h2>
+      <p class="aka">Also called <span>reveal on scroll · entrance animation · fade-in-up</span></p>
+      <div class="notes">
+        <div><h4>How it works</h4><p>The heading starts invisible and 48px low. When it scrolls into view it rises and fades in once, then stays. Unlike 08 it doesn't follow the scroll; scrolling only starts it. It's the only reveal on the whole Profectus page, on the footer's "Ready to Make Progress?".</p></div>
+        <div><h4>Use it when</h4><p>A closing call to action should arrive rather than just be there. Sparingly.</p></div>
+        <div><h4>Avoid</h4><p>Putting it on everything. A page where every block fades up feels like a template.</p></div>
+        <table class="vals">
+          <tr><td>Start offset</td><td>48px below</td><td><span class="st m">Measured</span></td></tr>
+          <tr><td>Duration / easing</td><td>900ms · ease-out</td><td><span class="st r">Reconstructed</span></td></tr>
+          <tr><td>Plays</td><td>once</td><td><span class="st m">Measured</span></td></tr>
+        </table>
+        <details><summary>Code</summary><pre>&lt;h3 class="pm-rise"&gt;Ready to Make Progress?&lt;/h3&gt;</pre></details>
+      </div>
+    </div>
+    <div class="stage rise-stage">
+      <div class="pm-rise"><h3>Ready to Make Progress?</h3><a class="pf-pill" href="#m11">Get in Touch →</a></div>
+    </div>
+  </article>
+</div></section>
+
+<!-- ================= Stillness ================= -->
+<section class="group"><div class="wrap">
+  <p class="pf-eyebrow">12 · What Profectus leaves still</p>
+  <h2 class="pf-h2" style="margin:24px 0 0;max-width:820px">Restraint is part of the system. These are measured absences: don't add them back by accident.</h2>
+  <div class="still">
+    <div><p class="pf-eyebrow">No load-in</p><h3>No intro animation</h3><p>Everything is fully visible 20ms after the page appears. No preloader, no page transition, no staggered hero entrance.</p></div>
+    <div><p class="pf-eyebrow">No hover motion</p><h3>No hover states</h3><p>Buttons, links and cards don't react to the pointer at all, even with the browser's hover state confirmed active. Hover effects exist in the page's code but never run.</p></div>
+    <div><p class="pf-eyebrow">Instant toggle</p><h3>No menu transition</h3><p>The mobile menu opens in one frame and closes in one frame. No slide, no fade.</p></div>
+    <div><p class="pf-eyebrow">Split, but still</p><h3>No letter animation</h3><p>Two headlines are split into single letters, the usual setup for a letter-by-letter animation, but neither animates.</p></div>
+  </div>
+</div></section>
+
+<!-- ================= Glossary ================= -->
+<section class="group"><div class="wrap">
+  <p class="pf-eyebrow">Glossary · the words you'll meet</p>
+  <dl class="gloss">
+    <div><dt>Easing</dt><dd>How speed changes during a movement. Linear is constant speed; most natural motion isn't.</dd></div>
+    <div><dt>Ease-out</dt><dd>Starts fast, slows into place. The default for anything arriving. Profectus's steps (06) and word fills (08) use it.</dd></div>
+    <div><dt>Cubic-bezier</dt><dd>Four numbers that draw an easing curve, e.g. <code>cubic-bezier(.16,1,.3,1)</code>. Paste them into cubic-bezier.com to see the shape.</dd></div>
+    <div><dt>Spring</dt><dd>Motion driven by physics instead of a fixed duration. <b>Stiffness</b> is how hard it pulls, <b>damping</b> is how much it resists. High damping means no bounce ("overdamped"), which is how both Profectus springs are tuned.</dd></div>
+    <div><dt>Lerp</dt><dd>Short for linear interpolation: each frame, move a fixed share of the remaining distance. Smooth scroll (01) is a lerp of 0.135.</dd></div>
+    <div><dt>Scrub</dt><dd>Tying an animation's progress to scroll position instead of time, like dragging a video's playhead.</dd></div>
+    <div><dt>Trigger</dt><dd>What starts a movement: time, scroll position, a scroll event, or the pointer. Name the trigger first and you've named the family.</dd></div>
+    <div><dt>Stagger</dt><dd>A delay between siblings doing the same thing, so they go one after another. In 08 the stagger is measured in scroll pixels, not milliseconds.</dd></div>
+    <div><dt>Ambient</dt><dd>Motion that runs on its own in the background and asks for no attention.</dd></div>
+    <div><dt>Exit range</dt><dd>The stretch of scrolling during which an element leaves the screen. Parallax (07) only runs in this range.</dd></div>
+    <div><dt>Reduced motion</dt><dd>A system setting people turn on because motion makes them unwell. Every mover here stops when it's on. The source only stops one.</dd></div>
+    <div><dt>rAF · WAAPI · Lenis</dt><dd>The engines: requestAnimationFrame (a script redraws every frame), the Web Animations API (the browser runs a keyframed animation itself), and Lenis (the smooth-scroll library).</dd></div>
+  </dl>
+</div></section>
+
+<footer><div class="wrap">
+  <p class="pf-eyebrow">Profectus Motion System · measured from profectusagency.com, 2026-09-23 · kit/motion-system/</p>
+</div></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="motion-system.js"></script>
+<script>
+  // Smooth-scroll chart: measured wheel samples (dots) vs fitted lerp 0.135 (line).
+  (() => {
+    const svg = document.getElementById('scrollChart');
+    const S = [[0,0],[81.1,270],[98.5,503.5],[130.7,880],[163.3,1160.5],[196.6,1372],[230,1527.5],[314.8,1771],[412.6,1905.5],[512.1,1961.5],[611.1,1985],[697.8,1993.5],[863,2000]];
+    const X = (t) => 50 + t / 900 * 560, Y = (v) => 250 - v / 2000 * 220;
+    let line = '';
+    for (let t = 0; t <= 900; t += 5) {
+      const n = Math.max(0, (t - 64) / 16.667);
+      line += `${X(t).toFixed(1)},${Y(2000 * (1 - Math.pow(1 - 0.135, n))).toFixed(1)} `;
+    }
+    const axis = 'stroke="rgba(255,255,255,.12)" stroke-width="1"';
+    const txt = (x, y, s, a = 'start') => `<text x="${x}" y="${y}" fill="#C2C2C2" font-family="PT Mono" font-size="11" text-anchor="${a}">${s}</text>`;
+    svg.innerHTML =
+      `<line x1="50" y1="250" x2="610" y2="250" ${axis}/><line x1="50" y1="30" x2="50" y2="250" ${axis}/>` +
+      `<line x1="50" y1="30" x2="610" y2="30" stroke="rgba(255,255,255,.06)" stroke-dasharray="3 4"/>` +
+      txt(44, 34, '2000px', 'end') + txt(44, 254, '0', 'end') +
+      txt(50, 272, '0ms') + txt(610, 272, '900ms', 'end') + txt(X(830), 272, 'settled', 'middle') +
+      `<polyline points="${line}" fill="none" stroke="#8E84F7" stroke-width="2"/>` +
+      S.map(([t, v]) => `<circle cx="${X(t)}" cy="${Y(v)}" r="3.5" fill="#FFFFFF"/>`).join('');
+  })();
+</script>
+</body>
+</html>

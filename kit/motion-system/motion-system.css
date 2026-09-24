@@ -1,0 +1,132 @@
+/* Profectus Motion System: tokens and CSS-only movers.
+   Pairs with motion-system.js. Colours and fonts come from the texture
+   pack, so load ../texture-pack/profectus-texture.css first.
+
+   Every value is measured off profectusagency.com unless tagged:
+   [fit] fitted to logged samples   [rec] reconstructed, not measurable
+   Evidence: kit/scouted/profectusagency-com-motion.md and -motion-analysis.md */
+
+:root {
+  /* ---- 1. Smooth scroll (inertial scrolling) ---- */
+  --pm-scroll-lerp:      0.135;   /* [fit] share of remaining distance covered per frame */
+
+  /* ---- 2. Colour cycling: the aurora ---- */
+  --pm-aurora-cycle:     21s;     /* [fit] one full trip of the colours around the ring */
+
+  /* ---- 3. Continuous rotation: the globe ---- */
+  --pm-globe-rev:        55s;     /* [fit] one revolution, ±10% */
+
+  /* ---- 5. Infinite marquee ---- */
+  --pm-marquee-speed:    50;      /* px per second, linear, right to left */
+
+  /* ---- 6. Stepped carousel ---- */
+  --pm-step-every:       2531ms;  /* start to start */
+  --pm-step-move:        600ms;
+  --pm-ease-step:        cubic-bezier(0.16, 1, 0.3, 1);   /* [fit] expo-out */
+
+  /* ---- 7. Parallax ---- */
+  --pm-parallax-ratio:   0.2078;  /* px of image shift per px of scroll */
+  --pm-parallax-from:    -60px;
+  --pm-parallax-to:      73px;
+
+  /* ---- 8. Scroll-scrubbed word reveal ---- */
+  --pm-scrub-floor:      0.2;     /* unread words sit at 20% */
+  --pm-scrub-per-word:   100;     /* px of scroll for one word to fill */
+  --pm-scrub-stagger:    50;      /* px of scroll between word starts */
+
+  /* ---- 9 & 10. Springs (stiffness / damping, mass 1). Both overdamped:
+     nothing on this site bounces. ---- */
+  --pm-spring-lag:       80 20;   /* [fit] service-card follow */
+  --pm-spring-cursor:    150 30;  /* [fit] cursor ring */
+
+  /* ---- 11. Scroll-triggered fade-up ---- */
+  --pm-rise:             48px;    /* start offset, measured */
+  --pm-rise-dur:         900ms;   /* [rec] */
+  --pm-ease-out:         cubic-bezier(0.22, 1, 0.36, 1);   /* [rec] */
+}
+
+/* ---------- 2. Colour cycling (aurora) ----------
+   The ring stays put. A conic gradient turns behind a ring-shaped mask, so
+   the colours travel along the arc. The bright "mist" sector passing
+   through the visible arc is what makes it seem to breathe. */
+.pm-aurora {
+  position: absolute; left: 50%; top: 18%;
+  width: 150vw; aspect-ratio: 1; translate: -50% 0;
+  border-radius: 50%;
+  background: var(--pf-gradient-ring);
+  -webkit-mask: radial-gradient(closest-side, transparent 72%, rgba(0,0,0,.35) 86%, #000 95%, transparent 100%);
+          mask: radial-gradient(closest-side, transparent 72%, rgba(0,0,0,.35) 86%, #000 95%, transparent 100%);
+  filter: blur(36px);
+  animation: pm-cycle var(--pm-aurora-cycle) linear infinite;
+  pointer-events: none;
+}
+@keyframes pm-cycle { to { rotate: 360deg; } }
+
+/* ---------- 5. Infinite marquee ----------
+   The track holds two copies of the content. JS sets --pm-loop to one
+   copy's width, so the duration always works out to 50px/s. */
+.pm-marquee { overflow: hidden; }
+.pm-marquee__track {
+  display: flex; width: max-content;
+  animation: pm-marquee calc(var(--pm-loop, 1600) / var(--pm-marquee-speed) * 1s) linear infinite;
+}
+.pm-marquee.is-off .pm-marquee__track { animation-play-state: paused; }
+@keyframes pm-marquee { to { transform: translateX(calc(var(--pm-loop, 1600) * -1px)); } }
+
+/* ---------- 6. Stepped carousel ---------- */
+.pm-stepper { overflow: hidden; }
+.pm-stepper__track {
+  display: flex; width: max-content;
+  transition: transform var(--pm-step-move) var(--pm-ease-step);
+}
+.pm-stepper__track.is-snap { transition: none; }
+
+/* ---------- 7. Parallax ----------
+   The plate is overscaled 1.2× so the shift never shows an edge. */
+.pm-parallax { position: relative; overflow: hidden; }
+.pm-parallax__plate {
+  position: absolute; inset: -12% 0; background-size: cover; background-position: center;
+  scale: 1.2; filter: brightness(.45);
+  translate: 0 var(--pm-y, var(--pm-parallax-from));
+  will-change: translate;
+}
+
+/* ---------- 8. Scroll-scrubbed words ---------- */
+.pm-scrub .pm-w { opacity: var(--pm-o, var(--pm-scrub-floor)); }
+
+/* ---------- 9. Lag ---------- */
+.pm-lag { translate: 0 var(--pm-y, 0); will-change: translate; }
+
+/* ---------- 10. Cursor follower ---------- */
+/* Ring and dot move as one piece: the source logs a single 24×28 element. */
+.pm-cursor {
+  position: fixed; left: 0; top: 0; z-index: 9999;
+  width: 28px; height: 28px; margin: -14px 0 0 -14px;
+  border-radius: 50%; pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.45);
+  translate: var(--pm-x, -100px) var(--pm-y, -100px);
+  transition: opacity 200ms;
+}
+.pm-cursor-dot {
+  position: absolute; left: 50%; top: 50%;
+  width: 3px; height: 3px; margin: -1.5px 0 0 -1.5px;
+  border-radius: 50%; background: var(--pf-violet);
+}
+@media (pointer: coarse) { .pm-cursor { display: none; } }
+
+/* ---------- 11. Scroll-triggered fade-up ---------- */
+.pm-rise { opacity: 0; translate: 0 var(--pm-rise);
+  transition: opacity var(--pm-rise-dur) var(--pm-ease-out), translate var(--pm-rise-dur) var(--pm-ease-out); }
+.pm-rise.is-in { opacity: 1; translate: 0 0; }
+
+/* ---------- Reduced motion ----------
+   The source stops one thing. This stops everything, and shows every
+   word and heading at full strength instead of leaving them dimmed. */
+@media (prefers-reduced-motion: reduce) {
+  .pm-aurora, .pm-marquee__track { animation: none; }
+  .pm-stepper__track, .pm-rise { transition: none; }
+  .pm-rise { opacity: 1; translate: none; }
+  .pm-scrub .pm-w { opacity: 1; }
+  .pm-lag, .pm-parallax__plate { translate: none; }
+  .pm-cursor { display: none; }
+}

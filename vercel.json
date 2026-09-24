@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/case-studies/filters/:filter", "destination": "/case-studies", "permanent": true },
+    { "source": "/portfolio", "destination": "/case-studies", "permanent": true },
+    { "source": "/vision", "destination": "/about", "permanent": true },
+    { "source": "/team", "destination": "/about", "permanent": true },
+    { "source": "/newsroom", "destination": "/", "permanent": true },
+    { "source": "/faq", "destination": "/contact", "permanent": true }
+  ]
+}

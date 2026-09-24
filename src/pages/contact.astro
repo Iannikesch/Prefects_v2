@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { SITE } from '../data/site.js';
+import Aurora from '../components/Aurora.astro';
+---
+<Base title="Contact" description="Tell us what's not working. Start the conversation with Profectus." footerCta={false}>
+  <section class="hero hero--page hero--left" style="padding-bottom:40px">
+    <Aurora />
+    <div class="wrap hero__inner">
+      <p class="pf-eyebrow">Ready to make progress?</p>
+      <h1 class="t-h1">Let's Talk About What's <em>Not</em> Working.</h1>
+    </div>
+  </section>
+  <section class="section section--flush-top">
+    <div class="wrap contact">
+      <div class="stack">
+        <p class="t-lead">Every engagement starts with something that isn't working. Tell us what it is, and we'll tell you honestly whether we can fix it.</p>
+        <p class="pf-eyebrow">Email</p>
+        <p class="t-soft">{SITE.contactEmail}</p>
+      </div>
+      <div class="pf-glass" style="padding:40px 32px"><ContactForm /></div>
+    </div>
+  </section>
+</Base>

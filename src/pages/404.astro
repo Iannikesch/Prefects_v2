@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import Aurora from '../components/Aurora.astro';
+---
+<Base title="Page not found" footerCta={false}>
+  <section class="hero">
+    <Aurora />
+    <div class="hero__inner">
+      <p class="pf-eyebrow">404</p>
+      <h1 class="t-h1">This page made <em>other</em> progress.</h1>
+      <div class="pills pills--center"><a class="pf-pill" href="/">Back to Home →</a><a class="pf-pill pf-pill--ghost" href="/capabilities">See Capabilities →</a></div>
+    </div>
+  </section>
+</Base>

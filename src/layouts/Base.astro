@@ -1,0 +1,117 @@
+---
+// Every page is wrapped in this: head, header, footer, contact pop-up, and
+// the kit (texture pack + motion system) loaded once.
+import '../../kit/texture-pack/profectus-texture.css';
+import '../../kit/motion-system/motion-system.css';
+import '../styles/site.css';
+import ContactForm from '../components/ContactForm.astro';
+import { SITE, NAV, AI_NAME, AI_PATH } from '../data/site.js';
+import { CAPABILITIES } from '../data/capabilities.js';
+import { CASE_STUDIES } from '../data/caseStudies.js';
+import Aurora from '../components/Aurora.astro';
+import { LAYERS, mv } from '../data/layers.js';
+
+const { title, description = SITE.description, footerCta = true } = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const fullTitle = title ? `${title} | ${SITE.name}` : SITE.name;
+const canonical = new URL(path, SITE.url).href;
+const current = (href) => (path === href || path.startsWith(href + '/') ? 'page' : undefined);
+---
+<!doctype html>
+<html lang="en" data-smooth={LAYERS.smooth ? "on" : undefined} data-nav-hide={LAYERS.navHide ? "on" : undefined}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=erode@400,500&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Instrument+Serif:ital@1&family=PT+Mono&display=swap" />
+</head>
+<body data-pm-cursor={LAYERS.cursor ? "" : undefined}>
+  <a class="skip pf-pill" href="#main">Skip to content</a>
+
+  <header class="pf-nav site-nav">
+    <div class="wrap site-nav__bar">
+      <a class="site-nav__logo" href="/">Profectus</a>
+      <nav aria-label="Main">
+        <ul class="site-nav__links">
+          {NAV.map((n) => <li><a href={n.href} aria-current={current(n.href)}>{n.label}</a></li>)}
+        </ul>
+      </nav>
+      <a class="pf-pill" href="/contact" data-contact>Get in Touch →</a>
+      <button class="site-nav__toggle" type="button" aria-controls="site-menu" aria-expanded="false" aria-label="Menu"><i></i><i></i></button>
+    </div>
+  </header>
+  <div class="site-menu" id="site-menu">
+    <ul>
+      <li><a href="/">Home</a></li>
+      {NAV.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </div>
+
+  <main id="main"><slot /></main>
+
+  <footer class="site-foot">
+    <Aurora />
+    {footerCta && (
+      <div class:list={['wrap site-foot__cta', mv.rise]}>
+        <h2 class="t-h3s">Ready to Make Progress?</h2>
+        <a class="pf-pill" href="/contact" data-contact>Get in Touch →</a>
+      </div>
+    )}
+    <div class="wrap site-foot__cols">
+      <div>
+        <a class="site-nav__logo" href="/">Profectus</a>
+        <p class="t-body measure" style="margin-top:16px;max-width:22em">Progress, powered by a proprietary data spine.</p>
+      </div>
+      <div><p class="pf-eyebrow">Main pages</p><ul>
+        <li><a href="/">Home</a></li><li><a href="/about">About</a></li><li><a href="/capabilities">Capabilities</a></li>
+        <li><a href={AI_PATH}>{AI_NAME}</a></li><li><a href="/case-studies">Case Studies</a></li><li><a href="/contact">Contact</a></li>
+      </ul></div>
+      <div><p class="pf-eyebrow">Capabilities</p><ul>
+        {CAPABILITIES.slice(0, 6).map((c) => <li><a href={`/capabilities/${c.slug}`}>{c.name}</a></li>)}
+        <li><a href="/capabilities">All 12 →</a></li>
+      </ul></div>
+      <div><p class="pf-eyebrow">Case studies</p><ul>
+        {CASE_STUDIES.map((c) => <li><a href={`/case-studies/${c.slug}`}>{c.client}</a></li>)}
+      </ul></div>
+      <div><p class="pf-eyebrow">Support</p><ul>
+        <li><a href="/contact">Contact</a></li><li><a href="/privacy">Privacy</a></li>
+      </ul></div>
+    </div>
+    <div class="wrap site-foot__base">
+      <span class="pf-eyebrow">The Profectus Agency</span>
+      <span class="pf-eyebrow">©{new Date().getFullYear()}. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <dialog class="modal" id="contact-modal" aria-labelledby="contact-modal-title">
+    <div class="modal__panel">
+      <button class="modal__close" type="button" aria-label="Close">×</button>
+      <p class="pf-eyebrow">Ready to make progress?</p>
+      <h2 class="t-h3s" id="contact-modal-title" style="margin:12px 0 28px">Let's Talk About What's Not Working.</h2>
+      <ContactForm />
+    </div>
+  </dialog>
+
+  <script>
+    import '../scripts/lenis-global.js';
+    import '../../kit/motion-system/motion-system.js';
+    import '../../kit/texture-pack/code-rain.js';
+    import '../../kit/texture-pack/nebula.js';
+    import '../scripts/site.js';
+  </script>
+</body>
+</html>

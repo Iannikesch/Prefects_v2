@@ -1,0 +1,5 @@
+---
+// A visible placeholder for anything not supplied yet (photos, logos, video).
+const { label = 'Placeholder', class: cls = '', as: Tag = 'div', ...rest } = Astro.props;
+---
+<Tag class:list={['ph', cls]} {...rest}><span>Placeholder · {label}</span></Tag>

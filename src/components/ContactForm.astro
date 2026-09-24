@@ -1,0 +1,25 @@
+---
+// One form, used on /contact and in the pop-up. Merkle's "what's this about?"
+// chooser comes first. Not wired to email yet (see scripts/site.js).
+const { id = 'form' } = Astro.props;
+const topics = ['A new project', 'Our AI product', 'Press', 'Careers', 'Something else'];
+---
+<form class="form" data-contact-form novalidate>
+  <fieldset class="chooser">
+    <legend class="pf-eyebrow">What's this about?</legend>
+    {topics.map((t, i) => (
+      <label><input type="radio" name="topic" value={t} checked={i === 0} /><span>{t}</span></label>
+    ))}
+  </fieldset>
+  <div class="form__row">
+    <label><span class="pf-eyebrow">Name</span><input name="name" autocomplete="name" required /></label>
+    <label><span class="pf-eyebrow">Company</span><input name="company" autocomplete="organization" /></label>
+  </div>
+  <div class="form__row">
+    <label><span class="pf-eyebrow">Email</span><input name="email" type="email" autocomplete="email" required /></label>
+    <label><span class="pf-eyebrow">Phone</span><input name="phone" type="tel" autocomplete="tel" /></label>
+  </div>
+  <label><span class="pf-eyebrow">Message</span><textarea name="message" rows="5"></textarea></label>
+  <div class="pills"><button class="pf-pill" type="submit">Start the Conversation →</button></div>
+  <p class="form__note" role="status" aria-live="polite"></p>
+</form>

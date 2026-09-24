@@ -1,0 +1,73 @@
+---
+// About. Copy from the live About page.
+import Base from '../layouts/Base.astro';
+import Ph from '../components/Ph.astro';
+import Confirm from '../components/Confirm.astro';
+import Mood from '../components/Mood.astro';
+import { PROCESS } from '../data/site.js';
+import Aurora from '../components/Aurora.astro';
+import { LAYERS, mv } from '../data/layers.js';
+const pad = (n) => String(n).padStart(2, '0');
+// The live About stats contradict the homepage (84% vs 94% SMS open rate,
+// 75% vs 85% occupancy), so they're flagged until the client confirms.
+const stats = [
+  { value: '35%', label: 'Increase in repeat visit frequency for hospitality clients' },
+  { value: '75%', label: 'Occupancy achieved within 6 months for a luxury launch', confirm: true },
+  { value: '84%', label: 'Average SMS open rate across campaigns', confirm: true },
+];
+---
+<Base title="About" description="Profectus means progress. A team with decades of Fortune 50 experience, and the proprietary data spine they built, made available to every brand.">
+  <section class="hero hero--page hero--left">
+    <Aurora />
+    <div class="wrap hero__inner">
+      <p class="pf-eyebrow">About</p>
+      <h1 class="t-h1">We Built the Infrastructure That Powers Modern Marketing. Then We Made It Available to <em>Every</em> Brand.</h1>
+      <ul class="chips"><li class="pf-chip">Attention</li><li class="pf-chip">Identity</li><li class="pf-chip">Activation</li></ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap statement">
+      <p class="pf-eyebrow">Our name</p>
+      <h2 class:list={['pf-h2', mv.scrub]}>Profectus means progress. It's not just our name, it's our commitment.</h2>
+      <p class="t-soft measure t-center">Whether you need a complete brand launch, a national media campaign, enterprise email and SMS at scale, or a GTM strategy that actually converts, we deliver integrated solutions that drive real business growth.</p>
+    </div>
+  </section>
+
+  <section class="section section--flush-top">
+    <div class="wrap alt">
+      <div class="alt__row">
+        <div class="stack"><p class="pf-eyebrow">Our infrastructure</p><h2 class="t-h3s">A proprietary data spine with near-full domestic coverage.</h2>
+          <p class="t-soft measure">We sit at the intersection of data science, strategic media, and performance creative. Identity resolution. Cookieless activation. Audience intelligence. Direct channel economics that no platform or agency can match. This is the foundation every engagement is built on.</p></div>
+        <Ph class="alt__media" label="Infrastructure visual" />
+      </div>
+      <div class="alt__row">
+        <div class="stack"><p class="pf-eyebrow">Our experience</p><h2 class="t-h3s">Decades inside Fortune 50 organizations.</h2>
+          <p class="t-soft measure">Our team spent decades running marketing and data programs inside Fortune 50 organizations, driving performance through digital paid activation, first-party customer data infrastructure, and direct channel programs at a scale where the cost of getting it wrong is measured in tens of millions of dollars. We built Profectus to make that capability available to every brand we work with.</p></div>
+        <Ph class="alt__media" label="Team photo" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="stat-row" style="--n:3">
+        {stats.map((s) => <div><span class="pf-stat">{s.value}</span><span class="pf-eyebrow">{s.label}</span>{s.confirm && <Confirm />}</div>)}
+      </div>
+    </div>
+  </section>
+
+  <Mood eyebrow="Our philosophy" title="Attention, identity, activation, <em>revenue</em>.">
+    <p class="t-soft measure">Attention is only valuable when it's connected to identity. Identity is only valuable when it powers activation. And activation is only valuable when it's measured back to revenue. That chain is what our infrastructure makes possible, and it's what every engagement we run is pointed at.</p>
+  </Mood>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="head"><p class="pf-eyebrow">Our process</p><h2 class="pf-h2">How It Works</h2></div>
+      <ol class="steps">
+        {PROCESS.map((s, i) => <li><span class="pf-eyebrow">{pad(i + 1)}</span><h3 class="t-h3">{s.title}</h3><p class="t-soft">{s.text}</p></li>)}
+      </ol>
+      <div class="pills" style="margin-top:48px"><a class="pf-pill" href="/contact" data-contact>Get in Touch →</a></div>
+    </div>
+  </section>
+</Base>

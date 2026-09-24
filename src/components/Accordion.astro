@@ -1,0 +1,15 @@
+---
+// Deloitte's numbered accordion: 01 / 02 / 03, one line each until opened.
+const { items, openFirst = true } = Astro.props;
+const pad = (n) => String(n).padStart(2, '0');
+---
+<ol class="acc">
+  {items.map(([title, text], i) => (
+    <li>
+      <details open={openFirst && i === 0}>
+        <summary><span class="pf-eyebrow">{pad(i + 1)}</span><span class="t-h3">{title}</span></summary>
+        <p class="acc__text t-soft">{text}</p>
+      </details>
+    </li>
+  ))}
+</ol>

@@ -1,0 +1,13 @@
+---
+// Deloitte's "mood band": a full-width glow with one statement on top.
+// Built from the kit's gradient tokens. Still, so it isn't a mover.
+const { eyebrow, title, pill, href = '/contact', contact = false, variant = '' } = Astro.props;
+---
+<section class:list={['mood', variant && `mood--${variant}`]}>
+  <div class="wrap mood__inner">
+    {eyebrow && <p class="pf-eyebrow">{eyebrow}</p>}
+    <p class="t-h1" set:html={title} />
+    <slot />
+    {pill && <a class="pf-pill pf-pill--ghost" href={href} data-contact={contact || undefined}>{pill} →</a>}
+  </div>
+</section>

@@ -1,0 +1,19 @@
+---
+// L5 · Industries marquee (motion system 05). Off: the same tiles as a
+// still, wrapping grid.
+import { LAYERS } from '../data/layers.js';
+const { items } = Astro.props;
+---
+{LAYERS.marquee ? (
+  <div class="pm-marquee" aria-label="Industries we serve">
+    <div class="pm-marquee__track">
+      {[...items, ...items].map((name, i) => (
+        <div class="ind-tile" aria-hidden={i >= items.length ? 'true' : undefined}><span class="pf-eyebrow">Industry</span><b>{name}</b></div>
+      ))}
+    </div>
+  </div>
+) : (
+  <div class="wrap"><ul class="ind-grid">
+    {items.map((name) => <li class="ind-tile"><span class="pf-eyebrow">Industry</span><b>{name}</b></li>)}
+  </ul></div>
+)}

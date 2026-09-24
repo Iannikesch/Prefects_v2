@@ -1,0 +1,44 @@
+---
+// Capabilities listing: all 12, grouped by theme. Same URL as the live site.
+import Base from '../../layouts/Base.astro';
+import Mood from '../../components/Mood.astro';
+import { THEMES, inTheme } from '../../data/capabilities.js';
+import { AI_NAME, AI_PATH } from '../../data/site.js';
+import Aurora from '../../components/Aurora.astro';
+const pad = (n) => String(n).padStart(2, '0');
+---
+<Base title="Capabilities" description="Twelve capabilities, one data spine. Strategy, brand, media, data, lifecycle and AI, each available on its own or as one integrated engagement.">
+  <section class="hero hero--page hero--left">
+    <Aurora />
+    <div class="wrap hero__inner">
+      <p class="pf-eyebrow">Capabilities</p>
+      <h1 class="pf-display"><em>Every</em> Capability.<br />One Spine.</h1>
+      <p class="t-lead measure">Each capability below works independently or as part of a fully integrated engagement. Choose any one to see everything it covers.</p>
+    </div>
+  </section>
+
+  {THEMES.map((t, ti) => (
+    <section class="section--sm">
+      <div class="wrap ti">
+        <div class="head">
+          <p class="pf-eyebrow">{pad(ti + 1)} · Theme</p>
+          <h2 class="pf-h2">{t.name}</h2>
+          <p class="t-soft">{t.blurb}</p>
+        </div>
+        <div class="ti__items">
+          {inTheme(t.id).map((c) => (
+            <a class="tile tile--link" href={`/capabilities/${c.slug}`}>
+              <p class="pf-eyebrow">Service offering · {c.items.length} services</p>
+              <h3 class="t-h3">{c.name}</h3>
+              <p class="t-body">{c.summary}</p>
+              <span class="link-arrow">Explore →</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <div style="height:var(--site-pad-y-sm)"></div>
+  <Mood eyebrow={AI_NAME} title="Need more than a service? <em>Own</em> your AI." pill={`Meet ${AI_NAME}`} href={AI_PATH} variant="plum" />
+</Base>

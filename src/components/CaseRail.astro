@@ -1,0 +1,24 @@
+---
+// Merkle's "Our work in action": heading fixed on the left, cards slide past
+// it one per click (250ms). Swipe on phones.
+import CaseCard from './CaseCard.astro';
+const { eyebrow = 'Case studies', title = 'Real Challenges. Real Outcomes.', cases, link = true } = Astro.props;
+---
+<div class="rail">
+  <div class="rail__side">
+    <div class="head">
+      <p class="pf-eyebrow">{eyebrow}</p>
+      <h2 class="pf-h2" set:html={title} />
+      {link && <a class="pf-pill pf-pill--ghost" href="/case-studies">View All →</a>}
+    </div>
+    <div class="rail__btns">
+      <button class="rail__btn" type="button" aria-label="Previous case study">←</button>
+      <button class="rail__btn" type="button" aria-label="Next case study">→</button>
+    </div>
+  </div>
+  <div class="rail__viewport">
+    <ul class="rail__track">
+      {cases.map((cs, i) => <li><CaseCard cs={cs} isNew={i === 0} /></li>)}
+    </ul>
+  </div>
+</div>

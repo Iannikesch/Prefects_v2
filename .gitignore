@@ -1,2 +1,8 @@
 .DS_Store
 .Rhistory
+node_modules/
+dist/
+.astro/
+.vercel/
+.DS_Store
+.playwright-mcp/
