@@ -12,7 +12,7 @@ export const LAYERS = {
   globe:     true,  // L4  rotating dotted globe in Firm Highlights (motion system 03)
   marquee:   true,  // L5  industries marquee, 50px/s (motion system 05)
   smooth:    true,  // L6  smooth scroll with Lenis (motion system 01)
-  scrub:     false, // L7  word-by-word scroll-scrubbed headline (motion system 08)
+  scrub:     true,  // L7  word-by-word scroll-scrubbed headline (motion system 08)
   parallax:  false, // L8  parallax photo bands (motion system 07)
   lag:       false, // L9  spring-lagged capability tiles (motion system 09)
   rise:      false, // L10 footer heading fade-up (motion system 11)
