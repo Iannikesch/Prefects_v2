@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Profectus Texture Specimen</title>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=erode@400,500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Instrument+Serif:ital@1&family=PT+Mono&display=swap">
+<link rel="stylesheet" href="profectus-texture.css">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--pf-black); color: var(--pf-text); font-family: var(--pf-sans); }
+  .wrap { max-width: 1376px; margin: 0 auto; padding: 0 var(--pf-gutter); }
+  .hero { position: relative; height: 900px; overflow: hidden; display: grid; place-items: center; text-align: center; }
+  .hero .inner { position: relative; z-index: 2; display: grid; justify-items: center; gap: 24px; }
+  .hero .pf-body { color: var(--pf-white); font-size: var(--pf-fs-lead); max-width: 400px; }
+  section.band { padding: 120px 0; border-top: 1px solid var(--pf-hairline); }
+  .label { margin-bottom: 32px; }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--pf-gap-grid); }
+  .sw { background: var(--pf-surface); }
+  .sw i { display: block; height: 96px; }
+  .sw p { padding: 10px 12px; font: 400 12px/1.4 var(--pf-mono); color: var(--pf-text); }
+  .strip { height: 56px; margin: 32px 0 12px; }
+  .row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .types > div { display: grid; grid-template-columns: 180px 1fr; gap: 24px; align-items: baseline; padding: 20px 0; border-bottom: 1px solid var(--pf-hairline); }
+  .glass-stage { position: relative; overflow: hidden; padding: 80px 0; }
+  .glass-stage .pf-glass { max-width: 360px; z-index: 2; }
+  .glass-stage .blob { position: absolute; inset: 0; background: radial-gradient(40% 50% at 55% 50%, var(--pf-g-violet), transparent 70%), radial-gradient(30% 40% at 35% 60%, var(--pf-g-teal), transparent 70%); opacity: .6; }
+  .marq span { font: 400 var(--pf-fs-mono)/1 var(--pf-mono); text-transform: uppercase; padding: 0 40px; color: var(--pf-text); }
+  .stats { display: flex; gap: 64px; flex-wrap: wrap; }
+  .stats small { display: block; margin-top: 12px; }
+  .rain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--pf-gap-grid); }
+  .rain-stage { position: relative; overflow: hidden; height: 560px; display: grid; align-items: end; padding: 40px 32px; }
+  .rain-stage .inner { position: relative; z-index: 2; display: grid; gap: 16px; justify-items: start; }
+  .rain-live { position: relative; overflow: hidden; height: 820px; display: grid; place-items: center; text-align: center; }
+  .rain-live .inner { position: relative; z-index: 2; display: grid; gap: 24px; justify-items: center; padding: 0 var(--pf-gutter); }
+  @media (max-width: 767px) { .types > div { grid-template-columns: 1fr; gap: 8px; } }
+</style>
+</head>
+<body>
+
+<nav class="pf-nav"><div class="wrap row" style="height:100%;justify-content:space-between">
+  <span style="font:400 26px/1 var(--pf-serif);color:var(--pf-white);letter-spacing:-0.03em">Profectus</span>
+  <a class="pf-pill" href="#">Get In Touch →</a>
+</div></nav>
+
+<header class="hero">
+  <div class="pf-aurora"></div><div class="pf-aurora-fade"></div>
+  <div class="inner">
+    <span class="pf-pill pf-pill--tag">The Profectus Agency</span>
+    <h1 class="pf-display"><em>Your</em> Progress,<br>Our Purpose.</h1>
+    <p class="pf-body">Texture pack specimen. Every value on this page comes from profectus-texture.css.</p>
+    <a class="pf-pill" href="#">Get in Touch →</a>
+  </div>
+</header>
+
+<section class="band"><div class="wrap">
+  <p class="pf-eyebrow label">01 · Ground and text</p>
+  <div class="swatches">
+    <div class="sw"><i style="background:var(--pf-black);box-shadow:inset 0 0 0 1px var(--pf-hairline)"></i><p>--pf-black<br>#000000</p></div>
+    <div class="sw"><i style="background:var(--pf-surface)"></i><p>--pf-surface<br>#121212</p></div>
+    <div class="sw"><i style="background:var(--pf-white)"></i><p>--pf-white<br>#FFFFFF</p></div>
+    <div class="sw"><i style="background:var(--pf-text)"></i><p>--pf-text<br>#C2C2C2</p></div>
+    <div class="sw"><i style="background:var(--pf-text-soft)"></i><p>--pf-text-soft<br>#E0E0E0</p></div>
+    <div class="sw"><i style="background:var(--pf-violet)"></i><p>--pf-violet<br>#8E84F7 · accent</p></div>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <p class="pf-eyebrow label">02 · The gradient (sampled, all cool, no gold)</p>
+  <div class="swatches">
+    <div class="sw"><i style="background:var(--pf-g-navy)"></i><p>g-navy #1C1F3C</p></div>
+    <div class="sw"><i style="background:var(--pf-g-deep)"></i><p>g-deep #214567</p></div>
+    <div class="sw"><i style="background:var(--pf-g-teal)"></i><p>g-teal #2F6476</p></div>
+    <div class="sw"><i style="background:var(--pf-g-teal-lit)"></i><p>g-teal-lit #48798E</p></div>
+    <div class="sw"><i style="background:var(--pf-g-mist)"></i><p>g-mist #8C9999</p></div>
+    <div class="sw"><i style="background:var(--pf-g-blue)"></i><p>g-blue #485384</p></div>
+    <div class="sw"><i style="background:var(--pf-g-periwinkle)"></i><p>g-periwinkle #5B588E</p></div>
+    <div class="sw"><i style="background:var(--pf-g-violet)"></i><p>g-violet #775E99</p></div>
+    <div class="sw"><i style="background:var(--pf-g-plum)"></i><p>g-plum #5E4A5E</p></div>
+    <div class="sw"><i style="background:var(--pf-g-plum-deep)"></i><p>g-plum-deep #4C345E</p></div>
+    <div class="sw"><i style="background:var(--pf-globe-fill)"></i><p>globe-fill #21164D</p></div>
+    <div class="sw"><i style="background:var(--pf-globe-rim)"></i><p>globe-rim #887BB8</p></div>
+  </div>
+  <div class="strip" style="background:var(--pf-gradient-line)"></div>
+  <p class="pf-eyebrow">--pf-gradient-line: the ring laid flat</p>
+</div></section>
+
+<section class="band"><div class="wrap types">
+  <p class="pf-eyebrow label">03 · Type</p>
+  <div><span class="pf-eyebrow">Display · Erode</span><span class="pf-display"><em>Your</em> Progress.</span></div>
+  <div><span class="pf-eyebrow">H2 · Erode</span><span class="pf-h2">The Data Spine Changes Everything<span class="pf-accent-dot">.</span></span></div>
+  <div><span class="pf-eyebrow">Stat · Geist</span><span class="pf-stat">94%</span></div>
+  <div><span class="pf-eyebrow">H3 · Geist</span><span style="font:400 var(--pf-fs-h3)/var(--pf-lh-h3) var(--pf-sans);letter-spacing:var(--pf-ls-h3);color:var(--pf-white)">Paid Media &amp; Activation</span></div>
+  <div><span class="pf-eyebrow">Body · Geist</span><p class="pf-body">We activate media across first, second, and third-party data, in fully cookieless environments.</p></div>
+  <div><span class="pf-eyebrow">Eyebrow · PT Mono</span><span class="pf-eyebrow">Services overview</span></div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <p class="pf-eyebrow label">04 · Surfaces</p>
+  <div class="row">
+    <a class="pf-pill" href="#">Get in Touch →</a>
+    <a class="pf-pill pf-pill--ghost" href="#">View All Capabilities →</a>
+    <span class="pf-pill pf-pill--tag">The Profectus Agency</span>
+    <span class="pf-chip">New</span>
+  </div>
+  <div class="glass-stage pf-rules" style="margin-top:48px">
+    <div class="blob"></div>
+    <div class="pf-glass" style="margin-left:180px">
+      <p class="pf-eyebrow" style="margin-bottom:20px">01</p>
+      <p style="font:400 18.4px/1.3 var(--pf-sans);color:var(--pf-white);margin-bottom:16px">We Built the Infrastructure.<br>We Didn't License It.</p>
+      <p class="pf-body">Glass card: 10% white, 10px blur, square, corner ticks, over the 180px column rules.</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <p class="pf-eyebrow label">05 · Motion: marquee at 50px/s</p>
+  <div class="pf-marquee marq"><div class="pf-marquee__track" style="--w:1260">
+    <span>Retail</span><span>Healthcare</span><span>Finance</span><span>Media &amp; Entertainment</span><span>Automotive</span><span>Hospitality</span>
+    <span>Retail</span><span>Healthcare</span><span>Finance</span><span>Media &amp; Entertainment</span><span>Automotive</span><span>Hospitality</span>
+  </div></div>
+  <div class="stats" style="margin-top:80px">
+    <div><span class="pf-stat">500+</span><small class="pf-eyebrow">Brands served</small></div>
+    <div><span class="pf-stat">22:1</span><small class="pf-eyebrow">Return on spend</small></div>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <p class="pf-eyebrow label">06 · Code rain: violet (full) and aurora (side)</p>
+  <div class="rain-grid">
+    <div class="rain-stage">
+      <div class="pf-code-rain"></div>
+      <div class="inner">
+        <span class="pf-pill pf-pill--tag">Victor AI</span>
+        <h2 class="pf-h2">Your Company's <em class="pf-accent-word">Own</em> AI<span class="pf-accent-dot">.</span></h2>
+      </div>
+    </div>
+    <div class="rain-stage">
+      <div class="pf-code-rain pf-code-rain--aurora pf-code-rain--side"></div>
+      <div class="inner" style="justify-items:end;text-align:right">
+        <span class="pf-pill pf-pill--tag">Agentic Fluid</span>
+        <h2 class="pf-h2">It Does the Work<span class="pf-accent-dot">.</span></h2>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <p class="pf-eyebrow label">07 · Code rain, live: violet, then aurora</p>
+</div>
+  <div class="rain-live">
+    <div class="pf-rain" data-ramp="violet"></div>
+    <div class="inner">
+      <span class="pf-pill pf-pill--tag">Victor AI</span>
+      <h2 class="pf-display">Your Company's <em>Own</em> AI<span class="pf-accent-dot">.</span></h2>
+    </div>
+  </div>
+  <div class="rain-live" style="margin-top:var(--pf-gap-grid)">
+    <div class="pf-rain" data-ramp="aurora"></div>
+    <div class="inner">
+      <span class="pf-pill pf-pill--tag">Agentic Fluid</span>
+      <h2 class="pf-display">It Does the Work<span class="pf-accent-dot">.</span></h2>
+    </div>
+  </div>
+</section>
+
+<section class="band"><div class="wrap">
+  <p class="pf-eyebrow label">08 · Nebula: breathing, star glow, shooting star on entry</p>
+</div>
+  <div class="rain-live">
+    <div class="pf-nebula" data-src="img/nebula-violet"></div>
+    <div class="inner">
+      <span class="pf-pill pf-pill--tag">Victor AI</span>
+      <h2 class="pf-display">See <em>Everything</em><span class="pf-accent-dot">.</span></h2>
+    </div>
+  </div>
+</section>
+
+<script src="code-rain.js" defer></script>
+<script src="nebula.js" defer></script>
+<script>
+  // Set each marquee's --w to one copy's real width.
+  document.querySelectorAll('.pf-marquee__track').forEach(t => {
+    requestAnimationFrame(() => t.style.setProperty('--w', Math.round(t.scrollWidth / 2)));
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,363 @@
+/* Profectus texture pack
+   The fixed layer: colour, gradient, type, surface, motion. Whatever layout
+   the new site borrows from elsewhere, these values are laid over it.
+
+   Source: profectusagency.com, measured 2026-09-22/23 in Chromium.
+   See kit/scouted/profectusagency-com-fullpage.md and -homepage.md.
+   [m] measured off the live page   [s] pixel-sampled from screenshots
+   [d] derived from measured values  [c] chosen, not measurable on source
+
+   Load the fonts with:
+   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=erode@400,500&display=swap">
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Instrument+Serif:ital@1&family=PT+Mono&display=swap">
+*/
+
+:root {
+  /* ---- Ground. The page is black. Not near-black: #000. [m] ---- */
+  --pf-black:        #000000;  /* every section fill */
+  --pf-surface:      #121212;  /* cards, tiles: the only raised solid */
+  --pf-surface-glass:#1A1B24;  /* how a 10% white glass card reads over black [s] */
+
+  /* ---- Text. Five colours, no more. [m] ---- */
+  --pf-white:        #FFFFFF;  /* headlines, nav, buttons, stat numbers */
+  --pf-text:         #C2C2C2;  /* body, eyebrows, captions, footer headers */
+  --pf-text-soft:    #E0E0E0;  /* a headline that sits back */
+  --pf-text-eyebrow: #F5F5F5;  /* the hero eyebrow only */
+  --pf-violet:       #8E84F7;  /* THE accent. See ration rule below. */
+
+  /* Accent ration: violet in type is used on one italic word per headline
+     OR the closing period of a headline, and on nothing else. The source
+     uses it 3 times in ~1400 text nodes. Keep it that scarce. */
+
+  /* ---- The gradient. [s]
+     Lives only in light: the aurora ring, the globe, the nebula. Every value
+     is sampled from rendered pixels, i.e. AFTER the source's
+     filter: brightness(0.6). There is no warm hue anywhere in it: a sweep of
+     every frame found zero pixels between 15° and 75°. It is cool end to end:
+     navy, teal, mist, periwinkle, violet, plum. */
+  --pf-g-navy:       #1C1F3C;  /* body of the glow, 40% of chromatic px */
+  --pf-g-deep:       #214567;  /* inner blue, 39% */
+  --pf-g-teal:       #2F6476;  /* ring flank, at rest */
+  --pf-g-teal-lit:   #48798E;  /* ring flank, brightest pass */
+  --pf-g-mist:       #8C9999;  /* ring crown: a white core clipped by brightness(.6) */
+  --pf-g-blue:       #485384;  /* periwinkle-blue */
+  --pf-g-periwinkle: #5B588E;
+  --pf-g-violet:     #775E99;  /* ring's violet pass */
+  --pf-g-plum:       #5E4A5E;  /* footer plate only */
+  --pf-g-plum-deep:  #4C345E;  /* footer plate only */
+  --pf-g-ink:        #241734;  /* footer plate edge */
+  --pf-globe-fill:   #21164D;  /* dotted globe body */
+  --pf-globe-rim:    #887BB8;  /* dotted globe rim light */
+
+  /* The ring, in angular order as it rotates. Use this for the aurora. */
+  --pf-gradient-ring: conic-gradient(from 200deg,
+      var(--pf-g-teal) 0deg, var(--pf-g-teal-lit) 40deg, var(--pf-g-mist) 80deg,
+      var(--pf-g-blue) 130deg, var(--pf-g-periwinkle) 175deg, var(--pf-g-violet) 220deg,
+      var(--pf-g-plum-deep) 265deg, var(--pf-g-deep) 310deg, var(--pf-g-teal) 360deg);
+  /* The same order laid flat, for dividers, a rule or a thin line. [d] Never
+     behind text blocks and never as a button fill: the source never does. */
+  --pf-gradient-line: linear-gradient(90deg,
+      var(--pf-g-teal), var(--pf-g-mist) 30%, var(--pf-g-periwinkle) 60%, var(--pf-g-violet) 85%, var(--pf-g-plum-deep));
+  /* The two CSS gradients the source actually has. [m] */
+  --pf-fade-bottom:  linear-gradient(rgba(0,0,0,0) 52%, #000 100%);  /* under the aurora */
+  --pf-fade-top:     linear-gradient(#000 0%, rgba(0,0,0,0) 43%);
+
+  /* ---- Type families. [m] Four, each with one job. No Inter. ---- */
+  --pf-serif:  "Erode", Georgia, serif;                        /* every headline */
+  --pf-italic: "Instrument Serif", Georgia, serif;             /* ONE italic word, violet */
+  --pf-sans:   "Geist", system-ui, sans-serif;                 /* body, UI, stat numbers */
+  --pf-mono:   "PT Mono", ui-monospace, monospace;             /* eyebrows, labels, numerals */
+
+  /* ---- Type scale. 1440 value → 390 value, fluid between. [m] unless noted
+     Tracking is in em so it scales with the size. All display tracking is
+     tight: −0.05em is the house value. */
+  --pf-fs-display: clamp(48px, 30.17px + 4.571vw, 96px);   /* hero words, 96→48 */
+  --pf-fs-h1:      clamp(48px, 37.6px + 2.667vw, 76px);    /* h1 element, mid-page CTA */
+  --pf-fs-stat:    clamp(64px, 46.2px + 4.571vw, 112px);   /* Geist, not Erode. 390 floor [c] */
+  --pf-fs-h2:      clamp(40px, 35.54px + 1.143vw, 52px);   /* section heads, 52→40 */
+  --pf-fs-h3-serif:36px;                                   /* footer CTA head */
+  --pf-fs-menu:    32px;                                   /* mobile menu, Erode */
+  --pf-fs-h3:      clamp(19.2px, 17.42px + 0.457vw, 24px); /* card titles, Geist */
+  --pf-fs-lead:    18.4px;
+  --pf-fs-body:    16px;
+  --pf-fs-ui:      15px;                                   /* nav, buttons, footer links */
+  --pf-fs-mono:    12.96px;                                /* every eyebrow and label */
+
+  --pf-lh-display: 0.9;   --pf-ls-display: -0.05em;
+  --pf-lh-stat:    0.8;   --pf-ls-stat:    -0.04em;
+  --pf-lh-h2:      1.05;  --pf-ls-h2:      -0.05em;
+  --pf-lh-h3-serif:1.15;  --pf-ls-h3-serif:-0.08em;
+  --pf-lh-h3:      1.2;   --pf-ls-h3:      -0.05em;
+  --pf-lh-body:    1.3;   --pf-ls-lead:    -0.04em;  --pf-ls-body: -0.03em;
+  --pf-lh-ui:      1.4;   --pf-ls-ui:      -0.04em;
+  --pf-lh-mono:    1.2;   --pf-ls-mono:    -0.02em;
+  --pf-italic-scale: 0.917em; /* italic word vs the roman beside it: 88/96 */
+
+  /* ---- Surface. [m] Zero box-shadows and zero borders on the source.
+     Depth comes from blur and alpha. Four blur steps, nothing in between. */
+  --pf-blur-chip: blur(4px);
+  --pf-blur-pill: blur(5px);
+  --pf-blur-tag:  blur(9px);
+  --pf-blur-bar:  blur(10px);   /* nav, glass cards */
+
+  --pf-fill-cta:   rgba(141,131,247,0.30);  /* violet pill */
+  --pf-fill-ghost: rgba(255,255,255,0.25);  /* secondary pill */
+  --pf-fill-tag:   rgba(255,255,255,0.13);  /* eyebrow pill */
+  --pf-fill-glass: rgba(255,255,255,0.10);  /* glass card */
+  --pf-fill-chip:  rgba(48,48,48,0.30);     /* "New" chip */
+  --pf-fill-nav:   rgba(3,3,3,0.20);
+
+  --pf-hairline:   rgba(255,255,255,0.06);  /* grid rules over black [s] */
+  --pf-edge:       rgba(255,255,255,0.04);  /* 1px top edge on glass cards [s] */
+  --pf-bracket:    rgba(255,255,255,0.38);  /* 10px corner ticks on glass cards [s] */
+
+  --pf-r-0:     0;      /* glass cards, tiles, nav: square */
+  --pf-r-chip:  4px;
+  --pf-r-card:  8px;    /* photo cards */
+  --pf-r-pill:  20px;   /* CTA + tag pills, and service cards */
+  --pf-r-ghost: 40px;   /* secondary pill */
+
+  /* ---- Layout constants. [m] ---- */
+  --pf-gutter:     32px;
+  --pf-gap-grid:   4px;     /* cards sit almost touching */
+  --pf-section-y:  180px;   /* big section top padding; 120px on stat bands */
+  --pf-nav-h:      75px;
+  --pf-pill-h:     41px;    /* does not change between 1440 and 390 */
+
+  /* ---- Motion. The source's character: ambient, never choreographed.
+     Things drift forever in the background; nothing enters, nothing
+     bounces, nothing celebrates the scroll. ---- */
+  --pf-marquee-speed: 50px;  /* per second, linear, right to left [m] */
+  --pf-aurora-turn:   60s;   /* one full rotation. Source >4.5s, period unreadable [c] */
+  --pf-ease:          cubic-bezier(0.22, 1, 0.36, 1);  /* for reveals and hover [c] */
+  --pf-dur-hover:     240ms; /* [c] source hovers never fired under test */
+  --pf-dur-reveal:    700ms; /* [c] */
+  --pf-parallax-scale:1.2;   /* photo plates: overscale 1.2, dim to brightness(.45) [m] */
+}
+
+/* ================ Primitives ================ */
+
+.pf-eyebrow {
+  font: 400 var(--pf-fs-mono)/var(--pf-lh-mono) var(--pf-mono);
+  letter-spacing: var(--pf-ls-mono);
+  text-transform: uppercase;
+  color: var(--pf-text);
+}
+
+.pf-display {
+  font: 400 var(--pf-fs-display)/var(--pf-lh-display) var(--pf-serif);
+  letter-spacing: var(--pf-ls-display);
+  color: var(--pf-white);
+}
+.pf-display em,
+.pf-accent-word {                    /* the one italic word */
+  font-family: var(--pf-italic);
+  font-style: italic;
+  font-size: var(--pf-italic-scale);
+  letter-spacing: -0.04em;
+  color: var(--pf-violet);
+}
+.pf-accent-dot { color: var(--pf-violet); }  /* the closing period */
+
+.pf-h2 {
+  font: 400 var(--pf-fs-h2)/var(--pf-lh-h2) var(--pf-serif);
+  letter-spacing: var(--pf-ls-h2);
+  color: var(--pf-white);
+}
+.pf-stat {
+  font: 400 var(--pf-fs-stat)/var(--pf-lh-stat) var(--pf-sans);
+  letter-spacing: var(--pf-ls-stat);
+  color: var(--pf-white);
+}
+.pf-body {
+  font: 400 var(--pf-fs-body)/var(--pf-lh-body) var(--pf-sans);
+  letter-spacing: var(--pf-ls-body);
+  color: var(--pf-text);
+}
+
+/* Pills: one height, one radius, at every width. */
+.pf-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: var(--pf-pill-h); padding: 10px 14px;
+  border-radius: var(--pf-r-pill);
+  font: 500 var(--pf-fs-ui)/var(--pf-lh-ui) var(--pf-sans);
+  letter-spacing: var(--pf-ls-ui);
+  color: var(--pf-white); text-decoration: none;
+  background: var(--pf-fill-cta);
+  -webkit-backdrop-filter: var(--pf-blur-pill);
+  backdrop-filter: var(--pf-blur-pill);
+  transition: background-color var(--pf-dur-hover) var(--pf-ease);
+}
+.pf-pill:hover { background: rgba(141,131,247,0.45); }
+.pf-pill--ghost { background: var(--pf-fill-ghost); border-radius: var(--pf-r-ghost); }
+.pf-pill--ghost:hover { background: rgba(255,255,255,0.32); }
+.pf-pill--tag {
+  height: auto; padding: 8px 12px;
+  background: var(--pf-fill-tag);
+  -webkit-backdrop-filter: var(--pf-blur-tag);
+  backdrop-filter: var(--pf-blur-tag);
+  font: 400 var(--pf-fs-mono)/var(--pf-lh-mono) var(--pf-mono);
+  letter-spacing: var(--pf-ls-mono); text-transform: uppercase;
+  color: var(--pf-text-eyebrow);
+}
+.pf-pill--tag::before {             /* the violet dot */
+  content: ""; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--pf-violet);
+}
+
+/* Glass card: square, 10% white, 10px blur, four corner ticks. */
+.pf-glass {
+  position: relative;
+  background: var(--pf-fill-glass);
+  -webkit-backdrop-filter: var(--pf-blur-bar);
+  backdrop-filter: var(--pf-blur-bar);
+  box-shadow: inset 0 1px 0 var(--pf-edge);
+  border-radius: var(--pf-r-0);
+  padding: 56px 32px 48px;
+}
+.pf-glass::before {
+  content: ""; position: absolute; inset: 12px; pointer-events: none;
+  --t: linear-gradient(var(--pf-bracket), var(--pf-bracket));
+  background:
+    var(--t) top left / 10px 1px no-repeat,    var(--t) top left / 1px 10px no-repeat,
+    var(--t) top right / 10px 1px no-repeat,   var(--t) top right / 1px 10px no-repeat,
+    var(--t) bottom left / 10px 1px no-repeat, var(--t) bottom left / 1px 10px no-repeat,
+    var(--t) bottom right / 10px 1px no-repeat,var(--t) bottom right / 1px 10px no-repeat;
+}
+
+.pf-chip {
+  display: inline-block; padding: 4px 8px;
+  border-radius: var(--pf-r-chip);
+  background: var(--pf-fill-chip);
+  -webkit-backdrop-filter: var(--pf-blur-chip);
+  backdrop-filter: var(--pf-blur-chip);
+  font: 400 var(--pf-fs-mono)/var(--pf-lh-mono) var(--pf-mono);
+  text-transform: uppercase; color: var(--pf-white);
+}
+
+/* Tile hairline: a 1px ring of 3% white behind a #121212 face. No border. */
+.pf-tile {
+  background: var(--pf-surface);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.03);
+}
+
+/* Column rules over black: the "Why" section's 180px grid. */
+.pf-rules {
+  background-image: linear-gradient(90deg, var(--pf-hairline) 1px, transparent 1px);
+  background-size: 180px 100%;
+}
+
+.pf-nav {
+  position: fixed; inset: 0 0 auto; height: var(--pf-nav-h);
+  background: var(--pf-fill-nav);
+  -webkit-backdrop-filter: var(--pf-blur-bar);
+  backdrop-filter: var(--pf-blur-bar);
+}
+
+/* ================ The aurora ================
+   CSS stand-in for the source's WebGL ring. A huge circle, conic fill,
+   masked to a ring, blurred, dimmed exactly like the source (brightness .6),
+   and turned slowly. Put it in a section with overflow: hidden and let only
+   its top arc show. */
+.pf-aurora {
+  position: absolute; left: 50%; top: 18%;
+  width: 150vw; aspect-ratio: 1; translate: -50% 0;
+  border-radius: 50%;
+  background: var(--pf-gradient-ring);
+  /* Bright rim, then a long glow falling inward toward the headline. */
+  -webkit-mask: radial-gradient(closest-side, transparent 72%, rgba(0,0,0,.35) 86%, #000 95%, transparent 100%);
+  mask: radial-gradient(closest-side, transparent 72%, rgba(0,0,0,.35) 86%, #000 95%, transparent 100%);
+  filter: blur(36px);
+  animation: pf-turn var(--pf-aurora-turn) linear infinite;
+  pointer-events: none; z-index: 0;
+}
+.pf-aurora-fade {               /* sits over it, fades the lower half to black */
+  position: absolute; inset: 0; background: var(--pf-fade-bottom);
+  pointer-events: none; z-index: 1;
+}
+@keyframes pf-turn { to { rotate: 360deg; } }
+
+/* ================ Code rain ================
+   Falling-glyph plate, gradient-mapped to the pack colours. It counts as
+   light, like the aurora: a glow behind content, never paint under a
+   paragraph. Violet variant ramps navy > periwinkle > violet > near-white;
+   aurora variant ramps navy > deep > teal > mist. Put it in a section with
+   position: relative and overflow: hidden. Content goes above with z-index 2.
+   Source is 668x893, so it stays a dimmed backdrop, never a sharp hero. */
+.pf-code-rain {
+  position: absolute; inset: 0;
+  background: url("img/code-rain-violet.webp") center top / cover no-repeat;
+  opacity: 0.55;
+  /* fade in from black at the top, back to black at the bottom (rule 6) */
+  -webkit-mask: linear-gradient(transparent 0%, #000 18%, #000 55%, transparent 100%);
+  mask: linear-gradient(transparent 0%, #000 18%, #000 55%, transparent 100%);
+  pointer-events: none; z-index: 0;
+}
+.pf-code-rain--aurora { background-image: url("img/code-rain-aurora.webp"); }
+.pf-code-rain--side {           /* one edge of a section, fading into the content */
+  inset: 0 auto 0 0; width: 45%;
+  -webkit-mask: linear-gradient(90deg, #000 30%, transparent), linear-gradient(transparent, #000 18%, #000 55%, transparent);
+  -webkit-mask-composite: source-in;
+  mask: linear-gradient(90deg, #000 30%, transparent), linear-gradient(transparent, #000 18%, #000 55%, transparent);
+  mask-composite: intersect;
+}
+
+/* Live version: code-rain.js draws into this. Same fade, same "light, not
+   paint" rules as the plate. The mask does the fade in and fade out. */
+.pf-rain {
+  position: absolute; inset: 0;
+  opacity: 0.7;
+  -webkit-mask: linear-gradient(transparent 0%, #000 22%, #000 50%, transparent 92%);
+  mask: linear-gradient(transparent 0%, #000 22%, #000 50%, transparent 92%);
+  pointer-events: none; z-index: 0;
+}
+.pf-rain > canvas { display: block; width: 100%; height: 100%; }
+
+/* ================ Nebula ================
+   Breathing space background. nebula.js builds the layers inside .pf-nebula.
+   The clouds breathe on two unrelated periods (scale 23s, light 14s) so the
+   motion never lines up into a visible loop. Faded to black top and bottom. */
+.pf-nebula {
+  position: absolute; inset: 0; overflow: hidden;
+  opacity: 0.85;
+  -webkit-mask: linear-gradient(transparent 0%, #000 20%, #000 68%, transparent 100%);
+  mask: linear-gradient(transparent 0%, #000 20%, #000 68%, transparent 100%);
+  pointer-events: none; z-index: 0;
+}
+.pf-nebula__breath {
+  position: absolute; inset: 0;
+  animation: pf-nebula-breathe 23s ease-in-out infinite alternate;
+}
+.pf-nebula__plate {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover;
+  animation: pf-nebula-light 14s ease-in-out infinite alternate;
+}
+.pf-nebula canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+@keyframes pf-nebula-breathe { from { scale: 1; } to { scale: 1.045; } }
+@keyframes pf-nebula-light   { from { opacity: 0.6; } to { opacity: 0.95; } }
+
+/* ================ Marquee ================
+   Linear, right to left, 50px/s, never pauses on hover (source behaviour).
+   Duplicate the track content once; set --w to one copy's width in px. */
+.pf-marquee { overflow: hidden; }
+.pf-marquee__track {
+  display: flex; width: max-content;
+  animation: pf-marquee calc(var(--w, 3223) / 50 * 1s) linear infinite;
+}
+@keyframes pf-marquee { to { transform: translateX(calc(var(--w, 3223) * -1px)); } }
+
+/* ================ Reveal ================
+   The source reveals on scroll with no visible choreography. Keep it to a
+   short rise and fade, once, no stagger over 80ms. Add .is-in via
+   IntersectionObserver. */
+.pf-reveal { opacity: 0; translate: 0 16px;
+  transition: opacity var(--pf-dur-reveal) var(--pf-ease), translate var(--pf-dur-reveal) var(--pf-ease); }
+.pf-reveal.is-in { opacity: 1; translate: 0 0; }
+
+/* The source ignores reduced motion for everything but one marquee. We
+   don't: every mover stops, every reveal is shown. */
+@media (prefers-reduced-motion: reduce) {
+  .pf-aurora, .pf-marquee__track, .pf-nebula__breath, .pf-nebula__plate { animation: none; }
+  .pf-reveal { opacity: 1; translate: none; transition: none; }
+}
