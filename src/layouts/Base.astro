@@ -37,6 +37,8 @@ const current = (href) => (path === href || path.startsWith(href + '/') ? 'page'
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=erode@400,500&display=swap" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Instrument+Serif:ital@1&family=PT+Mono&display=swap" />
+  <!-- Failstop: if scripts never run, nothing that starts hidden stays hidden. -->
+  <noscript><style>.pm-rise { opacity: 1 !important; translate: none !important; }</style></noscript>
 </head>
 <body data-pm-cursor={LAYERS.cursor ? "" : undefined}>
   <a class="skip pf-pill" href="#main">Skip to content</a>
