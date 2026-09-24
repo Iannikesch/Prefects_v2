@@ -13,7 +13,7 @@ export const LAYERS = {
   marquee:   true,  // L5  industries marquee, 50px/s (motion system 05)
   smooth:    true,  // L6  smooth scroll with Lenis (motion system 01)
   scrub:     true,  // L7  word-by-word scroll-scrubbed headline (motion system 08)
-  parallax:  false, // L8  parallax photo bands (motion system 07)
+  parallax:  true,  // L8  parallax photo bands (motion system 07)
   lag:       false, // L9  spring-lagged capability tiles (motion system 09)
   rise:      false, // L10 footer heading fade-up (motion system 11)
   cursor:    false, // L11 cursor ring (motion system 10)
