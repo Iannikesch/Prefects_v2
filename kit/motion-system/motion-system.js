@@ -139,14 +139,19 @@
     const speed = parseFloat(el.dataset.speed || 0.15);
     const max = parseFloat(el.dataset.max || 200);
     const spring = new Spring(pair('--pm-spring-lag'));
+    // data-anchor="parent": measure the parent instead of the element, so
+    // every tile in a tight grid reads the same distance and only its own
+    // data-speed differs. Tiles in one column then move together and never
+    // collide with the row above or below.
+    const anchor = el.dataset.anchor === 'parent' ? el.parentElement : null;
     watch(el);
     if (reduce) return;
     // Target: pull toward the viewport centre in proportion to distance.
     // The spring is measured; this target mapping is reconstructed.
     tickers.push((dt) => {
       if (!onScreen(el)) return;
-      const r = el.getBoundingClientRect();
-      const off = r.top - spring.x + r.height / 2 - innerHeight / 2;   // untransformed position
+      const r = (anchor || el).getBoundingClientRect();
+      const off = r.top - (anchor ? 0 : spring.x) + r.height / 2 - innerHeight / 2;   // untransformed position
       spring.target = clamp(-off * speed, -max, max);
       el.style.setProperty('--pm-y', `${spring.step(dt).toFixed(2)}px`);
     });

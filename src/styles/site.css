@@ -150,7 +150,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .tile li a { color: var(--pf-white); text-decoration: none; font-size: var(--pf-fs-ui); letter-spacing: var(--pf-ls-ui); opacity: .88; transition: opacity var(--site-hover) var(--pf-ease); }
 .tile li a:hover { opacity: 1; text-decoration: underline; text-decoration-color: var(--pf-violet); text-underline-offset: 4px; }
 @media (max-width: 1100px) { .ti { grid-template-columns: 1fr; gap: 32px; } .ti__items--4 { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 640px) { .ti__items, .ti__items--4, .ti__items--3 { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .ti__items, .ti__items--4, .ti__items--3 { grid-template-columns: 1fr; } .ti__items .pm-lag { translate: none; } }  /* L9 column drift needs columns */
 
 /* ---------- Industries: marquee (L5) or, with the layer off, a still grid ---------- */
 .ind-grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(150px, 45%), 1fr)); gap: var(--site-gap); }

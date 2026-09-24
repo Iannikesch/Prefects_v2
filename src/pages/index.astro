@@ -58,7 +58,7 @@ const pad = (n) => String(n).padStart(2, '0');
       </div>
       <div class="ti__items">
         {THEMES.map((t, i) => (
-          <div class:list={['tile', mv.lag]} data-speed={[0.04, 0.07, 0.05, 0.08][i]} data-max="40">
+          <div class:list={['tile', mv.lag]} data-anchor="parent" data-speed={i % 2 ? 0.07 : 0.03} data-max="36">
             <p class="pf-eyebrow">{pad(i + 1)} · {t.name}</p>
             <p class="t-soft">{t.blurb}</p>
             <ul>{inTheme(t.id).map((c) => <li><a href={`/capabilities/${c.slug}`}>{c.name}</a></li>)}</ul>
