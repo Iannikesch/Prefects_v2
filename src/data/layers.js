@@ -16,7 +16,7 @@ export const LAYERS = {
   parallax:  true,  // L8  parallax photo bands (motion system 07)
   lag:       true,  // L9  spring-lagged capability tiles (motion system 09)
   rise:      true,  // L10 footer heading fade-up (motion system 11)
-  cursor:    false, // L11 cursor ring (motion system 10)
+  cursor:    true,  // L11 cursor ring (motion system 10)
   navHide:   false, // L12 header hides on scroll down, returns on scroll up (Deloitte)
 };
 
