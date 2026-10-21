@@ -300,3 +300,26 @@ a { color: inherit; }
 .why-gold .pf-glass p { font-size: 16px; line-height: 1.45; color: var(--pf-text); }
 .why-gold .pf-glass .num { color: var(--rw-gold-300); }
 .why-gold .pf-glass { box-shadow: inset 0 1px 0 rgba(247, 225, 127, 0.10); }
+
+
+/* ---------- Purple and gold, in balance ----------
+   Gold leads the hero and every button; violet takes the section accents
+   below it, so the page reads roughly half and half. */
+.v { font-family: var(--pf-italic); font-style: italic; font-size: var(--pf-italic-scale); letter-spacing: -0.04em; color: var(--pf-violet); }
+.light .v { color: #6E62E6; }   /* a touch deeper, so violet holds up on white */
+.ucard .pf-eyebrow { color: #6E62E6; }
+.ucard:nth-child(2):hover { box-shadow: 0 0 0 1px rgba(142, 132, 247, 0.5), 0 24px 60px rgba(20, 16, 40, 0.12); }
+.cascade__card:nth-child(even) .pf-eyebrow { color: #6E62E6; }
+.why-light .pf-glass .num { color: #6E62E6; }
+
+/* Gold galaxy, with violet drifting through it: the untoned violet photo
+   laid back over the gold in a few soft patches. */
+.why-gold .pf-nebula__breath::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: url("/img/nebula-violet.webp") center / cover no-repeat;
+  mix-blend-mode: screen; opacity: 0.85;
+  -webkit-mask: radial-gradient(42% 46% at 22% 32%, #000, transparent 70%), radial-gradient(38% 40% at 80% 72%, #000, transparent 70%), radial-gradient(26% 30% at 58% 12%, #000, transparent 70%);
+          mask: radial-gradient(42% 46% at 22% 32%, #000, transparent 70%), radial-gradient(38% 40% at 80% 72%, #000, transparent 70%), radial-gradient(26% 30% at 58% 12%, #000, transparent 70%);
+}
+.why-gold .pf-glass:nth-child(1) .num { color: var(--rw-gold-300); }
+.why-gold li:nth-child(even) .pf-glass .num { color: var(--pf-violet); }

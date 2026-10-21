@@ -45,7 +45,7 @@
     const ACC = light ? "201,154,66" : gold ? "211,167,84" : VIOLET;          // halo, glint, trail
     const CORE = light ? "112,82,28" : gold ? "255,242,205" : "255,255,255";  // glint core, shooting-star head
     const TT = light ? ["24,22,32", "52,44,78", "34,48,60"]
-             : gold ? ["255,238,198", "247,225,127", "229,186,97"] : TINTS;
+             : gold ? ["255,238,198", "247,225,127", "228,224,255", "229,186,97", "200,192,255"] : TINTS;
 
     const breath = document.createElement("div");
     breath.className = "pf-nebula__breath";
@@ -77,6 +77,7 @@
         x: nx * map.width * s + ox, y: ny * map.height * s + oy, b,
         r: 0.45 + 1.35 * Math.pow(b, 1.2),
         tint: TT[i % TT.length],
+        acc: gold && i % 2 ? VIOLET : ACC,   // gold theme: glints alternate gold and violet
       })).filter((p) => p.x > -4 && p.x < W + 4 && p.y > -4 && p.y < H + 4);
 
       // Static star layer, drawn once per size.
@@ -84,7 +85,7 @@
       for (const p of stars) {
         if (p.b > 0.55) {               // bright stars carry a faint halo
           const g = bctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 5);
-          g.addColorStop(0, `rgba(${ACC},${0.22 * p.b})`); g.addColorStop(1, `rgba(${ACC},0)`);
+          g.addColorStop(0, `rgba(${p.acc},${0.22 * p.b})`); g.addColorStop(1, `rgba(${p.acc},0)`);
           bctx.fillStyle = g; bctx.fillRect(p.x - p.r * 5, p.y - p.r * 5, p.r * 10, p.r * 10);
         }
         bctx.fillStyle = `rgba(${p.tint},${0.35 + 0.65 * p.b})`;
@@ -107,7 +108,7 @@
       // e: 0..1 envelope. Halo in violet, core swells, two faint spikes.
       const R = p.r * 4 + 22 * e;
       const g = sctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, R);
-      g.addColorStop(0, `rgba(${ACC},${0.55 * e})`); g.addColorStop(1, `rgba(${ACC},0)`);
+      g.addColorStop(0, `rgba(${p.acc},${0.55 * e})`); g.addColorStop(1, `rgba(${p.acc},0)`);
       sctx.fillStyle = g; sctx.fillRect(p.x - R, p.y - R, R * 2, R * 2);
       const L = 4 + 16 * e;
       sctx.lineWidth = 0.6;
@@ -123,6 +124,7 @@
 
     // ---- shooting star ----
     let shot = null, shootTimer = 0;
+    let shotCount = 0;
     function launch() {
       const dist = rand(240, SHOOT_MAX);
       const dir = Math.random() < 0.5 ? 1 : -1;               // left or right
@@ -131,7 +133,9 @@
       // start so the whole path stays inside the frame
       const x0 = dir > 0 ? rand(EDGE, Math.max(EDGE + 1, W - EDGE - dx * dist)) : rand(Math.min(W - EDGE - 1, EDGE - dx * dist), W - EDGE);
       const y0 = rand(H * 0.12, Math.max(H * 0.12 + 1, Math.min(H * 0.5, H - EDGE - dy * dist)));
-      shot = { x0, y0, dx, dy, dist, trail: rand(70, 110), dur: rand(0.75, 1.0), t: 0 };
+      shotCount++;
+      shot = { x0, y0, dx, dy, dist, trail: rand(70, 110), dur: rand(0.75, 1.0), t: 0,
+               acc: gold && shotCount % 2 === 0 ? VIOLET : ACC };   // gold theme: alternate gold, violet
     }
     function drawShot(dt) {
       hctx.clearRect(0, 0, W, H);
@@ -146,12 +150,12 @@
       const tx = shot.x0 + shot.dx * tail, ty = shot.y0 + shot.dy * tail;
       const g = hctx.createLinearGradient(hx, hy, tx, ty);
       g.addColorStop(0, `rgba(${CORE},${a})`);
-      g.addColorStop(0.3, `rgba(${ACC},${0.55 * a})`);
-      g.addColorStop(1, `rgba(${ACC},0)`);
+      g.addColorStop(0.3, `rgba(${shot.acc},${0.55 * a})`);
+      g.addColorStop(1, `rgba(${shot.acc},0)`);
       hctx.strokeStyle = g; hctx.lineWidth = 1.4; hctx.lineCap = "round";
       hctx.beginPath(); hctx.moveTo(tx, ty); hctx.lineTo(hx, hy); hctx.stroke();
       const hg = hctx.createRadialGradient(hx, hy, 0, hx, hy, 7);
-      hg.addColorStop(0, `rgba(${CORE},${a})`); hg.addColorStop(0.35, `rgba(${ACC},${0.5 * a})`); hg.addColorStop(1, `rgba(${ACC},0)`);
+      hg.addColorStop(0, `rgba(${CORE},${a})`); hg.addColorStop(0.35, `rgba(${shot.acc},${0.5 * a})`); hg.addColorStop(1, `rgba(${shot.acc},0)`);
       hctx.fillStyle = hg; hctx.fillRect(hx - 7, hy - 7, 14, 14);
     }
 
