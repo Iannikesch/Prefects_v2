@@ -375,3 +375,7 @@ a { color: inherit; }
 .cascade.is-grabbing { cursor: grabbing; }
 .cascade.is-grabbing .cascade__card { transition: none; }
 @media (pointer: fine) { .cascade { touch-action: none; } }
+
+/* Nav: links sit on the right, grouped with the button (logo alone on the left). */
+.fnav__bar > nav { margin-left: auto; }
+.fnav__links { margin-left: 0; }
