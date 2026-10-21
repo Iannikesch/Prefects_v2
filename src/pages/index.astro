@@ -3,6 +3,7 @@
 // The previous homepage is kept at src/pages/_old-index.astro for reference
 // (the underscore keeps it from being published as a page).
 import Fresh from '../layouts/Fresh.astro';
+import { WHY } from '../data/site.js';
 ---
 <Fresh>
   <section class="rhero" data-hero>
@@ -19,5 +20,33 @@ import Fresh from '../layouts/Fresh.astro';
     </div>
   </section>
 
-  <section class="next"><p>Section 2 goes here · built next</p></section>
+  <!-- Experiment: the "Why Profectus" galaxy, reworked for a white page.
+       The cloud photo is shown as a negative; stars are ink, glints are gold. -->
+  <section class="why-light light">
+    <div class="pf-nebula" data-src="/img/nebula-violet" data-theme="light" aria-hidden="true"></div>
+    <div class="why-light__rules pf-rules" aria-hidden="true"></div>
+    <div class="why-light__inner">
+      <div class="lhead">
+        <p class="pf-eyebrow">Why Profectus</p>
+        <h2 class="lh2">The Data Spine Changes Everything<span class="foil-text">.</span></h2>
+      </div>
+      <ol class="why-light__cards">
+        {WHY.map((w, i) => (
+          <li><div class="pf-glass"><span class="pf-eyebrow num">{String(i + 1).padStart(2, '0')}</span><h3>{w.title}</h3><p>{w.text}</p></div></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Experiment: the "Our infrastructure" mood band, repainted as light
+       washes of the same teal, violet and navy, with a little gold. -->
+  <section class="mood-light light">
+    <div class="mood-light__inner">
+      <p class="pf-eyebrow">Our infrastructure</p>
+      <p class="mood-light__title">Most agencies resell someone else's data. <em class="foil-text">This</em> is ours.</p>
+      <a class="pill-ink" href="/about">About Our Firm →</a>
+    </div>
+  </section>
+
+  <section class="next"><p>Next section goes here</p></section>
 </Fresh>

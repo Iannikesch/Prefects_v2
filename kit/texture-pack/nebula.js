@@ -37,6 +37,14 @@
     let map = { width: 1, height: 1, stars: [] };
     try { map = await (await fetch(`${src}.stars.json`)).json(); } catch (e) { /* clouds only */ }
 
+    // data-theme="light": for a white page. The cloud plate is shown as a
+    // photo-negative in CSS; stars draw in ink, glints and the shooting star
+    // in gold. Dark pages are unchanged.
+    const light = host.dataset.theme === "light";
+    const ACC = light ? "201,154,66" : VIOLET;          // halo, glint, trail
+    const CORE = light ? "112,82,28" : "255,255,255";   // glint core, shooting-star head
+    const TT = light ? ["24,22,32", "52,44,78", "34,48,60"] : TINTS;
+
     const breath = document.createElement("div");
     breath.className = "pf-nebula__breath";
     const plate = new Image();
@@ -66,7 +74,7 @@
       stars = map.stars.map(([nx, ny, b], i) => ({
         x: nx * map.width * s + ox, y: ny * map.height * s + oy, b,
         r: 0.45 + 1.35 * Math.pow(b, 1.2),
-        tint: TINTS[i % TINTS.length],
+        tint: TT[i % TT.length],
       })).filter((p) => p.x > -4 && p.x < W + 4 && p.y > -4 && p.y < H + 4);
 
       // Static star layer, drawn once per size.
@@ -74,7 +82,7 @@
       for (const p of stars) {
         if (p.b > 0.55) {               // bright stars carry a faint halo
           const g = bctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 5);
-          g.addColorStop(0, `rgba(${VIOLET},${0.22 * p.b})`); g.addColorStop(1, `rgba(${VIOLET},0)`);
+          g.addColorStop(0, `rgba(${ACC},${0.22 * p.b})`); g.addColorStop(1, `rgba(${ACC},0)`);
           bctx.fillStyle = g; bctx.fillRect(p.x - p.r * 5, p.y - p.r * 5, p.r * 10, p.r * 10);
         }
         bctx.fillStyle = `rgba(${p.tint},${0.35 + 0.65 * p.b})`;
@@ -97,17 +105,17 @@
       // e: 0..1 envelope. Halo in violet, core swells, two faint spikes.
       const R = p.r * 4 + 22 * e;
       const g = sctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, R);
-      g.addColorStop(0, `rgba(${VIOLET},${0.55 * e})`); g.addColorStop(1, `rgba(${VIOLET},0)`);
+      g.addColorStop(0, `rgba(${ACC},${0.55 * e})`); g.addColorStop(1, `rgba(${ACC},0)`);
       sctx.fillStyle = g; sctx.fillRect(p.x - R, p.y - R, R * 2, R * 2);
       const L = 4 + 16 * e;
       sctx.lineWidth = 0.6;
       for (const [dx, dy] of [[1, 0], [0, 1]]) {
         const s = sctx.createLinearGradient(p.x - dx * L, p.y - dy * L, p.x + dx * L, p.y + dy * L);
-        s.addColorStop(0, "rgba(255,255,255,0)"); s.addColorStop(0.5, `rgba(255,255,255,${0.45 * e})`); s.addColorStop(1, "rgba(255,255,255,0)");
+        s.addColorStop(0, `rgba(${CORE},0)`); s.addColorStop(0.5, `rgba(${CORE},${0.45 * e})`); s.addColorStop(1, `rgba(${CORE},0)`);
         sctx.strokeStyle = s;
         sctx.beginPath(); sctx.moveTo(p.x - dx * L, p.y - dy * L); sctx.lineTo(p.x + dx * L, p.y + dy * L); sctx.stroke();
       }
-      sctx.fillStyle = `rgba(255,255,255,${0.6 + 0.4 * e})`;
+      sctx.fillStyle = `rgba(${CORE},${0.6 + 0.4 * e})`;
       sctx.beginPath(); sctx.arc(p.x, p.y, p.r * (1 + 0.9 * e), 0, 6.2832); sctx.fill();
     }
 
@@ -135,13 +143,13 @@
       const hx = shot.x0 + shot.dx * travel, hy = shot.y0 + shot.dy * travel;
       const tx = shot.x0 + shot.dx * tail, ty = shot.y0 + shot.dy * tail;
       const g = hctx.createLinearGradient(hx, hy, tx, ty);
-      g.addColorStop(0, `rgba(255,255,255,${a})`);
-      g.addColorStop(0.3, `rgba(${VIOLET},${0.55 * a})`);
-      g.addColorStop(1, `rgba(${VIOLET},0)`);
+      g.addColorStop(0, `rgba(${CORE},${a})`);
+      g.addColorStop(0.3, `rgba(${ACC},${0.55 * a})`);
+      g.addColorStop(1, `rgba(${ACC},0)`);
       hctx.strokeStyle = g; hctx.lineWidth = 1.4; hctx.lineCap = "round";
       hctx.beginPath(); hctx.moveTo(tx, ty); hctx.lineTo(hx, hy); hctx.stroke();
       const hg = hctx.createRadialGradient(hx, hy, 0, hx, hy, 7);
-      hg.addColorStop(0, `rgba(255,255,255,${a})`); hg.addColorStop(0.35, `rgba(${VIOLET},${0.5 * a})`); hg.addColorStop(1, `rgba(${VIOLET},0)`);
+      hg.addColorStop(0, `rgba(${CORE},${a})`); hg.addColorStop(0.35, `rgba(${ACC},${0.5 * a})`); hg.addColorStop(1, `rgba(${ACC},0)`);
       hctx.fillStyle = hg; hctx.fillRect(hx - 7, hy - 7, 14, 14);
     }
 
