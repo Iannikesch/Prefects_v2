@@ -51,6 +51,12 @@ a { color: inherit; }
   opacity: var(--p);
 }
 .fnav.is-scrolled::before { -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+/* Deloitte's hide and reveal: scrolling down slides the whole bar out of view,
+   any scroll up slides it back. 200ms, cubic-bezier(0.4, 0, 0.2, 1), measured
+   on deloittedigital.com. Transform only, so it never repaints. */
+.fnav { transform: translateY(0); transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1); will-change: transform; }
+.fnav.is-hidden { transform: translateY(-100%); }
+@media (prefers-reduced-motion: reduce) { .fnav { transition: none; } }
 .fnav__bar { width: var(--rw-container); margin-inline: auto; height: 100%; display: flex; align-items: center; justify-content: space-between; }
 .fnav__logo { font: 400 clamp(30px, 2.6vw, 40px)/1 var(--pf-serif); letter-spacing: -0.035em; text-decoration: none; }
 /* Inbound's links: 14px uppercase, 1.4px tracking, 20px padding, no gaps */
@@ -217,3 +223,65 @@ a { color: inherit; }
 .rhero .pf-pill--tag.glow::before { box-shadow: 0 0 12px 2px rgba(247, 225, 127, 0.8); }
 
 @media (prefers-reduced-motion: reduce) { .glow::after { animation: none; } }
+
+
+/* ---------- Section 2: "Put the data spine to work" ----------
+   Epsilon's framing (one big card left, two stacked right), Inbound's
+   spacing (90px under the hero, 1298px container), Profectus finish.
+   Hover grows the card by transform only, so it stays smooth. */
+.uses { padding: var(--rw-after) 0 140px; background: var(--rw-paper); }
+.uses__inner { width: var(--rw-container); margin-inline: auto; display: grid; gap: 56px; }
+.uses__head { display: grid; gap: 16px; }
+.uses__head .lh2 em { font-family: var(--pf-italic); font-size: var(--pf-italic-scale); letter-spacing: -0.04em; }
+.uses__grid { display: grid; grid-template-columns: 1.45fr 1fr; grid-template-rows: 1fr 1fr; gap: 24px; }
+.ucard {
+  display: grid; grid-template-rows: auto 1fr; text-decoration: none; color: var(--rw-ink);
+  background: var(--rw-paper); border-radius: 15px; overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(11, 11, 12, 0.07), 0 10px 30px rgba(20, 16, 40, 0.05);
+  transform: translateZ(0); transition: transform 450ms var(--pf-ease), box-shadow 450ms var(--pf-ease);
+}
+.ucard:hover, .ucard:focus-visible { transform: scale(1.03); box-shadow: 0 0 0 1px rgba(211, 167, 84, 0.45), 0 24px 60px rgba(20, 16, 40, 0.12); z-index: 1; }
+.ucard--big { grid-row: 1 / span 2; }
+.ucard__media {
+  position: relative; display: grid; place-items: center; aspect-ratio: 16 / 9;
+  background:
+    radial-gradient(60% 90% at 20% 100%, color-mix(in srgb, var(--pf-g-teal-lit) 30%, transparent), transparent 65%),
+    radial-gradient(55% 80% at 85% 0%, color-mix(in srgb, var(--pf-g-violet) 28%, transparent), transparent 65%),
+    radial-gradient(40% 60% at 60% 70%, color-mix(in srgb, var(--rw-gold-300) 30%, transparent), transparent 70%),
+    #F4F3F7;
+}
+.ucard--big .ucard__media { aspect-ratio: 4 / 3; }
+.ucard__media span { font: 400 11px/1.3 var(--pf-mono); text-transform: uppercase; letter-spacing: .04em; color: var(--rw-ink-2); }
+.ucard__body { display: grid; gap: 12px; align-content: start; padding: 24px 24px 28px; }
+.ucard h3 { font: 400 clamp(22px, 18px + 0.8vw, 30px)/1.1 var(--pf-serif); letter-spacing: -0.035em; text-wrap: balance; }
+.ucard--big h3 { font-size: clamp(28px, 20px + 1.4vw, 44px); line-height: 1.02; }
+.ucard__body > p:not(.pf-eyebrow) { font-size: 16px; line-height: 1.45; color: var(--rw-ink-2); max-width: 34em; }
+.ucard__link { font: 500 15px/1 var(--pf-sans); letter-spacing: -0.02em; color: var(--rw-gold-900); margin-top: 4px; }
+@media (max-width: 900px) {
+  .uses__grid { grid-template-columns: 1fr; grid-template-rows: none; }
+  .ucard--big { grid-row: auto; }
+  .ucard:hover { transform: scale(1.015); }
+}
+@media (prefers-reduced-motion: reduce) { .ucard { transition: box-shadow 200ms ease; } .ucard:hover { transform: none; } }
+
+
+/* ---------- Cascade (Silver Bullet belt, measured) ----------
+   The lane clips at the top so cards emerge from its edge; the script fades
+   them over the last 140px. 40px gaps, 5.12px corners, as measured. */
+.casc { padding: 40px 0 140px; background: var(--rw-paper); }
+.casc__inner { width: var(--rw-container); margin-inline: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.casc__copy { display: grid; gap: 18px; align-content: start; position: sticky; top: calc(var(--rw-nav-h) + 40px); }
+.casc__copy .lh2 em { font-family: var(--pf-italic); font-size: var(--pf-italic-scale); letter-spacing: -0.04em; }
+.casc__lead { color: var(--rw-ink-2); font-size: 17px; line-height: 1.45; max-width: 30em; }
+.cascade { position: relative; height: 720px; overflow: hidden; }
+.cascade__track { position: absolute; inset: 0; }
+.cascade__card {
+  position: absolute; top: 0; left: 0; display: grid; gap: 10px;
+  padding: 22px 22px 26px; border-radius: 5.12px;
+  background: var(--rw-paper);
+  box-shadow: 0 0 0 1px rgba(11, 11, 12, 0.08), 0 12px 30px rgba(20, 16, 40, 0.05);
+  will-change: transform, opacity;
+}
+.cascade__card .pf-eyebrow { color: var(--rw-gold-900); }
+.cascade__card p:not(.pf-eyebrow) { font: 400 22px/1.15 var(--pf-serif); letter-spacing: -0.03em; color: var(--rw-ink); }
+@media (max-width: 900px) { .casc__inner { grid-template-columns: 1fr; } .casc__copy { position: static; } .cascade { height: 560px; } }
