@@ -50,6 +50,34 @@ const CLIENTS = [
     </ul>
   </section>
 
+  <!-- "Reach real people, drive real results": Epsilon's coverflow band,
+       measured. White text, gold calls to action, purple overlay on the
+       selected card, darker purple on the sides. Placeholder photos/logos. -->
+  <section class="reach" aria-labelledby="reach-h">
+    <div class="reach__bg" aria-hidden="true"></div>
+    <h2 class="reach__h" id="reach-h">Reach real people, drive real results</h2>
+    <div class="cflow" data-cflow tabindex="0" aria-roledescription="carousel" aria-label="Case studies">
+      <div class="cflow__track">
+        {[0, 1, 2].map(() => REACH.map((r) => (
+          <a class="cflow__slide" href={r.href}>
+            <span class="cflow__photo"><span>Photo · {r.client}</span></span>
+            <span class="cflow__shade" aria-hidden="true"></span>
+            <span class="cflow__panel">
+              <span class="cflow__logo">{r.client}</span>
+              <span class="cflow__title">{r.title}</span>
+              <span class="cflow__cta">Read the case study →</span>
+            </span>
+          </a>
+        )))}
+      </div>
+      <button class="cflow__arrow cflow__prev" type="button" aria-label="Previous case study">←</button>
+      <button class="cflow__arrow cflow__next" type="button" aria-label="Next case study">→</button>
+      <div class="cflow__dots">{REACH.map((r, k) => <button class="cflow__dot" type="button" aria-label={`Go to ${r.client}`}></button>)}</div>
+    </div>
+    <a class="reach__all btn-gold pf-pill" href="/case-studies">See all</a>
+  </section>
+
+
   <!-- Section 2 (Epsilon's "what we can do" framing, original copy):
        one big card on the left, two stacked on the right. Cards grow on hover. -->
   <div class="spacer" aria-hidden="true"><span>Space for a section</span></div>
@@ -94,35 +122,6 @@ const CLIENTS = [
         </div>
       </div>
     </div>
-  </section>
-
-  <div class="spacer" aria-hidden="true"><span>Space for a section</span></div>
-
-  <!-- "Reach real people, drive real results": Epsilon's coverflow band,
-       measured. White text, gold calls to action, purple overlay on the
-       selected card, darker purple on the sides. Placeholder photos/logos. -->
-  <section class="reach" aria-labelledby="reach-h">
-    <div class="reach__bg" aria-hidden="true"></div>
-    <h2 class="reach__h" id="reach-h">Reach real people, drive real results</h2>
-    <div class="cflow" data-cflow tabindex="0" aria-roledescription="carousel" aria-label="Case studies">
-      <div class="cflow__track">
-        {[0, 1, 2].map(() => REACH.map((r) => (
-          <a class="cflow__slide" href={r.href}>
-            <span class="cflow__photo"><span>Photo · {r.client}</span></span>
-            <span class="cflow__shade" aria-hidden="true"></span>
-            <span class="cflow__panel">
-              <span class="cflow__logo">{r.client}</span>
-              <span class="cflow__title">{r.title}</span>
-              <span class="cflow__cta">Read the case study →</span>
-            </span>
-          </a>
-        )))}
-      </div>
-      <button class="cflow__arrow cflow__prev" type="button" aria-label="Previous case study">←</button>
-      <button class="cflow__arrow cflow__next" type="button" aria-label="Next case study">→</button>
-      <div class="cflow__dots">{REACH.map((r, k) => <button class="cflow__dot" type="button" aria-label={`Go to ${r.client}`}></button>)}</div>
-    </div>
-    <a class="reach__all btn-gold pf-pill" href="/case-studies">See all</a>
   </section>
 
   <div class="spacer" aria-hidden="true"><span>Space for a section</span></div>
