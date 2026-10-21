@@ -379,3 +379,9 @@ a { color: inherit; }
 /* Nav: links sit on the right, grouped with the button (logo alone on the left). */
 .fnav__bar > nav { margin-left: auto; }
 .fnav__links { margin-left: 0; }
+
+
+/* A screen of white between the dark-backed sections, so they never fade
+   straight into each other. Temporary: real sections will go here. */
+.spacer { height: 100svh; display: grid; place-items: center; background: var(--rw-paper); }
+.spacer span { font: 400 11px/1 var(--pf-mono); text-transform: uppercase; letter-spacing: .06em; color: rgba(11, 11, 12, 0.18); }
