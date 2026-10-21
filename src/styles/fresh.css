@@ -330,23 +330,48 @@ a { color: inherit; }
    and black) and runs 5px past the right column on every side. The right
    column is a one-column cascade (same engine as the Silver Bullet belt). */
 .uses__grid { position: relative; isolation: isolate; grid-template-rows: none; }
-.uses__grid::before {
-  content: ""; position: absolute; z-index: 0; pointer-events: none;
-  top: -5px; bottom: -5px; right: -5px;
-  left: calc((100% - 24px) * 1.45 / 2.45 / 2);    /* the big card's midline */
-  background: #000;
-  border: 1px solid var(--rw-gold-500);
-  border-radius: 20px;
-  box-shadow: inset 0 0 0 1px rgba(247, 225, 127, 0.08), 0 20px 60px rgba(20, 16, 40, 0.10);
-}
 .ucard--big { position: relative; z-index: 1; grid-row: auto; }
-.uses__lane { position: relative; z-index: 1; height: auto; min-height: 100%; align-self: stretch; overflow: hidden; border-radius: 15px; }
+.uses__lane { position: relative; z-index: 1; height: auto; min-height: 100%; align-self: stretch; overflow: hidden; border-radius: 15px;
+  box-shadow: 0 0 0 1px var(--rw-gold-500), 0 0 0 6px rgba(211, 167, 84, 0.10); }   /* the thin gold line */
 /* Lane cards move by transform (set every frame by the script), so they
    grow on hover with the separate scale property instead. */
 .ucard--lane { transition: scale 450ms var(--pf-ease), box-shadow 450ms var(--pf-ease); }
 .ucard--lane:hover, .ucard--lane:focus-visible { transform: none; scale: 1.03; }
 .ucard--lane .ucard__media { aspect-ratio: 16 / 8; }
 @media (max-width: 900px) {
-  .uses__grid::before { display: none; }
-  .uses__lane { height: 560px; background: #000; border: 1px solid var(--rw-gold-500); border-radius: 20px; padding: 0; }
+  .uses__lane { height: 560px; }
+  .uses__galaxy { -webkit-mask: linear-gradient(transparent, #000 30%, #000 85%, transparent); mask: linear-gradient(transparent, #000 30%, #000 85%, transparent); }
 }
+
+
+/* ---------- Section 2 background: the black, gold and violet galaxy ----------
+   Covers the whole section (its padding gives the room above and below the
+   cards), fading in from the left so the big card's side stays white. */
+.uses { position: relative; overflow: hidden; }
+.uses__inner { position: relative; z-index: 1; }
+.uses__galaxy {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none; background: #000;
+  -webkit-mask: linear-gradient(90deg, transparent 0%, transparent 26%, rgba(0,0,0,.55) 44%, #000 62%),
+                linear-gradient(180deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask: linear-gradient(90deg, transparent 0%, transparent 26%, rgba(0,0,0,.55) 44%, #000 62%),
+        linear-gradient(180deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  mask-composite: intersect;
+}
+.uses__galaxy .pf-nebula { opacity: 1; -webkit-mask: none; mask: none; }
+.uses__galaxy .pf-nebula__plate { filter: grayscale(1) sepia(1) saturate(2.6) hue-rotate(-8deg) brightness(1.1) contrast(1.15); }
+.uses__galaxy .pf-nebula__breath::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: url("/img/nebula-violet.webp") center / cover no-repeat;
+  mix-blend-mode: screen; opacity: 0.85;
+  -webkit-mask: radial-gradient(40% 46% at 70% 30%, #000, transparent 70%), radial-gradient(34% 40% at 88% 78%, #000, transparent 70%);
+          mask: radial-gradient(40% 46% at 70% 30%, #000, transparent 70%), radial-gradient(34% 40% at 88% 78%, #000, transparent 70%);
+}
+
+
+/* Cascades are grabbable with a mouse or trackpad. On touch screens a
+   vertical swipe stays page scrolling. */
+.cascade { cursor: grab; user-select: none; -webkit-user-select: none; }
+.cascade.is-grabbing { cursor: grabbing; }
+.cascade.is-grabbing .cascade__card { transition: none; }
+@media (pointer: fine) { .cascade { touch-action: none; } }

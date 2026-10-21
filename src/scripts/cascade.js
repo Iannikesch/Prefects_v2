@@ -8,6 +8,8 @@
 // - Pauses off screen and in background tabs; big frame gaps are clamped,
 //   not caught up. Reduced motion: one still, settled frame.
 // Moves only transform and opacity, so it never repaints.
+// Grab and drag (mouse/trackpad): drag the cards, throw them, and they
+// glide back into the drift. A real drag never triggers a card's link.
 //
 // Markup: <div class="cascade" data-speed="14" data-cols="1|2 (optional)"><article class="cascade__card">…</article>…</div>
 
@@ -57,7 +59,7 @@ function setup(lane) {
     for (const c of cols) {
       for (const it of c.items) {
         // wrap into [−K, L−K): the jump happens above the lane, out of sight
-        const y = ((it.base + shift + c.offset) % c.L) - c.K;
+        const y = ((((it.base + shift + c.offset) % c.L) + c.L) % c.L) - c.K;
         const centre = y + it.h / 2;
         const t = Math.min(1, Math.max(0, (centre - (H - FADE)) / FADE));
         it.el.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
@@ -67,15 +69,51 @@ function setup(lane) {
   }
 
   let raf = 0, last = 0, visible = false;
+  let held = false, vel = 0;
   const frame = (now) => {
     raf = requestAnimationFrame(frame);
     const dt = Math.min(0.05, (now - (last || now)) / 1000);   // clamp hiccups
     last = now;
-    shift += speed * dt;
+    if (!held) {
+      shift += (speed + vel) * dt;
+      vel *= Math.exp(-dt * 3.5);              // momentum from a throw dies away
+    }
     draw();
   };
   const run = () => { if (!raf && visible && !document.hidden && !reduce) { last = 0; raf = requestAnimationFrame(frame); } };
   const stop = () => { cancelAnimationFrame(raf); raf = 0; };
+
+  // ---- Grab and drag: pull the cards up or down, throw them, let go ----
+  let startY = 0, lastY = 0, lastT = 0, moved = 0, pid = null;
+  lane.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0) return;
+    held = true; pid = e.pointerId; moved = 0; vel = 0;
+    startY = lastY = e.clientY; lastT = performance.now();
+    lane.classList.add('is-grabbing');
+  });
+  lane.addEventListener('pointermove', (e) => {
+    if (!held || e.pointerId !== pid) return;
+    const now = performance.now(), dy = e.clientY - lastY;
+    moved += Math.abs(dy);
+    if (moved > 4 && !lane.hasPointerCapture(pid)) lane.setPointerCapture(pid);
+    shift += dy;
+    const dt = Math.max(1, now - lastT) / 1000;
+    vel = 0.8 * vel + 0.2 * (dy / dt);          // smoothed throw speed, px/s
+    lastY = e.clientY; lastT = now;
+    if (!raf) draw();                           // still respond when paused or reduced motion
+  });
+  const release = (e) => {
+    if (!held || (e && e.pointerId !== pid)) return;
+    held = false; lane.classList.remove('is-grabbing');
+    if (performance.now() - lastT > 80) vel = 0;  // held still before letting go: no throw
+    vel = Math.max(-1600, Math.min(1600, vel));
+    if (reduce) vel = 0;
+  };
+  lane.addEventListener('pointerup', release);
+  lane.addEventListener('pointercancel', release);
+  // A drag shouldn't count as a click on the card underneath.
+  lane.addEventListener('click', (e) => { if (moved > 4) { e.preventDefault(); e.stopPropagation(); } }, true);
+  lane.addEventListener('dragstart', (e) => e.preventDefault());
 
   build();
   new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible ? run() : stop(); }).observe(lane);
