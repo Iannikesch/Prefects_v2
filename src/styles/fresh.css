@@ -506,3 +506,9 @@ a { color: inherit; }
 
 /* Text selection: Profectus purple, white letters. */
 ::selection { background: #6E62E6; color: #FFFFFF; -webkit-text-fill-color: #FFFFFF; }
+
+/* Nav: frosted again over the hero, with the Profectus nav glass
+   (rgba(3,3,3,0.2) + 10px blur, measured on the live site). Past the hero
+   it still turns frosted white. */
+.fnav { background: var(--pf-fill-nav); -webkit-backdrop-filter: var(--pf-blur-bar); backdrop-filter: var(--pf-blur-bar); transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1), background-color 200ms ease; }
+.fnav.is-light { background: transparent; }
