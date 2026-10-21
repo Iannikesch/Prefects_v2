@@ -40,7 +40,8 @@ const CLIENTS = [
     <!-- Companies who trust us: sits on the hero's fade line. Each logo is
          filled light at the top and dark at the bottom, the reverse of the
          fade behind it. Hover rolls it up to a copy of itself (Silver Bullet). -->
-    <ul class="trusted" aria-label="Companies who trust us" data-trusted>
+    <p class="trusted__label" id="trusted-label">Companies who trust Profectus</p>
+    <ul class="trusted" aria-labelledby="trusted-label" data-trusted>
       {CLIENTS.map((c, i) => (
         <li class="tlogo" style={`--logo:url(${c.src});--w:${c.w}px;--h:${c.h}px;--i:${i}`}>
           <span class="tlogo__track" aria-hidden="true"><img src={c.src} alt="" width={c.w} height={c.h} decoding="async" /><img src={c.src} alt="" width={c.w} height={c.h} decoding="async" /></span>

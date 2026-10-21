@@ -491,3 +491,13 @@ a { color: inherit; }
 
 /* Reach band sits under the hero, after Inbound's 90px gap. */
 .rhero + .reach { margin-top: var(--rw-after); }
+
+/* "Companies who trust Profectus": dead centre above the logo strip, 24px
+   above it (Inbound's heading gap). Pale lavender, like the logos' tops. */
+.trusted__label {
+  position: absolute; z-index: 2; left: 0; right: 0; text-align: center;
+  bottom: calc(12% - 40px + 80px + 24px);
+  font: 400 var(--pf-fs-mono)/1.2 var(--pf-mono); text-transform: uppercase; letter-spacing: 0.08em;
+  color: rgba(238, 234, 255, 0.75);
+}
+@media (max-width: 1100px) { .trusted__label { position: relative; bottom: auto; margin-top: 24px; } }
