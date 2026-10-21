@@ -39,17 +39,25 @@ const { title = 'Profectus Agency' } = Astro.props;
     import '../../kit/texture-pack/code-rain.js';
     import '../../kit/texture-pack/nebula.js';
     // Nav (Inbound): clear over the hero, fading to frosted white across the
-    // first 175px of scroll. --p goes 0 to 1 and the CSS does the rest.
+    // first 175px of scroll. One write per frame at most (rAF), and only to
+    // the nav and the hero, so a scroll never restyles the whole page.
     const nav = document.querySelector('[data-fnav]');
+    const hero = document.querySelector('[data-hero]');
     const turn = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--rw-nav-turn')) || 175;
-    const root = document.documentElement;
-    const set = () => {
+    let queued = false, lastP = -1;
+    const apply = () => {
+      queued = false;
       const p = Math.min(1, Math.max(0, scrollY / turn));
+      if (Math.abs(p - lastP) < 0.004) return;
+      lastP = p;
       nav.style.setProperty('--p', p.toFixed(3));
-      root.style.setProperty('--glow', (1 - p).toFixed(3));   // gold glows only at the top
+      nav.classList.toggle('is-scrolled', p > 0);
+      const g = (1 - p).toFixed(3);                // gold glows only at the top
+      nav.style.setProperty('--glow', g);
+      if (hero) hero.style.setProperty('--glow', g);
     };
-    addEventListener('scroll', set, { passive: true });
-    set();
+    addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(apply); } }, { passive: true });
+    apply();
   </script>
 </body>
 </html>

@@ -39,12 +39,18 @@ a { color: inherit; }
 .fnav {
   --p: 0;
   position: fixed; inset: 0 0 auto; z-index: 100; height: var(--rw-nav-h);
-  background: rgba(255, 255, 255, calc(var(--p) * 0.82));
-  -webkit-backdrop-filter: blur(calc(var(--p) * 14px + 2px)); backdrop-filter: blur(calc(var(--p) * 14px + 2px));
-  box-shadow: 0 1px 0 rgba(0, 0, 0, calc(var(--p) * 0.06));
   color: color-mix(in srgb, var(--rw-ink) calc(var(--p) * 100%), var(--pf-white));
-  transition: background-color var(--rw-fade) ease, color var(--rw-fade) ease, box-shadow var(--rw-fade) ease;
 }
+/* The white frosted layer fades in by opacity only (no repaint). The blur is
+   a fixed 14px and only switches on once you leave the top, so the browser
+   isn't re-blurring the moving code rain while the nav is clear anyway. */
+.fnav::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  opacity: var(--p);
+}
+.fnav.is-scrolled::before { -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
 .fnav__bar { width: var(--rw-container); margin-inline: auto; height: 100%; display: flex; align-items: center; justify-content: space-between; }
 .fnav__logo { font: 400 clamp(30px, 2.6vw, 40px)/1 var(--pf-serif); letter-spacing: -0.035em; text-decoration: none; }
 /* Inbound's links: 14px uppercase, 1.4px tracking, 20px padding, no gaps */
@@ -120,7 +126,7 @@ a { color: inherit; }
 .next { min-height: 90vh; padding: var(--rw-after) var(--rw-gutter) 120px; display: grid; place-items: center; text-align: center; color: var(--rw-ink-2); }
 .next p { font: 400 13px/1.4 var(--pf-mono); text-transform: uppercase; letter-spacing: .04em; }
 
-@media (prefers-reduced-motion: reduce) { .fnav, .fnav__cta { transition: none; } }
+
 
 /* Longer headline: one step smaller than the old two-line tagline, so it
    sets in about three lines instead of five. */
@@ -179,41 +185,35 @@ a { color: inherit; }
 
 
 /* ---------- Gold glow (only while you're at the top) ----------
-   Each gold piece lights the black around it: a pale, almost-white core
-   fading into warm gold. It breathes on its own clock, and the foil's light
-   streak drifts across. --glow (1 at the top, 0 once the nav has turned
-   white) comes from the nav script; --pulse is the breathing. */
-@property --pulse { syntax: "<number>"; inherits: true; initial-value: 0.6; }
-:root { --glow: 1; }
-@keyframes rw-breathe { 0% { --pulse: 0.45; } 100% { --pulse: 1; } }
-@keyframes rw-sheen  { 0% { background-position: 0 0, 0% 0; } 100% { background-position: 0 0, 100% 0; } }
+   Each gold piece casts a warm light behind it, almost white at the core.
+   Built to stay smooth while scrolling: the light is a pre-drawn gradient
+   layer behind the piece, and only its opacity moves, which the graphics
+   card handles without repainting anything.
+   --glow (1 at the top, 0 once the nav has turned white) is set on the
+   hero and nav only, never on the whole page. */
+.glow { position: relative; }
+.glow::after {
+  content: ""; position: absolute; z-index: -1; pointer-events: none;
+  inset: -90% -45%; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 247, 226, 0.55), rgba(247, 225, 127, 0.32) 32%, rgba(211, 167, 84, 0.16) 58%, rgba(211, 167, 84, 0) 100%);
+  opacity: var(--glow, 1);
+  animation: rw-breathe 3.8s ease-in-out infinite alternate;
+  will-change: opacity;
+}
+/* Breathe by brightness only. (Breathing by size made the graphics card
+   redraw the gradient every frame: about 9x the raster work, measured.) */
+@keyframes rw-breathe { from { opacity: calc(0.45 * var(--glow, 1)); } to { opacity: var(--glow, 1); } }
+.glow:nth-child(2n)::after { animation-duration: 4.6s; animation-delay: -1.4s; }   /* out of step */
+/* Gold word: inline-block so its light sits behind the word itself */
+.foil-text.glow { display: inline-block; }
+.foil-text.glow::after { inset: -35% -30%; animation-duration: 4.4s; }
+.foil-rule.glow::after { inset: -900% -60%; animation-duration: 5s; }
+/* Buttons: no glass blur behind the opaque foil, so the light can sit
+   behind the button instead of on top of it */
+.btn-gold.glow { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+.btn-gold.glow::after { inset: -70% -30%; }
+/* The tag's gold dot: a small steady glow (too small to need motion) */
+.rhero .pf-pill--tag.glow::after { display: none; }
+.rhero .pf-pill--tag.glow::before { box-shadow: 0 0 12px 2px rgba(247, 225, 127, 0.8); }
 
-.glow { animation: rw-breathe 3.8s ease-in-out infinite alternate; }
-.glow:nth-of-type(2n) { animation-duration: 4.6s; animation-delay: -1.3s; }  /* don't pulse in unison */
-
-/* Buttons: a halo that lights and whitens the black around them */
-.btn-gold.glow {
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.45),
-    0 0 calc(18px + 14px * var(--pulse)) calc(2px + 4px * var(--pulse)) rgba(255, 246, 222, calc(0.30 * var(--pulse) * var(--glow))),
-    0 0 calc(50px + 40px * var(--pulse)) calc(10px + 14px * var(--pulse)) rgba(229, 186, 97, calc(0.26 * var(--pulse) * var(--glow))),
-    0 6px 24px rgba(211, 167, 84, 0.22) !important;
-  animation: rw-breathe 3.8s ease-in-out infinite alternate, rw-sheen 7s ease-in-out infinite alternate !important;
-}
-/* Gold text and the foil rule: light spills from the letterforms */
-.foil-text.glow, .foil-rule.glow {
-  filter:
-    drop-shadow(0 0 calc(6px + 6px * var(--pulse)) rgba(255, 246, 222, calc(0.55 * var(--pulse) * var(--glow))))
-    drop-shadow(0 0 calc(20px + 24px * var(--pulse)) rgba(229, 186, 97, calc(0.45 * var(--pulse) * var(--glow))));
-  animation: rw-breathe 4.6s ease-in-out infinite alternate, rw-sheen 9s ease-in-out infinite alternate;
-}
-.foil-rule.glow { background-size: 220% 100%; background-image: var(--rw-foil); }
-/* The eyebrow's gold dot */
-.rhero .pf-pill--tag.glow::before {
-  animation: rw-breathe 3.2s ease-in-out infinite alternate;
-  box-shadow: 0 0 calc(6px + 10px * var(--pulse)) calc(1px + 2px * var(--pulse)) rgba(247, 225, 127, calc(0.85 * var(--glow) + 0.15));
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .glow, .btn-gold.glow, .foil-text.glow, .foil-rule.glow, .rhero .pf-pill--tag.glow::before { animation: none !important; --pulse: 0.75; }
-}
+@media (prefers-reduced-motion: reduce) { .glow::after { animation: none; } }
