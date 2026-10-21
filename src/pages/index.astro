@@ -6,14 +6,16 @@ import Fresh from '../layouts/Fresh.astro';
 import { WHY } from '../data/site.js';
 // Clients cleared to name (owner, Oct 21). Sizes follow Silver Bullet's
 // measured logos at 1440; Sitka is a temporary wordmark until its logo arrives.
+// The images are pre-baked (fill already applied, 2x for Retina) so scrolling
+// never has to re-mask them; sources are the plain files beside them.
 const CLIENTS = [
-  { name: 'OpenAI', src: '/logos/openai.png', w: 193, h: 38 },
-  { name: 'Smoothie King', src: '/logos/smoothie-king.png', w: 107, h: 80 },
-  { name: 'Essentials Provisions', src: '/logos/essentials-provisions.png', w: 171, h: 38 },
-  { name: 'Skyrizi', src: '/logos/skyrizi.png', w: 108, h: 49 },
-  { name: 'Marriott', src: '/logos/marriott.svg', w: 130, h: 67 },
-  { name: 'General Motors', src: '/logos/general-motors.svg', w: 60, h: 60 },
-  { name: 'Sitka', src: '/logos/sitka.svg', w: 120, h: 33 },
+  { name: 'OpenAI', src: '/logos/baked-openai.webp?v=2', w: 193, h: 38 },
+  { name: 'Smoothie King', src: '/logos/baked-smoothie-king.webp?v=2', w: 107, h: 80 },
+  { name: 'Essentials Provisions', src: '/logos/baked-essentials-provisions.webp?v=2', w: 171, h: 38 },
+  { name: 'Skyrizi', src: '/logos/baked-skyrizi.webp?v=2', w: 108, h: 49 },
+  { name: 'Marriott', src: '/logos/baked-marriott.webp?v=2', w: 130, h: 67 },
+  { name: 'General Motors', src: '/logos/baked-general-motors.webp?v=2', w: 60, h: 60 },
+  { name: 'Sitka', src: '/logos/baked-sitka.webp?v=2', w: 120, h: 33 },
 ];
 ---
 <Fresh>
@@ -34,7 +36,7 @@ const CLIENTS = [
     <ul class="trusted" aria-label="Companies who trust us" data-trusted>
       {CLIENTS.map((c, i) => (
         <li class="tlogo" style={`--logo:url(${c.src});--w:${c.w}px;--h:${c.h}px;--i:${i}`}>
-          <span class="tlogo__track" aria-hidden="true"><i></i><i></i></span>
+          <span class="tlogo__track" aria-hidden="true"><img src={c.src} alt="" width={c.w} height={c.h} decoding="async" /><img src={c.src} alt="" width={c.w} height={c.h} decoding="async" /></span>
           <span class="sr-only">{c.name}</span>
         </li>
       ))}

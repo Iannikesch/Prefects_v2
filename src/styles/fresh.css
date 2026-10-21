@@ -392,7 +392,8 @@ a { color: inherit; }
 /* ---------- Companies who trust us, on the hero's fade line ----------
    Hero gets a full screen so the logos sit in the fade below the copy.
    Fill: light at the top, dark at the bottom, crossing over quickly in the
-   middle: the reverse of the black-to-white fade behind it.
+   middle: the reverse of the black-to-white fade behind it. The fill is baked
+   into each image (public/logos/baked-*.webp) so scrolling costs nothing.
    Motion, measured on Silver Bullet: logos rest at 0.5504 opacity; hover
    rolls each up to a copy of itself (0.4s cubic-bezier(.76,0,.24,1)) and
    brightens to 1 (0.3s). Reveal once: rise 30px and fade in, 83ms apart. */
@@ -414,13 +415,10 @@ a { color: inherit; }
 .trusted.is-done .tlogo:hover { opacity: 1; }
 .tlogo__track { display: flex; flex-direction: column; transition: transform 400ms cubic-bezier(0.76, 0, 0.24, 1); }
 .tlogo:hover .tlogo__track { transform: translateY(-50%); }
-.tlogo__track i {
-  display: block; width: var(--w); height: var(--h);
-  background: linear-gradient(180deg, #F2F2F2 0%, #E2E2E2 40%, #1C1C1E 60%, #0B0B0C 100%);
-  -webkit-mask: var(--logo) center / contain no-repeat; mask: var(--logo) center / contain no-repeat;
-}
+.tlogo__track img { display: block; width: var(--w); height: var(--h); }
+.tlogo { will-change: transform; }   /* each logo on its own GPU layer: scrolling just moves it */
 @media (max-width: 1100px) { .trusted { height: auto; bottom: 24px; gap: 18px 40px; } .tlogo { scale: 0.8; } }
-@media (max-width: 768px) { .tlogo { width: calc(var(--w) * 0.674); height: calc(var(--h) * 0.674); scale: 1; } .tlogo__track i { width: calc(var(--w) * 0.674); height: calc(var(--h) * 0.674); } }
+@media (max-width: 768px) { .tlogo { width: calc(var(--w) * 0.674); height: calc(var(--h) * 0.674); scale: 1; } .tlogo__track img { width: calc(var(--w) * 0.674); height: calc(var(--h) * 0.674); } }
 @media (prefers-reduced-motion: reduce) {
   .tlogo { opacity: 0.5504; translate: none; transition: opacity 300ms ease; transition-delay: 0ms; }
   .tlogo__track { transition: none; }
