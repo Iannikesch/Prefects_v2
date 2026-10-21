@@ -323,3 +323,30 @@ a { color: inherit; }
 }
 .why-gold .pf-glass:nth-child(1) .num { color: var(--rw-gold-300); }
 .why-gold li:nth-child(even) .pf-glass .num { color: var(--pf-violet); }
+
+
+/* ---------- Section 2, segmented: black panel, gold edge, cascading right side ----------
+   The panel starts halfway across the big card (so that card straddles white
+   and black) and runs 5px past the right column on every side. The right
+   column is a one-column cascade (same engine as the Silver Bullet belt). */
+.uses__grid { position: relative; isolation: isolate; grid-template-rows: none; }
+.uses__grid::before {
+  content: ""; position: absolute; z-index: 0; pointer-events: none;
+  top: -5px; bottom: -5px; right: -5px;
+  left: calc((100% - 24px) * 1.45 / 2.45 / 2);    /* the big card's midline */
+  background: #000;
+  border: 1px solid var(--rw-gold-500);
+  border-radius: 20px;
+  box-shadow: inset 0 0 0 1px rgba(247, 225, 127, 0.08), 0 20px 60px rgba(20, 16, 40, 0.10);
+}
+.ucard--big { position: relative; z-index: 1; grid-row: auto; }
+.uses__lane { position: relative; z-index: 1; height: auto; min-height: 100%; align-self: stretch; overflow: hidden; border-radius: 15px; }
+/* Lane cards move by transform (set every frame by the script), so they
+   grow on hover with the separate scale property instead. */
+.ucard--lane { transition: scale 450ms var(--pf-ease), box-shadow 450ms var(--pf-ease); }
+.ucard--lane:hover, .ucard--lane:focus-visible { transform: none; scale: 1.03; }
+.ucard--lane .ucard__media { aspect-ratio: 16 / 8; }
+@media (max-width: 900px) {
+  .uses__grid::before { display: none; }
+  .uses__lane { height: 560px; background: #000; border: 1px solid var(--rw-gold-500); border-radius: 20px; padding: 0; }
+}

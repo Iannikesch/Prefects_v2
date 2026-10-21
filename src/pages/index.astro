@@ -37,22 +37,25 @@ import { WHY } from '../data/site.js';
             <span class="ucard__link">See how it works →</span>
           </div>
         </a>
-        <a class="ucard" href="/capabilities/data-identity-infrastructure">
-          <div class="ucard__media"><span>Photo · one customer record</span></div>
-          <div class="ucard__body">
-            <p class="pf-eyebrow">Data &amp; identity</p>
-            <h3>Turn scattered data into one record per customer.</h3>
-            <span class="ucard__link">See how it works →</span>
-          </div>
-        </a>
-        <a class="ucard" href="/capabilities/paid-media-demand-generation">
-          <div class="ucard__media"><span>Photo · every channel</span></div>
-          <div class="ucard__body">
-            <p class="pf-eyebrow">Paid &amp; owned media</p>
-            <h3>Keep every channel telling the same story.</h3>
-            <span class="ucard__link">See how it works →</span>
-          </div>
-        </a>
+        <!-- Right side: the cards cascade down a lane on a black, gold-edged panel -->
+        <div class="uses__lane cascade" data-speed="14" data-cols="1" aria-label="More of what we do">
+          <a class="cascade__card ucard ucard--lane" href="/capabilities/data-identity-infrastructure">
+            <div class="ucard__media"><span>Photo · one customer record</span></div>
+            <div class="ucard__body">
+              <p class="pf-eyebrow">Data &amp; identity</p>
+              <h3>Turn scattered data into one record per customer.</h3>
+              <span class="ucard__link">See how it works →</span>
+            </div>
+          </a>
+          <a class="cascade__card ucard ucard--lane" href="/capabilities/paid-media-demand-generation">
+            <div class="ucard__media"><span>Photo · every channel</span></div>
+            <div class="ucard__body">
+              <p class="pf-eyebrow">Paid &amp; owned media</p>
+              <h3>Keep every channel telling the same story.</h3>
+              <span class="ucard__link">See how it works →</span>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
   </section>

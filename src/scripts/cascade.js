@@ -9,7 +9,7 @@
 //   not caught up. Reduced motion: one still, settled frame.
 // Moves only transform and opacity, so it never repaints.
 //
-// Markup: <div class="cascade" data-speed="14"><article class="cascade__card">…</article>…</div>
+// Markup: <div class="cascade" data-speed="14" data-cols="1|2 (optional)"><article class="cascade__card">…</article>…</div>
 
 const FADE = 140;     // px of dissolve at the bottom
 const GAP = 40;       // px between cards
@@ -30,7 +30,7 @@ function setup(lane) {
     track.replaceChildren();
     H = lane.clientHeight;
     const W = lane.clientWidth;
-    const n = W >= 560 ? 2 : 1;
+    const n = lane.dataset.cols ? +lane.dataset.cols : (W >= 560 ? 2 : 1);
     const colW = (W - GAP * (n - 1)) / n;
     cols = [];
     for (let k = 0; k < n; k++) {
