@@ -70,6 +70,18 @@ const { title = 'Profectus Agency' } = Astro.props;
     // Keyboard users: focus inside a hidden nav brings it back.
     nav.addEventListener('focusin', () => { hidden = false; nav.classList.remove('is-hidden'); });
     apply();
+
+    // Trusted logos: reveal once when the row is in view, then hand the
+    // transitions over to hover.
+    const trusted = document.querySelector('[data-trusted]');
+    if (trusted) {
+      new IntersectionObserver(([e], o) => {
+        if (!e.isIntersecting) return;
+        o.disconnect();
+        trusted.classList.add('is-in');
+        setTimeout(() => trusted.classList.add('is-done'), 400 + 83 * 7 + 700);
+      }, { threshold: 0.4 }).observe(trusted);
+    }
   </script>
 </body>
 </html>

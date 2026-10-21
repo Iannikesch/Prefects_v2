@@ -4,6 +4,17 @@
 // (the underscore keeps it from being published as a page).
 import Fresh from '../layouts/Fresh.astro';
 import { WHY } from '../data/site.js';
+// Clients cleared to name (owner, Oct 21). Sizes follow Silver Bullet's
+// measured logos at 1440; Sitka is a temporary wordmark until its logo arrives.
+const CLIENTS = [
+  { name: 'OpenAI', src: '/logos/openai.png', w: 193, h: 38 },
+  { name: 'Smoothie King', src: '/logos/smoothie-king.png', w: 107, h: 80 },
+  { name: 'Essentials Provisions', src: '/logos/essentials-provisions.png', w: 171, h: 38 },
+  { name: 'Skyrizi', src: '/logos/skyrizi.png', w: 108, h: 49 },
+  { name: 'Marriott', src: '/logos/marriott.svg', w: 130, h: 67 },
+  { name: 'General Motors', src: '/logos/general-motors.svg', w: 60, h: 60 },
+  { name: 'Sitka', src: '/logos/sitka.svg', w: 120, h: 33 },
+];
 ---
 <Fresh>
   <section class="rhero" data-hero>
@@ -17,6 +28,17 @@ import { WHY } from '../data/site.js';
         <a class="pf-pill pf-pill--ghost" href="/ai">Meet [AI Product] →</a>
       </div>
     </div>
+    <!-- Companies who trust us: sits on the hero's fade line. Each logo is
+         filled light at the top and dark at the bottom, the reverse of the
+         fade behind it. Hover rolls it up to a copy of itself (Silver Bullet). -->
+    <ul class="trusted" aria-label="Companies who trust us" data-trusted>
+      {CLIENTS.map((c, i) => (
+        <li class="tlogo" style={`--logo:url(${c.src});--w:${c.w}px;--h:${c.h}px;--i:${i}`}>
+          <span class="tlogo__track" aria-hidden="true"><i></i><i></i></span>
+          <span class="sr-only">{c.name}</span>
+        </li>
+      ))}
+    </ul>
   </section>
 
   <!-- Section 2 (Epsilon's "what we can do" framing, original copy):
