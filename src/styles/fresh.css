@@ -285,3 +285,18 @@ a { color: inherit; }
 .cascade__card .pf-eyebrow { color: var(--rw-gold-900); }
 .cascade__card p:not(.pf-eyebrow) { font: 400 22px/1.15 var(--pf-serif); letter-spacing: -0.03em; color: var(--rw-ink); }
 @media (max-width: 900px) { .casc__inner { grid-template-columns: 1fr; } .casc__copy { position: static; } .cascade { height: 560px; } }
+
+
+/* ---------- Galaxy, black and gold ----------
+   Same photo, re-toned: grey it, warm it to sepia, push the saturation
+   toward the foil gold. Stars and glints are gold (data-theme="gold"). */
+.why-gold { position: relative; overflow: hidden; padding: 140px 0 160px; background: #000; color: var(--pf-white); }
+.why-gold .pf-nebula { opacity: 0.95; }
+.why-gold .pf-nebula__plate { filter: grayscale(1) sepia(1) saturate(2.6) hue-rotate(-8deg) brightness(1.1) contrast(1.15); }
+.why-gold .lh2 { color: var(--pf-white); }
+.why-gold .pf-eyebrow { color: var(--pf-text); }
+.why-gold .pf-glass { display: grid; gap: 14px; }
+.why-gold .pf-glass h3 { font: 500 var(--pf-fs-h3)/1.2 var(--pf-sans); letter-spacing: -0.04em; color: var(--pf-white); }
+.why-gold .pf-glass p { font-size: 16px; line-height: 1.45; color: var(--pf-text); }
+.why-gold .pf-glass .num { color: var(--rw-gold-300); }
+.why-gold .pf-glass { box-shadow: inset 0 1px 0 rgba(247, 225, 127, 0.10); }

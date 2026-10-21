@@ -97,6 +97,24 @@ import { WHY } from '../data/site.js';
     </div>
   </section>
 
+  <!-- Experiment: the same galaxy in black and gold. The cloud photo is
+       re-toned to gold, stars are warm white and gold. -->
+  <section class="why-gold">
+    <div class="pf-nebula" data-src="/img/nebula-violet" data-theme="gold" aria-hidden="true"></div>
+    <div class="why-light__rules pf-rules" aria-hidden="true"></div>
+    <div class="why-light__inner">
+      <div class="lhead">
+        <p class="pf-eyebrow">Why Profectus · black &amp; gold</p>
+        <h2 class="lh2">The Data Spine Changes Everything<span class="foil-text">.</span></h2>
+      </div>
+      <ol class="why-light__cards">
+        {WHY.map((w, i) => (
+          <li><div class="pf-glass"><span class="pf-eyebrow num">{String(i + 1).padStart(2, '0')}</span><h3>{w.title}</h3><p>{w.text}</p></div></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
   <!-- Experiment: the "Our infrastructure" mood band, repainted as light
        washes of the same teal, violet and navy, with a little gold. -->
   <section class="mood-light light">

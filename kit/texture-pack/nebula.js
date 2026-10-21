@@ -40,10 +40,12 @@
     // data-theme="light": for a white page. The cloud plate is shown as a
     // photo-negative in CSS; stars draw in ink, glints and the shooting star
     // in gold. Dark pages are unchanged.
-    const light = host.dataset.theme === "light";
-    const ACC = light ? "201,154,66" : VIOLET;          // halo, glint, trail
-    const CORE = light ? "112,82,28" : "255,255,255";   // glint core, shooting-star head
-    const TT = light ? ["24,22,32", "52,44,78", "34,48,60"] : TINTS;
+    const theme = host.dataset.theme;                    // "light", "gold", or dark (default)
+    const light = theme === "light", gold = theme === "gold";
+    const ACC = light ? "201,154,66" : gold ? "211,167,84" : VIOLET;          // halo, glint, trail
+    const CORE = light ? "112,82,28" : gold ? "255,242,205" : "255,255,255";  // glint core, shooting-star head
+    const TT = light ? ["24,22,32", "52,44,78", "34,48,60"]
+             : gold ? ["255,238,198", "247,225,127", "229,186,97"] : TINTS;
 
     const breath = document.createElement("div");
     breath.className = "pf-nebula__breath";
