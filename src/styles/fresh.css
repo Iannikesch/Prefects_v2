@@ -503,3 +503,6 @@ a { color: inherit; }
 @media (max-width: 1100px) { .trusted__label { position: relative; bottom: auto; margin-top: 24px; } }
 .trusted__label { font-size: calc(var(--pf-fs-mono) * 3); letter-spacing: 0.04em; }   /* 3x: 38.88px */
 @media (max-width: 760px) { .trusted__label { font-size: calc(var(--pf-fs-mono) * 1.8); } }
+
+/* Text selection: Profectus purple, white letters. */
+::selection { background: #6E62E6; color: #FFFFFF; -webkit-text-fill-color: #FFFFFF; }
