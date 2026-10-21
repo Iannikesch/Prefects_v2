@@ -37,26 +37,20 @@ a { color: inherit; }
    175px of scroll, scrubbed by --p (0 to 1) from the script, with Inbound's
    ~300ms lag. Height never changes. */
 .fnav {
-  --p: 0;
   position: fixed; inset: 0 0 auto; z-index: 100; height: var(--rw-nav-h);
-  color: color-mix(in srgb, var(--rw-ink) calc(var(--p) * 100%), var(--pf-white));
+  color: var(--pf-white);
 }
-/* The white frosted layer fades in by opacity only (no repaint). The blur is
-   a fixed 14px and only switches on once you leave the top, so the browser
-   isn't re-blurring the moving code rain while the nav is clear anyway. */
+/* Deloitte: clear while the bar is over the hero, white once it's past the
+   hero's bottom edge. The white fades in over 200ms; text and logo colours
+   swap at once (as measured). A light shadow, not Deloitte's grey haze. */
 .fnav::before {
   content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background: rgba(255, 255, 255, 0.82);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
-  opacity: var(--p);
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06), 0 8px 24px rgba(20, 16, 40, 0.06);
+  opacity: 0; transition: opacity 200ms ease;
 }
-.fnav.is-scrolled::before { -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
-/* Deloitte's hide and reveal: scrolling down slides the whole bar out of view,
-   any scroll up slides it back. 200ms, cubic-bezier(0.4, 0, 0.2, 1), measured
-   on deloittedigital.com. Transform only, so it never repaints. */
-.fnav { transform: translateY(0); transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1); will-change: transform; }
-.fnav.is-hidden { transform: translateY(-100%); }
-@media (prefers-reduced-motion: reduce) { .fnav { transition: none; } }
+.fnav.is-light { color: var(--rw-ink); }
+.fnav.is-light::before { opacity: 1; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
 .fnav__bar { width: var(--rw-container); margin-inline: auto; height: 100%; display: flex; align-items: center; justify-content: space-between; }
 .fnav__logo { font: 400 clamp(30px, 2.6vw, 40px)/1 var(--pf-serif); letter-spacing: -0.035em; text-decoration: none; }
 /* Inbound's links: 14px uppercase, 1.4px tracking, 20px padding, no gaps */

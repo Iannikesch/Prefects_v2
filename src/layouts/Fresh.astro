@@ -39,39 +39,35 @@ const { title = 'Profectus Agency' } = Astro.props;
     import '../../kit/texture-pack/code-rain.js';
     import '../../kit/texture-pack/nebula.js';
     import '../scripts/cascade.js';
-    // Nav: Inbound's colour fade plus Deloitte's hide and reveal.
-    // - Colour: clear over the hero, fading to frosted white across the first
-    //   175px of scroll (--p), and the gold glow fading out with it (--glow).
-    // - Position: scrolling down past the nav's own height slides it out of
-    //   view; scrolling up brings it back, already white.
-    // One write per frame at most (rAF), only to the nav and the hero.
+    // Nav, measured on deloittedigital.com:
+    // - Hide on any downward scroll once past the very top (y > 2); reveal on
+    //   any upward scroll. No threshold, no delay. 200ms slide (CSS).
+    // - Clear while the bar sits over the hero; white once it's past the
+    //   hero's bottom edge (y >= heroHeight - navHeight), whichever way you go.
+    // Gold glow: fades out across the first 175px of scroll (--glow).
+    // One write per frame at most, only to the nav and the hero.
     const nav = document.querySelector('[data-fnav]');
     const hero = document.querySelector('[data-hero]');
-    const rootCS = getComputedStyle(document.documentElement);
-    const turn = parseFloat(rootCS.getPropertyValue('--rw-nav-turn')) || 175;
-    const HIDE_AFTER = nav.offsetHeight;     // never hide while it still overlaps the very top
-    const NUDGE = 6;                         // ignore tiny wobbles in scroll position
-    let queued = false, lastP = -1, lastY = scrollY, hidden = false;
+    const turn = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--rw-nav-turn')) || 175;
+    let queued = false, lastG = -1, lastY = scrollY, hidden = false, light = null;
     const apply = () => {
       queued = false;
       const y = scrollY, dy = y - lastY;
-      const p = Math.min(1, Math.max(0, y / turn));
-      if (Math.abs(p - lastP) >= 0.004) {
-        lastP = p;
-        nav.style.setProperty('--p', p.toFixed(3));
-        nav.classList.toggle('is-scrolled', p > 0);
-        const g = (1 - p).toFixed(3);
-        nav.style.setProperty('--glow', g);
-        if (hero) hero.style.setProperty('--glow', g);
-      }
-      if (Math.abs(dy) >= NUDGE) {
-        const hide = dy > 0 && y > HIDE_AFTER;
-        if (hide !== hidden) { hidden = hide; nav.classList.toggle('is-hidden', hide); }
-        lastY = y;
+      lastY = y;
+      if (dy > 0 && y > 2 && !hidden) { hidden = true; nav.classList.add('is-hidden'); }
+      else if (dy < 0 && hidden) { hidden = false; nav.classList.remove('is-hidden'); }
+      const edge = hero ? hero.offsetHeight - nav.offsetHeight : 0;
+      const isLight = y >= edge;
+      if (isLight !== light) { light = isLight; nav.classList.toggle('is-light', isLight); }
+      const g = 1 - Math.min(1, Math.max(0, y / turn));
+      if (Math.abs(g - lastG) >= 0.004) {
+        lastG = g;
+        nav.style.setProperty('--glow', g.toFixed(3));
+        if (hero) hero.style.setProperty('--glow', g.toFixed(3));
       }
     };
     addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(apply); } }, { passive: true });
-    // Keyboard users: a focused link inside a hidden nav brings it back.
+    // Keyboard users: focus inside a hidden nav brings it back.
     nav.addEventListener('focusin', () => { hidden = false; nav.classList.remove('is-hidden'); });
     apply();
   </script>
