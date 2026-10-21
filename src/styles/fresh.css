@@ -501,3 +501,5 @@ a { color: inherit; }
   color: rgba(238, 234, 255, 0.75);
 }
 @media (max-width: 1100px) { .trusted__label { position: relative; bottom: auto; margin-top: 24px; } }
+.trusted__label { font-size: calc(var(--pf-fs-mono) * 3); letter-spacing: 0.04em; }   /* 3x: 38.88px */
+@media (max-width: 760px) { .trusted__label { font-size: calc(var(--pf-fs-mono) * 1.8); } }
