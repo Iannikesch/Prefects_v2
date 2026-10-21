@@ -104,7 +104,7 @@ a { color: inherit; }
   -webkit-background-clip: text; background-clip: text; color: transparent;
   -webkit-text-fill-color: transparent;
 }
-.rhero .pf-display em { font-family: var(--pf-italic); filter: drop-shadow(0 2px 18px rgba(211,167,84,.25)); }
+.rhero .pf-display em { font-family: var(--pf-italic); text-shadow: none; }  /* glow comes from .glow */
 .rhero .pf-pill--tag::before { background: var(--rw-gold-300); box-shadow: 0 0 10px var(--rw-gold-500); }
 .btn-gold {
   background: var(--rw-foil-grain), var(--rw-foil) !important; background-size: 160px 160px, 220% 100% !important;
@@ -176,3 +176,44 @@ a { color: inherit; }
 .pill-ink { display: inline-flex; align-items: center; height: 41px; padding: 10px 16px; border-radius: var(--pf-r-pill); background: var(--rw-ink); color: var(--pf-white); font: 500 15px/1 var(--pf-sans); letter-spacing: -0.02em; text-decoration: none; transition: background-color 240ms ease; }
 .pill-ink:hover { background: #2a2a30; }
 @media (max-width: 760px) { .why-light__cards > li:nth-child(even) { justify-self: start; } }
+
+
+/* ---------- Gold glow (only while you're at the top) ----------
+   Each gold piece lights the black around it: a pale, almost-white core
+   fading into warm gold. It breathes on its own clock, and the foil's light
+   streak drifts across. --glow (1 at the top, 0 once the nav has turned
+   white) comes from the nav script; --pulse is the breathing. */
+@property --pulse { syntax: "<number>"; inherits: true; initial-value: 0.6; }
+:root { --glow: 1; }
+@keyframes rw-breathe { 0% { --pulse: 0.45; } 100% { --pulse: 1; } }
+@keyframes rw-sheen  { 0% { background-position: 0 0, 0% 0; } 100% { background-position: 0 0, 100% 0; } }
+
+.glow { animation: rw-breathe 3.8s ease-in-out infinite alternate; }
+.glow:nth-of-type(2n) { animation-duration: 4.6s; animation-delay: -1.3s; }  /* don't pulse in unison */
+
+/* Buttons: a halo that lights and whitens the black around them */
+.btn-gold.glow {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    0 0 calc(18px + 14px * var(--pulse)) calc(2px + 4px * var(--pulse)) rgba(255, 246, 222, calc(0.30 * var(--pulse) * var(--glow))),
+    0 0 calc(50px + 40px * var(--pulse)) calc(10px + 14px * var(--pulse)) rgba(229, 186, 97, calc(0.26 * var(--pulse) * var(--glow))),
+    0 6px 24px rgba(211, 167, 84, 0.22) !important;
+  animation: rw-breathe 3.8s ease-in-out infinite alternate, rw-sheen 7s ease-in-out infinite alternate !important;
+}
+/* Gold text and the foil rule: light spills from the letterforms */
+.foil-text.glow, .foil-rule.glow {
+  filter:
+    drop-shadow(0 0 calc(6px + 6px * var(--pulse)) rgba(255, 246, 222, calc(0.55 * var(--pulse) * var(--glow))))
+    drop-shadow(0 0 calc(20px + 24px * var(--pulse)) rgba(229, 186, 97, calc(0.45 * var(--pulse) * var(--glow))));
+  animation: rw-breathe 4.6s ease-in-out infinite alternate, rw-sheen 9s ease-in-out infinite alternate;
+}
+.foil-rule.glow { background-size: 220% 100%; background-image: var(--rw-foil); }
+/* The eyebrow's gold dot */
+.rhero .pf-pill--tag.glow::before {
+  animation: rw-breathe 3.2s ease-in-out infinite alternate;
+  box-shadow: 0 0 calc(6px + 10px * var(--pulse)) calc(1px + 2px * var(--pulse)) rgba(247, 225, 127, calc(0.85 * var(--glow) + 0.15));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow, .btn-gold.glow, .foil-text.glow, .foil-rule.glow, .rhero .pf-pill--tag.glow::before { animation: none !important; --pulse: 0.75; }
+}

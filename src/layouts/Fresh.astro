@@ -29,7 +29,7 @@ const { title = 'Profectus Agency' } = Astro.props;
           <li><a href="/about">About</a></li>
         </ul>
       </nav>
-      <a class="fnav__cta btn-gold" href="/contact">Get in Touch →</a>
+      <a class="fnav__cta btn-gold glow" href="/contact">Get in Touch →</a>
     </div>
   </header>
 
@@ -42,7 +42,12 @@ const { title = 'Profectus Agency' } = Astro.props;
     // first 175px of scroll. --p goes 0 to 1 and the CSS does the rest.
     const nav = document.querySelector('[data-fnav]');
     const turn = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--rw-nav-turn')) || 175;
-    const set = () => nav.style.setProperty('--p', Math.min(1, Math.max(0, scrollY / turn)).toFixed(3));
+    const root = document.documentElement;
+    const set = () => {
+      const p = Math.min(1, Math.max(0, scrollY / turn));
+      nav.style.setProperty('--p', p.toFixed(3));
+      root.style.setProperty('--glow', (1 - p).toFixed(3));   // gold glows only at the top
+    };
     addEventListener('scroll', set, { passive: true });
     set();
   </script>
