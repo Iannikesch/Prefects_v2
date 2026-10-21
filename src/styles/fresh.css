@@ -379,3 +379,11 @@ a { color: inherit; }
    straight into each other. Temporary: real sections will go here. */
 .spacer { height: 100svh; display: grid; place-items: center; background: var(--rw-paper); }
 .spacer span { font: 400 11px/1 var(--pf-mono); text-transform: uppercase; letter-spacing: .06em; color: rgba(11, 11, 12, 0.18); }
+
+/* Nav button: gold over the hero, purple once the nav has turned white. */
+.fnav.is-light .fnav__cta.btn-gold {
+  background: #6E62E6 !important; color: var(--pf-white) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 6px 20px rgba(110, 98, 230, 0.25) !important;
+}
+.fnav.is-light .fnav__cta.btn-gold:hover { background: #5B4FD9 !important; }
+.fnav.is-light .fnav__cta.btn-gold::after { display: none; }   /* no gold glow on white */
