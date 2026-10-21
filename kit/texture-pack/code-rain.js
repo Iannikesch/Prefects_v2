@@ -18,6 +18,9 @@
     violet: ["#1C1F3C", "#485384", "#5B588E", "#775E99", "#8E84F7", "#B9B2FA", "#EDEBFF"],
     aurora: ["#1C1F3C", "#214567", "#2F6476", "#48798E", "#8C9999", "#B8C4C6", "#E6EEF0"],
   };
+  // data-accent="gold": the highlighted letters (each stream's leading glyph
+  // and the light pulse) flash to this gold, then settle back to the ramp.
+  const GOLD = ["#3A2C12", "#6B5222", "#9A7537", "#BA8D44", "#D3A754", "#E5BA61", "#F7E17F"];
   const LEVELS = 10;       // colour steps baked into the atlas
   const GLOW_FROM = 7;     // levels at and above this get a baked soft glow
   const FPS = 30;
@@ -76,7 +79,7 @@
     if (!col.on) return null;
     const p = 1 - col.left / col.runLen;             // 0 at tail, 1 at head
     const head = col.left === 0 && Math.random() < 0.6;
-    return { g: pick(), base: head ? 1 : 0.18 + 0.55 * p * p };
+    return { g: pick(), base: head ? 1 : 0.18 + 0.55 * p * p, flash: head ? 1 : 0 };
   }
 
   function makeField(host) {
@@ -90,6 +93,7 @@
     host.appendChild(canvas);
     const ctx = canvas.getContext("2d");
     const colours = rampColours(ramp);
+    const gold = host.dataset.accent === "gold" ? rampColours(GOLD) : null;
 
     let w = 0, h = 0, dpr = 1, layers = [], t = 0;
 
@@ -102,6 +106,7 @@
 
       layers = LAYERS.map((L) => {
         const atlas = buildAtlas(L.fs, colours, dpr);
+        const goldAtlas = gold ? buildAtlas(L.fs, gold, dpr) : null;
         const lineH = L.fs * 1.15;
         const cols = [];
         for (let x = rand(0, L.fs); x < w; x += L.fs * L.gap * rand(0.85, 1.25)) {
@@ -120,7 +125,7 @@
           col.y0 = -lineH;
           cols.push(col);
         }
-        return { ...L, atlas, cols };
+        return { ...L, atlas, goldAtlas, cols };
       });
     }
 
@@ -132,7 +137,12 @@
         while (c.y0 > -c.lineH) { c.cells.unshift(nextCell(c)); c.y0 -= c.lineH; }
         while (c.y0 + (c.cells.length - 1) * c.lineH > h + c.lineH) c.cells.pop();
         // occasional glyph swaps so the text never sits still
-        for (const cell of c.cells) if (cell && Math.random() < 0.12 * dt) cell.g = pick();
+        for (const cell of c.cells) {
+          if (!cell) continue;
+          if (Math.random() < 0.12 * dt) cell.g = pick();
+          if (cell.flash > 0) cell.flash = Math.max(0, cell.flash - dt / 0.9);  // gold fades over ~0.9s
+          else if (Math.random() < 0.004 * dt) cell.flash = 1;                    // a rare stray glint
+        }
       }
     }
 
@@ -152,9 +162,13 @@
             let I = cell.base * 0.8 + 0.45 * Math.exp(-dp * dp) + 0.22 * Math.exp(-dx * dx);
             if (I < 0.05) continue;
             if (I > 1) I = 1;
+            // Gold flash: a fresh leading glyph, or the pulse passing over it.
+            const glint = L.goldAtlas ? Math.max(cell.flash, dp * dp < 0.35 ? 0.9 : 0) : 0;
+            const useGold = glint > 0.08;
+            if (useGold) I = Math.max(I, glint);
             const l = Math.min(LEVELS - 1, (I * (LEVELS - 1)) | 0);
             ctx.globalAlpha = L.alpha * Math.min(1, 0.25 + I);
-            ctx.drawImage(img, cell.g * cw * dpr, l * ch * dpr, cw * dpr, ch * dpr,
+            ctx.drawImage(useGold ? L.goldAtlas.img : img, cell.g * cw * dpr, l * ch * dpr, cw * dpr, ch * dpr,
                           c.x - cw / 2, y - ch / 2, cw, ch);
           }
         }

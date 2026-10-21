@@ -1,0 +1,129 @@
+/* Rework: white site, black accents. Colours and fonts still come from the
+   texture pack (--pf-*); these are the few new values. Spacing follows
+   inboundmedia.co, measured Oct 21 (kit/scouted/inboundmedia-co-hero.md). */
+:root {
+  --rw-paper:   #FFFFFF;   /* the new page background */
+  --rw-ink:     #0B0B0C;   /* text on white */
+  --rw-ink-2:   #4A4A50;   /* secondary text on white */
+  /* Gold, sampled from the owner's foil reference (Oct 21), shadow to glint. */
+  --rw-gold-900: #9A7537;
+  --rw-gold-700: #BA8D44;
+  --rw-gold-500: #D3A754;   /* the main gold */
+  --rw-gold-300: #E5BA61;
+  --rw-gold-100: #F7E17F;   /* glint */
+  /* Foil: a raking light streak across the gold, plus fine grain for the crinkle. */
+  --rw-foil-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35  0 0 0 0 .25  0 0 0 0 .08  0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --rw-foil: linear-gradient(115deg, var(--rw-gold-900) 0%, var(--rw-gold-500) 20%, var(--rw-gold-100) 36%, var(--rw-gold-700) 52%, var(--rw-gold-300) 68%, var(--rw-gold-900) 86%, var(--rw-gold-300) 100%);
+  /* Inbound's measured layout */
+  --rw-container: min(calc(100% - 32px), 1298px);  /* = min(100%,1330px) - 32px: 71px gutters at 1440, 16px on phones */
+  --rw-hero-w:    min(calc(100% - 32px), 1140px);  /* hero container */
+  --rw-gutter:    16px;
+  --rw-nav-h:     90px;      /* 89.6 measured */
+  --rw-nav-turn:  175px;     /* scroll distance over which the nav goes clear to white */
+  --rw-fade:      300ms;     /* the nav's lag behind scroll */
+  --rw-hero-pt:   140px;     /* hero padding: 140 top, 80 bottom */
+  --rw-hero-pb:   80px;
+  --rw-after:     90px;      /* gap below the hero (89.6 measured; 64 at 768, 32 at 390) */
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html { background: var(--rw-paper); }
+body { background: var(--rw-paper); color: var(--rw-ink); font: 400 16px/1.4 var(--pf-sans); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+a { color: inherit; }
+
+/* ---------- Nav (Inbound pattern, our frosted glass) ----------
+   Clear over the black hero, then fades to frosted white over the first
+   175px of scroll, scrubbed by --p (0 to 1) from the script, with Inbound's
+   ~300ms lag. Height never changes. */
+.fnav {
+  --p: 0;
+  position: fixed; inset: 0 0 auto; z-index: 100; height: var(--rw-nav-h);
+  background: rgba(255, 255, 255, calc(var(--p) * 0.82));
+  -webkit-backdrop-filter: blur(calc(var(--p) * 14px + 2px)); backdrop-filter: blur(calc(var(--p) * 14px + 2px));
+  box-shadow: 0 1px 0 rgba(0, 0, 0, calc(var(--p) * 0.06));
+  color: color-mix(in srgb, var(--rw-ink) calc(var(--p) * 100%), var(--pf-white));
+  transition: background-color var(--rw-fade) ease, color var(--rw-fade) ease, box-shadow var(--rw-fade) ease;
+}
+.fnav__bar { width: var(--rw-container); margin-inline: auto; height: 100%; display: flex; align-items: center; justify-content: space-between; }
+.fnav__logo { font: 400 clamp(30px, 2.6vw, 40px)/1 var(--pf-serif); letter-spacing: -0.035em; text-decoration: none; }
+/* Inbound's links: 14px uppercase, 1.4px tracking, 20px padding, no gaps */
+.fnav__links { display: flex; list-style: none; padding: 0; margin-left: auto; margin-right: 10px; }
+.fnav__links a { display: block; padding: 20px; font: 500 14px/1 var(--pf-sans); letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; opacity: .85; transition: opacity 200ms ease; }
+.fnav__links a:hover { opacity: 1; }
+.fnav__cta {
+  font: 500 15px/1 var(--pf-sans); letter-spacing: -0.02em; text-decoration: none;
+  padding: 13px 18px; border-radius: var(--pf-r-pill);
+  background: var(--pf-fill-cta); color: var(--pf-white);
+  -webkit-backdrop-filter: var(--pf-blur-pill); backdrop-filter: var(--pf-blur-pill);
+  transition: background-color var(--rw-fade) ease;
+}
+@media (max-width: 900px) { .fnav__links { display: none; } :root { --rw-nav-h: 72px; } }
+
+/* ---------- Hero: Inbound's background. Black holds to 76%, then fades
+   to white by the bottom edge, so it joins the white page with no seam. ---------- */
+.rhero {
+  position: relative; overflow: hidden;
+  min-height: 760px;   /* Inbound's is 603px with one headline; ours carries more copy */
+  background: #000 linear-gradient(#000 76%, var(--rw-paper));
+  color: var(--pf-white);
+  display: grid; align-content: start;
+  padding: var(--rw-hero-pt) 0 var(--rw-hero-pb);
+}
+/* Code rain: invisible at the centre of the screen, stronger toward the
+   right edge, and gone before the fade to white. */
+.rhero .pf-rain {
+  opacity: 0.95;
+  -webkit-mask: linear-gradient(90deg, transparent 0%, transparent 46%, rgba(0,0,0,.25) 58%, rgba(0,0,0,.7) 74%, #000 90%),
+                linear-gradient(180deg, transparent 0%, #000 12%, #000 52%, transparent 74%);
+  -webkit-mask-composite: source-in;
+  mask: linear-gradient(90deg, transparent 0%, transparent 46%, rgba(0,0,0,.25) 58%, rgba(0,0,0,.7) 74%, #000 90%),
+        linear-gradient(180deg, transparent 0%, #000 12%, #000 52%, transparent 74%);
+  mask-composite: intersect;
+}
+/* Copy sits on the left of the hero container (Inbound: x 150 at 1440). */
+.rhero__inner {
+  position: relative; z-index: 2; width: var(--rw-hero-w); margin-inline: auto; text-align: left;
+  display: grid; justify-items: start; gap: 28px;
+}
+.rhero .pf-display { text-shadow: 0 2px 30px rgba(0,0,0,.6); }
+.rhero__lead { max-width: 30em; font-size: var(--pf-fs-lead); letter-spacing: var(--pf-ls-lead); line-height: 1.35; color: rgba(255,255,255,.9); text-shadow: 0 1px 16px rgba(0,0,0,.7); }
+.rhero__pills { display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-start; }
+@media (max-width: 760px) {
+  .rhero { min-height: 100svh; }
+  .rhero .pf-rain { -webkit-mask: linear-gradient(180deg, transparent, #000 15%, #000 50%, transparent 70%); mask: linear-gradient(180deg, transparent, #000 15%, #000 50%, transparent 70%); opacity: .45; }
+}
+
+/* ---------- Gold, sprinkled (not everywhere) ----------
+   1. The italic word in the headline, as gold foil.
+   2. The dot in the eyebrow tag.
+   3. The main button: gold foil with black text.
+   4. A short foil rule above the subtext. */
+.foil-text {
+  background: var(--rw-foil-grain), var(--rw-foil); background-size: 160px 160px, 220% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.rhero .pf-display em { font-family: var(--pf-italic); filter: drop-shadow(0 2px 18px rgba(211,167,84,.25)); }
+.rhero .pf-pill--tag::before { background: var(--rw-gold-300); box-shadow: 0 0 10px var(--rw-gold-500); }
+.btn-gold {
+  background: var(--rw-foil-grain), var(--rw-foil) !important; background-size: 160px 160px, 220% 100% !important;
+  background-position: 0 0, 0% 0 !important;
+  color: var(--rw-ink) !important; font-weight: 600 !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 6px 24px rgba(211,167,84,.22);
+  transition: background-position 700ms var(--pf-ease), box-shadow 300ms ease !important;
+}
+.btn-gold:hover { background-position: 0 0, 100% 0 !important; }   /* the light streak slides across */
+.foil-rule { width: 64px; height: 2px; border-radius: 2px; background: var(--rw-foil); }
+
+/* ---------- Everything below the hero: white, built section by section ---------- */
+.next { min-height: 90vh; padding: var(--rw-after) var(--rw-gutter) 120px; display: grid; place-items: center; text-align: center; color: var(--rw-ink-2); }
+.next p { font: 400 13px/1.4 var(--pf-mono); text-transform: uppercase; letter-spacing: .04em; }
+
+@media (prefers-reduced-motion: reduce) { .fnav, .fnav__cta { transition: none; } }
+
+/* Longer headline: one step smaller than the old two-line tagline, so it
+   sets in about three lines instead of five. */
+.rhero__title { font-size: clamp(40px, 26px + 3.6vw, 82px); line-height: 0.95; max-width: 9.6em; text-wrap: balance; }
+@media (max-width: 768px) { :root { --rw-after: 64px; } }
+@media (max-width: 390px) { :root { --rw-after: 32px; --rw-hero-pb: 60px; } }

@@ -1,0 +1,49 @@
+---
+// The rework starts here: a fresh layout. Inbound-style nav (frosted,
+// black over the hero, white once you scroll), white page, and the kit's
+// colours, fonts and movers. The old Base.astro is untouched for reference.
+import '../../kit/texture-pack/profectus-texture.css';
+import '../../kit/motion-system/motion-system.css';
+import '../styles/fresh.css';
+const { title = 'Profectus Agency' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=erode@400,500&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Instrument+Serif:ital@1&family=PT+Mono&display=swap" />
+</head>
+<body>
+  <header class="fnav" data-fnav>
+    <div class="fnav__bar">
+      <a class="fnav__logo" href="/">Profectus</a>
+      <nav aria-label="Main">
+        <ul class="fnav__links">
+          <li><a href="/capabilities">Capabilities</a></li>
+          <li><a href="/ai">[AI Product]</a></li>
+          <li><a href="/case-studies">Case Studies</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </nav>
+      <a class="fnav__cta btn-gold" href="/contact">Get in Touch →</a>
+    </div>
+  </header>
+
+  <main><slot /></main>
+
+  <script>
+    import '../../kit/texture-pack/code-rain.js';
+    // Nav (Inbound): clear over the hero, fading to frosted white across the
+    // first 175px of scroll. --p goes 0 to 1 and the CSS does the rest.
+    const nav = document.querySelector('[data-fnav]');
+    const turn = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--rw-nav-turn')) || 175;
+    const set = () => nav.style.setProperty('--p', Math.min(1, Math.max(0, scrollY / turn)).toFixed(3));
+    addEventListener('scroll', set, { passive: true });
+    set();
+  </script>
+</body>
+</html>

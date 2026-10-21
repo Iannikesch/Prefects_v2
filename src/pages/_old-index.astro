@@ -1,0 +1,184 @@
+---
+// Homepage. Twelve bands. Movers (time-driven backgrounds) are spaced so
+// only one is on screen at a time: aurora, marquee, globe, code rain,
+// galaxy, footer aurora. Every other band is still.
+import Base from '../layouts/Base.astro';
+import Ph from '../components/Ph.astro';
+import CaseRail from '../components/CaseRail.astro';
+import Mood from '../components/Mood.astro';
+import { AI_NAME, AI_PATH, STATS, INDUSTRIES, WHY, PROCESS } from '../data/site.js';
+import { THEMES, inTheme } from '../data/capabilities.js';
+import { CASE_STUDIES, caseBySlug } from '../data/caseStudies.js';
+import Aurora from '../components/Aurora.astro';
+import CodeRain from '../components/CodeRain.astro';
+import Galaxy from '../components/Galaxy.astro';
+import Globe from '../components/Globe.astro';
+import Marquee from '../components/Marquee.astro';
+import { LAYERS, mv } from '../data/layers.js';
+
+const featured = caseBySlug('serenity-collective');
+const pad = (n) => String(n).padStart(2, '0');
+---
+<Base>
+  <!-- 1 · Hero: Profectus, unchanged. Mover: aurora. -->
+  <section class="hero">
+    <Aurora />
+    <div class="hero__inner">
+      <span class="pf-pill pf-pill--tag">The Profectus Agency</span>
+      <h1 class="pf-display"><em>Your</em> Progress,<br />Our Purpose.</h1>
+      <p class="t-lead">Profectus is powered by a proprietary data spine with near-full domestic coverage. We've spent decades building this capability inside Fortune 50 organizations.</p>
+      <div class="pills pills--center">
+        <a class="pf-pill" href="/contact" data-contact>Get in Touch →</a>
+        <a class="pf-pill pf-pill--ghost" href={AI_PATH}>Meet {AI_NAME} →</a>
+      </div>
+    </div>
+    <svg class="hero__cue" viewBox="0 0 28 14" fill="none" aria-hidden="true"><path d="M1 1l13 12L27 1" stroke="#fff" /></svg>
+  </section>
+
+  <!-- 2 · Statement: the page's one scroll-scrubbed headline (Profectus) -->
+  <section class="section">
+    <div class="wrap statement">
+      <p class="pf-eyebrow">Services overview</p>
+      <h2 class:list={['pf-h2', mv.scrub]}>Everything You Need to Move Forward. Nothing You Don't.</h2>
+      <div class="statement__cols">
+        <p class="t-soft">We sit at the intersection of data science, strategic media, and performance creative, connected by a proprietary data spine with near-full domestic coverage. Identity resolution. Cookieless activation. Audience intelligence.</p>
+        <p class="t-soft">Our team spent decades running marketing and data programs inside Fortune 50 organizations. We built Profectus to make that capability available to every brand we work with.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · Capabilities: IBM title-plus-items. 12 services grouped into 4 themes. -->
+  <section class="section section--flush-top">
+    <div class="wrap ti">
+      <div class="head">
+        <p class="pf-eyebrow">Capabilities</p>
+        <h2 class="pf-h2">Every Capability. One Spine.</h2>
+        <p class="t-soft">Each capability works independently or as part of a fully integrated engagement.</p>
+        <div class="pills"><a class="pf-pill pf-pill--ghost" href="/capabilities">View All Capabilities →</a></div>
+      </div>
+      <div class="ti__items">
+        {THEMES.map((t, i) => (
+          <div class:list={['tile', mv.lag]} data-anchor="parent" data-speed={i % 2 ? 0.07 : 0.03} data-max="36">
+            <p class="pf-eyebrow">{pad(i + 1)} · {t.name}</p>
+            <p class="t-soft">{t.blurb}</p>
+            <ul>{inTheme(t.id).map((c) => <li><a href={`/capabilities/${c.slug}`}>{c.name}</a></li>)}</ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · Industries: Profectus marquee, 50px/s. Mover. -->
+  <section class="section--sm">
+    <div class="wrap head" style="margin-bottom:40px">
+      <p class="pf-eyebrow">Who we work with</p>
+      <h2 class="pf-h2">Target Industries</h2>
+    </div>
+    <Marquee items={INDUSTRIES} />
+  </section>
+
+  <!-- 5 · Featured case study: one big story (Deloitte featured card) -->
+  <section class="section">
+    <div class="wrap feature">
+      <Ph class="feature__media" label={`${featured.client} hero photo`} />
+      <div class="stack-lg">
+        <div class="head">
+          <p class="pf-eyebrow">Featured · {featured.client}</p>
+          <h2 class="pf-h2">Zero to <em>85%</em> occupancy in six months.</h2>
+        </div>
+        <p class="t-soft">{featured.summary}</p>
+        <div class="feature__stats">
+          {featured.stats.slice(1, 4).map((s) => <div><b>{s.value}</b><span class="pf-eyebrow">{s.label}</span></div>)}
+        </div>
+        <a class="link-arrow" href={`/case-studies/${featured.slug}`}>Read the case study →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · Results: heading + globe (mover), static stat row under a hairline (Merkle) -->
+  <section class="section section--flush-top">
+    <div class="wrap">
+      <div class="results">
+        <div class="head">
+          <p class="pf-eyebrow">Firm highlights</p>
+          <h2 class="pf-h2">These are results our team has delivered for brands ranging from regional startups to Fortune 500 enterprises.</h2>
+        </div>
+        <Globe />
+      </div>
+      <div class="stat-row" style="--n:5;margin-top:48px">
+        {STATS.map((s) => <div><span class="pf-stat">{s.value}</span><span class="pf-eyebrow">{s.label}</span></div>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · How it works: three numbered steps (live About copy) -->
+  <section class="section">
+    <div class="wrap">
+      <div class="head">
+        <p class="pf-eyebrow">Our process</p>
+        <h2 class="pf-h2">How It Works</h2>
+      </div>
+      <ol class="steps">
+        {PROCESS.map((s, i) => <li><span class="pf-eyebrow">{pad(i + 1)}</span><h3 class="t-h3">{s.title}</h3><p class="t-soft">{s.text}</p></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <!-- 8 · Mid-page CTA over a parallax photo (Profectus) -->
+  <section class:list={[mv.parallax, 'band-photo']}>
+    <Ph class="pm-parallax__plate" label="Mid-page photo (live site: skyscraper)" />
+    <div class="band-photo__inner">
+      <h2 class="t-h1">We built the infrastructure. Now we put it to work for you<span class="pf-accent-dot">.</span></h2>
+      <a class="pf-pill pf-pill--ghost" href="/about">About Us →</a>
+    </div>
+  </section>
+
+  <!-- 9 · The AI product: code rain on one side. Mover. -->
+  <section class="section clip">
+    <div class="ai-band__rain" aria-hidden="true"><CodeRain /></div>
+    <div class="wrap ai-band layer">
+      <div class="stack-lg">
+        <div class="head">
+          <p class="pf-eyebrow">{AI_NAME}</p>
+          <h2 class="pf-h2">Your company's <em>own</em> AI.</h2>
+        </div>
+        <p class="t-soft measure">It knows your business, plugs into the tools you already use, and doesn't just answer questions. It does the work. Built for you, owned by you.</p>
+        <ul class="beats">
+          <li><span class="pf-eyebrow">Sees</span><span class="t-soft">One view of your whole business, in plain language.</span></li>
+          <li><span class="pf-eyebrow">Answers</span><span class="t-soft">Ask about your numbers and get answers from your own data.</span></li>
+          <li><span class="pf-eyebrow">Builds</span><span class="t-soft">Drafts, files, follows up, and builds the sites and apps you ask for.</span></li>
+        </ul>
+        <div class="pills">
+          <a class="pf-pill" href={AI_PATH}>Meet {AI_NAME} →</a>
+          <a class="pf-pill pf-pill--ghost" href="/contact" data-contact>Book a Demo →</a>
+        </div>
+      </div>
+      <div class="pf-glass ai-band__panel"><Ph label="Product screenshot or demo still" style="position:absolute;inset:32px;background-color:transparent" /></div>
+    </div>
+  </section>
+
+  <!-- 10 · More work: Merkle heading-left rail -->
+  <section class="section">
+    <div class="wrap"><CaseRail cases={CASE_STUDIES} /></div>
+  </section>
+
+  <!-- 11 · Why Profectus: glass cards alternating over the galaxy. Mover. -->
+  <section class="section why clip">
+    <Galaxy />
+    <div class="why__rules pf-rules" aria-hidden="true"></div>
+    <div class="wrap layer">
+      <div class="head head--center">
+        <p class="pf-eyebrow">Why Profectus</p>
+        <h2 class="pf-h2">The Data Spine Changes Everything.</h2>
+      </div>
+      <ol class="why__cards">
+        {WHY.map((w, i) => (
+          <li><div class="pf-glass"><span class="pf-eyebrow">{pad(i + 1)}</span><h3 class="t-h3">{w.title}</h3><p class="t-body">{w.text}</p></div></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- 12 · Mood band (Deloitte), still glow. Then the footer. -->
+  <Mood eyebrow="Our infrastructure" title="Most agencies resell someone else's data. <em>This</em> is ours." pill="About Our Firm" href="/about" />
+</Base>
