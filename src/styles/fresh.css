@@ -972,3 +972,4 @@ em.foil-text, .edge__num.foil-text {
     rgba(0,0,0,.86) calc(100% - var(--b) * .82), rgba(0,0,0,.66) calc(100% - var(--b) * .64),
     rgba(0,0,0,.44) calc(100% - var(--b) * .46), rgba(0,0,0,.24) calc(100% - var(--b) * .3),
     rgba(0,0,0,.1) calc(100% - var(--b) * .16), rgba(0,0,0,.03) calc(100% - var(--b) * .06), rgba(0,0,0,0)); }
+.uses[data-pin] { transform-origin: 50% 100%; }   /* sinks back toward its bottom edge as the sheet covers it */

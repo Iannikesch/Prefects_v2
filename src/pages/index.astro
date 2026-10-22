@@ -240,6 +240,25 @@ const POWERS = [...SERVICE_GROUPS].reverse().flatMap((g) => g.slugs.map((slug) =
       addEventListener('resize', set);
       addEventListener('load', set);
       set();
+
+      // As "Why Profectus" comes up over it, the pinned section fades and
+      // sinks back a touch (to 35% and 96% at full cover), so the hand-off
+      // flows. Scroll-linked; opacity and transform only.
+      const sheet = pin.nextElementSibling;
+      if (sheet && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        let queued = false, last = -1;
+        const fade = () => {
+          queued = false;
+          const top = sheet.getBoundingClientRect().top;
+          const p = Math.max(0, Math.min(1, (innerHeight - top) / innerHeight));
+          if (Math.abs(p - last) < 0.002) return;
+          last = p;
+          pin.style.opacity = (1 - p * 0.65).toFixed(3);
+          pin.style.transform = p ? `scale(${(1 - p * 0.04).toFixed(4)})` : '';
+        };
+        addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(fade); } }, { passive: true });
+        fade();
+      }
     }
   </script>
   <script>
