@@ -3,7 +3,7 @@
 // The previous homepage is kept at src/pages/_old-index.astro for reference
 // (the underscore keeps it from being published as a page).
 import Fresh from '../layouts/Fresh.astro';
-import { WHY } from '../data/site.js';
+import { WHY, EDGE } from '../data/site.js';
 import { CASE_STUDIES } from '../data/caseStudies.js';
 // "Reach real people" slides: the four case studies plus a placeholder.
 // Photos and client logos are placeholders until supplied.
@@ -23,16 +23,6 @@ const CLIENTS = [
   { name: 'Marriott', src: '/logos/baked-marriott.webp?v=2', w: 130, h: 67 },
   { name: 'General Motors', src: '/logos/baked-general-motors.webp?v=2', w: 60, h: 60 },
   { name: 'Sitka', src: '/logos/baked-sitka.webp?v=2', w: 120, h: 33 },
-];
-// Why Profectus: what you get from a platform, and from us. Claims come from
-// the live site's copy plus the owner's 230M database (Oct 21). "Holding
-// company" awaits the owner's OK.
-const EDGE = [
-  ['What you get', 'A login and a support ticket.', 'The operators who ran it at Fortune 50 scale, on your account.'],
-  ['Whose data', "Rented from someone else's graph.", 'Our own database of 230 million people. Near-full domestic coverage.'],
-  ['Where your budget goes', 'Into their own network first.', 'Wherever it works. 500+ platforms and no inventory to protect.'],
-  ['What sending costs', 'Priced for enterprise contracts.', 'Built in-house, priced so sending more often finally pays.'],
-  ['Who it answers to', 'Shareholders and a holding company.', 'You, and the number you hired us to move.'],
 ];
 ---
 <Fresh>
@@ -165,7 +155,6 @@ const EDGE = [
     </div>
   </section>
 
-  <div class="spacer" aria-hidden="true"><span>Space for a section</span></div>
 
   <!-- PREVIEW: the Silver Bullet-style cascade, with draft text cards.
        Placement and card copy still to be decided together. -->

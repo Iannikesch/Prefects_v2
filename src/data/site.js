@@ -71,3 +71,15 @@ export const PROCESS = [
     text: 'Campaigns launch, performance is measured against revenue, and insights feed back into the data layer, making every future campaign smarter, more efficient, and more effective.',
   },
 ];
+
+// Why Profectus: what you get from a platform, and from us. Used on the
+// homepage and every capability page. Claims come from the live site's copy
+// plus the owner's 230M database (Oct 21). "Holding company" and "no
+// inventory" await the owner's OK.
+export const EDGE = [
+  ['What you get', 'A login and a support ticket.', 'The operators who ran it at Fortune 50 scale, on your account.'],
+  ['Whose data', "Rented from someone else's graph.", 'Our own database of 230 million people. Near-full domestic coverage.'],
+  ['Where your budget goes', 'Into their own network first.', 'Wherever it works. 500+ platforms and no inventory to protect.'],
+  ['What sending costs', 'Priced for enterprise contracts.', 'Built in-house, priced so sending more often finally pays.'],
+  ['Who it answers to', 'Shareholders and a holding company.', 'You, and the number you hired us to move.'],
+];

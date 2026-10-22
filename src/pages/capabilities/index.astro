@@ -3,39 +3,11 @@
 // then the services where that progress shows up. The previous listing is
 // kept at _old-index.astro for reference.
 import Fresh from '../../layouts/Fresh.astro';
-import { bySlug } from '../../data/capabilities.js';
+import { bySlug, SPINE as STEPS, SERVICE_GROUPS as SERVICES } from '../../data/capabilities.js';
 
-// The five vertebrae. `state` is what the customer becomes once the step is
-// done; it's the label on the travelling dot. Recognize and Unify both link
-// to the Data, Identity & Infrastructure page until Identity gets its own.
-const SPINE = [
-  { verb: 'Recognize', name: 'Identity Resolution', slug: 'data-identity-infrastructure', state: 'Someone',
-    line: 'A stranger becomes someone.',
-    body: 'Every email, device and purchase traced back to one real person. Matched deterministically against our own database of 230 million people, not guessed from a rented graph.',
-    does: ['Deterministic matching', 'Cross-device and cross-channel', 'Known customers and unknown prospects'] },
-  { verb: 'Unify', name: 'Customer Data & Infrastructure', slug: 'data-identity-infrastructure', state: 'Whole picture',
-    line: 'Someone becomes a whole picture.',
-    body: 'Your CRM, site, store and inbox finally agree. One profile per person, updated the moment they act, with consent built in from day one.',
-    does: ['Data layer and event tracking', 'CDP setup and integration', 'Real-time profiles', 'Privacy and consent'] },
-  { verb: 'Understand', name: 'Audience & Intent', slug: 'audience-intent-development', state: 'Priority',
-    line: 'A picture becomes a priority.',
-    body: "Know who is worth the most, who is ready to buy now and who is about to walk. Then find more people just like your best.",
-    does: ['Intent scoring', 'Lookalike expansion', 'Enrichment', 'Suppression of wasted spend'] },
-  { verb: 'Decide', name: 'AI & Automation', slug: 'ai-automation', state: 'Next move',
-    line: 'A priority gets the right next move.',
-    body: 'AI picks what to send, where and when, and sends it. Models trained on your own first-party data. Workflows that run while your team sleeps.',
-    does: ['Predictive models', 'Trigger-based journeys', 'Chat and voice agents'] },
-  { verb: 'Prove', name: 'Measurement & Attribution', slug: 'analytics-attribution-optimization', state: 'Proven',
-    line: 'Every move gets a receipt.',
-    body: 'Which dollar moved which person, counted honestly. Incrementality tests instead of vanity metrics, and a dashboard your CFO will actually read.',
-    does: ['Multi-touch attribution', 'Incrementality testing', 'Executive dashboards'] },
-];
-const SERVICES = [
-  { title: 'Reach them', blurb: 'The channels where the next move lands.',
-    slugs: ['paid-media-demand-generation', 'enterprise-email-text-messaging', 'direct-mail-offline-media', 'social-media-management'] },
-  { title: 'Win them', blurb: 'The story, the site and the team that close it.',
-    slugs: ['strategy-go-to-market', 'brand-creative-storytelling', 'website-digital-experience', 'sales-enablement'] },
-];
+// The five steps and the two service groups live in capabilities.js, so the
+// detail pages read the same order.
+const SPINE = STEPS.map((s) => ({ ...s, name: bySlug(s.slug).name }));
 const pad = (n) => String(n).padStart(2, '0');
 ---
 <Fresh title="Capabilities · Profectus Agency">

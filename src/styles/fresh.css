@@ -605,3 +605,112 @@ a { color: inherit; }
 @media (max-width: 560px) { .svc__grid { grid-template-columns: 1fr; } .svc__card { min-height: 0; } }
 @media (prefers-reduced-motion: reduce) { .svc__card { transition: none; } .svc__card:hover { transform: none; } }
 @media (max-width: 900px) { .spine__label { display: none; } }
+
+/* ---------- Inbound spacing, everywhere (owner, Oct 21) ----------
+   Measured on inboundmedia.co: sections ~90-100px top and bottom at 1440,
+   64 at 768, ~40 at 390; heading to text 16-20px; the hero is sized by its
+   content (140 top, 80 bottom), never stretched to the screen. These rules
+   override the larger paddings above. */
+:root { --rw-sec: 96px; --rw-head-gap: 16px; }
+@media (max-width: 768px) { :root { --rw-sec: 64px; } }
+@media (max-width: 390px) { :root { --rw-sec: 40px; } }
+
+/* Hero: no forced height. The trusted label and logos follow the buttons in
+   the flow, one section gap below them, so there is no dead space. */
+.rhero, .rhero.rhero--page { min-height: 0; }
+.trusted__label { position: relative; bottom: auto; left: auto; right: auto; margin-top: var(--rw-sec); }
+.trusted { position: relative; left: auto; bottom: auto; translate: none; margin: 24px auto 0; height: auto; }
+
+.uses, .edge, .spine, .svc, .casc, .why-light, .why-gold { padding-top: var(--rw-sec); padding-bottom: var(--rw-sec); }
+.mood-light, .close { padding-top: calc(var(--rw-sec) * 1.25); padding-bottom: calc(var(--rw-sec) * 1.25); }
+.rhero + .reach { margin-top: var(--rw-after); }   /* Inbound: 90px after the hero */
+.reach { padding-top: var(--rw-sec); padding-bottom: var(--rw-sec); }
+.next { min-height: 0; padding: var(--rw-sec) var(--rw-gutter); }
+.spine__head { margin-bottom: 56px; }
+.spine__steps { gap: var(--rw-sec); }
+.lhead, .uses__head, .edge__head, .spine__head, .cap-head { gap: var(--rw-head-gap); }
+
+/* ---------- Capability detail pages (Epsilon's product skeleton) ---------- */
+/* Jump bar: pinned at the top once reached (Epsilon). Active tab gets a gold
+   underline; on phones the bar scrolls sideways. */
+.jump { position: sticky; top: 0; z-index: 90; background: rgba(255, 255, 255, 0.92); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(11, 11, 12, 0.08); }
+.jump.is-stuck { box-shadow: 0 8px 24px rgba(20, 16, 40, 0.06); }
+.jump__inner { width: var(--rw-container); margin-inline: auto; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.jump__inner::-webkit-scrollbar { display: none; }
+.jump__tab { flex: none; padding: 20px 16px 18px; border-bottom: 2px solid transparent; font: 500 14px/1 var(--pf-sans); letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; color: var(--rw-ink-2); transition: color 300ms cubic-bezier(0.4, 0, 0.2, 1), border-color 300ms cubic-bezier(0.4, 0, 0.2, 1); }
+.jump__tab:hover { color: var(--rw-ink); }
+.jump__tab.is-on { color: var(--rw-ink); border-bottom-color: var(--rw-gold-500); }
+.cap-sec { scroll-margin-top: 60px; padding: var(--rw-sec) 0; background: var(--rw-paper); }
+.cap-sec + .cap-sec { padding-top: 0; }
+.cap-sec__inner { width: var(--rw-container); margin-inline: auto; }
+.cap-head { display: grid; justify-items: start; margin-bottom: 48px; max-width: 860px; }
+.cap-head .lh2 em { font-family: var(--pf-italic); font-size: var(--pf-italic-scale); letter-spacing: -0.03em; }
+.cap-head__sub { font-size: 18px; line-height: 1.45; color: var(--rw-ink-2); }
+.rhero--page .pf-eyebrow a { text-decoration: none; }
+.rhero--page .pf-eyebrow a:hover { color: var(--pf-white); }
+
+/* Overview: three benefits, then a wide media slot */
+.cap-benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 21px; }
+.cap-benefit { display: grid; align-content: start; gap: 12px; padding: 28px 24px; border-top: 2px solid var(--rw-ink); }
+.cap-benefit__n { font: 400 var(--pf-fs-mono)/1 var(--pf-mono); color: var(--rw-gold-900); }
+.cap-benefit h3 { font: 500 var(--pf-fs-h3)/1.2 var(--pf-sans); letter-spacing: -0.03em; }
+.cap-benefit p { font-size: 16px; line-height: 1.5; color: var(--rw-ink-2); }
+.cap-media { margin-top: 48px; aspect-ratio: 16 / 6; border-radius: 15px; display: grid; place-items: center; background: linear-gradient(135deg, #F6F5FA, #EDEAF8 60%, #F7EEDB); }
+.cap-media span, .cap-story__photo span { font: 400 11px/1 var(--pf-mono); text-transform: uppercase; letter-spacing: .06em; color: rgba(11, 11, 12, 0.35); }
+
+/* Head on the left (sticky), list on the right */
+.cap-split { display: grid; grid-template-columns: 1fr 1.3fr; gap: 64px; align-items: start; }
+.cap-head--sticky { position: sticky; top: 100px; }
+
+/* Accordion (Epsilon: 350ms, several open at once). Height animates with
+   the grid 0fr to 1fr trick, so no max-height guessing. */
+.acc { list-style: none; padding: 0; border-top: 1px solid rgba(11, 11, 12, 0.14); }
+.acc__item { border-bottom: 1px solid rgba(11, 11, 12, 0.14); }
+.acc__btn { width: 100%; display: flex; align-items: center; gap: 20px; padding: 24px 0; background: none; border: 0; text-align: left; cursor: pointer; color: inherit; font: 500 20px/1.3 var(--pf-sans); letter-spacing: -0.02em; }
+.acc__n { font: 400 var(--pf-fs-mono)/1 var(--pf-mono); color: var(--rw-gold-900); }
+.acc__t { flex: 1; }
+.acc__icon { position: relative; width: 14px; height: 14px; flex: none; }
+.acc__icon::before, .acc__icon::after { content: ""; position: absolute; left: 0; top: 6px; width: 14px; height: 2px; background: currentColor; transition: transform 350ms cubic-bezier(0.4, 0, 0.2, 1); }
+.acc__icon::after { transform: rotate(90deg); }
+.acc__item.is-open .acc__icon::after { transform: rotate(0deg); }
+.acc__panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 350ms cubic-bezier(0.4, 0, 0.2, 1); }
+.acc__panel > div { overflow: hidden; }
+.acc__panel p { padding: 0 34px 24px; font-size: 17px; line-height: 1.55; color: var(--rw-ink-2); max-width: 44em; }
+.acc__item.is-open .acc__panel { grid-template-rows: 1fr; }
+
+/* Why: the homepage comparison on a soft lavender band */
+.cap-sec--why { background: #F6F5FA; padding: var(--rw-sec) 0; }
+.cap-sec--why + .cap-sec { padding-top: var(--rw-sec); }
+.cap-sec--why .lh2 em { font-family: var(--pf-italic); font-size: var(--pf-italic-scale); }
+
+/* Progress stories: three cards, photo on top */
+.cap-stories { display: grid; grid-template-columns: repeat(3, 1fr); gap: 21px; }
+.cap-story { display: grid; align-content: start; gap: 10px; text-decoration: none; }
+.cap-story__photo { aspect-ratio: 16 / 10; border-radius: 15px; display: grid; place-items: center; background: linear-gradient(135deg, #1C1242, #3A2C8A 55%, #6E62E6); margin-bottom: 8px; transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1); }
+.cap-story__photo span { color: rgba(238, 234, 255, 0.6); }
+.cap-story:hover .cap-story__photo { transform: scale(1.02); }
+.cap-story__client { font: 400 var(--pf-fs-mono)/1.3 var(--pf-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--rw-ink-2); }
+.cap-story__stat { font-size: 15px; color: var(--rw-ink-2); }
+.cap-story__stat b { font: 400 32px/1 var(--pf-serif); color: var(--rw-gold-900); margin-right: 4px; }
+.cap-story__title { font: 500 19px/1.3 var(--pf-sans); letter-spacing: -0.02em; }
+.cap-story__go { font: 500 14px/1 var(--pf-sans); color: #6E62E6; margin-top: 4px; }
+
+/* Next step: one wide link to the next capability */
+.cap-next { display: grid; gap: 12px; width: var(--rw-container); margin: 0 auto var(--rw-sec); padding: 48px; border-radius: 15px; background: var(--rw-ink); color: var(--pf-white); text-decoration: none; transition: background-color 300ms ease; }
+.cap-next:hover { background: #1a1730; }
+.cap-next .pf-eyebrow { color: var(--rw-gold-300); }
+.cap-next__h { font: 400 clamp(32px, 22px + 2vw, 56px)/1.05 var(--pf-serif); letter-spacing: -0.035em; }
+.cap-next__go { font: 500 16px/1 var(--pf-sans); color: var(--rw-gold-300); }
+
+@media (max-width: 900px) {
+  .cap-benefits, .cap-stories { grid-template-columns: 1fr; }
+  .cap-split { grid-template-columns: 1fr; gap: 24px; }
+  .cap-head--sticky { position: static; }
+  .cap-media { aspect-ratio: 16 / 10; }
+  .cap-next { padding: 28px; }
+  .jump__tab { padding: 16px 12px 14px; font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) { .acc__panel, .acc__icon::before, .acc__icon::after, .cap-story__photo { transition: none; } }
+/* When the nav slides back in, the jump bar steps down under it (same 200ms). */
+.jump { transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+.fnav:not(.is-hidden) ~ main .jump.is-stuck { transform: translateY(var(--rw-nav-h)); }

@@ -1,95 +1,226 @@
 ---
-// Service detail template (IBM + Epsilon + Deloitte). One template, all 12
-// capabilities, same URLs as the live site.
-import Base from '../../layouts/Base.astro';
-import Accordion from '../../components/Accordion.astro';
-import CaseCard from '../../components/CaseCard.astro';
-import Mood from '../../components/Mood.astro';
-import { CAPABILITIES, THEMES, bySlug } from '../../data/capabilities.js';
+// One page per capability, on Epsilon's product-page skeleton
+// (kit/scouted/epsilon-com-cdp.md, epsilon-com-sitewide.md):
+// hero > pinned jump bar > overview > what's inside (accordion) >
+// why Profectus (comparison) > progress stories > FAQ > next step > close.
+// Our copy throughout; anything not yet written is a marked placeholder.
+// The previous template is kept at _old-slug.astro for reference.
+import Fresh from '../../layouts/Fresh.astro';
+import { CAPABILITIES, bySlug, placeOf } from '../../data/capabilities.js';
 import { CASE_STUDIES, casesFor } from '../../data/caseStudies.js';
-import { AI_NAME, AI_PATH } from '../../data/site.js';
-import Aurora from '../../components/Aurora.astro';
+import { EDGE } from '../../data/site.js';
 
 export function getStaticPaths() {
   return CAPABILITIES.map((c) => ({ params: { slug: c.slug } }));
 }
 const cap = bySlug(Astro.params.slug);
-const theme = THEMES.find((t) => t.id === cap.theme);
-const related = CAPABILITIES.filter((c) => c.theme === cap.theme && c.slug !== cap.slug)
-  .concat(CAPABILITIES.filter((c) => c.theme !== cap.theme))
-  .slice(0, 4);
-const cases = casesFor(cap.slug);
-const shown = (cases.length ? cases : CASE_STUDIES).slice(0, 2);
-const isAI = cap.slug === 'ai-automation';
+const place = placeOf(cap.slug);
+const pad = (n) => String(n).padStart(2, '0');
+const firstSentence = (t) => (t.match(/^.*?[.!?](\s|$)/) || [t])[0].trim();
+
+const eyebrow = place.kind === 'spine'
+  ? `The spine · ${pad(place.index + 1)} ${place.step.verb}`
+  : `Where the progress happens · ${place.group.title}`;
+const pitch = place.kind === 'spine' ? place.step.line : cap.summary;
+const lede = place.kind === 'spine' ? place.step.body : cap.summary;
+const benefits = cap.items.slice(0, 3);
+const stories = (casesFor(cap.slug).length ? casesFor(cap.slug) : CASE_STUDIES).slice(0, 3);
+
+// Jump bar, Epsilon style: buttons that scroll to each section and write ?tab=
+const TABS = [
+  ['overview', 'Overview'],
+  ['inside', "What's inside"],
+  ['why', 'Why Profectus'],
+  ['stories', 'Progress stories'],
+  ['faq', 'FAQ'],
+];
+// FAQ: structure only. Questions and answers to be written together.
+const FAQ = [
+  [`[Question] Do I need the whole spine, or just ${cap.name}?`, '[Answer to write together]'],
+  ['[Question] How long until we see results?', '[Answer to write together]'],
+  ['[Question] Who owns the data when we are done?', '[Answer to write together]'],
+  ['[Question] What does it cost to start?', '[Answer to write together]'],
+];
 ---
-<Base title={cap.name} description={cap.summary}>
-  <section class="hero hero--page hero--left">
-    <Aurora />
-    <div class="wrap hero__inner">
-      <ol class="crumbs pf-eyebrow"><li><a href="/capabilities">Capabilities</a></li><li>{theme.name}</li></ol>
-      <h1 class="t-h1">{cap.name}</h1>
-      <p class="t-lead measure">{cap.summary}</p>
-      <div class="pills">
-        <a class="pf-pill" href="/contact" data-contact>Talk to Us About This →</a>
-        <a class="pf-pill pf-pill--ghost" href="#services">See All {cap.items.length} Services ↓</a>
+<Fresh title={`${cap.name} · Profectus Agency`}>
+  <section class="rhero rhero--page" data-hero>
+    <div class="pf-rain" data-ramp="violet" data-accent="gold" aria-hidden="true"></div>
+    <div class="rhero__inner">
+      <p class="pf-eyebrow"><a href="/capabilities">Capabilities</a> · {eyebrow}</p>
+      <h1 class="pf-display rhero__title">{cap.name}</h1>
+      <span class="foil-rule glow" aria-hidden="true"></span>
+      <p class="rhero__lead">{lede}</p>
+      <div class="rhero__pills">
+        <a class="pf-pill btn-gold glow" href="/contact">Talk to an operator →</a>
+        <a class="pf-pill pf-pill--ghost" href="?tab=stories" data-jump="stories">See the proof ↓</a>
       </div>
     </div>
   </section>
 
-  {isAI && (
-    <section class="section--sm">
-      <div class="wrap">
-        <a class="next-pick" href={AI_PATH}>
-          <div class="ph" style="aspect-ratio:auto;height:100%;min-height:180px"><span>Placeholder · {AI_NAME} visual</span></div>
-          <div class="next-pick__body">
-            <p class="pf-eyebrow">Go further</p>
-            <h2 class="t-h3s">Want an AI that runs on your whole business? Meet {AI_NAME}.</h2>
-            <span class="link-arrow">See how it works →</span>
+  <!-- Jump bar: pinned under the nav. Clicking scrolls to the section and
+       writes ?tab=; scrolling by hand lights the tab without touching the URL. -->
+  <div class="jump-sentinel" aria-hidden="true"></div>
+  <nav class="jump" aria-label={`${cap.name} sections`} data-jumpbar>
+    <div class="jump__inner">
+      {TABS.map(([id, label]) => <a class="jump__tab" href={`?tab=${id}`} data-jump={id}>{label}</a>)}
+    </div>
+  </nav>
+
+  <section class="cap-sec light" id="overview">
+    <div class="cap-sec__inner">
+      <div class="cap-head">
+        <p class="pf-eyebrow">Overview</p>
+        <h2 class="lh2">{pitch}</h2>
+      </div>
+      <div class="cap-benefits">
+        {benefits.map(([name, desc], i) => (
+          <div class="cap-benefit">
+            <span class="cap-benefit__n">{pad(i + 1)}</span>
+            <h3>{name}</h3>
+            <p>{firstSentence(desc)}</p>
           </div>
-        </a>
+        ))}
       </div>
-    </section>
-  )}
-
-  <!-- How we help: every service on the live page, as a numbered accordion -->
-  <section class="section" id="services">
-    <div class="wrap ti">
-      <div class="head">
-        <p class="pf-eyebrow">Service offering</p>
-        <h2 class="pf-h2">How We Help</h2>
-        <p class="t-soft">Every engagement runs on the same data spine, so each of these works better alongside the others.</p>
-      </div>
-      <Accordion items={cap.items} />
+      <div class="cap-media"><span>Photo or diagram · {cap.name}</span></div>
     </div>
   </section>
 
-  <Mood eyebrow="The Profectus difference" title="We built the infrastructure. We didn't <em>license</em> it." pill="Why Profectus" href="/about" />
-
-  <section class="section">
-    <div class="wrap">
-      <div class="head">
-        <p class="pf-eyebrow">Proof</p>
-        <h2 class="pf-h2">Where This Shows Up in Our Work</h2>
+  <section class="cap-sec light" id="inside">
+    <div class="cap-sec__inner cap-split">
+      <div class="cap-head cap-head--sticky">
+        <p class="pf-eyebrow">What's inside · {cap.items.length} services</p>
+        <h2 class="lh2">Everything {cap.name} <em class="v">covers</em>.</h2>
+        <p class="cap-head__sub">Use one, or all of them. Every service runs on the same data spine.</p>
       </div>
-      <ul class="cards">{shown.map((cs) => <li><CaseCard cs={cs} /></li>)}</ul>
+      <ul class="acc" data-acc>
+        {cap.items.map(([name, desc], i) => (
+          <li class="acc__item">
+            <button class="acc__btn" type="button" aria-expanded="false" aria-controls={`acc-${i}`}>
+              <span class="acc__n">{pad(i + 1)}</span><span class="acc__t">{name}</span><span class="acc__icon" aria-hidden="true"></span>
+            </button>
+            <div class="acc__panel" id={`acc-${i}`} role="region"><div><p>{desc}</p></div></div>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
-  <section class="section section--flush-top">
-    <div class="wrap ti">
-      <div class="head">
-        <p class="pf-eyebrow">Related services</p>
-        <h2 class="pf-h2">Works Well With</h2>
+  <section class="cap-sec cap-sec--why light" id="why">
+    <div class="cap-sec__inner">
+      <div class="cap-head">
+        <p class="pf-eyebrow">Why Profectus</p>
+        <h2 class="lh2">Platforms sell you a login. <em class="foil-text">We bring the people who built it.</em></h2>
       </div>
-      <div class="ti__items">
-        {related.map((c) => (
-          <a class="tile tile--link" href={`/capabilities/${c.slug}`}>
-            <h3 class="t-h3">{c.name}</h3>
-            <p class="t-body">{c.summary}</p>
-            <span class="link-arrow">Explore →</span>
-          </a>
+      <div class="edge__table" role="table" aria-label="A platform compared with Profectus">
+        <div class="edge__row edge__row--head" role="row">
+          <span role="columnheader"></span><span role="columnheader">A platform</span><span role="columnheader">Profectus</span>
+        </div>
+        {EDGE.map(([k, them, us]) => (
+          <div class="edge__row" role="row">
+            <span class="edge__k" role="rowheader">{k}</span>
+            <span class="edge__them" role="cell">{them}</span>
+            <span class="edge__us" role="cell">{us}</span>
+          </div>
         ))}
       </div>
     </div>
   </section>
-</Base>
+
+  <section class="cap-sec light" id="stories">
+    <div class="cap-sec__inner">
+      <div class="cap-head">
+        <p class="pf-eyebrow">Progress stories</p>
+        <h2 class="lh2">Where {cap.name} <em class="v">moved the number</em>.</h2>
+      </div>
+      <div class="cap-stories">
+        {stories.map((cs) => {
+          const st = cs.stats?.find((x) => !x.confirm) || cs.stats?.[0];
+          return (
+            <a class="cap-story" href={`/case-studies/${cs.slug}`}>
+              <span class="cap-story__photo"><span>Photo · {cs.client}</span></span>
+              <span class="cap-story__client">{cs.client}</span>
+              {st && <span class="cap-story__stat"><b>{st.value}</b> {st.label}</span>}
+              <span class="cap-story__title">{cs.title}</span>
+              <span class="cap-story__go">Read the story →</span>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="cap-sec light" id="faq">
+    <div class="cap-sec__inner cap-split">
+      <div class="cap-head">
+        <p class="pf-eyebrow">FAQ</p>
+        <h2 class="lh2">Questions, <em class="v">answered</em>.</h2>
+      </div>
+      <ul class="acc" data-acc>
+        {FAQ.map(([q, a], i) => (
+          <li class="acc__item">
+            <button class="acc__btn" type="button" aria-expanded="false" aria-controls={`faq-${i}`}>
+              <span class="acc__t">{q}</span><span class="acc__icon" aria-hidden="true"></span>
+            </button>
+            <div class="acc__panel" id={`faq-${i}`} role="region"><div><p>{a}</p></div></div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {place.next && (
+    <a class="cap-next" href={`/capabilities/${place.next.slug}`}>
+      <span class="pf-eyebrow">{place.kind === 'spine' ? `Next on the spine · ${pad(place.index + 2)} ${place.nextStep.verb}` : `Next in ${place.group.title}`}</span>
+      <span class="cap-next__h">{place.kind === 'spine' ? place.nextStep.line : place.next.name}</span>
+      <span class="cap-next__go">{place.next.name} →</span>
+    </a>
+  )}
+
+  <section class="close" aria-labelledby="close-h">
+    <p class="pf-eyebrow">Built inside the Fortune 50. Sized for the business down the street.</p>
+    <h2 class="close__h" id="close-h">Ready to make <em class="foil-text">progress</em>?</h2>
+    <a class="pf-pill btn-gold" href="/contact">Talk to an operator →</a>
+  </section>
+
+  <script>
+    // Jump bar (Epsilon, measured): a click scrolls to the section and writes
+    // ?tab=<id>; hand scrolling lights the tab under the bar but leaves the
+    // URL alone; a cold load with ?tab= scrolls there.
+    const bar = document.querySelector('[data-jumpbar]');
+    if (bar) {
+      const sentinel = bar.previousElementSibling;
+      const tabs = [...bar.querySelectorAll('.jump__tab')];
+      const ids = tabs.map((t) => t.dataset.jump);
+      const secs = ids.map((id) => document.getElementById(id));
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const go = (id, write) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const y = el.getBoundingClientRect().top + scrollY - bar.offsetHeight + 1;
+        scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
+        if (write) history.replaceState(null, '', `?tab=${id}`);
+      };
+      document.querySelectorAll('[data-jump]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); go(a.dataset.jump, true); }));
+      let queued = false;
+      const spy = () => {
+        queued = false;
+        const line = bar.getBoundingClientRect().bottom + 40;
+        let cur = -1;
+        secs.forEach((s, i) => { if (s && s.getBoundingClientRect().top <= line) cur = i; });
+        tabs.forEach((t, i) => t.classList.toggle('is-on', i === cur));
+        bar.classList.toggle('is-stuck', sentinel.getBoundingClientRect().top <= 0);   // a marker above the bar, so the bar's own shift can't flip this
+      };
+      addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(spy); } }, { passive: true });
+      spy();
+      const start = new URLSearchParams(location.search).get('tab');
+      if (start && ids.includes(start)) requestAnimationFrame(() => go(start, false));
+    }
+
+    // Accordion (Epsilon, measured): several rows can be open at once; 350ms.
+    document.querySelectorAll('[data-acc] .acc__btn').forEach((b) => b.addEventListener('click', () => {
+      const open = b.getAttribute('aria-expanded') !== 'true';
+      b.setAttribute('aria-expanded', String(open));
+      b.closest('.acc__item').classList.toggle('is-open', open);
+    }));
+  </script>
+</Fresh>

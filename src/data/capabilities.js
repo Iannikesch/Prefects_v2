@@ -1,4 +1,4 @@
-// The 12 capabilities, with the same URLs as the live site
+// The 13 capabilities (12 from the live site plus Identity Resolution), with the same URLs as the live site
 // (/capabilities/<slug>) so old links and search ranking carry over.
 // Item copy is from the live pages, with em dashes rewritten.
 // `summary` is new: one line per capability, written from its own items.
@@ -9,6 +9,8 @@ export const THEMES = [
   { id: 'data', name: 'Data & Intelligence', blurb: 'The spine underneath everything, and the models on top of it.' },
   { id: 'lifecycle', name: 'Lifecycle & Revenue', blurb: 'Turn every customer you reach into revenue that compounds.' },
 ];
+
+const IDENTITY_ITEM = ['Identity Resolution', 'Connect fragmented customer data into a single, unified profile through deterministic matching. We translate CRM records, transaction histories, loyalty data, and telecommunications signals into addressable digital identities at scale with industry-leading match rates.'];
 
 export const CAPABILITIES = [
   {
@@ -118,13 +120,26 @@ export const CAPABILITIES = [
     ],
   },
   {
-    slug: 'data-identity-infrastructure',
-    name: 'Data, Identity & Infrastructure',
+    slug: 'identity-resolution',
+    name: 'Identity Resolution',
     theme: 'data',
-    summary: 'The data layer, identity resolution and governance everything else runs on.',
+    summary: 'Every email, device and purchase traced back to one real person.',
+    // New capability (Oct 21), split out of Data, Identity & Infrastructure.
+    // The first item is the live site's copy; the rest are new drafts.
+    items: [
+      IDENTITY_ITEM,
+      ['Cross-Device & Cross-Channel Linking', 'Phones, laptops, inboxes, loyalty cards and store visits tied back to the same person, so one customer stops looking like five.'],
+      ['Known & Unknown Audience Resolution', 'Resolve the customers you already have and the prospects you have never met against our database of 230 million people, including high-value audiences outside your program today.'],
+      ['Match Rate Diagnostics', 'See how much of your file we can recognize, where the gaps are and what it takes to close them, before you spend a dollar on media.'],
+    ],
+  },
+  {
+    slug: 'data-identity-infrastructure',
+    name: 'Customer Data & Infrastructure',
+    theme: 'data',
+    summary: 'The data layer, real-time profiles and governance everything else runs on.',
     items: [
       ['Data Layer Design & Deployment', 'We architect and deploy the foundational data layer that captures, normalizes, and routes customer interaction data across your entire digital ecosystem. This is the infrastructure everything else runs on.'],
-      ['Identity Resolution', 'Connect fragmented customer data into a single, unified profile through deterministic matching. We translate CRM records, transaction histories, loyalty data, and telecommunications signals into addressable digital identities at scale with industry-leading match rates.'],
       ['First-Party Data Capture', 'Design and implement systems that capture valuable first-party data at every customer touchpoint: website, app, email, SMS, events, point-of-sale, and customer service interactions.'],
       ['Audience Enrichment', 'Layer additional behavioral, demographic, psychographic, and intent signals onto your existing customer profiles. Enrichment creates a more complete picture that powers better targeting and personalization.'],
       ['Proprietary Database Activation', 'Activate your owned data assets across 500+ platforms in the advertising ecosystem. We serve as your neutral data hub, connecting walled gardens, DSPs, SSPs, social platforms, CTV partners, and retail media networks.'],
@@ -220,3 +235,45 @@ export const CAPABILITIES = [
 
 export const bySlug = (slug) => CAPABILITIES.find((c) => c.slug === slug);
 export const inTheme = (id) => CAPABILITIES.filter((c) => c.theme === id);
+
+// The spine: five capabilities in order, each moving one customer one step.
+// `state` is what the customer becomes once the step is done.
+export const SPINE = [
+  { slug: 'identity-resolution', verb: 'Recognize', state: 'Someone',
+    line: 'A stranger becomes someone.',
+    body: 'Every email, device and purchase traced back to one real person. Matched deterministically against our own database of 230 million people, not guessed from a rented graph.',
+    does: ['Deterministic matching', 'Cross-device and cross-channel', 'Known customers and unknown prospects'] },
+  { slug: 'data-identity-infrastructure', verb: 'Unify', state: 'Whole picture',
+    line: 'Someone becomes a whole picture.',
+    body: 'Your CRM, site, store and inbox finally agree. One profile per person, updated the moment they act, with consent built in from day one.',
+    does: ['Data layer and event tracking', 'CDP setup and integration', 'Real-time profiles', 'Privacy and consent'] },
+  { slug: 'audience-intent-development', verb: 'Understand', state: 'Priority',
+    line: 'A picture becomes a priority.',
+    body: 'Know who is worth the most, who is ready to buy now and who is about to walk. Then find more people just like your best.',
+    does: ['Intent scoring', 'Lookalike expansion', 'Enrichment', 'Suppression of wasted spend'] },
+  { slug: 'ai-automation', verb: 'Decide', state: 'Next move',
+    line: 'A priority gets the right next move.',
+    body: 'AI picks what to send, where and when, and sends it. Models trained on your own first-party data. Workflows that run while your team sleeps.',
+    does: ['Predictive models', 'Trigger-based journeys', 'Chat and voice agents'] },
+  { slug: 'analytics-attribution-optimization', verb: 'Prove', state: 'Proven',
+    line: 'Every move gets a receipt.',
+    body: 'Which dollar moved which person, counted honestly. Incrementality tests instead of vanity metrics, and a dashboard your CFO will actually read.',
+    does: ['Multi-touch attribution', 'Incrementality testing', 'Executive dashboards'] },
+];
+
+// The services the spine runs through, in two groups.
+export const SERVICE_GROUPS = [
+  { title: 'Reach them', blurb: 'The channels where the next move lands.',
+    slugs: ['paid-media-demand-generation', 'enterprise-email-text-messaging', 'direct-mail-offline-media', 'social-media-management'] },
+  { title: 'Win them', blurb: 'The story, the site and the team that close it.',
+    slugs: ['strategy-go-to-market', 'brand-creative-storytelling', 'website-digital-experience', 'sales-enablement'] },
+];
+
+// Where a capability sits: its spine step or its service group, and what comes next.
+export function placeOf(slug) {
+  const i = SPINE.findIndex((s) => s.slug === slug);
+  if (i >= 0) return { kind: 'spine', index: i, step: SPINE[i], next: SPINE[i + 1] ? bySlug(SPINE[i + 1].slug) : null, nextStep: SPINE[i + 1] || null };
+  const g = SERVICE_GROUPS.find((g) => g.slugs.includes(slug));
+  const j = g.slugs.indexOf(slug);
+  return { kind: 'service', group: g, next: bySlug(g.slugs[(j + 1) % g.slugs.length]), nextStep: null };
+}
