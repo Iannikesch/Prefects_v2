@@ -1026,3 +1026,20 @@ em.foil-text, .edge__num.foil-text {
 .ucard__media img, .edge__ph img, .casc__photo img, .cap-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .edge__ph { padding: 0; }
 .cap-media img { object-position: 50% 35%; }
+
+/* ---------- 404 ---------- */
+.nf__tag { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 28px; padding: 10px 14px; border-radius: 10px; background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.14); font: 400 14px/1 var(--pf-mono); color: rgba(255, 255, 255, 0.65); filter: blur(0.6px); }
+.nf__tag b { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: rgba(255, 255, 255, 0.14); font: 600 13px/1 var(--pf-sans); color: rgba(255, 255, 255, 0.8); }
+.nf-next { padding: var(--rw-sec) 0; background: var(--rw-paper); }
+.nf-next__inner { width: var(--rw-container); margin-inline: auto; }
+.nf-next__grid { margin-top: 20px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.nf-next__card { display: grid; gap: 10px; padding: 22px 20px 26px; border-top: 2px solid #6E62E6; background: var(--rw-paper); text-decoration: none; color: var(--rw-ink); transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1); }
+.nf-next__card span { font: 400 var(--pf-fs-mono)/1 var(--pf-mono); text-transform: uppercase; letter-spacing: .06em; color: #6E62E6; }
+.nf-next__card b { font: 400 24px/1.15 var(--pf-serif); letter-spacing: -0.02em; font-weight: 400; }
+.nf-next__card:hover { background: #ECEAFD; }
+.nf-next__stages { list-style: none; margin: 40px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 28px; }
+.nf-next__stages a { font: 500 15px/1.4 var(--pf-sans); color: var(--rw-ink-2); text-decoration: none; }
+.nf-next__stages a:hover { color: #6E62E6; }
+@media (max-width: 900px) { .nf-next__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .nf-next__grid { grid-template-columns: minmax(0, 1fr); } }
+.rhero.nf { padding-bottom: 240px; }   /* room for the fade below the buttons, so they sit on black */
