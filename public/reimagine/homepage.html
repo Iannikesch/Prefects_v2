@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homepage Reimagined</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Instrument+Serif:ital@1&family=PT+Mono&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=erode@400,500&display=swap" rel="stylesheet">
+<style>
+/* A reference shot, not the site. The homepage with the copy rewrite
+   (COPY-REWRITE.md) and the motion from two teardowns combined:
+   - Infinite: piece-by-piece fade-up (100px, 0.6s, ease, 200ms apart)
+     and a pinned card swap scrubbed by scroll (kept short, no dead space).
+   - Epsilon: a pinned picture that changes scene beside free-scrolling text
+     (0.3s out, 0.15s stagger in) and hover-reveal cards on one 0.4s curve.
+   Opacity and transform only. Reduced motion: everything shown, nothing moves. */
+:root {
+  --ink: #0B0B0C; --ink-2: #4a4a52; --night: #07060D; --paper: #FFFFFF; --mist: #F4F3F8;
+  --violet: #6E62E6; --violet-lt: #9C93FF; --violet-wash: #ECEAFD; --gold: #D3A754; --gold-dk: #9C7A35;
+  --serif: "Erode", Georgia, serif; --italic: "Instrument Serif", Georgia, serif;
+  --sans: "Geist", system-ui, sans-serif; --mono: "PT Mono", ui-monospace, monospace;
+  --gutter: max(16px, 5vw); --sec: 96px;
+  --curve: cubic-bezier(0.4, 0, 0.2, 1);   /* Epsilon's one curve */
+}
+@media (max-width: 768px) { :root { --sec: 64px; } }
+@media (max-width: 420px) { :root { --sec: 40px; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.5 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+a { color: inherit; }
+em { font-family: var(--italic); font-style: italic; font-weight: 400; letter-spacing: -0.02em; }
+.wrap { width: min(1240px, 100% - 2 * var(--gutter)); margin-inline: auto; }
+.label { font: 400 13px/1.3 var(--mono); letter-spacing: .04em; color: var(--ink-2); margin: 0 0 16px; }
+.h2 { font: 400 clamp(36px, 4.6vw, 64px)/1.04 var(--serif); letter-spacing: -0.04em; margin: 0; }
+.h2 em { color: var(--violet); }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; border-radius: 6px; background: var(--violet); color: #fff; font: 600 15px/1 var(--sans); text-decoration: none; transition: background-color 200ms ease; }
+.btn:hover { background: #5B4FD9; }
+.btn--ghost { background: rgba(255,255,255,.1); }
+.btn--ghost:hover { background: rgba(255,255,255,.18); }
+
+/* Infinite's fade-up: each [data-rise] piece rises 100px and fades in,
+   0.6s ease, 200ms after the one before it (--d), once. */
+.js [data-rise] { opacity: 0; transform: translate3d(0, 100px, 0); transition: opacity .6s ease, transform .6s ease; transition-delay: calc(var(--d, 0) * 200ms); }
+.js [data-rise].is-in { opacity: 1; transform: none; }
+
+/* Prototype chrome */
+.proto { position: fixed; right: 16px; bottom: 16px; z-index: 60; display: flex; gap: 8px; font: 500 13px/1 var(--sans); }
+.proto a, .proto button { padding: 10px 14px; border-radius: 6px; border: 1px solid rgba(255,255,255,.18); background: rgba(7,6,13,.92); color: #fff; cursor: pointer; text-decoration: none; font: inherit; }
+.proto button[aria-pressed="true"] { background: #FFE9A8; color: var(--ink); border-color: #FFE9A8; }
+.note { display: none; max-width: 400px; margin: 0 0 20px; padding: 10px 12px; border-radius: 6px; background: #FFF4CC; color: #4b3a00; font: 400 13px/1.45 var(--sans); box-shadow: 0 2px 10px rgba(0,0,0,.08); position: relative; z-index: 5; }
+.note b { font-weight: 600; }
+body.show-notes .note { display: block; }
+
+/* ---------- Nav (static, for context) ---------- */
+.nav { position: absolute; inset: 0 0 auto; z-index: 10; color: #fff; }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 90px; }
+.nav__logo { font: 400 34px/1 var(--serif); letter-spacing: -0.035em; }
+.nav__links { display: flex; gap: 36px; font: 500 13px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; }
+@media (max-width: 760px) { .nav__links { display: none; } }
+
+/* ---------- Hero ---------- */
+.hero { position: relative; background: linear-gradient(#000 70%, #1a1730 88%, var(--paper)); color: #fff; padding: 180px 0 120px; }
+.hero h1 { margin: 0; max-width: 15ch; font: 400 clamp(46px, 7vw, 104px)/0.98 var(--serif); letter-spacing: -0.045em; }
+.hero h1 em { display: block; color: var(--violet-lt); }
+.hero__lead { margin: 32px 0 0; max-width: 36em; font-size: 19px; color: rgba(255,255,255,.76); }
+.hero__btns { margin-top: 36px; display: flex; gap: 12px; flex-wrap: wrap; }
+.logos { margin-top: 96px; display: flex; flex-wrap: wrap; gap: 18px 48px; align-items: center; font: 400 15px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.5); }
+.logos span:first-child { color: rgba(255,255,255,.3); letter-spacing: .04em; }
+
+/* ---------- Proof strip ---------- */
+.proof { padding: var(--sec) 0; }
+.proof__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+.proof__item { border-top: 2px solid var(--ink); padding-top: 18px; }
+.proof__n { display: block; font: 400 clamp(40px, 4.2vw, 64px)/1 var(--serif); letter-spacing: -0.045em; color: var(--violet); }
+.proof__n i { font: 300 .5em/1 var(--sans); font-style: normal; color: var(--gold-dk); vertical-align: .35em; margin: 0 .12em; }
+.proof__t { margin: 12px 0 0; font-size: 15px; color: var(--ink-2); }
+.proof__t b { color: var(--ink); font-weight: 500; display: block; }
+@media (max-width: 900px) { .proof__grid { grid-template-columns: 1fr 1fr; } }
+
+/* ---------- Journey: Epsilon's pinned picture, scene by scene ---------- */
+.journey { padding: var(--sec) 0 0; background: var(--mist); }
+.journey__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 64px; }
+.journey__panel { padding: 22vh 0; max-width: 30em; }
+.journey__panel:first-child { padding-top: 10vh; }
+.journey__panel:last-child { padding-bottom: 30vh; }
+.journey__step { font: 400 13px/1 var(--mono); color: var(--gold-dk); letter-spacing: .04em; }
+.journey__panel h3 { margin: 14px 0 0; font: 400 clamp(28px, 3vw, 42px)/1.1 var(--serif); letter-spacing: -0.035em; }
+.journey__panel p { margin: 16px 0 0; color: var(--ink-2); font-size: 18px; }
+.art { position: sticky; top: 12vh; height: 76vh; margin-top: 10vh; border-radius: 20px; background: var(--night); overflow: hidden; color: #fff; }
+.scene { position: absolute; inset: 0; display: grid; place-items: center; padding: 40px; pointer-events: none; }
+.pc { opacity: 0; transform: translate3d(0, 16px, 0); transition: opacity .3s var(--curve), transform .3s var(--curve); }
+.scene.is-on .pc { opacity: 1; transform: none; transition-delay: calc(450ms + var(--i, 0) * 150ms); }  /* wait for the old scene to leave (0.3s + 0.15s gap), then pieces 150ms apart */
+.scene__cap { position: absolute; left: 28px; bottom: 24px; font: 400 12px/1 var(--mono); letter-spacing: .06em; color: rgba(255,255,255,.45); text-transform: uppercase; }
+/* scene 1: anonymous visitors */
+.visitors { display: grid; grid-template-columns: repeat(3, auto); gap: 14px; }
+.visitor { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 10px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); font: 400 14px/1 var(--mono); color: rgba(255,255,255,.55); filter: blur(1.2px); }
+.visitor b { width: 26px; height: 26px; border-radius: 50%; background: rgba(255,255,255,.14); display: grid; place-items: center; font: 600 13px/1 var(--sans); color: rgba(255,255,255,.7); }
+/* scene 2: one record */
+.record { width: min(380px, 90%); padding: 24px 26px; border-radius: 14px; background: #fff; color: var(--ink); box-shadow: 0 30px 80px rgba(0,0,0,.5); }
+.record > b { display: block; font: 400 28px/1 var(--serif); letter-spacing: -0.02em; margin-bottom: 16px; }
+.record dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 9px 18px; font-size: 15px; }
+.record dt { font: 400 12px/1.6 var(--mono); color: var(--gold-dk); }
+.record dd { margin: 0; }
+/* scene 3: who's worth the most */
+.rank { width: min(440px, 92%); display: grid; gap: 12px; }
+.rank__row { display: grid; grid-template-columns: 110px 1fr auto; align-items: center; gap: 14px; font-size: 15px; }
+.rank__bar { height: 10px; border-radius: 5px; background: rgba(255,255,255,.1); overflow: hidden; }
+.rank__bar span { display: block; height: 100%; border-radius: 5px; background: var(--violet-lt); transform-origin: left; }
+.rank__tag { font: 400 12px/1 var(--mono); color: var(--gold); }
+/* scene 4: the next move */
+.move { width: min(360px, 90%); display: grid; gap: 14px; }
+.move__phone { padding: 18px; border-radius: 18px; background: #1b1930; border: 1px solid rgba(255,255,255,.1); }
+.move__msg { padding: 14px 16px; border-radius: 16px 16px 16px 4px; background: var(--violet); font-size: 16px; line-height: 1.4; }
+.move__chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.move__chips span { padding: 7px 11px; border-radius: 6px; background: rgba(255,255,255,.08); font: 400 12px/1 var(--mono); color: rgba(255,255,255,.75); }
+/* scene 5: the receipt */
+.receipt { width: min(360px, 90%); padding: 24px 26px; border-radius: 6px; background: #fff; color: var(--ink); font: 400 14px/1.4 var(--mono); box-shadow: 0 30px 80px rgba(0,0,0,.5); }
+.receipt div { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px dashed rgba(11,11,12,.2); }
+.receipt div:last-child { border: 0; padding-top: 14px; font: 500 18px/1 var(--sans); color: var(--violet); }
+.receipt s { color: #999; }
+@media (max-width: 900px) {
+  .journey__grid { grid-template-columns: 1fr; gap: 0; }
+  .art { order: -1; top: 70px; height: 46vh; margin-top: 0; z-index: 2; }
+  .journey__panel { padding: 14vh 0; }
+  .visitors { grid-template-columns: repeat(2, auto); }
+}
+
+/* ---------- Services: Epsilon's hover reveal + Infinite's entrance ---------- */
+.svc { padding: var(--sec) 0; }
+.svc__head { display: flex; justify-content: space-between; align-items: end; gap: 32px; flex-wrap: wrap; margin-bottom: 48px; }
+.svc__group { font: 400 13px/1 var(--mono); letter-spacing: .04em; color: var(--ink-2); margin: 36px 0 14px; }
+.svc__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.card { position: relative; height: 330px; overflow: hidden; border-top: 2px solid var(--violet); border-bottom: 2px solid var(--violet); text-decoration: none; color: var(--ink); background: var(--paper); }
+.card__tint { position: absolute; inset: 0; background: var(--violet-wash); opacity: 0; transition: opacity .4s var(--curve); }
+.card__body { position: absolute; inset: 0; padding: 26px 20px; transform: translate3d(0, 108px, 0); transition: transform .4s var(--curve); }
+.card__name { margin: 0; font: 400 26px/1.08 var(--serif); letter-spacing: -0.03em; transition: transform .4s var(--curve); }
+.card__sum { margin: 12px 0 0; font-size: 15px; color: var(--ink-2); transition: opacity .4s var(--curve); }
+.card__list { list-style: none; margin: 0; padding: 0; position: absolute; left: 20px; right: 20px; top: 112px; display: grid; gap: 8px; font-size: 15px; opacity: 0; transform: translate3d(0, 30px, 0); transition: opacity .4s var(--curve), transform .4s var(--curve); }
+.card__list li::before { content: "→ "; color: var(--violet); }
+.card__chev { position: absolute; right: 18px; bottom: 16px; color: var(--violet); font: 400 20px/1 var(--sans); transition: transform .4s var(--curve); }
+.card:hover .card__tint, .card:focus-visible .card__tint { opacity: 1; }
+.card:hover .card__body, .card:focus-visible .card__body { transform: none; }
+.card:hover .card__sum, .card:focus-visible .card__sum { opacity: 0; }
+.card:hover .card__list, .card:focus-visible .card__list { opacity: 1; transform: none; }
+.card:hover .card__chev, .card:focus-visible .card__chev { transform: rotate(-90deg); }
+@media (hover: none) {   /* phones: show the open state, no hover needed */
+  .card { height: auto; } .card__tint { opacity: .5; }
+  .card__body { position: relative; transform: none; } .card__sum { display: none; }
+  .card__list { position: static; opacity: 1; transform: none; margin-top: 14px; }
+}
+@media (max-width: 1000px) { .svc__grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .svc__grid { grid-template-columns: 1fr; } }
+
+/* ---------- Comparison: Infinite's pinned card swap, kept short ---------- */
+.swap { position: relative; height: calc(100svh + 6 * 42vh); background: var(--night); color: #fff; }
+.swap__stick { position: sticky; top: 0; height: 100svh; display: grid; align-items: center; overflow: hidden; }
+.swap__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: center; }
+.swap .h2 { color: #fff; }
+.swap .h2 em { color: var(--violet-lt); display: block; }
+.swap__sub { margin: 24px 0 0; max-width: 28em; color: rgba(255,255,255,.7); font-size: 18px; }
+.swap__count { margin-top: 32px; font: 400 14px/1 var(--mono); color: var(--gold); }
+.swap__stack { position: relative; height: 380px; }
+.swap__card { position: absolute; inset: 0; padding: 34px; border-radius: 18px; border: 1px solid rgba(255,255,255,.18); background: #0f0d1c; display: grid; align-content: space-between; will-change: transform, opacity; }
+.swap__k { font: 400 13px/1 var(--mono); letter-spacing: .04em; color: var(--gold); }
+.swap__them { font: 400 18px/1.4 var(--sans); color: rgba(255,255,255,.45); text-decoration: line-through; text-decoration-color: rgba(255,255,255,.6); }
+.swap__them::before { content: "A platform: "; text-decoration: none; display: inline; }
+.swap__us { font: 400 clamp(26px, 2.6vw, 38px)/1.15 var(--serif); letter-spacing: -0.03em; }
+.swap__us mark { background: none; color: #FFE08A; font: 400 12px/1 var(--mono); letter-spacing: 0; vertical-align: middle; }
+@media (max-width: 900px) {
+  .swap { height: auto; padding: var(--sec) 0; }
+  .swap__stick { position: static; height: auto; }
+  .swap__grid { grid-template-columns: 1fr; gap: 32px; }
+  .swap__stack { height: auto; display: grid; gap: 14px; }
+  .swap__card { position: relative; transform: none !important; opacity: 1 !important; min-height: 220px; }
+}
+
+/* ---------- Questions ---------- */
+.ask { padding: var(--sec) 0; }
+.ask__grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 64px; }
+.ask details { border-top: 1px solid rgba(11,11,12,.12); }
+.ask summary { cursor: pointer; list-style: none; padding: 22px 0; font: 400 22px/1.3 var(--serif); letter-spacing: -0.02em; display: flex; justify-content: space-between; gap: 24px; }
+.ask summary::after { content: "+"; font-family: var(--sans); color: var(--violet); }
+.ask details[open] summary::after { content: "–"; }
+.ask details p { margin: 0 0 24px; color: var(--ink-2); }
+.ask mark { background: #FFF4CC; padding: 0 4px; }
+@media (max-width: 900px) { .ask__grid { grid-template-columns: 1fr; gap: 24px; } }
+
+/* ---------- Close ---------- */
+.close { background: var(--night); color: #fff; text-align: center; padding: calc(var(--sec) * 1.5) var(--gutter); }
+.close h2 { margin: 0 auto 36px; max-width: 18ch; font: 400 max(40px, 5vw)/1.02 var(--serif); letter-spacing: -0.04em; }
+.close h2 em { display: block; color: var(--violet-lt); }
+
+/* Photos (Assets/Images, converted in REIMAGINE-assets) */
+.hero { overflow: hidden; }
+.hero .wrap { position: relative; z-index: 1; }
+.hero__photo { position: absolute; top: 0; right: 0; bottom: 0; width: 50%;
+  -webkit-mask: linear-gradient(90deg, transparent 6%, #000 50%), linear-gradient(180deg, #000 55%, transparent 82%); -webkit-mask-composite: source-in;
+  mask: linear-gradient(90deg, transparent 6%, #000 50%), linear-gradient(180deg, #000 55%, transparent 82%); mask-composite: intersect; }
+.hero__photo img { width: 100%; height: 100%; object-fit: cover; opacity: .7; }
+.people { padding: 0 0 var(--sec); }
+.people__row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.person { position: relative; margin: 0; aspect-ratio: 3 / 4; border-radius: 14px; overflow: hidden; background: #ddd; }
+.person img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--curve); }
+.person:hover img { transform: scale(1.04); }
+.person figcaption { position: absolute; left: 10px; right: 10px; bottom: 10px; display: grid; gap: 3px; padding: 9px 11px; border-radius: 8px; background: rgba(255,255,255,.94); font: 500 13px/1.25 var(--sans); }
+.person figcaption b { font: 400 11px/1 var(--mono); color: var(--violet); font-weight: 400; }
+.people__note { margin: 18px 0 0; font: 400 13px/1.4 var(--mono); color: var(--ink-2); }
+@media (max-width: 900px) { .people__row { grid-template-columns: 1fr 1fr; } .hero__photo { width: 100%; opacity: .45; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+  .js [data-rise] { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+<script>document.body.classList.add('js');</script>
+
+<div class="proto">
+  <a href="https://profectus-rework.vercel.app" target="_blank" rel="noopener">Compare: current homepage ↗</a>
+  <button type="button" aria-pressed="false" data-notes>Show notes</button>
+</div>
+
+<header class="nav"><div class="wrap"><span class="nav__logo">Profectus</span><nav class="nav__links"><span>Capabilities</span><span>Case Studies</span><span>About</span></nav></div></header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero__photo" aria-hidden="true"><img src="/reimagine/assets/coffee.webp" alt=""></div>
+  <div class="wrap">
+    <p class="note"><b>Copy:</b> the rewrite's hero. A claim only we can make, instead of "Personalization through data and customer experience". <b>Motion:</b> Infinite's fade-up. Each piece rises 100px, 0.6s, 200ms after the last.</p>
+    <h1 data-rise style="--d:0">We know who your next customer is. <em>We have 230 million people to choose from.</em></h1>
+    <p class="hero__lead" data-rise style="--d:1">Profectus is a marketing agency with its own database of US consumers. We use it to find the people most likely to buy from you, reach them on the channels they actually use, and show you which dollar did the work.</p>
+    <div class="hero__btns" data-rise style="--d:2"><a class="btn" href="#">Talk to us →</a><a class="btn btn--ghost" href="#">See the work</a></div>
+    <div class="logos" data-rise style="--d:3"><span>Trusted by</span><span>OpenAI</span><span>Smoothie King</span><span>Marriott</span><span>GM</span><span>Skyrizi</span><span>Essentials</span><span>Sitka</span></div>
+  </div>
+</section>
+
+<!-- Proof -->
+<section class="proof">
+  <div class="wrap">
+    <p class="note"><b>Copy:</b> the rewrite's proof strip. The best lines on the site, moved up from the case study pages. <b>Motion:</b> same fade-up, four items 200ms apart.</p>
+    <div class="proof__grid">
+      <div class="proof__item" data-rise style="--d:0"><span class="proof__n">$14</span><p class="proof__t"><b>Morning Grounds Coffee</b>back for every $1 on the direct channel</p></div>
+      <div class="proof__item" data-rise style="--d:1"><span class="proof__n">$420<i>→</i>$680</span><p class="proof__t"><b>Nonna's Table</b>customer lifetime value</p></div>
+      <div class="proof__item" data-rise style="--d:2"><span class="proof__n">85%</span><p class="proof__t"><b>Serenity Collective</b>occupancy at premium pricing in six months</p></div>
+      <div class="proof__item" data-rise style="--d:3"><span class="proof__n">$612K</span><p class="proof__t"><b>Flowstate AI</b>ARR in six months, then a $4.2M Series A</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- People: who's out there, and what we'd know -->
+<section class="people">
+  <div class="wrap">
+    <p class="note"><b>New:</b> the photos from Assets/Images. Five everyday customers, each tagged with the one thing our data would tell you about them. It shows the 230 million as people instead of a number. <b>Motion:</b> fade-up, 200ms apart; photos zoom slightly on hover.</p>
+    <p class="label" data-rise>Who's in the 230 million</p>
+    <div class="people__row">
+      <figure class="person" data-rise style="--d:0"><img src="/reimagine/assets/dogwalk.webp" alt="A woman walking her dog"><figcaption><b>Read your pricing page</b>last night at 11:02pm</figcaption></figure>
+      <figure class="person" data-rise style="--d:1"><img src="/reimagine/assets/tap.webp" alt="Paying by phone at a card reader"><figcaption><b>Just bought</b>matched to her loyalty account</figcaption></figure>
+      <figure class="person" data-rise style="--d:2"><img src="/reimagine/assets/mail.webp" alt="Opening mail on a doorstep"><figcaption><b>Opened your postcard</b>sent because she left her cart</figcaption></figure>
+      <figure class="person" data-rise style="--d:3"><img src="/reimagine/assets/jetbridge.webp" alt="Boarding a plane"><figcaption><b>Gold member</b>11th trip this year</figcaption></figure>
+      <figure class="person" data-rise style="--d:4"><img src="/reimagine/assets/owner-glasses.webp" alt="A bakery owner at her laptop"><figcaption><b>Your next client</b>owner-run, reads reviews first</figcaption></figure>
+    </div>
+    <p class="people__note">Illustrative. Faces stay anonymous on the real site.</p>
+  </div>
+</section>
+
+<!-- Journey -->
+<section class="journey">
+  <div class="wrap">
+    <p class="note"><b>Copy:</b> the rewrite's five steps, plain instead of poetic. <b>Motion:</b> Epsilon's identity page. The picture on the right stays put and changes scene as each step's text scrolls past the middle. The change plays on its own timing (0.3s out, then pieces 150ms apart), so you're never locked in place.</p>
+    <p class="label" data-rise>How a stranger becomes a customer</p>
+    <h2 class="h2" data-rise style="--d:1">Five stages, in order. <em>And proof that it happened.</em></h2>
+    <div class="journey__grid">
+      <div class="journey__panels">
+        <div class="journey__panel" data-scene="0"><span class="journey__step">01 · Recognize</span><h3>Find out who's actually visiting, buying and opening.</h3><p>We match visits, emails and purchases to real people in our database. Most of your traffic stops being anonymous.</p></div>
+        <div class="journey__panel" data-scene="1"><span class="journey__step">02 · Unify</span><h3>One record per customer, across every system you run.</h3><p>Nonna's Table had three locations with three guest lists. Now each guest is one record.</p></div>
+        <div class="journey__panel" data-scene="2"><span class="journey__step">03 · Understand</span><h3>Know who's worth the most, and who's about to leave.</h3><p>Scoring built on your own sales history, not industry averages.</p></div>
+        <div class="journey__panel" data-scene="3"><span class="journey__step">04 · Decide</span><h3>Send the right message without a person pressing send.</h3><p>AI chooses the offer, the channel and the time for each customer.</p></div>
+        <div class="journey__panel" data-scene="4"><span class="journey__step">05 · Prove</span><h3>See which dollar drove which sale.</h3><p>Incrementality tests, so you're measuring what changed because of us, not what would have happened anyway.</p></div>
+      </div>
+      <div class="art" aria-hidden="true">
+        <div class="scene is-on">
+          <div class="visitors">
+            <span class="visitor pc" style="--i:0"><b>?</b>visitor 4211</span><span class="visitor pc" style="--i:1"><b>?</b>visitor 4212</span><span class="visitor pc" style="--i:2"><b>?</b>visitor 4213</span>
+            <span class="visitor pc" style="--i:3"><b>?</b>visitor 4214</span><span class="visitor pc" style="--i:4"><b>?</b>visitor 4215</span><span class="visitor pc" style="--i:5"><b>?</b>visitor 4216</span>
+          </div>
+          <span class="scene__cap pc">Last night's traffic</span>
+        </div>
+        <div class="scene">
+          <div class="record pc"><b>J. Alvarez</b><dl>
+            <dt class="pc" style="--i:1">Email</dt><dd class="pc" style="--i:1">j.alvarez@…mail.com</dd>
+            <dt class="pc" style="--i:2">Devices</dt><dd class="pc" style="--i:2">iPhone, laptop</dd>
+            <dt class="pc" style="--i:3">Loyalty</dt><dd class="pc" style="--i:3">Member #48213</dd>
+            <dt class="pc" style="--i:4">Store</dt><dd class="pc" style="--i:4">Downtown, Saturdays</dd>
+            <dt class="pc" style="--i:5">Last read</dt><dd class="pc" style="--i:5">Your pricing page</dd></dl></div>
+          <span class="scene__cap pc">Visitor 4212, recognized</span>
+        </div>
+        <div class="scene">
+          <div class="rank">
+            <div class="rank__row pc" style="--i:0"><span>J. Alvarez</span><span class="rank__bar"><span style="width:92%"></span></span><span class="rank__tag">Ready to buy</span></div>
+            <div class="rank__row pc" style="--i:1"><span>M. Chen</span><span class="rank__bar"><span style="width:74%"></span></span><span class="rank__tag">High value</span></div>
+            <div class="rank__row pc" style="--i:2"><span>R. Okafor</span><span class="rank__bar"><span style="width:58%"></span></span><span class="rank__tag">About to leave</span></div>
+            <div class="rank__row pc" style="--i:3"><span>S. Patel</span><span class="rank__bar"><span style="width:31%"></span></span><span class="rank__tag">Just browsing</span></div>
+          </div>
+          <span class="scene__cap pc">Scored on your sales history</span>
+        </div>
+        <div class="scene">
+          <div class="move">
+            <div class="move__phone pc" style="--i:0"><div class="move__msg">Hi Jordan, the plan you were looking at is 15% off until Friday. Want us to hold it?</div></div>
+            <div class="move__chips pc" style="--i:1"><span>Channel: SMS</span><span>When: Thu 6:10pm</span><span>Offer: 15% off</span><span>Sent by: the model</span></div>
+          </div>
+          <span class="scene__cap pc">The next move, chosen</span>
+        </div>
+        <div class="scene">
+          <div class="receipt pc">
+            <div class="pc" style="--i:1"><span>Messages sent</span><span>1,240</span></div>
+            <div class="pc" style="--i:2"><span>Purchases from them</span><span>212</span></div>
+            <div class="pc" style="--i:3"><span>Would've bought anyway</span><s>61</s></div>
+            <div class="pc" style="--i:4"><span>Caused by us</span><span>151</span></div>
+            <div class="pc" style="--i:5"><span>Revenue we moved</span><span>$9,860</span></div>
+          </div>
+          <span class="scene__cap pc">The receipt (example figures)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="svc">
+  <div class="wrap">
+    <p class="note"><b>Copy:</b> "The channels and the craft", with the rewrite's plainer group names. <b>Motion:</b> Infinite's fade-up as the cards arrive, then Epsilon's hover reveal: the card tints, its content slides up, the one-liner fades out and three real services slide in. Everything on one 0.4s curve so it all lands together. On phones the cards show open.</p>
+    <div class="svc__head">
+      <div><p class="label" data-rise>What we do</p><h2 class="h2" data-rise style="--d:1">The channels <em>and the craft.</em></h2></div>
+      <a class="btn" href="#" data-rise style="--d:2">All capabilities →</a>
+    </div>
+    <p class="svc__group" data-rise>Getting them to say yes</p>
+    <div class="svc__grid">
+      <a class="card" href="#" data-rise style="--d:0"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Strategy &amp; Go-to-Market</h3><p class="card__sum">Research, positioning and launch plans grounded in who actually buys.</p><ul class="card__list"><li>Market &amp; competitive research</li><li>Ideal customer profiles</li><li>Buyer journey mapping</li></ul></div><span class="card__chev">↓</span></a>
+      <a class="card" href="#" data-rise style="--d:1"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Brand, Creative &amp; Storytelling</h3><p class="card__sum">Identity, campaigns and content people remember.</p><ul class="card__list"><li>Brand identity &amp; voice</li><li>Creative direction</li><li>Integrated campaigns</li></ul></div><span class="card__chev">↓</span></a>
+      <a class="card" href="#" data-rise style="--d:2"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Website &amp; Digital Experience</h3><p class="card__sum">Sites built to convert, wired to your data from day one.</p><ul class="card__list"><li>Site strategy &amp; architecture</li><li>Conversion optimization</li><li>Landing pages &amp; lead capture</li></ul></div><span class="card__chev">↓</span></a>
+      <a class="card" href="#" data-rise style="--d:3"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Sales Enablement</h3><p class="card__sum">Marketing and sales, working as one revenue team.</p><ul class="card__list"><li>Sales narrative</li><li>Rep toolkits &amp; scripts</li><li>Lead scoring &amp; routing</li></ul></div><span class="card__chev">↓</span></a>
+    </div>
+    <p class="svc__group" data-rise>Getting in front of people</p>
+    <div class="svc__grid">
+      <a class="card" href="#" data-rise style="--d:0"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Paid Media</h3><p class="card__sum">Ads on 500+ platforms, sent to people, not cookies.</p><ul class="card__list"><li>Paid search</li><li>Paid social</li><li>Programmatic &amp; retargeting</li></ul></div><span class="card__chev">↓</span></a>
+      <a class="card" href="#" data-rise style="--d:1"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Loyalty &amp; Lifecycle</h3><p class="card__sum">Programs that turn a first purchase into a lifetime.</p><ul class="card__list"><li>Loyalty program design</li><li>Member journeys</li><li>Churn prediction &amp; winback</li></ul></div><span class="card__chev">↓</span></a>
+      <a class="card" href="#" data-rise style="--d:2"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Direct Mail</h3><p class="card__sum">Mail triggered by the same data as your digital.</p><ul class="card__list"><li>Data-driven direct mail</li><li>Print &amp; collateral design</li><li>Match-back measurement</li></ul></div><span class="card__chev">↓</span></a>
+      <a class="card" href="#" data-rise style="--d:3"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Social Media</h3><p class="card__sum">Social that sells, measured in sales.</p><ul class="card__list"><li>Strategy &amp; content</li><li>Community management</li><li>Social commerce</li></ul></div><span class="card__chev">↓</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- Comparison swap -->
+<section class="swap" data-swap>
+  <div class="swap__stick">
+    <div class="wrap swap__grid">
+      <div>
+        <p class="note"><b>Copy:</b> the rewrite's "Why Profectus" and its sharper table rows. <b>Motion:</b> Infinite's pinned card swap. The left side holds while six cards slide up and cross-fade with your scroll. Kept short (about 40% of a screen per card) and the cards fill the space, so there's no empty black like theirs.</p>
+        <h2 class="h2">Most marketing software hands you a dashboard and wishes you luck. <em>We do the work.</em></h2>
+        <p class="swap__sub">The people on your account ran data and marketing at <mark style="background:#FFF4CC;color:#4b3a00;padding:0 4px">[2 or 3 brands]</mark>. They use a database we own, and buy media wherever it performs.</p>
+        <p class="swap__count"><span data-swap-n>1</span> / 6</p>
+      </div>
+      <div class="swap__stack">
+        <div class="swap__card"><span class="swap__k">Who does the work</span><span class="swap__them">You do. They send tutorials.</span><span class="swap__us">Our team, on your account.</span></div>
+        <div class="swap__card"><span class="swap__k">Who visited your site</span><span class="swap__them">4,212 anonymous sessions.</span><span class="swap__us">Names and mailing addresses for the visitors we can match. <mark>[confirm match rate]</mark></span></div>
+        <div class="swap__card"><span class="swap__k">Where the data comes from</span><span class="swap__them">Licensed from a third party.</span><span class="swap__us">Our database: 230 million people, near-full US coverage.</span></div>
+        <div class="swap__card"><span class="swap__k">Where your ad budget goes</span><span class="swap__them">Their network, first.</span><span class="swap__us">Any of 500+ platforms. We don't own inventory. <mark>[confirm]</mark></span></div>
+        <div class="swap__card"><span class="swap__k">What a text costs</span><span class="swap__them">Enterprise contract pricing.</span><span class="swap__us">Our own sending infrastructure, so you can afford to send more often.</span></div>
+        <div class="swap__card"><span class="swap__k">Reach without cookies</span><span class="swap__them">Shrinking.</span><span class="swap__us">Up to 87% of identifiable audiences on one major ad platform, 95% on another.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Questions -->
+<section class="ask">
+  <div class="wrap ask__grid">
+    <div>
+      <p class="note"><b>Copy:</b> the rewrite's real questions, including the one a big brand's legal team asks first. Yellow means the answer needs the owner. <b>Motion:</b> fade-up only.</p>
+      <p class="label" data-rise>Before you call</p>
+      <h2 class="h2" data-rise style="--d:1">What people <em>ask us first.</em></h2>
+    </div>
+    <div data-rise style="--d:2">
+      <details><summary>Is this legal? How do you get data on 230 million people?</summary><p><mark>[Need: one honest paragraph on sourcing and compliance.]</mark></p></details>
+      <details><summary>Do I need all five stages, or can I start with one?</summary><p>Start with one. Most clients begin with the stage closest to their biggest problem and add the rest once the first is paying for itself. <mark>[Confirm]</mark></p></details>
+      <details><summary>How long until we see results?</summary><p><mark>[Need: a real range.]</mark></p></details>
+      <details><summary>Who owns the data when we're done?</summary><p>You own your customer data, always. Every match and audience we build for you is yours to keep. <mark>[Confirm wording]</mark></p></details>
+      <details><summary>What does it cost to start?</summary><p><mark>[Need: a starting price or range.]</mark></p></details>
+    </div>
+  </div>
+</section>
+
+<!-- Close -->
+<section class="close">
+  <p class="note" style="margin-inline:auto"><b>Copy:</b> the default close that's on the live site now.</p>
+  <h2 data-rise>Your next customer is probably in our database. <em>Let's go find them.</em></h2>
+  <a class="btn" href="#" data-rise style="--d:1">Start the conversation →</a>
+</section>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp = (v) => Math.max(0, Math.min(1, v));
+
+  // Notes switch
+  const nb = document.querySelector('[data-notes]');
+  nb.addEventListener('click', () => { const on = document.body.classList.toggle('show-notes'); nb.setAttribute('aria-pressed', on); nb.textContent = on ? 'Hide notes' : 'Show notes'; });
+
+  // Infinite's fade-up: once, when the piece is ~10% into the screen.
+  const rise = [...document.querySelectorAll('[data-rise]')];
+  // The hero plays on load; it's all on the first screen anyway.
+  document.querySelectorAll('.hero [data-rise]').forEach((el) => requestAnimationFrame(() => el.classList.add('is-in')));
+  if (reduce) rise.forEach((el) => el.classList.add('is-in'));
+  else {
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px 0px 0px' });
+    rise.forEach((el) => io.observe(el));
+  }
+
+  // Epsilon's scene swap: whichever step's text crosses the middle of the
+  // screen sets the scene. CSS plays the change (out 0.3s, in 150ms apart).
+  const scenes = [...document.querySelectorAll('.scene')];
+  const sio = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    const n = +e.target.dataset.scene;
+    scenes.forEach((s, i) => s.classList.toggle('is-on', i === n));
+  }), { rootMargin: '-50% 0px -50% 0px' });
+  document.querySelectorAll('[data-scene]').forEach((p) => sio.observe(p));
+
+  // Infinite's card swap: progress through the pinned section slides the
+  // current card up and out while the next comes up from below. Linear
+  // scrub, like theirs: opacity = 1 - |offset| / distance.
+  const swap = document.querySelector('[data-swap]');
+  const cards = [...swap.querySelectorAll('.swap__card')];
+  const count = swap.querySelector('[data-swap-n]');
+  let queued = false, lastN = 0;
+  const draw = () => {
+    queued = false;
+    if (innerWidth <= 900 || reduce) return;
+    const r = swap.getBoundingClientRect();
+    const p = clamp(-r.top / (swap.offsetHeight - innerHeight));
+    const pos = p * (cards.length - 1);           // 0 .. 5: which card is centred
+    const D = 420;                                 // px a card travels on its way in or out
+    cards.forEach((c, i) => {
+      const off = i - pos;                         // 0 = centred, 1 = next one down
+      const y = Math.max(-1, Math.min(1, off)) * D;
+      c.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
+      c.style.opacity = (1 - Math.min(1, Math.abs(off))).toFixed(3);
+      c.style.zIndex = String(10 - Math.round(Math.abs(off) * 2));
+    });
+    const n = Math.round(pos) + 1;
+    if (n !== lastN) { lastN = n; count.textContent = n; }
+  };
+  addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(draw); } }, { passive: true });
+  addEventListener('resize', draw);
+  draw();
+})();
+</script>
+</body>
+</html>

@@ -973,3 +973,24 @@ em.foil-text, .edge__num.foil-text {
     rgba(0,0,0,.44) calc(100% - var(--b) * .46), rgba(0,0,0,.24) calc(100% - var(--b) * .3),
     rgba(0,0,0,.1) calc(100% - var(--b) * .16), rgba(0,0,0,.03) calc(100% - var(--b) * .06), rgba(0,0,0,0)); }
 .uses[data-pin] { transform-origin: 50% 100%; }   /* sinks back toward its bottom edge as the sheet covers it */
+
+/* ---------- Reimagined hub ---------- */
+.rmg { padding: var(--rw-sec) 0; background: var(--rw-paper); }
+.rmg__inner { width: var(--rw-container); margin-inline: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 20px 24px; }
+.rmg__feature { position: relative; display: grid; align-content: end; gap: 10px; min-height: 380px; padding: 28px; border-radius: 16px; overflow: hidden; color: var(--pf-white); text-decoration: none; background: #000; isolation: isolate; }
+.rmg__feature img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1); }
+.rmg__feature::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,.8)); }
+.rmg__feature:hover img { transform: scale(1.04); }
+.rmg__k { font: 400 13px/1 var(--pf-mono); letter-spacing: .04em; color: rgba(238, 234, 255, 0.75); }
+.rmg__t { font: 400 clamp(26px, 2.6vw, 38px)/1.1 var(--pf-serif); letter-spacing: -0.03em; }
+.rmg__t em { font-family: var(--pf-italic); color: var(--pf-violet); }
+.rmg__go { font: 500 15px/1 var(--pf-sans); }
+.rmg__group { grid-column: 1 / -1; margin-top: 36px; }
+.rmg__group .pf-eyebrow { margin-bottom: 8px; }
+.rmg__row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) auto; gap: 24px; align-items: baseline; padding: 18px 0; border-top: 1px solid rgba(11, 11, 12, 0.1); text-decoration: none; color: var(--rw-ink); }
+.rmg__name { font: 400 24px/1.2 var(--pf-serif); letter-spacing: -0.02em; }
+.rmg__sum { font-size: 15px; color: var(--rw-ink-2); }
+.rmg__arrow { color: #6E62E6; transition: transform 200ms ease; }
+.rmg__row:hover .rmg__name { color: #6E62E6; }
+.rmg__row:hover .rmg__arrow { transform: translateX(4px); }
+@media (max-width: 900px) { .rmg__inner { grid-template-columns: 1fr; } .rmg__row { grid-template-columns: 1fr auto; } .rmg__sum { display: none; } }

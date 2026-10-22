@@ -17,6 +17,7 @@ export const NAV = [
   { label: 'Capabilities', href: '/capabilities' },
   { label: 'Case Studies', href: '/case-studies' },
   { label: 'About', href: '/about' },
+  { label: 'Reimagined', href: '/reimagined' },
 ];
 
 // Homepage "Firm Highlights", from the live homepage.
