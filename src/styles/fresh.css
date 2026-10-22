@@ -761,3 +761,13 @@ a { color: inherit; }
   .fnav__menu a.btn-gold { margin-top: 12px; padding: 14px 20px; border-radius: var(--pf-r-pill); border: 0; text-align: center; letter-spacing: 0; text-transform: none; }
 }
 @media (max-width: 900px) { .fnav__menu { background: var(--rw-paper); -webkit-backdrop-filter: none; backdrop-filter: none; } }
+/* Reach, revised (owner, Oct 21): no galaxy. The infrastructure blend runs
+   the full width, same washes as .mood-light. */
+.reach__galaxy { display: none; }
+.reach__bg {
+  background:
+    radial-gradient(55% 80% at 16% 100%, color-mix(in srgb, var(--pf-g-teal-lit) 34%, transparent), transparent 66%),
+    radial-gradient(50% 75% at 86% 0%, color-mix(in srgb, var(--pf-g-violet) 30%, transparent), transparent 66%),
+    radial-gradient(38% 60% at 64% 72%, color-mix(in srgb, var(--rw-gold-300) 34%, transparent), transparent 70%),
+    radial-gradient(70% 90% at 45% 40%, color-mix(in srgb, var(--pf-g-periwinkle) 16%, transparent), transparent 76%),
+    var(--rw-paper); }
