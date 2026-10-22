@@ -41,7 +41,7 @@ const pad = (n) => String(n).padStart(2, '0');
               <h3 class="vert__line"><a href={`/capabilities/${s.slug}`}>{s.line}</a></h3>
               <p class="vert__name"><a href={`/capabilities/${s.slug}`}>{s.name} →</a></p>
               <p class="vert__body">{s.body}</p>
-              <ul class="vert__does" data-stagger>{s.does.map((d, j) => <li style={`--i:${j}`}>{d}</li>)}</ul>
+              <ul class="vert__does">{s.does.map((d) => <li>{d}</li>)}</ul>
               <a class="vert__link" href={`/capabilities/${s.slug}`}>Explore {s.name} →</a>
             </li>
           ))}
@@ -81,15 +81,17 @@ const pad = (n) => String(n).padStart(2, '0');
   </section>
 
   <script>
-    // Staggered reveal: each step's three chips slide in from the left, one
-    // after another (150ms apart), the first time that step comes into view.
+    // Slide-in: each of the five steps slides in from the left edge of the
+    // screen as you scroll to it, so they arrive one after another: 01, 02, 03...
+    // Fires only once the step is well into view (not on load); the gold node
+    // stays put on the line.
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
       const io = new IntersectionObserver((entries) => entries.forEach((e) => {
         if (!e.isIntersecting) return;
         e.target.classList.add('is-in');
         io.unobserve(e.target);
-      }), { threshold: 0.5 });
-      document.querySelectorAll('.vert__does[data-stagger]').forEach((ul) => { ul.classList.add('is-armed'); io.observe(ul); });
+      }), { rootMargin: '0px 0px -20% 0px', threshold: 0.15 });
+      document.querySelectorAll('.vert').forEach((v) => { v.classList.add('is-armed'); io.observe(v); });
     }
 
     // Spine dot: its position follows how far the track has scrolled past the

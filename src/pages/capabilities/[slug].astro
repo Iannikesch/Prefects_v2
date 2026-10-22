@@ -217,8 +217,8 @@ const FAQ = [
       if (start && ids.includes(start)) requestAnimationFrame(() => go(start, false));
     }
 
-    // Staggered reveal: the three overview cards slide in from the left one
-    // after another (150ms apart) the first time they come into view.
+    // Staggered reveal: the three overview cards slide in from the left edge
+    // of the screen one after another (180ms apart) once they're well into view.
     const stag = document.querySelector('[data-stagger]');
     if (stag && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
       stag.classList.add('is-armed');
@@ -226,7 +226,7 @@ const FAQ = [
         if (!e.isIntersecting) return;
         stag.classList.add('is-in');
         o.disconnect();
-      }, { threshold: 0.25 }).observe(stag);
+      }, { rootMargin: '0px 0px -25% 0px', threshold: 0.2 }).observe(stag);   // only once well into view, never on load
     }
 
     // Accordion (Epsilon, measured): several rows can be open at once; 350ms.
