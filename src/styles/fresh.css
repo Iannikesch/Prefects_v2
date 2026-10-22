@@ -957,3 +957,18 @@ em.foil-text, .edge__num.foil-text {
 .casc__stick { margin-block: -1px; }   /* close the hairline seam against the blends */
 .casc__photo { width: 74%; }
 .casc__photo--2 { width: 52%; margin-top: -16%; }
+
+/* ---------- Hero into Reach: one blend, no white band (Oct 22) ----------
+   The hero now fades from black to see-through over its last 240px instead
+   of to white, and Reach slides up underneath it by the same 240px, so the
+   black melts straight into Reach's glow. Reach keeps only its bottom fade. */
+:root { --rw-hero-blend: 240px; }
+.rhero { z-index: 1; background: linear-gradient(#000 calc(100% - var(--rw-hero-blend)), rgba(0, 0, 0, 0)); }
+.rhero + .reach { margin-top: calc(-1 * var(--rw-hero-blend)); padding-top: calc(var(--rw-hero-blend) + var(--rw-sec)); z-index: 0; }
+.rhero + .reach::after { background: linear-gradient(transparent 82%, var(--rw-paper)); }
+/* Eased fade (no crease where a straight-line gradient would end). */
+.rhero { --b: var(--rw-hero-blend);
+  background: linear-gradient(#000 calc(100% - var(--b)),
+    rgba(0,0,0,.86) calc(100% - var(--b) * .82), rgba(0,0,0,.66) calc(100% - var(--b) * .64),
+    rgba(0,0,0,.44) calc(100% - var(--b) * .46), rgba(0,0,0,.24) calc(100% - var(--b) * .3),
+    rgba(0,0,0,.1) calc(100% - var(--b) * .16), rgba(0,0,0,.03) calc(100% - var(--b) * .06), rgba(0,0,0,0)); }
