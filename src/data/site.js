@@ -8,7 +8,7 @@ export const SITE = {
   name: 'Profectus Agency',
   url: 'https://profectusagency.com',
   description:
-    'Profectus is a data-driven marketing agency powered by a proprietary data spine with near-full domestic coverage, built by a team with decades of Fortune 50 experience.',
+    'Profectus is a data-driven marketing agency powered by a proprietary data spine with near-full domestic coverage, built by a team with decades of experience at world-class brands.',
   // Where contact enquiries go. Placeholder until the client confirms.
   contactEmail: '[CONTACT EMAIL]',
 };
@@ -40,7 +40,7 @@ export const INDUSTRIES = [
 export const WHY = [
   {
     title: "We Built the Infrastructure. We Didn't License It.",
-    text: "Our proprietary data spine was built and refined over decades at Fortune 50 scale. It gives clients near-complete domestic audience coverage with powerful identity resolution, targeting, and activation capabilities. Most agencies resell someone else's data. This is ours.",
+    text: "Our proprietary data spine was built and refined over decades for world-class brands. It gives clients near-complete domestic audience coverage with powerful identity resolution, targeting, and activation capabilities. Most agencies resell someone else's data. This is ours.",
   },
   {
     title: "We Reach Who Others Can't.",
@@ -51,7 +51,7 @@ export const WHY = [
     text: 'We offer industry-leading pricing for email, SMS, and push. Not as a loss leader, but because we built the infrastructure ourselves. Lower sending costs mean higher frequency, stronger relationships, and more revenue.',
   },
   {
-    title: 'Fortune 50 Experience. Applied to Every Client.',
+    title: 'World-Class Brand Experience. Applied to Every Client.',
     text: "Our strategies and systems were built running marketing inside some of the world's most complex organizations. That experience isn't theoretical. It's embedded in how we operate every day.",
   },
 ];
@@ -77,7 +77,7 @@ export const PROCESS = [
 // plus the owner's 230M database (Oct 21). "Holding company" and "no
 // inventory" await the owner's OK.
 export const EDGE = [
-  ['What you get', 'A login and a support ticket.', 'The operators who ran it at Fortune 50 scale, on your account.'],
+  ['What you get', 'A login and a support ticket.', 'The operators who ran it for world-class brands, on your account.'],
   ['Whose data', "Rented from someone else's graph.", 'Our own database of 230 million people. Near-full domestic coverage.'],
   ['Where your budget goes', 'Into their own network first.', 'Wherever it works. 500+ platforms and no inventory to protect.'],
   ['What sending costs', 'Priced for enterprise contracts.', 'Built in-house, priced so sending more often finally pays.'],
