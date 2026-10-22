@@ -14,19 +14,21 @@ const PANELS = [
 ];
 ---
 <div class="pj" data-pj>
-  <div class="pj__panels">
-    {PANELS.map(([h, t], i) => (
-      <div class="pj__panel" data-pj-panel={i + 1}>
-        <span class="pj__n">0{i + 1}</span>
-        <h3>{h}</h3>
-        <p>{t}</p>
-      </div>
-    ))}
-  </div>
-  <div class="pj__art">
-    <div class="pj__stage" data-scene="1" data-pj-stage>
-      <svg class="pj__tree pj__tree--2" viewBox="0 0 1000 620" aria-hidden="true"><path d="M600 110 V80 H660" class="pj__g"/><path d="M560 176 V200 H620" class="pj__g"/><path d="M560 272 V300 H610" class="pj__g"/><path d="M600 372 V345 H650" class="pj__g"/><path d="M580 432 V460 H630" class="pj__g"/><path d="M580 540 V565 H640" class="pj__g"/><path d="M315 180 H400 V140 H480 H600 V110 H700" style="stroke:#E79A9A"/><path d="M400 180 V232 H470 H560 V272 H640" style="stroke:#E79A9A"/><path d="M480 140 H560 V176 H660" style="stroke:#E79A9A"/><path d="M270 450 H400 V405 H490 H600 V372 H700" style="stroke:#E79A9A"/><path d="M490 405 H580 V432 H680" style="stroke:#E79A9A"/><path d="M400 450 V492 H480 H580 V540 H660" style="stroke:#E79A9A"/><circle cx="700" cy="110" r="7" style="fill:#C0392B"/><circle cx="660" cy="176" r="7" style="fill:#C0392B"/><circle cx="640" cy="272" r="7" style="fill:#C0392B"/><circle cx="700" cy="372" r="7" style="fill:#C0392B"/><circle cx="680" cy="432" r="7" style="fill:#C0392B"/><circle cx="660" cy="540" r="7" style="fill:#C0392B"/></svg>
-      <svg class="pj__tree pj__tree--4" viewBox="0 0 1000 620" aria-hidden="true"><path d="M520 150 V120 H580" class="pj__g"/><path d="M640 140 V115 H700" class="pj__g"/><path d="M540 300 V275 H600" class="pj__g"/><path d="M660 305 V330 H720" class="pj__g"/><path d="M520 440 V410 H570" class="pj__g"/><path d="M640 460 V490 H700" class="pj__g"/><path d="M520 150 V178 H570" class="pj__g"/><path d="M335 210 H420 V150 H520 V140 H640 H800" style="stroke:#3E7BEA"/><path d="M420 210 V300 H540 V305 H660 H800" style="stroke:#2B2A6B"/><path d="M420 210 V380 H520 V440 H640 V460 H800" style="stroke:#9B7FD8"/><circle cx="800" cy="140" r="7" style="fill:#3E7BEA"/><circle cx="800" cy="305" r="7" style="fill:#2B2A6B"/><circle cx="800" cy="460" r="7" style="fill:#9B7FD8"/><circle cx="420" cy="210" r="7" style="fill:#3E7BEA"/></svg>
+  <div class="pj__sticky">
+    <div class="pj__panels">
+      {PANELS.map(([h, t], i) => (
+        <div class={`pj__panel${i === 0 ? ' is-on' : ''}`} data-pj-panel={i + 1}>
+          <span class="pj__n">0{i + 1} / 05</span>
+          <h3>{h}</h3>
+          <p>{t}</p>
+        </div>
+      ))}
+      <div class="pj__dots" aria-hidden="true">{PANELS.map((_, i) => <i class={i === 0 ? 'is-on' : ''} />)}</div>
+    </div>
+    <div class="pj__art">
+      <div class="pj__stage" data-scene="1" data-pj-stage>
+        <svg class="pj__tree pj__tree--2" viewBox="0 0 1000 620" aria-hidden="true"><path d="M600 110 V80 H660" class="pj__g"/><path d="M560 176 V200 H620" class="pj__g"/><path d="M560 272 V300 H610" class="pj__g"/><path d="M600 372 V345 H650" class="pj__g"/><path d="M580 432 V460 H630" class="pj__g"/><path d="M580 540 V565 H640" class="pj__g"/><path d="M315 180 H400 V140 H480 H600 V110 H700" style="stroke:#E79A9A"/><path d="M400 180 V232 H470 H560 V272 H640" style="stroke:#E79A9A"/><path d="M480 140 H560 V176 H660" style="stroke:#E79A9A"/><path d="M270 450 H400 V405 H490 H600 V372 H700" style="stroke:#E79A9A"/><path d="M490 405 H580 V432 H680" style="stroke:#E79A9A"/><path d="M400 450 V492 H480 H580 V540 H660" style="stroke:#E79A9A"/><circle cx="700" cy="110" r="7" style="fill:#C0392B"/><circle cx="660" cy="176" r="7" style="fill:#C0392B"/><circle cx="640" cy="272" r="7" style="fill:#C0392B"/><circle cx="700" cy="372" r="7" style="fill:#C0392B"/><circle cx="680" cy="432" r="7" style="fill:#C0392B"/><circle cx="660" cy="540" r="7" style="fill:#C0392B"/></svg>
+        <svg class="pj__tree pj__tree--4" viewBox="0 0 1000 620" aria-hidden="true"><path d="M520 150 V120 H580" class="pj__g"/><path d="M640 140 V115 H700" class="pj__g"/><path d="M540 300 V275 H600" class="pj__g"/><path d="M660 305 V330 H720" class="pj__g"/><path d="M520 440 V410 H570" class="pj__g"/><path d="M640 460 V490 H700" class="pj__g"/><path d="M520 150 V178 H570" class="pj__g"/><path d="M335 210 H420 V150 H520 V140 H640 H800" style="stroke:#3E7BEA"/><path d="M420 210 V300 H540 V305 H660 H800" style="stroke:#2B2A6B"/><path d="M420 210 V380 H520 V440 H640 V460 H800" style="stroke:#9B7FD8"/><circle cx="800" cy="140" r="7" style="fill:#3E7BEA"/><circle cx="800" cy="305" r="7" style="fill:#2B2A6B"/><circle cx="800" cy="460" r="7" style="fill:#9B7FD8"/><circle cx="420" cy="210" r="7" style="fill:#3E7BEA"/></svg>
       <div class="pj__p pj__face" data-p="maria" aria-hidden="true"><img src="/img/photos/mail.webp" alt="" style="object-position:45% 28%" loading="lazy" decoding="async"></div>
       <div class="pj__p pj__face" data-p="p2" aria-hidden="true"><img src="/img/photos/coffee.webp" alt="" style="object-position:62% 40%" loading="lazy" decoding="async"></div>
       <div class="pj__p pj__face" data-p="p3" aria-hidden="true"><img src="/img/photos/notify.webp" alt="" style="object-position:55% 28%" loading="lazy" decoding="async"></div>
@@ -64,17 +66,34 @@ const PANELS = [
       <div class="pj__p pj__email" data-p="email" aria-hidden="true"><p class="pj__em-from">Your store · 8:10 pm</p><p class="pj__em-sub">Still thinking about the boots, Maria?</p><span class="pj__em-img"></span><span class="pj__em-btn">Take another look</span><span class="pj__hand">☝</span></div>
       <div class="pj__p pj__verified" data-p="verified" aria-hidden="true"><i>✓</i>Verified purchase</div>
       <div class="pj__p pj__ltv" data-p="ltv" aria-hidden="true"><b>Lifetime value</b> $420 → $680</div>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
-  // Whichever panel crosses the middle of the screen sets the scene.
-  const stage = document.querySelector('[data-pj-stage]');
-  if (stage) {
-    const io = new IntersectionObserver((es) => es.forEach((e) => {
-      if (e.isIntersecting) stage.dataset.scene = e.target.dataset.pjPanel;
-    }), { rootMargin: '-45% 0px -45% 0px' });
-    document.querySelectorAll('[data-pj-panel]').forEach((p) => io.observe(p));
+  // Locked journey: the section is five screens tall and its contents stay
+  // pinned; how far you've scrolled through it picks the scene (1-5), so the
+  // page guides you through every step before it lets go. The scene change
+  // itself plays on its own timing (CSS), like Epsilon's.
+  const root = document.querySelector('[data-pj]');
+  if (root) {
+    const stage = root.querySelector('[data-pj-stage]');
+    const panels = [...root.querySelectorAll('[data-pj-panel]')];
+    const dots = [...root.querySelectorAll('.pj__dots i')];
+    let last = 1, queued = false;
+    const set = () => {
+      queued = false;
+      const r = root.getBoundingClientRect();
+      const p = Math.max(0, Math.min(0.9999, -r.top / Math.max(1, root.offsetHeight - innerHeight)));
+      const n = Math.floor(p * 5) + 1;
+      if (n === last) return;
+      last = n;
+      stage.dataset.scene = n;
+      panels.forEach((el, i) => el.classList.toggle('is-on', i === n - 1));
+      dots.forEach((el, i) => el.classList.toggle('is-on', i < n));
+    };
+    addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(set); } }, { passive: true });
+    set();
   }
 </script>

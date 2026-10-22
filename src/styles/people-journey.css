@@ -1,14 +1,21 @@
 
 /* ---------- Homepage centrepiece: the people journey (generated) ---------- */
-.pj { display: grid; grid-template-columns: minmax(0, .72fr) minmax(0, 1.6fr); gap: 40px; margin-top: 24px; }
-.pj__panel { min-height: 78vh; display: grid; align-content: center; gap: 14px; max-width: 26em; }
-.pj__panel:first-child { min-height: 60vh; }
-.pj__panel:last-child { min-height: 70vh; }
+/* Locked: five screens of scroll, contents pinned, on a grey panel for contrast. */
+.pj { position: relative; height: 500vh; margin-top: 24px; }
+.pj__sticky { position: sticky; top: 0; height: 100vh; display: grid; grid-template-columns: minmax(0, .72fr) minmax(0, 1.6fr); gap: 40px; align-items: center;
+  padding: 0 clamp(20px, 3vw, 48px); border-radius: 24px; background: #F2F1F6; overflow: hidden;
+  background-image: radial-gradient(60% 70% at 75% 50%, rgba(110, 98, 230, .08), transparent 70%), radial-gradient(rgba(11, 11, 12, .05) 1px, transparent 1.2px); background-size: auto, 22px 22px; }
+.pj__panels { position: relative; height: 60vh; }
+.pj__panel { position: absolute; inset: 0; display: grid; align-content: center; gap: 14px; max-width: 26em; opacity: 0; transform: translate3d(0, 24px, 0); transition: opacity .45s ease, transform .6s cubic-bezier(.16, 1, .3, 1); pointer-events: none; }
+.pj__panel.is-on { opacity: 1; transform: none; transition-delay: .15s; pointer-events: auto; }
 .pj__n { font: 400 var(--pf-fs-mono)/1 var(--pf-mono); letter-spacing: .06em; color: #6E62E6; }
 .pj__panel h3 { font: 400 clamp(28px, 2.6vw, 40px)/1.1 var(--pf-serif); letter-spacing: -0.03em; }
 .pj__panel p { font-size: 17px; line-height: 1.5; color: var(--rw-ink-2); }
-.pj__art { position: sticky; top: calc(50vh - 31cqw * 0); height: fit-content; align-self: start; top: 14vh; container-type: inline-size; }
-.pj__stage { position: relative; width: 100%; height: 62cqw; }
+.pj__dots { position: absolute; left: 0; bottom: 0; display: flex; gap: 8px; }
+.pj__dots i { width: 28px; height: 3px; border-radius: 2px; background: rgba(11, 11, 12, .12); transition: background-color .3s ease; }
+.pj__dots i.is-on { background: #6E62E6; }
+.pj__art { container-type: inline-size; }
+.pj__stage { position: relative; width: 100%; height: 62cqw; max-height: 84vh; }
 .pj__p { position: absolute; left: 0; top: 0; opacity: var(--o, 0);
   transform: translate(calc(var(--x, 50) * 1cqw), calc(var(--y, 31) * 1cqw)) translate(-50%, -50%) scale(var(--s, 1));
   transition: transform 1.1s cubic-bezier(.65, 0, .35, 1) var(--d, 0ms), opacity .55s ease var(--d, 0ms); will-change: transform, opacity; }
@@ -50,12 +57,20 @@
   fill: none; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; clip-path: inset(0 100% 0 0); }
 .pj__tree .pj__g { stroke: #E6E4EA; stroke-width: 4; }
 .pj__stage[data-scene="2"] .pj__tree--2, .pj__stage[data-scene="4"] .pj__tree--4 { opacity: 1; clip-path: inset(0 0 0 0); transition: opacity .3s ease .5s, clip-path 1.6s cubic-bezier(.65, 0, .35, 1) .5s; }
+@keyframes pj-drift { 0%, 100% { translate: 0 0; } 50% { translate: .4cqw -.9cqw; } }
+.pj__stage[data-scene="1"] :is(.pj__card, .pj__grey, .pj__face) { animation: pj-drift 4.2s ease-in-out infinite; }
+.pj__stage[data-scene="1"] :is(.pj__card, .pj__grey, .pj__face):nth-child(3n) { animation-duration: 5.1s; animation-delay: -1.3s; }
+.pj__stage[data-scene="1"] :is(.pj__card, .pj__grey, .pj__face):nth-child(3n+1) { animation-duration: 3.6s; animation-delay: -2.2s; }
+@keyframes pj-tap { 0%, 60%, 100% { transform: rotate(-12deg) scale(1); } 70% { transform: rotate(-12deg) scale(.82); } }
+.pj__stage[data-scene="5"] .pj__hand { animation: pj-tap 2.4s ease-in-out 1.1s infinite; }
 @media (max-width: 900px) {
-  .pj { grid-template-columns: 1fr; gap: 0; }
-  .pj__art { order: -1; position: sticky; top: 72px; z-index: 5; background: var(--rw-paper); padding: 8px 0; }
-  .pj__panel { min-height: 70vh; }
+  .pj { height: 420vh; }
+  .pj__sticky { grid-template-columns: 1fr; grid-template-rows: auto 1fr; align-content: start; gap: 8px; padding: 84px 16px 16px; border-radius: 0; }
+  .pj__art { order: -1; }
+  .pj__panels { height: 34vh; }
+  .pj__panel h3 { font-size: 26px; } .pj__panel p { font-size: 15px; }
 }
-@media (prefers-reduced-motion: reduce) { .pj__p, .pj__ir, .pj__tree { transition: none !important; } }
+@media (prefers-reduced-motion: reduce) { .pj__p, .pj__ir, .pj__tree, .pj__panel { transition: none !important; } .pj__stage * { animation: none !important; } }
 .pj__stage[data-scene="1"] [data-p="maria"] { --x:52; --y:27; --s:0.85; --o:1; --d:0ms; }
 .pj__stage[data-scene="2"] [data-p="maria"] { --x:24; --y:18; --s:0.75; --o:1; --d:100ms; }
 .pj__stage[data-scene="3"] [data-p="maria"] { --x:55; --y:32; --s:1.45; --o:1; --d:0ms; }
