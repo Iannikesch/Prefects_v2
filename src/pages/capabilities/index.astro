@@ -1,44 +1,141 @@
 ---
-// Capabilities listing: all 12, grouped by theme. Same URL as the live site.
-import Base from '../../layouts/Base.astro';
-import Mood from '../../components/Mood.astro';
-import { THEMES, inTheme } from '../../data/capabilities.js';
-import { AI_NAME, AI_PATH } from '../../data/site.js';
-import Aurora from '../../components/Aurora.astro';
+// Capabilities: the spine. Five steps, each moving one customer forward,
+// then the services where that progress shows up. The previous listing is
+// kept at _old-index.astro for reference.
+import Fresh from '../../layouts/Fresh.astro';
+import { bySlug } from '../../data/capabilities.js';
+
+// The five vertebrae. `state` is what the customer becomes once the step is
+// done; it's the label on the travelling dot. Recognize and Unify both link
+// to the Data, Identity & Infrastructure page until Identity gets its own.
+const SPINE = [
+  { verb: 'Recognize', name: 'Identity Resolution', slug: 'data-identity-infrastructure', state: 'Someone',
+    line: 'A stranger becomes someone.',
+    body: 'Every email, device and purchase traced back to one real person. Matched deterministically against our own database of 230 million people, not guessed from a rented graph.',
+    does: ['Deterministic matching', 'Cross-device and cross-channel', 'Known customers and unknown prospects'] },
+  { verb: 'Unify', name: 'Customer Data & Infrastructure', slug: 'data-identity-infrastructure', state: 'Whole picture',
+    line: 'Someone becomes a whole picture.',
+    body: 'Your CRM, site, store and inbox finally agree. One profile per person, updated the moment they act, with consent built in from day one.',
+    does: ['Data layer and event tracking', 'CDP setup and integration', 'Real-time profiles', 'Privacy and consent'] },
+  { verb: 'Understand', name: 'Audience & Intent', slug: 'audience-intent-development', state: 'Priority',
+    line: 'A picture becomes a priority.',
+    body: "Know who is worth the most, who is ready to buy now and who is about to walk. Then find more people just like your best.",
+    does: ['Intent scoring', 'Lookalike expansion', 'Enrichment', 'Suppression of wasted spend'] },
+  { verb: 'Decide', name: 'AI & Automation', slug: 'ai-automation', state: 'Next move',
+    line: 'A priority gets the right next move.',
+    body: 'AI picks what to send, where and when, and sends it. Models trained on your own first-party data. Workflows that run while your team sleeps.',
+    does: ['Predictive models', 'Trigger-based journeys', 'Chat and voice agents'] },
+  { verb: 'Prove', name: 'Measurement & Attribution', slug: 'analytics-attribution-optimization', state: 'Proven',
+    line: 'Every move gets a receipt.',
+    body: 'Which dollar moved which person, counted honestly. Incrementality tests instead of vanity metrics, and a dashboard your CFO will actually read.',
+    does: ['Multi-touch attribution', 'Incrementality testing', 'Executive dashboards'] },
+];
+const SERVICES = [
+  { title: 'Reach them', blurb: 'The channels where the next move lands.',
+    slugs: ['paid-media-demand-generation', 'enterprise-email-text-messaging', 'direct-mail-offline-media', 'social-media-management'] },
+  { title: 'Win them', blurb: 'The story, the site and the team that close it.',
+    slugs: ['strategy-go-to-market', 'brand-creative-storytelling', 'website-digital-experience', 'sales-enablement'] },
+];
 const pad = (n) => String(n).padStart(2, '0');
 ---
-<Base title="Capabilities" description="Twelve capabilities, one data spine. Strategy, brand, media, data, lifecycle and AI, each available on its own or as one integrated engagement.">
-  <section class="hero hero--page hero--left">
-    <Aurora />
-    <div class="wrap hero__inner">
+<Fresh title="Capabilities · Profectus Agency">
+  <section class="rhero rhero--page" data-hero>
+    <div class="pf-rain" data-ramp="violet" data-accent="gold" aria-hidden="true"></div>
+    <div class="rhero__inner">
       <p class="pf-eyebrow">Capabilities</p>
-      <h1 class="pf-display"><em>Every</em> Capability.<br />One Spine.</h1>
-      <p class="t-lead measure">Each capability below works independently or as part of a fully integrated engagement. Choose any one to see everything it covers.</p>
+      <h1 class="pf-display rhero__title">One spine. Every step <em class="foil-text glow">forward</em>.</h1>
+      <span class="foil-rule glow" aria-hidden="true"></span>
+      <p class="rhero__lead">Profectus means progress. Every capability below moves one customer one step: from stranger, to sale, to proof. Use one on its own, or run the whole spine.</p>
     </div>
   </section>
 
-  {THEMES.map((t, ti) => (
-    <section class="section--sm">
-      <div class="wrap ti">
-        <div class="head">
-          <p class="pf-eyebrow">{pad(ti + 1)} · Theme</p>
-          <h2 class="pf-h2">{t.name}</h2>
-          <p class="t-soft">{t.blurb}</p>
-        </div>
-        <div class="ti__items">
-          {inTheme(t.id).map((c) => (
-            <a class="tile tile--link" href={`/capabilities/${c.slug}`}>
-              <p class="pf-eyebrow">Service offering · {c.items.length} services</p>
-              <h3 class="t-h3">{c.name}</h3>
-              <p class="t-body">{c.summary}</p>
-              <span class="link-arrow">Explore →</span>
-            </a>
-          ))}
-        </div>
+  <!-- The spine: one customer (the dot) travels down the gold line as you
+       scroll, and its label changes at each step it passes. Scroll-linked:
+       it moves only as far as you scroll. -->
+  <section class="spine light" aria-labelledby="spine-h">
+    <div class="spine__inner">
+      <div class="spine__head">
+        <p class="pf-eyebrow">The spine · five steps</p>
+        <h2 class="lh2" id="spine-h">Follow one customer <em class="v">down the spine</em>.</h2>
       </div>
-    </section>
-  ))}
+      <div class="spine__track" data-spine>
+        <div class="spine__rail" aria-hidden="true"><span class="spine__fill"></span></div>
+        <div class="spine__dot" aria-hidden="true"><span class="spine__label">Stranger</span></div>
+        <ol class="spine__steps">
+          {SPINE.map((s, i) => (
+            <li class="vert" data-state={s.state}>
+              <span class="vert__node" aria-hidden="true"></span>
+              <p class="vert__num">{pad(i + 1)} · {s.verb}</p>
+              <h3 class="vert__line">{s.line}</h3>
+              <p class="vert__name">{s.name}</p>
+              <p class="vert__body">{s.body}</p>
+              <ul class="vert__does">{s.does.map((d) => <li>{d}</li>)}</ul>
+              <a class="vert__link" href={`/capabilities/${s.slug}`}>{i < SPINE.length - 1 ? `${s.verb}, then ${SPINE[i + 1].verb.toLowerCase()} →` : 'See how we prove it →'}</a>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
 
-  <div style="height:var(--site-pad-y-sm)"></div>
-  <Mood eyebrow={AI_NAME} title="Need more than a service? <em>Own</em> your AI." pill={`Meet ${AI_NAME}`} href={AI_PATH} variant="plum" />
-</Base>
+  <!-- Where the progress happens: the services that run on the spine. -->
+  <section class="svc light" aria-labelledby="svc-h">
+    <div class="svc__inner">
+      <div class="spine__head">
+        <p class="pf-eyebrow">Where the progress happens</p>
+        <h2 class="lh2" id="svc-h">The spine decides. <em class="v">These deliver.</em></h2>
+      </div>
+      {SERVICES.map((g) => (
+        <div class="svc__group">
+          <div class="svc__label"><h3>{g.title}</h3><p>{g.blurb}</p></div>
+          <div class="svc__grid">
+            {g.slugs.map((slug) => { const c = bySlug(slug); return (
+              <a class="svc__card" href={`/capabilities/${slug}`}>
+                <span class="svc__name">{c.name}</span>
+                <span class="svc__sum">{c.summary}</span>
+                <span class="svc__go">Explore →</span>
+              </a>
+            ); })}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="close" aria-labelledby="close-h">
+    <p class="pf-eyebrow">Built inside the Fortune 50. Sized for the business down the street.</p>
+    <h2 class="close__h" id="close-h">Ready to make <em class="foil-text">progress</em>?</h2>
+    <a class="pf-pill btn-gold" href="/contact">Talk to an operator →</a>
+  </section>
+
+  <script>
+    // Spine dot: its position follows how far the track has scrolled past the
+    // middle of the screen. One write per frame, transform and text only.
+    const track = document.querySelector('[data-spine]');
+    if (track) {
+      const dot = track.querySelector('.spine__dot');
+      const fill = track.querySelector('.spine__fill');
+      const label = track.querySelector('.spine__label');
+      const steps = [...track.querySelectorAll('.vert')];
+      let queued = false, last = '';
+      const update = () => {
+        queued = false;
+        const r = track.getBoundingClientRect();
+        const mid = innerHeight * 0.5;
+        const y = Math.min(r.height, Math.max(0, mid - r.top));
+        dot.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
+        fill.style.transform = `scaleY(${(y / r.height).toFixed(4)})`;
+        let state = 'Stranger';
+        steps.forEach((s) => {
+          const on = s.offsetTop + 28 <= y;   // the step's node has been passed
+          s.classList.toggle('is-passed', on);
+          if (on) state = s.dataset.state;
+        });
+        if (state !== last) { last = state; label.textContent = state; }
+      };
+      addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
+      addEventListener('resize', update);
+      update();
+    }
+  </script>
+</Fresh>
