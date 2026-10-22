@@ -81,37 +81,6 @@ const CLIENTS = [
   </section>
 
 
-  <!-- Why Profectus: operators, not a platform. A platform and Profectus,
-       compared row by row. No rival is named. -->
-  <section class="edge" aria-labelledby="edge-h">
-    <div class="edge__inner">
-      <div class="edge__head">
-        <p class="pf-eyebrow">Why Profectus</p>
-        <h2 class="edge__h" id="edge-h">Platforms sell you a login. <em class="foil-text">We bring the people who built it.</em></h2>
-        <p class="edge__lead">Profectus is a team of operators who spent decades running data and marketing inside world-class brands. We own our data: 230 million people deep. We don't own the channels. And we don't answer to a holding company. The only thing we're built to move is your <em class="v">progress</em>.</p>
-      </div>
-      <div class="edge__stat" aria-hidden="true"><span class="edge__num foil-text">230M</span><span class="edge__unit">people in our own database</span></div>
-      <div class="edge__table" role="table" aria-label="A platform compared with Profectus">
-        <div class="edge__row edge__row--head" role="row">
-          <span role="columnheader"></span>
-          <span role="columnheader">A platform</span>
-          <span role="columnheader">Profectus</span>
-        </div>
-        {EDGE.map(([k, them, us]) => (
-          <div class="edge__row" role="row">
-            <span class="edge__k" role="rowheader">{k}</span>
-            <span class="edge__them" role="cell">{them}</span>
-            <span class="edge__us" role="cell">{us}</span>
-          </div>
-        ))}
-      </div>
-      <div class="edge__foot">
-        <p class="edge__line">Built for world-class brands. <em class="v">Sized for the business down the street.</em></p>
-        <a class="pf-pill btn-gold" href="/contact">Ready to make progress? →</a>
-      </div>
-    </div>
-  </section>
-
   <!-- Section 2 (Epsilon's "what we can do" framing, original copy):
        one big card on the left, two stacked on the right. Cards grow on hover. -->
 
@@ -153,6 +122,37 @@ const CLIENTS = [
             </div>
           </a>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Profectus: operators, not a platform. A platform and Profectus,
+       compared row by row. No rival is named. -->
+  <section class="edge" aria-labelledby="edge-h">
+    <div class="edge__inner">
+      <div class="edge__head">
+        <p class="pf-eyebrow">Why Profectus</p>
+        <h2 class="edge__h" id="edge-h">Platforms sell you a login. <em class="foil-text">We bring the people who built it.</em></h2>
+        <p class="edge__lead">Profectus is a team of operators who spent decades running data and marketing inside world-class brands. We own our data: 230 million people deep. We don't own the channels. And we don't answer to a holding company. The only thing we're built to move is your <em class="v">progress</em>.</p>
+      </div>
+      <div class="edge__stat" aria-hidden="true"><span class="edge__num foil-text">230M</span><span class="edge__unit">people in our own database</span></div>
+      <div class="edge__table" role="table" aria-label="A platform compared with Profectus">
+        <div class="edge__row edge__row--head" role="row">
+          <span role="columnheader"></span>
+          <span role="columnheader">A platform</span>
+          <span role="columnheader">Profectus</span>
+        </div>
+        {EDGE.map(([k, them, us]) => (
+          <div class="edge__row" role="row">
+            <span class="edge__k" role="rowheader">{k}</span>
+            <span class="edge__them" role="cell">{them}</span>
+            <span class="edge__us" role="cell">{us}</span>
+          </div>
+        ))}
+      </div>
+      <div class="edge__foot">
+        <p class="edge__line">Built for world-class brands. <em class="v">Sized for the business down the street.</em></p>
+        <a class="pf-pill btn-gold" href="/contact">Ready to make progress? →</a>
       </div>
     </div>
   </section>
