@@ -155,15 +155,19 @@ body.show-notes .note { display: block; }
 @media (max-width: 560px) { .svc__grid { grid-template-columns: 1fr; } }
 
 /* ---------- Comparison: Infinite's pinned card swap, kept short ---------- */
-.swap { position: relative; height: calc(100svh + 6 * 42vh); background: var(--night); color: #fff; }
+.swap { position: relative; height: calc(100svh + 4 * 42vh); background: var(--night); color: #fff; }
 .swap__stick { position: sticky; top: 0; height: 100svh; display: grid; align-items: center; overflow: hidden; }
 .swap__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: center; }
 .swap .h2 { color: #fff; }
 .swap .h2 em { color: var(--violet-lt); display: block; }
 .swap__sub { margin: 24px 0 0; max-width: 28em; color: rgba(255,255,255,.7); font-size: 18px; }
 .swap__count { margin-top: 32px; font: 400 14px/1 var(--mono); color: var(--gold); }
-.swap__stack { position: relative; height: 380px; }
-.swap__card { position: absolute; inset: 0; padding: 34px; border-radius: 18px; border: 1px solid rgba(255,255,255,.18); background: #0f0d1c; display: grid; align-content: space-between; will-change: transform, opacity; }
+.swap__stack { position: relative; height: 460px; }
+.swap__pic { position: relative; display: block; height: 220px; margin: -34px -34px 6px; overflow: hidden; }
+.swap__pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.swap__card { grid-template-rows: 1fr auto auto; align-content: stretch; }
+.swap__pic { height: auto; min-height: 200px; }
+.swap__card { position: absolute; inset: 0; padding: 34px; border-radius: 18px; border: 1px solid rgba(255,255,255,.18); background: #0f0d1c; display: grid; align-content: end; gap: 18px; overflow: hidden; will-change: transform, opacity; }
 .swap__k { font: 400 13px/1 var(--mono); letter-spacing: .04em; color: var(--gold); }
 .swap__them { font: 400 18px/1.4 var(--sans); color: rgba(255,255,255,.45); text-decoration: line-through; text-decoration-color: rgba(255,255,255,.6); }
 .swap__them::before { content: "A platform: "; text-decoration: none; display: inline; }
@@ -230,9 +234,9 @@ body.show-notes .note { display: block; }
 <section class="hero">
   <div class="hero__photo" aria-hidden="true"><img src="/reimagine/assets/coffee.webp" alt=""></div>
   <div class="wrap">
-    <p class="note"><b>Copy:</b> the rewrite's hero. A claim only we can make, instead of "Personalization through data and customer experience". <b>Motion:</b> Infinite's fade-up. Each piece rises 100px, 0.6s, 200ms after the last.</p>
-    <h1 data-rise style="--d:0">We know who your next customer is. <em>We have 230 million people to choose from.</em></h1>
-    <p class="hero__lead" data-rise style="--d:1">Profectus is a marketing agency with its own database of US consumers. We use it to find the people most likely to buy from you, reach them on the channels they actually use, and show you which dollar did the work.</p>
+    <p class="note"><b>Copy:</b> the owner's viewpoint. Personalization leads, transparency is the second half, the 230M is the reason it works, operators stay vague and present-tense. <b>Motion:</b> Infinite's fade-up. Each piece rises 100px, 0.6s, 200ms after the last.</p>
+    <h1 data-rise style="--d:0">Personal to every customer. <em>Proof for every dollar.</em></h1>
+    <p class="hero__lead" data-rise style="--d:1">Profectus is an independent marketing agency. Our own data on 230 million people lets us give each customer the message, channel and moment that fits them, and show you exactly what each one earned. Run by people who run marketing for world-class brands.</p>
     <div class="hero__btns" data-rise style="--d:2"><a class="btn" href="#">Talk to us →</a><a class="btn btn--ghost" href="#">See the work</a></div>
     <div class="logos" data-rise style="--d:3"><span>Trusted by</span><span>OpenAI</span><span>Smoothie King</span><span>Marriott</span><span>GM</span><span>Skyrizi</span><span>Essentials</span><span>Sitka</span></div>
   </div>
@@ -257,10 +261,10 @@ body.show-notes .note { display: block; }
     <p class="note"><b>New:</b> the photos from Assets/Images. Five everyday customers, each tagged with the one thing our data would tell you about them. It shows the 230 million as people instead of a number. <b>Motion:</b> fade-up, 200ms apart; photos zoom slightly on hover.</p>
     <p class="label" data-rise>Who's in the 230 million</p>
     <div class="people__row">
-      <figure class="person" data-rise style="--d:0"><img src="/reimagine/assets/dogwalk.webp" alt="A woman walking her dog"><figcaption><b>Read your pricing page</b>last night at 11:02pm</figcaption></figure>
-      <figure class="person" data-rise style="--d:1"><img src="/reimagine/assets/tap.webp" alt="Paying by phone at a card reader"><figcaption><b>Just bought</b>matched to her loyalty account</figcaption></figure>
+      <figure class="person" data-rise style="--d:0"><img src="/reimagine/assets/coffee.webp" alt="A man drinking coffee by a café window"><figcaption><b>Read your pricing page</b>last night at 11:02pm</figcaption></figure>
+      <figure class="person" data-rise style="--d:1"><img src="/reimagine/assets/notify.webp" alt="A woman smiling at a text on her phone"><figcaption><b>Opened your text</b>sent 2 hours after she left her cart</figcaption></figure>
       <figure class="person" data-rise style="--d:2"><img src="/reimagine/assets/mail.webp" alt="Opening mail on a doorstep"><figcaption><b>Opened your postcard</b>sent because she left her cart</figcaption></figure>
-      <figure class="person" data-rise style="--d:3"><img src="/reimagine/assets/jetbridge.webp" alt="Boarding a plane"><figcaption><b>Gold member</b>11th trip this year</figcaption></figure>
+      <figure class="person" data-rise style="--d:3"><img src="/reimagine/assets/counter.webp" alt="A restaurant owner at the counter"><figcaption><b>Knows his regulars</b>by name, and so does his email</figcaption></figure>
       <figure class="person" data-rise style="--d:4"><img src="/reimagine/assets/owner-glasses.webp" alt="A bakery owner at her laptop"><figcaption><b>Your next client</b>owner-run, reads reviews first</figcaption></figure>
     </div>
     <p class="people__note">Illustrative. Faces stay anonymous on the real site.</p>
@@ -354,23 +358,21 @@ body.show-notes .note { display: block; }
   </div>
 </section>
 
-<!-- Comparison swap -->
+<!-- Why Profectus: the owner's four points, as a pinned card swap -->
 <section class="swap" data-swap>
   <div class="swap__stick">
     <div class="wrap swap__grid">
       <div>
-        <p class="note"><b>Copy:</b> the rewrite's "Why Profectus" and its sharper table rows. <b>Motion:</b> Infinite's pinned card swap. The left side holds while six cards slide up and cross-fade with your scroll. Kept short (about 40% of a screen per card) and the cards fill the space, so there's no empty black like theirs.</p>
-        <h2 class="h2">Most marketing software hands you a dashboard and wishes you luck. <em>We do the work.</em></h2>
-        <p class="swap__sub">The people on your account ran data and marketing at <mark style="background:#FFF4CC;color:#4b3a00;padding:0 4px">[2 or 3 brands]</mark>. They use a database we own, and buy media wherever it performs.</p>
-        <p class="swap__count"><span data-swap-n>1</span> / 6</p>
+        <p class="note"><b>Copy:</b> the owner's four points, same as the live homepage now. No comparison chart. <b>Motion:</b> Infinite's pinned card swap, each card with its photo.</p>
+        <h2 class="h2">Every customer gets their own journey. <em>You get to see all of it.</em></h2>
+        <p class="swap__sub">Most agencies make one great ad and hope it lands with everyone. The big data companies can tailor every message, but they sell you a platform and leave you to run it. We do the tailoring for you, and show you what it earned.</p>
+        <p class="swap__count"><span data-swap-n>1</span> / 4</p>
       </div>
       <div class="swap__stack">
-        <div class="swap__card"><span class="swap__k">Who does the work</span><span class="swap__them">You do. They send tutorials.</span><span class="swap__us">Our team, on your account.</span></div>
-        <div class="swap__card"><span class="swap__k">Who visited your site</span><span class="swap__them">4,212 anonymous sessions.</span><span class="swap__us">Names and mailing addresses for the visitors we can match. <mark>[confirm match rate]</mark></span></div>
-        <div class="swap__card"><span class="swap__k">Where the data comes from</span><span class="swap__them">Licensed from a third party.</span><span class="swap__us">Our database: 230 million people, near-full US coverage.</span></div>
-        <div class="swap__card"><span class="swap__k">Where your ad budget goes</span><span class="swap__them">Their network, first.</span><span class="swap__us">Any of 500+ platforms. We don't own inventory. <mark>[confirm]</mark></span></div>
-        <div class="swap__card"><span class="swap__k">What a text costs</span><span class="swap__them">Enterprise contract pricing.</span><span class="swap__us">Our own sending infrastructure, so you can afford to send more often.</span></div>
-        <div class="swap__card"><span class="swap__k">Reach without cookies</span><span class="swap__them">Shrinking.</span><span class="swap__us">Up to 87% of identifiable audiences on one major ad platform, 95% on another.</span></div>
+        <div class="swap__card"><span class="swap__pic"><img src="/reimagine/assets/mail.webp" alt=""></span><span class="swap__k">01 · One customer at a time</span><span class="swap__us">Each person gets the message, channel and moment that fits them, whether that's a thousand customers or a few million.</span></div>
+        <div class="swap__card"><span class="swap__pic"><img src="/reimagine/assets/team.webp" alt=""></span><span class="swap__k">02 · Data and creative in the same room</span><span class="swap__us">The people who read the data also shape the message, so nothing gets lost in a hand-off between two agencies.</span></div>
+        <div class="swap__card"><span class="swap__pic"><img src="/reimagine/assets/owner-sheet.webp" alt=""></span><span class="swap__k">03 · Nothing hidden</span><span class="swap__us">You see who we reached, what they did next, and which dollar caused it. Attribution is part of the work, not an extra.</span></div>
+        <div class="swap__card"><span class="swap__pic"><img src="/reimagine/assets/opensign.webp" alt=""></span><span class="swap__k">04 · Proudly independent</span><span class="swap__us">No holding company and no media to sell you. We answer to you and the number you hired us to move.</span></div>
       </div>
     </div>
   </div>

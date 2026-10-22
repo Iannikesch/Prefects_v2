@@ -155,15 +155,19 @@ body.show-notes .note { display: block; }
 @media (max-width: 560px) { .svc__grid { grid-template-columns: 1fr; } }
 
 /* ---------- Comparison: Infinite's pinned card swap, kept short ---------- */
-.swap { position: relative; height: calc(100svh + 6 * 42vh); background: var(--night); color: #fff; }
+.swap { position: relative; height: calc(100svh + 4 * 42vh); background: var(--night); color: #fff; }
 .swap__stick { position: sticky; top: 0; height: 100svh; display: grid; align-items: center; overflow: hidden; }
 .swap__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: center; }
 .swap .h2 { color: #fff; }
 .swap .h2 em { color: var(--violet-lt); display: block; }
 .swap__sub { margin: 24px 0 0; max-width: 28em; color: rgba(255,255,255,.7); font-size: 18px; }
 .swap__count { margin-top: 32px; font: 400 14px/1 var(--mono); color: var(--gold); }
-.swap__stack { position: relative; height: 380px; }
-.swap__card { position: absolute; inset: 0; padding: 34px; border-radius: 18px; border: 1px solid rgba(255,255,255,.18); background: #0f0d1c; display: grid; align-content: space-between; will-change: transform, opacity; }
+.swap__stack { position: relative; height: 460px; }
+.swap__pic { position: relative; display: block; height: 220px; margin: -34px -34px 6px; overflow: hidden; }
+.swap__pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.swap__card { grid-template-rows: 1fr auto auto; align-content: stretch; }
+.swap__pic { height: auto; min-height: 200px; }
+.swap__card { position: absolute; inset: 0; padding: 34px; border-radius: 18px; border: 1px solid rgba(255,255,255,.18); background: #0f0d1c; display: grid; align-content: end; gap: 18px; overflow: hidden; will-change: transform, opacity; }
 .swap__k { font: 400 13px/1 var(--mono); letter-spacing: .04em; color: var(--gold); }
 .swap__them { font: 400 18px/1.4 var(--sans); color: rgba(255,255,255,.45); text-decoration: line-through; text-decoration-color: rgba(255,255,255,.6); }
 .swap__them::before { content: "A platform: "; text-decoration: none; display: inline; }
@@ -193,11 +197,42 @@ body.show-notes .note { display: block; }
 .close h2 { margin: 0 auto 36px; max-width: 18ch; font: 400 max(40px, 5vw)/1.02 var(--serif); letter-spacing: -0.04em; }
 .close h2 em { display: block; color: var(--violet-lt); }
 
+/* Photos (Assets/Images, converted in REIMAGINE-assets) */
+.hero { overflow: hidden; }
+.hero .wrap { position: relative; z-index: 1; }
+.hero__photo { position: absolute; top: 0; right: 0; bottom: 0; width: 50%;
+  -webkit-mask: linear-gradient(90deg, transparent 6%, #000 50%), linear-gradient(180deg, #000 55%, transparent 82%); -webkit-mask-composite: source-in;
+  mask: linear-gradient(90deg, transparent 6%, #000 50%), linear-gradient(180deg, #000 55%, transparent 82%); mask-composite: intersect; }
+.hero__photo img { width: 100%; height: 100%; object-fit: cover; opacity: .7; }
+.people { padding: 0 0 var(--sec); }
+.people__row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.person { position: relative; margin: 0; aspect-ratio: 3 / 4; border-radius: 14px; overflow: hidden; background: #ddd; }
+.person img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--curve); }
+.person:hover img { transform: scale(1.04); }
+.person figcaption { position: absolute; left: 10px; right: 10px; bottom: 10px; display: grid; gap: 3px; padding: 9px 11px; border-radius: 8px; background: rgba(255,255,255,.94); font: 500 13px/1.25 var(--sans); }
+.person figcaption b { font: 400 11px/1 var(--mono); color: var(--violet); font-weight: 400; }
+.people__note { margin: 18px 0 0; font: 400 13px/1.4 var(--mono); color: var(--ink-2); }
+@media (max-width: 900px) { .people__row { grid-template-columns: 1fr 1fr; } .hero__photo { width: 100%; opacity: .45; } }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; }
   .js [data-rise] { opacity: 1; transform: none; }
 }
 
+.swap { height: calc(100svh + 4 * 42vh); }
+.swap__card { align-content: end; gap: 18px; overflow: hidden; }
+.swap__stack { height: 460px; }
+.swap__pic { position: relative; display: block; height: 220px; margin: -34px -34px 6px; overflow: hidden; }
+.swap__pic img, .swap__pic .slot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.slot { display: grid; place-items: center; padding: 24px; background: #8E8E93; text-align: center; }
+.slot span { max-width: 34em; font: 400 12px/1.5 var(--mono); text-transform: uppercase; letter-spacing: .04em; color: rgba(255,255,255,.92); }
+.ph .slot { position: absolute; inset: 0; }
+.hero__photo .slot { position: absolute; inset: 0; background: #3a3a40; }
+.swap__card { grid-template-rows: 1fr auto auto; align-content: stretch; }
+.swap__pic { height: auto; min-height: 200px; }
+.ph .slot { place-items: end center; padding: 0 28px 112px; text-align: center; }
+.ph .slot span { max-width: 80%; position: relative; z-index: 2; color: #fff; }
+@media (max-width: 900px) { .swap__stack { height: auto; } .swap__pic { min-height: 180px; } }
 /* ---------- Scenes: photos with live data, and purpose-built visuals ---------- */
 .art { background: #0b0a14; }
 /* The whole scene fades (0.3s out), then its pieces come in 150ms apart. */
@@ -307,7 +342,7 @@ body.show-notes .note { display: block; }
 <header class="nav"><div class="wrap"><span class="nav__logo">Profectus</span><nav class="nav__links"><span>Capabilities</span><span>Case Studies</span><span>About</span></nav></div></header>
 
 <section class="hero">
-  <div class="hero__photo" aria-hidden="true"><img src="/reimagine/assets/tap.webp" alt=""></div>
+  <div class="hero__photo" aria-hidden="true"><img src="/reimagine/assets/dashboard.webp" alt=""></div>
   <div class="wrap">
     <p class="note"><b>Copy:</b> a hook made for this capability, then its one-line summary. No breadcrumb, no tab bar. <b>Motion:</b> Infinite's fade-up, piece by piece.</p>
     <p class="hero__where" data-rise style="--d:0"><a href="/reimagined">Capabilities</a> · Stage 02 · Unify</p>
@@ -371,18 +406,16 @@ body.show-notes .note { display: block; }
   <div class="swap__stick">
     <div class="wrap swap__grid">
       <div>
-        <p class="note"><b>Copy:</b> the same comparison as the live pages. <b>Motion:</b> Infinite's pinned card swap, kept short.</p>
-        <h2 class="h2">Platforms sell you a login. <em>We bring the people who built it.</em></h2>
-        <p class="swap__sub">The people on your account ran data and marketing for world-class brands. They use a database we own, and buy media wherever it performs.</p>
-        <p class="swap__count"><span data-swap-n>1</span> / 6</p>
+        <p class="note"><b>Copy:</b> the owner's four points (one customer at a time, data and creative together, nothing hidden, independent), written for Customer Data &amp; Infrastructure. No comparison chart. <b>Motion:</b> Infinite's pinned card swap.</p>
+        <h2 class="h2">Every customer gets their own journey. <em>You get to see all of it.</em></h2>
+        <p class="swap__sub">Built by people who run marketing for world-class brands. Independent, and open about every dollar.</p>
+        <p class="swap__count"><span data-swap-n>1</span> / 4</p>
       </div>
       <div class="swap__stack">
-        <div class="swap__card"><span class="swap__k">What you get</span><span class="swap__them">A login and a support ticket.</span><span class="swap__us">The operators who ran it for world-class brands, on your account.</span></div>
-        <div class="swap__card"><span class="swap__k">Who visited your site</span><span class="swap__them">4,212 anonymous sessions.</span><span class="swap__us">A name to every click we can match, and what they read.</span></div>
-        <div class="swap__card"><span class="swap__k">Whose data</span><span class="swap__them">Rented from someone else's graph.</span><span class="swap__us">Our own database of 230 million people. Near-full domestic coverage.</span></div>
-        <div class="swap__card"><span class="swap__k">Where your budget goes</span><span class="swap__them">Into their own network first.</span><span class="swap__us">Wherever it works. 500+ platforms and no inventory to protect.</span></div>
-        <div class="swap__card"><span class="swap__k">What sending costs</span><span class="swap__them">Priced for enterprise contracts.</span><span class="swap__us">Built in-house, priced so sending more often finally pays.</span></div>
-        <div class="swap__card"><span class="swap__k">Who it answers to</span><span class="swap__them">Shareholders and a holding company.</span><span class="swap__us">You, and the number you hired us to move.</span></div>
+        <div class="swap__card"><span class="swap__pic"><img src="/reimagine/assets/mail.webp" alt=""></span><span class="swap__k">01 · One customer at a time</span><span class="swap__us">One record per customer, so every system finally treats them as one person.</span></div>
+        <div class="swap__card"><span class="swap__pic"><img src="/reimagine/assets/team.webp" alt=""></span><span class="swap__k">02 · Data and creative in the same room</span><span class="swap__us">The people who build your data layer also plan the campaigns that run on it.</span></div>
+        <div class="swap__card"><span class="swap__pic"><img src="/reimagine/assets/owner-sheet.webp" alt=""></span><span class="swap__k">03 · Nothing hidden</span><span class="swap__us">You can see every source, every field and where it flows.</span></div>
+        <div class="swap__card"><span class="swap__pic"><img src="/reimagine/assets/opensign.webp" alt=""></span><span class="swap__k">04 · Proudly independent</span><span class="swap__us">We build on the tools you already run. We don't sell you new ones.</span></div>
       </div>
     </div>
   </div>
