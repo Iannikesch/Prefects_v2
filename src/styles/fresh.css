@@ -800,3 +800,12 @@ a { color: inherit; }
 }
 .fnav__drop-inner { width: 100%; }
 .fnav__col a span { width: 112px; white-space: nowrap; }
+
+/* No glow around the gold (owner, Oct 21). The foil itself stays; every
+   halo, bloom and gold drop shadow is switched off. */
+.glow::after { display: none !important; animation: none !important; }
+.btn-gold { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45) !important; }
+.rhero .pf-pill--tag.glow::before { box-shadow: none; }
+.uses__lane { box-shadow: 0 0 0 1px var(--rw-gold-500); }
+.edge__us::before { box-shadow: none; }
+.spine__dot::before { box-shadow: 0 0 0 4px rgba(211, 167, 84, 0.18); }
