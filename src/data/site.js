@@ -8,14 +8,13 @@ export const SITE = {
   name: 'Profectus Agency',
   url: 'https://profectusagency.com',
   description:
-    'Profectus is a data-driven marketing agency powered by a proprietary data spine with near-full domestic coverage, built by a team with decades of experience at world-class brands.',
+    'Profectus is a data-driven marketing agency powered by a proprietary database with near-full domestic coverage, built by a team with decades of experience at world-class brands.',
   // Where contact enquiries go. Placeholder until the client confirms.
   contactEmail: '[CONTACT EMAIL]',
 };
 
 export const NAV = [
   { label: 'Capabilities', href: '/capabilities' },
-  { label: AI_NAME, href: AI_PATH },
   { label: 'Case Studies', href: '/case-studies' },
   { label: 'About', href: '/about' },
 ];
@@ -40,7 +39,7 @@ export const INDUSTRIES = [
 export const WHY = [
   {
     title: "We Built the Infrastructure. We Didn't License It.",
-    text: "Our proprietary data spine was built and refined over decades for world-class brands. It gives clients near-complete domestic audience coverage with powerful identity resolution, targeting, and activation capabilities. Most agencies resell someone else's data. This is ours.",
+    text: "Our proprietary database was built and refined over decades for world-class brands. It gives clients near-complete domestic audience coverage with powerful identity resolution, targeting, and activation capabilities. Most agencies resell someone else's data. This is ours.",
   },
   {
     title: "We Reach Who Others Can't.",
@@ -60,7 +59,7 @@ export const WHY = [
 export const PROCESS = [
   {
     title: 'Define Identity',
-    text: 'We connect your customer data to our proprietary spine, resolve identities across devices and channels, and build a unified audience view, including known customers, unknown prospects, and high-value audiences currently outside your program.',
+    text: 'We connect your customer data to our proprietary database, resolve identities across devices and channels, and build a unified audience view, including known customers, unknown prospects, and high-value audiences currently outside your program.',
   },
   {
     title: 'Build the Engine',

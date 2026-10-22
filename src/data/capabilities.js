@@ -6,7 +6,7 @@
 export const THEMES = [
   { id: 'strategy', name: 'Strategy & Brand', blurb: 'Know who you are for, then say it so it lands.' },
   { id: 'media', name: 'Media & Audience', blurb: 'Reach the right person, in the right channel, at the right moment.' },
-  { id: 'data', name: 'Data & Intelligence', blurb: 'The spine underneath everything, and the models on top of it.' },
+  { id: 'data', name: 'Data & Intelligence', blurb: 'The data underneath everything, and the models on top of it.' },
   { id: 'lifecycle', name: 'Lifecycle & Revenue', blurb: 'Turn every customer you reach into revenue that compounds.' },
 ];
 

@@ -19,7 +19,7 @@ const pad = (n) => String(n).padStart(2, '0');
 const firstSentence = (t) => (t.match(/^.*?[.!?](\s|$)/) || [t])[0].trim();
 
 const eyebrow = place.kind === 'spine'
-  ? `The spine · ${pad(place.index + 1)} ${place.step.verb}`
+  ? `Step ${pad(place.index + 1)} · ${place.step.verb}`
   : `Where the progress happens · ${place.group.title}`;
 const pitch = place.kind === 'spine' ? place.step.line : cap.summary;
 const lede = place.kind === 'spine' ? place.step.body : cap.summary;
@@ -36,7 +36,7 @@ const TABS = [
 ];
 // FAQ: structure only. Questions and answers to be written together.
 const FAQ = [
-  [`[Question] Do I need the whole spine, or just ${cap.name}?`, '[Answer to write together]'],
+  [`[Question] Do I need all five steps, or just ${cap.name}?`, '[Answer to write together]'],
   ['[Question] How long until we see results?', '[Answer to write together]'],
   ['[Question] Who owns the data when we are done?', '[Answer to write together]'],
   ['[Question] What does it cost to start?', '[Answer to write together]'],
@@ -90,7 +90,7 @@ const FAQ = [
       <div class="cap-head cap-head--sticky">
         <p class="pf-eyebrow">What's inside · {cap.items.length} services</p>
         <h2 class="lh2">Everything {cap.name} <em class="v">covers</em>.</h2>
-        <p class="cap-head__sub">Use one, or all of them. Every service runs on the same data spine.</p>
+        <p class="cap-head__sub">Use one, or all of them. Every service runs on the same proprietary data.</p>
       </div>
       <ul class="acc" data-acc>
         {cap.items.map(([name, desc], i) => (
@@ -170,7 +170,7 @@ const FAQ = [
 
   {place.next && (
     <a class="cap-next" href={`/capabilities/${place.next.slug}`}>
-      <span class="pf-eyebrow">{place.kind === 'spine' ? `Next on the spine · ${pad(place.index + 2)} ${place.nextStep.verb}` : `Next in ${place.group.title}`}</span>
+      <span class="pf-eyebrow">{place.kind === 'spine' ? `Next step · ${pad(place.index + 2)} ${place.nextStep.verb}` : `Next in ${place.group.title}`}</span>
       <span class="cap-next__h">{place.kind === 'spine' ? place.nextStep.line : place.next.name}</span>
       <span class="cap-next__go">{place.next.name} →</span>
     </a>

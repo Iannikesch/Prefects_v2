@@ -29,7 +29,15 @@ const { title = 'Profectus Agency' } = Astro.props;
         </ul>
       </nav>
       <a class="fnav__cta btn-gold glow" href="/contact">Get in Touch →</a>
+      <button class="fnav__toggle" type="button" aria-controls="fnav-menu" aria-expanded="false" aria-label="Menu"><i></i><i></i></button>
     </div>
+    <!-- Phones and narrow windows: the links move into a drop-down panel. -->
+    <nav class="fnav__menu" id="fnav-menu" aria-label="Main (menu)">
+      <a href="/capabilities">Capabilities</a>
+      <a href="/case-studies">Case Studies</a>
+      <a href="/about">About</a>
+      <a class="btn-gold" href="/contact">Get in Touch →</a>
+    </nav>
   </header>
 
   <main><slot /></main>
@@ -54,7 +62,7 @@ const { title = 'Profectus Agency' } = Astro.props;
       queued = false;
       const y = scrollY, dy = y - lastY;
       lastY = y;
-      if (dy > 0 && y > 2 && !hidden) { hidden = true; nav.classList.add('is-hidden'); }
+      if (dy > 0 && y > 2 && !hidden && !nav.classList.contains('is-open')) { hidden = true; nav.classList.add('is-hidden'); }
       else if (dy < 0 && hidden) { hidden = false; nav.classList.remove('is-hidden'); }
       const edge = hero ? hero.offsetHeight - nav.offsetHeight : 0;
       const isLight = y >= edge;
@@ -67,6 +75,12 @@ const { title = 'Profectus Agency' } = Astro.props;
       }
     };
     addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(apply); } }, { passive: true });
+    // Menu button (under 900px): opens the drop-down; Escape or a link closes it.
+    const toggle = nav.querySelector('.fnav__toggle');
+    const setMenu = (open) => { nav.classList.toggle('is-open', open); toggle.setAttribute('aria-expanded', String(open)); };
+    toggle.addEventListener('click', () => setMenu(!nav.classList.contains('is-open')));
+    nav.querySelectorAll('.fnav__menu a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+    addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
     // Keyboard users: focus inside a hidden nav brings it back.
     nav.addEventListener('focusin', () => { hidden = false; nav.classList.remove('is-hidden'); });
     apply();

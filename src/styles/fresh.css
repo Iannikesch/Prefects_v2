@@ -741,3 +741,23 @@ a { color: inherit; }
 .cflow__arrow:hover { background: var(--rw-ink); }
 .cflow__dot { border-color: var(--rw-ink); }
 .cflow__dot[aria-current="true"] { background: var(--rw-ink); }
+
+/* ---------- Nav menu for phones and narrow windows (under 900px) ---------- */
+.fnav__toggle { display: none; position: relative; width: 44px; height: 44px; margin-left: 8px; border: 0; background: none; color: inherit; cursor: pointer; }
+.fnav__toggle i { position: absolute; left: 11px; width: 22px; height: 2px; border-radius: 2px; background: currentColor; transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+.fnav__toggle i:first-child { top: 17px; } .fnav__toggle i:last-child { top: 25px; }
+.fnav.is-open .fnav__toggle i:first-child { transform: translateY(4px) rotate(45deg); }
+.fnav.is-open .fnav__toggle i:last-child { transform: translateY(-4px) rotate(-45deg); }
+.fnav__menu { display: none; }
+@media (max-width: 900px) {
+  .fnav__toggle { display: block; }
+  .fnav__bar .fnav__cta { display: none; }
+  .fnav__menu { display: grid; position: absolute; top: 100%; left: 0; right: 0; gap: 4px; padding: 12px 16px 24px;
+    background: rgba(255, 255, 255, 0.97); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); color: var(--rw-ink);
+    box-shadow: 0 16px 32px rgba(20, 16, 40, 0.12);
+    opacity: 0; visibility: hidden; translate: 0 -8px; transition: opacity 200ms ease, translate 200ms cubic-bezier(0.4, 0, 0.2, 1), visibility 0s 200ms; }
+  .fnav.is-open .fnav__menu { opacity: 1; visibility: visible; translate: 0 0; transition: opacity 200ms ease, translate 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+  .fnav__menu a { padding: 14px 4px; font: 500 15px/1 var(--pf-sans); letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-bottom: 1px solid rgba(11, 11, 12, 0.08); }
+  .fnav__menu a.btn-gold { margin-top: 12px; padding: 14px 20px; border-radius: var(--pf-r-pill); border: 0; text-align: center; letter-spacing: 0; text-transform: none; }
+}
+@media (max-width: 900px) { .fnav__menu { background: var(--rw-paper); -webkit-backdrop-filter: none; backdrop-filter: none; } }

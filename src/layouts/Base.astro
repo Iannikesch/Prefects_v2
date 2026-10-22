@@ -76,11 +76,11 @@ const current = (href) => (path === href || path.startsWith(href + '/') ? 'page'
     <div class="wrap site-foot__cols">
       <div>
         <a class="site-nav__logo" href="/">Profectus</a>
-        <p class="t-body measure" style="margin-top:16px;max-width:22em">Progress, powered by a proprietary data spine.</p>
+        <p class="t-body measure" style="margin-top:16px;max-width:22em">Progress, powered by our own proprietary data.</p>
       </div>
       <div><p class="pf-eyebrow">Main pages</p><ul>
         <li><a href="/">Home</a></li><li><a href="/about">About</a></li><li><a href="/capabilities">Capabilities</a></li>
-        <li><a href={AI_PATH}>{AI_NAME}</a></li><li><a href="/case-studies">Case Studies</a></li><li><a href="/contact">Contact</a></li>
+        <li><a href="/case-studies">Case Studies</a></li><li><a href="/contact">Contact</a></li>
       </ul></div>
       <div><p class="pf-eyebrow">Capabilities</p><ul>
         {CAPABILITIES.slice(0, 6).map((c) => <li><a href={`/capabilities/${c.slug}`}>{c.name}</a></li>)}

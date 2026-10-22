@@ -54,7 +54,7 @@ export const CASE_STUDIES = [
       { value: '40%', label: 'Rebooking rate' },
     ],
     inherited: 'A world-class hospitality experience with no brand, no audience, and no bookings. Everything had been invested in building the product. Nothing had been built for being found by the people who would pay premium prices to experience it.',
-    built: 'A brand built from scratch with the precision that audience intelligence makes possible. Positioning that owned a specific, defensible space in the wellness landscape. Acquisition infrastructure built on our data spine, reaching the exact audience profile, by behavior and intent, most likely to book at premium pricing and come back. And retention programming designed to turn a first visit into a lasting relationship.',
+    built: 'A brand built from scratch with the precision that audience intelligence makes possible. Positioning that owned a specific, defensible space in the wellness landscape. Acquisition infrastructure built on our proprietary data, reaching the exact audience profile, by behavior and intent, most likely to book at premium pricing and come back. And retention programming designed to turn a first visit into a lasting relationship.',
     changed: 'Within six months: 85% occupancy at premium pricing, $425K in retreat bookings, a 4.9/5.0 guest satisfaction score, and a 40% rebooking rate. The brand launched with a data foundation that meant every subsequent season would be smarter than the last.',
   },
   {
