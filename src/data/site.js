@@ -77,6 +77,7 @@ export const PROCESS = [
 // inventory" await the owner's OK.
 export const EDGE = [
   ['What you get', 'A login and a support ticket.', 'The operators who ran it for world-class brands, on your account.'],
+  ['Who visited your site', '4,212 anonymous sessions.', 'A name to every click we can match, and what they read.'],
   ['Whose data', "Rented from someone else's graph.", 'Our own database of 230 million people. Near-full domestic coverage.'],
   ['Where your budget goes', 'Into their own network first.', 'Wherever it works. 500+ platforms and no inventory to protect.'],
   ['What sending costs', 'Priced for enterprise contracts.', 'Built in-house, priced so sending more often finally pays.'],

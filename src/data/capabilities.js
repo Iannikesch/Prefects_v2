@@ -135,6 +135,7 @@ export const CAPABILITIES = [
     // The first item is the live site's copy; the rest are new drafts.
     items: [
       IDENTITY_ITEM,
+      ['Website Visitor Identification', "We put a name to a click. One line of code on your site matches visitors against our database of 230 million people, so a visit that would have ended as an anonymous session becomes a real profile in your CRM: who they are, how to reach them and what they read. Then they go straight into retargeting across direct mail, paid social and email, with a message that picks up where they left off."],
       ['Cross-Device & Cross-Channel Linking', 'Phones, laptops, inboxes, loyalty cards and store visits tied back to the same person, so one customer stops looking like five.'],
       ['Known & Unknown Audience Resolution', 'Resolve the customers you already have and the prospects you have never met against our database of 230 million people, including high-value audiences outside your program today.'],
       ['Match Rate Diagnostics', 'See how much of your file we can recognize, where the gaps are and what it takes to close them, before you spend a dollar on media.'],
