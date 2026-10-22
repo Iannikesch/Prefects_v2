@@ -96,11 +96,18 @@ export const CAPABILITIES = [
     ],
   },
   {
-    slug: 'enterprise-email-text-messaging',
-    name: 'Enterprise Email & Text Messaging',
+    slug: 'loyalty-lifecycle',
+    name: 'Loyalty & Lifecycle',
     theme: 'lifecycle',
-    summary: 'High-volume email and SMS on infrastructure we built ourselves, priced so frequency finally makes sense.',
+    summary: 'Loyalty programs and lifecycle journeys that turn a first purchase into a lifetime, sent on email and SMS we built ourselves.',
+    // Renamed Oct 22 from Enterprise Email & Text Messaging (old URL redirects).
+    // The first five items are new drafts; the rest are the live site's copy.
     items: [
+      ['Loyalty Program Design', 'Tiers, points, perks and the economics behind them. We design programs members actually want to climb, priced so the rewards pay for themselves.'],
+      ['Member Lifecycle Journeys', 'Every stage of membership mapped and automated: join, first reward, tier up, lapse, return. Each member gets the next move that fits where they are.'],
+      ['VIP & Tier Experiences', 'Recognition for the customers who matter most. Early access, surprise rewards and service that makes your best members feel known.'],
+      ['Churn Prediction & Winback', 'Models that spot a member drifting before they leave, and journeys that bring them back with the right offer at the right moment.'],
+      ['Loyalty Value Measurement', 'What the program is really worth: member lifetime value, incremental visits and the true cost of every reward, reported honestly.'],
       ['ESP Architecture & Setup', 'Full email service provider selection, configuration, and deployment. We build the technical foundation for high-volume, high-deliverability email programs from the ground up.'],
       ['Lifecycle & Journey Orchestration', 'End-to-end email programs mapped to customer lifecycle stages. Welcome series, onboarding sequences, nurture tracks, re-engagement campaigns, winback flows, and post-purchase journeys, all automated and behavioral.'],
       ['Behavioral & Event-Triggered Email', 'Real-time email triggers based on customer actions, inactions, milestones, and signals. Browse abandonment, cart abandonment, purchase confirmation, usage alerts, and custom behavioral triggers.'],
@@ -264,7 +271,7 @@ export const SPINE = [
 // The services the spine runs through, in two groups.
 export const SERVICE_GROUPS = [
   { title: 'Reach them', blurb: 'The channels where the next move lands.',
-    slugs: ['paid-media-demand-generation', 'enterprise-email-text-messaging', 'direct-mail-offline-media', 'social-media-management'] },
+    slugs: ['paid-media-demand-generation', 'loyalty-lifecycle', 'direct-mail-offline-media', 'social-media-management'] },
   { title: 'Win them', blurb: 'The story, the site and the team that close it.',
     slugs: ['strategy-go-to-market', 'brand-creative-storytelling', 'website-digital-experience', 'sales-enablement'] },
 ];
