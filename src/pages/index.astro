@@ -174,28 +174,48 @@ const POWERS = [...SERVICE_GROUPS].reverse().flatMap((g) => g.slugs.map((slug) =
   </div>
 
 
-  <!-- Everything our data powers: the eight Win them / Reach them services
-       stream down on the black galaxy. Hover a card to stop the stream,
-       click to open that capability. Scrolling the page pushes the stream
-       along with you. -->
-  <section class="casc casc--dark">
-    <div class="pf-nebula" data-src="/img/nebula-violet" data-theme="gold" aria-hidden="true"></div>
-    <div class="casc__inner">
-      <div class="casc__copy">
-        <p class="pf-eyebrow">Win them · Reach them</p>
-        <h2 class="lh2">Everything our data <em class="v">powers</em>.</h2>
-        <p class="casc__lead">Eight services that run on the same 230 million people. Four win customers over, four reach them where they are. Hover one to stop the stream, click to go deeper.</p>
-        <a class="casc__all" href="/capabilities">All capabilities →</a>
-      </div>
-      <div class="cascade cascade--links" data-speed="22" data-follow="0.5" aria-label="Everything our data powers">
-        {POWERS.map((c) => (
-          <a class="cascade__card" href={`/capabilities/${c.slug}`}>
-            <p class="pf-eyebrow">{c.group}</p>
-            <p class="cascade__name">{c.name}</p>
-            <p class="cascade__sum">{c.summary}</p>
-            <span class="cascade__go">Explore →</span>
-          </a>
-        ))}
+  <!-- Everything our data powers: a pinned scroll journey on the black galaxy.
+       The section locks to the screen while the eight Win them / Reach them
+       services stream down the right (hover to stop, click to open). On the
+       left, three beats replace each other as you scroll: the intro slides
+       down and out, stats come down from the top, then photos. Fades in from
+       white above and out to white below. -->
+  <section class="casc casc--dark casc--pin" data-casc-pin>
+    <div class="casc__stick">
+      <div class="pf-nebula" data-src="/img/nebula-violet" data-theme="gold" aria-hidden="true"></div>
+      <div class="casc__inner">
+        <div class="casc__stage">
+          <div class="casc__beat" data-beat>
+            <p class="pf-eyebrow">Win them · Reach them</p>
+            <h2 class="lh2">Everything our data <em class="v">powers</em>.</h2>
+            <p class="casc__lead">Eight services that run on the same 230 million people. Four win customers over, four reach them where they are. Hover one to stop the stream, click to go deeper.</p>
+            <a class="casc__all" href="/capabilities">All capabilities →</a>
+          </div>
+          <div class="casc__beat" data-beat>
+            <p class="pf-eyebrow">The numbers underneath</p>
+            <dl class="casc__stats">
+              <div><dt>230M</dt><dd>people in our own database, near-full US coverage</dd></div>
+              <div><dt>500+</dt><dd>platforms we can put an audience on</dd></div>
+              <div><dt>95%</dt><dd>of identifiable audiences reached on one major ad platform, no cookies</dd></div>
+              <div><dt>$14</dt><dd>back for every $1 on one client's direct channel</dd></div>
+            </dl>
+          </div>
+          <div class="casc__beat casc__beat--photos" data-beat>
+            <figure class="casc__photo"><span>Photo · the team at work</span></figure>
+            <figure class="casc__photo casc__photo--2"><span>Photo · a client's storefront</span></figure>
+            <p class="casc__cap">The people who ran it for world-class brands, now running it for you.</p>
+          </div>
+        </div>
+        <div class="cascade cascade--links" data-speed="22" data-follow="0.5" aria-label="Everything our data powers">
+          {POWERS.map((c) => (
+            <a class="cascade__card" href={`/capabilities/${c.slug}`}>
+              <p class="pf-eyebrow">{c.group}</p>
+              <p class="cascade__name">{c.name}</p>
+              <p class="cascade__sum">{c.summary}</p>
+              <span class="cascade__go">Explore →</span>
+            </a>
+          ))}
+        </div>
       </div>
     </div>
   </section>
@@ -220,6 +240,45 @@ const POWERS = [...SERVICE_GROUPS].reverse().flatMap((g) => g.slugs.map((slug) =
       addEventListener('resize', set);
       addEventListener('load', set);
       set();
+    }
+  </script>
+  <script>
+    // "Everything our data powers" journey: progress through the pinned
+    // section (0 when it locks, 1 when it lets go) drives three beats on the
+    // left. Each beat drops in from above, holds, then slides down and out.
+    // Scrubbed with the scroll; transform and opacity only, one write per frame.
+    const cp = document.querySelector('[data-casc-pin]');
+    if (cp) {
+      const beats = [...cp.querySelectorAll('[data-beat]')];
+      const stick = cp.querySelector('.casc__stick');
+      const still = () => matchMedia('(max-width: 900px), (prefers-reduced-motion: reduce)').matches;
+      const clamp = (v) => Math.max(0, Math.min(1, v));
+      const ease = (t) => t * t * (3 - 2 * t);
+      // [in-start, in-end, out-start, out-end] in pin progress; the first beat starts in place.
+      const WIN = [[0, 0, 0.26, 0.38], [0.30, 0.42, 0.60, 0.72], [0.64, 0.76, 2, 2]];
+      let queued = false;
+      const draw = () => {
+        queued = false;
+        if (still()) { beats.forEach((b) => { b.style.transform = ''; b.style.opacity = ''; }); return; }
+        const r = cp.getBoundingClientRect();
+        const blend = parseFloat(getComputedStyle(cp, '::before').height) || 0;   // the white-to-black lead-in
+        const travel = cp.offsetHeight - blend * 2 - stick.offsetHeight;
+        const p = clamp((-(r.top + blend)) / Math.max(1, travel));
+        const H = stick.offsetHeight;
+        beats.forEach((b, i) => {
+          const [a, bIn, c, d] = WIN[i];
+          const tin = bIn > a ? ease(clamp((p - a) / (bIn - a))) : 1;
+          const tout = ease(clamp((p - c) / (d - c)));
+          const y = (1 - tin) * -0.55 * H + tout * 0.55 * H;
+          const o = Math.min(tin, 1 - tout);
+          b.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
+          b.style.opacity = o.toFixed(3);
+          b.style.pointerEvents = o > 0.5 ? 'auto' : 'none';
+        });
+      };
+      addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(draw); } }, { passive: true });
+      addEventListener('resize', draw);
+      draw();
     }
   </script>
 </Fresh>

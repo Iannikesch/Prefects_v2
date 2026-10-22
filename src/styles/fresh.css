@@ -914,3 +914,43 @@ em.foil-text, .edge__num.foil-text {
 .uses .ucard__media { background: #8E8E93; }
 .uses .ucard__media span { color: rgba(255, 255, 255, 0.85); }
 .casc--dark .cascade__card .pf-eyebrow { color: #6E62E6; }   /* the card labels stay purple; the white is for the section text only */
+
+/* ---------- "Everything our data powers": pinned journey (Oct 22) ----------
+   The section is tall; .casc__stick pins for the middle of it. A 30vh blend
+   above (white to black) and below (black to white) softens both edges.
+   The left column stacks three beats in one spot; the script moves them.
+   Under 900px (or with reduced motion) nothing pins: the beats stack. */
+.casc--pin { height: auto; padding: 0; overflow: visible; background: none; }
+.casc--pin::before, .casc--pin::after { content: ""; display: block; position: static; inset: auto; z-index: auto; height: 30vh; pointer-events: none; }
+.casc--pin::before { background: linear-gradient(var(--rw-paper), #000); }
+.casc--pin::after { background: linear-gradient(#000, var(--rw-paper)); }
+.casc__stick { position: relative; isolation: isolate; overflow: hidden; background: #000; }
+.casc__stick > .pf-nebula { opacity: 0.95; z-index: -1; }
+.casc__stick > .pf-nebula .pf-nebula__plate { filter: grayscale(1) sepia(1) saturate(2.6) hue-rotate(-8deg) brightness(1.1) contrast(1.15); }
+.casc__stage { position: relative; }
+.casc__beat { display: grid; gap: 18px; align-content: start; will-change: transform, opacity; }
+/* Contrast: a soft dark pool behind the left-hand text, so it holds up over the bright gold cloud. */
+.casc__stage::before { content: ""; position: absolute; inset: -12% -18% -12% -30%; z-index: -1; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.45) 55%, transparent); }
+.casc--pin .casc__lead { color: rgba(238, 234, 255, 0.85); }
+.casc__stats { margin: 6px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 28px 40px; }
+.casc__stats div { display: grid; gap: 6px; border-top: 1px solid rgba(238, 234, 255, 0.18); padding-top: 14px; }
+.casc__stats dt { font: 400 clamp(44px, 4.4vw, 68px)/1 var(--pf-serif); letter-spacing: -0.04em; color: var(--pf-violet); }
+.casc__stats dd { margin: 0; font-size: 15px; line-height: 1.4; color: rgba(238, 234, 255, 0.8); }
+.casc__photo { margin: 0; display: grid; place-items: center; aspect-ratio: 16 / 10; width: 86%; border-radius: 12px; background: #8E8E93; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); }
+.casc__photo span { font: 400 11px/1.3 var(--pf-mono); text-transform: uppercase; letter-spacing: .04em; color: rgba(255, 255, 255, 0.85); }
+.casc__photo--2 { width: 62%; margin: -18% 0 0 auto; aspect-ratio: 4 / 5; }
+.casc__cap { margin: 4px 0 0; max-width: 26em; font: 400 22px/1.25 var(--pf-serif); letter-spacing: -0.02em; color: var(--pf-white); }
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  .casc--pin { height: calc(320vh + 60vh); }   /* ~3 screens of pinned travel, plus the two 30vh blends */
+  .casc__stick { position: sticky; top: 0; height: 100svh; display: grid; align-items: center; }
+  .casc--pin .casc__inner { align-items: center; }
+  .casc__stage { height: calc(100svh - 160px); }
+  .casc__beat { position: absolute; inset: 0; align-content: center; }
+  .casc__beat + .casc__beat { opacity: 0; }
+  .casc--pin .cascade { height: calc(100svh - 120px); }
+}
+@media (max-width: 900px), (prefers-reduced-motion: reduce) {
+  .casc__stick { padding: var(--rw-sec) 0; }
+  .casc__stage { display: grid; gap: 56px; }
+}
