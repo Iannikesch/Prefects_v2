@@ -994,3 +994,16 @@ em.foil-text, .edge__num.foil-text {
 .rmg__row:hover .rmg__name { color: #6E62E6; }
 .rmg__row:hover .rmg__arrow { transform: translateX(4px); }
 @media (max-width: 900px) { .rmg__inner { grid-template-columns: 1fr; } .rmg__row { grid-template-columns: 1fr auto; } .rmg__sum { display: none; } }
+
+/* ---------- Why Profectus, Oct 22: four points and a three-way table ---------- */
+.edge__points { grid-column: 1 / -1; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+.edge__points li { display: grid; gap: 10px; align-content: start; padding-top: 18px; border-top: 2px solid #6E62E6; }
+.edge__points h3 { font: 400 22px/1.2 var(--pf-serif); letter-spacing: -0.02em; }
+.edge__points p { font-size: 15px; line-height: 1.5; color: var(--rw-ink-2); }
+.edge__table--3 .edge__row { grid-template-columns: 0.7fr 1fr 1fr 1.2fr; }
+@media (max-width: 1000px) { .edge__points { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 900px) {
+  .edge__points { grid-template-columns: 1fr; gap: 20px; }
+  .edge__table--3 .edge__row { grid-template-columns: 1fr; }
+  .edge__table--3 .edge__them::before { content: attr(data-who) ": "; }
+}

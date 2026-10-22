@@ -3,7 +3,7 @@
 // The previous homepage is kept at src/pages/_old-index.astro for reference
 // (the underscore keeps it from being published as a page).
 import Fresh from '../layouts/Fresh.astro';
-import { EDGE } from '../data/site.js';
+import { DIFFERENT, EDGE3 } from '../data/site.js';
 import { bySlug, SERVICE_GROUPS } from '../data/capabilities.js';
 import { CASE_STUDIES } from '../data/caseStudies.js';
 // "Reach real people" slides: the four case studies plus a placeholder.
@@ -141,26 +141,32 @@ const POWERS = [...SERVICE_GROUPS].reverse().flatMap((g) => g.slugs.map((slug) =
     </div>
   </section>
 
-  <!-- Why Profectus: operators, not a platform. A platform and Profectus,
-       compared row by row. No rival is named. -->
+  <!-- Why Profectus (Oct 22, owner's notes): personalization at scale, run by
+       people, shown to you step by step. A creative agency, a big data
+       company and Profectus, compared row by row. No rival is named. -->
   <section class="edge" aria-labelledby="edge-h">
     <div class="edge__inner">
       <div class="edge__head">
         <p class="pf-eyebrow">Why Profectus</p>
-        <h2 class="edge__h" id="edge-h">Platforms sell you a login. <em class="foil-text">We bring the people who built it.</em></h2>
-        <p class="edge__lead">Profectus is a team of operators who spent decades running data and marketing inside world-class brands. We own our data: 230 million people deep. We don't own the channels. And we don't answer to a holding company. The only thing we're built to move is your <em class="v">progress</em>.</p>
+        <h2 class="edge__h" id="edge-h">Every customer gets their own journey. <em class="foil-text">You get to see all of it.</em></h2>
+        <p class="edge__lead">Most agencies make one great ad and hope it lands with everyone. The big data companies can tailor every message, but they sell you a platform and leave you to run it. We do the tailoring for you. Our own data tells us who each customer is, our operators plan what each one hears next, and you see every step and what it earned.</p>
       </div>
       <div class="edge__stat" aria-hidden="true"><span class="edge__num foil-text">230M</span><span class="edge__unit">people in our own database</span></div>
-      <div class="edge__table" role="table" aria-label="A platform compared with Profectus">
+      <ul class="edge__points">
+        {DIFFERENT.map(([h, t]) => <li><h3>{h}</h3><p>{t}</p></li>)}
+      </ul>
+      <div class="edge__table edge__table--3" role="table" aria-label="A creative agency, a big data company and Profectus, compared">
         <div class="edge__row edge__row--head" role="row">
           <span role="columnheader"></span>
-          <span role="columnheader">A platform</span>
+          <span role="columnheader">A creative agency</span>
+          <span role="columnheader">A big data company</span>
           <span role="columnheader">Profectus</span>
         </div>
-        {EDGE.map(([k, them, us]) => (
+        {EDGE3.map(([k, a, b, us]) => (
           <div class="edge__row" role="row">
             <span class="edge__k" role="rowheader">{k}</span>
-            <span class="edge__them" role="cell">{them}</span>
+            <span class="edge__them" role="cell" data-who="A creative agency">{a}</span>
+            <span class="edge__them" role="cell" data-who="A big data company">{b}</span>
             <span class="edge__us" role="cell">{us}</span>
           </div>
         ))}

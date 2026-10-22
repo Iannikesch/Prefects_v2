@@ -77,10 +77,28 @@ export const PROCESS = [
 // plus the owner's 230M database (Oct 21). "Holding company" and "no
 // inventory" await the owner's OK.
 export const EDGE = [
-  ['What you get', 'A login and a support ticket.', 'The operators who ran it for world-class brands, on your account.'],
+  ['What you get', 'A login and a support ticket.', 'The operators who run it for world-class brands, on your account.'],
   ['Who visited your site', '4,212 anonymous sessions.', 'A name to every click we can match, and what they read.'],
   ['Whose data', "Rented from someone else's graph.", 'Our own database of 230 million people. Near-full domestic coverage.'],
   ['Where your budget goes', 'Into their own network first.', 'Wherever it works. 500+ platforms and no inventory to protect.'],
   ['What sending costs', 'Priced for enterprise contracts.', 'Built in-house, priced so sending more often finally pays.'],
   ['Who it answers to', 'Shareholders and a holding company.', 'You, and the number you hired us to move.'],
+];
+
+// Homepage "Why Profectus" (Oct 22, from the owner's notes): personalization
+// at scale, run by people, shown to you step by step. Compared against a
+// creative agency and "a big data company" (no rival named).
+export const DIFFERENT = [
+  ['One customer at a time, at any size.', "Each person gets the message, channel and moment that fits them, whether that's a thousand customers or a few million."],
+  ['Data and creative in the same room.', 'The people who read the data also shape the message, so nothing gets lost in a hand-off between two agencies.'],
+  ['Nothing hidden.', 'You see who we reached, what they did next, and which dollar caused it. Attribution is part of the work, not an extra.'],
+  ['Proudly independent.', 'No holding company and no media to sell you. We answer to you and the number you hired us to move.'],
+];
+export const EDGE3 = [
+  ['Starts from', 'The idea', 'The platform', 'The customer'],
+  ['Personalization', 'One message for everyone', 'Per person, if you run their software', 'Per person, run for you'],
+  ['Who does the work', 'Their creative team', 'Your team, with their tools', 'Our operators, who run this for world-class brands'],
+  ['What you see', 'The ad and the reach', 'A dashboard', 'Every step, and what it earned'],
+  ['Priced for', 'The campaign', 'Enterprise contracts', "Any business that's ready to grow"],
+  ['Answers to', 'Often a holding company', 'A holding company', 'You'],
 ];
