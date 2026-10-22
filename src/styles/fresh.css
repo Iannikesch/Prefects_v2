@@ -1109,3 +1109,5 @@ em.foil-text, .edge__num.foil-text {
   .uses .pweb .pweb__tag:nth-of-type(4) { left: 82% !important; }
   .uses .pweb .pweb__tag--stat { max-width: 38%; }
 }
+.edge__journey { grid-column: 1 / -1; }
+.edge__inner:has(.edge__journey) { grid-template-columns: 1fr; }

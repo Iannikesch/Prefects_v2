@@ -3,7 +3,8 @@
 // The previous homepage is kept at src/pages/_old-index.astro for reference
 // (the underscore keeps it from being published as a page).
 import Fresh from '../layouts/Fresh.astro';
-import { DIFFERENT } from '../data/site.js';
+import PeopleJourney from '../components/PeopleJourney.astro';
+import '../styles/people-journey.css';
 import { bySlug, SERVICE_GROUPS } from '../data/capabilities.js';
 import { CASE_STUDIES } from '../data/caseStudies.js';
 // "Reach real people" slides: the four case studies plus a placeholder.
@@ -163,12 +164,9 @@ const POWERS = [...SERVICE_GROUPS].reverse().flatMap((g) => g.slugs.map((slug) =
       <div class="edge__head">
         <p class="pf-eyebrow">Why Profectus</p>
         <h2 class="edge__h" id="edge-h">Every customer gets their own journey. <em class="foil-text">You get to see all of it.</em></h2>
-        <p class="edge__lead">Most agencies make one great ad and hope it lands with everyone. The big data companies can tailor every message, but they sell you a platform and leave you to run it. We do the tailoring for you. Our own data tells us who each customer is, our operators plan what each one hears next, and you see every step and what it earned.</p>
+        <p class="edge__lead">Most agencies make one great ad and hope it lands with everyone. We tailor every message to the person getting it, and show you every step and what it earned. Here's what that looks like for one customer.</p>
       </div>
-      <div class="edge__stat" aria-hidden="true"><span class="edge__num foil-text">230M</span><span class="edge__unit">people in our own database</span></div>
-      <ul class="edge__points">
-        {DIFFERENT.map(([h, t, alt, photo]) => <li><figure class="edge__ph"><img src={`/img/photos/${photo}.webp`} alt={alt} loading="lazy" decoding="async" /></figure><h3>{h}</h3><p>{t}</p></li>)}
-      </ul>
+      <div class="edge__journey"><PeopleJourney /></div>
       <div class="edge__foot">
         <p class="edge__line">Built for world-class brands. <em class="v">Sized for the business down the street.</em></p>
         <a class="pf-pill btn-gold" href="/contact">Start the conversation →</a>
