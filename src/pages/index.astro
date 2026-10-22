@@ -3,7 +3,7 @@
 // The previous homepage is kept at src/pages/_old-index.astro for reference
 // (the underscore keeps it from being published as a page).
 import Fresh from '../layouts/Fresh.astro';
-import { DIFFERENT, EDGE3, EDGE3_PHOTOS } from '../data/site.js';
+import { DIFFERENT } from '../data/site.js';
 import { bySlug, SERVICE_GROUPS } from '../data/capabilities.js';
 import { CASE_STUDIES } from '../data/caseStudies.js';
 // "Reach real people" slides: the four case studies plus a placeholder.
@@ -102,7 +102,7 @@ const POWERS = [...SERVICE_GROUPS].reverse().flatMap((g) => g.slugs.map((slug) =
       </div>
       <div class="uses__grid">
         <a class="ucard ucard--big" href="/capabilities/audience-intent-development">
-          <div class="ucard__media"><span>Photo · high-value customers</span></div>
+          <div class="ucard__media"><img src="/img/photos/party.webp" alt="Friends laughing under string lights" loading="lazy" decoding="async"></div>
           <div class="ucard__body">
             <p class="pf-eyebrow">Audience &amp; intent</p>
             <h3>Find, and keep, your highest-value customers.</h3>
@@ -113,7 +113,7 @@ const POWERS = [...SERVICE_GROUPS].reverse().flatMap((g) => g.slugs.map((slug) =
         <!-- Right side: the cards cascade down a lane on a black, gold-edged panel -->
         <div class="uses__lane cascade" data-speed="18.2" data-cols="1" aria-label="More of what we do">
           <a class="cascade__card ucard ucard--lane" href="/capabilities/identity-resolution?tab=inside">
-            <div class="ucard__media"><span>Photo · a site visitor</span></div>
+            <div class="ucard__media"><img src="/img/photos/coffee.webp" alt="A man drinking coffee by a café window" loading="lazy" decoding="async"></div>
             <div class="ucard__body">
               <p class="pf-eyebrow">Website visitors</p>
               <h3>We put a name to a click.</h3>
@@ -121,7 +121,7 @@ const POWERS = [...SERVICE_GROUPS].reverse().flatMap((g) => g.slugs.map((slug) =
             </div>
           </a>
           <a class="cascade__card ucard ucard--lane" href="/capabilities/data-identity-infrastructure">
-            <div class="ucard__media"><span>Photo · one customer record</span></div>
+            <div class="ucard__media"><img src="/img/photos/dashboard.webp" alt="An analyst reading a customer dashboard" loading="lazy" decoding="async"></div>
             <div class="ucard__body">
               <p class="pf-eyebrow">Data &amp; identity</p>
               <h3>Turn scattered data into one record per customer.</h3>
@@ -129,7 +129,7 @@ const POWERS = [...SERVICE_GROUPS].reverse().flatMap((g) => g.slugs.map((slug) =
             </div>
           </a>
           <a class="cascade__card ucard ucard--lane" href="/capabilities/paid-media-demand-generation">
-            <div class="ucard__media"><span>Photo · every channel</span></div>
+            <div class="ucard__media"><img src="/img/photos/notify.webp" alt="A woman smiling at a text on her phone" loading="lazy" decoding="async"></div>
             <div class="ucard__body">
               <p class="pf-eyebrow">Paid &amp; owned media</p>
               <h3>Keep every channel telling the same story.</h3>
@@ -142,8 +142,7 @@ const POWERS = [...SERVICE_GROUPS].reverse().flatMap((g) => g.slugs.map((slug) =
   </section>
 
   <!-- Why Profectus (Oct 22, owner's notes): personalization at scale, run by
-       people, shown to you step by step. A creative agency, a big data
-       company and Profectus, compared row by row. No rival is named. -->
+       people, shown to you step by step. Four points, each with a photo. -->
   <section class="edge" aria-labelledby="edge-h">
     <div class="edge__inner">
       <div class="edge__head">
@@ -153,24 +152,8 @@ const POWERS = [...SERVICE_GROUPS].reverse().flatMap((g) => g.slugs.map((slug) =
       </div>
       <div class="edge__stat" aria-hidden="true"><span class="edge__num foil-text">230M</span><span class="edge__unit">people in our own database</span></div>
       <ul class="edge__points">
-        {DIFFERENT.map(([h, t, ph]) => <li><figure class="edge__ph"><span>Photo · {ph}</span></figure><h3>{h}</h3><p>{t}</p></li>)}
+        {DIFFERENT.map(([h, t, alt, photo]) => <li><figure class="edge__ph"><img src={`/img/photos/${photo}.webp`} alt={alt} loading="lazy" decoding="async" /></figure><h3>{h}</h3><p>{t}</p></li>)}
       </ul>
-      <div class="edge__table edge__table--3" role="table" aria-label="A creative agency, a big data company and Profectus, compared">
-        <div class="edge__row edge__row--head" role="row">
-          <span role="columnheader"></span>
-          <span role="columnheader"><figure class="edge__ph edge__ph--col"><span>Photo · {EDGE3_PHOTOS[0]}</span></figure>A creative agency</span>
-          <span role="columnheader"><figure class="edge__ph edge__ph--col"><span>Photo · {EDGE3_PHOTOS[1]}</span></figure>A big data company</span>
-          <span role="columnheader"><figure class="edge__ph edge__ph--col edge__ph--us"><span>Photo · {EDGE3_PHOTOS[2]}</span></figure>Profectus</span>
-        </div>
-        {EDGE3.map(([k, a, b, us]) => (
-          <div class="edge__row" role="row">
-            <span class="edge__k" role="rowheader">{k}</span>
-            <span class="edge__them" role="cell" data-who="A creative agency">{a}</span>
-            <span class="edge__them" role="cell" data-who="A big data company">{b}</span>
-            <span class="edge__us" role="cell">{us}</span>
-          </div>
-        ))}
-      </div>
       <div class="edge__foot">
         <p class="edge__line">Built for world-class brands. <em class="v">Sized for the business down the street.</em></p>
         <a class="pf-pill btn-gold" href="/contact">Start the conversation →</a>
@@ -207,9 +190,9 @@ const POWERS = [...SERVICE_GROUPS].reverse().flatMap((g) => g.slugs.map((slug) =
             </dl>
           </div>
           <div class="casc__beat casc__beat--photos" data-beat>
-            <figure class="casc__photo"><span>Photo · the team at work</span></figure>
-            <figure class="casc__photo casc__photo--2"><span>Photo · a client's storefront</span></figure>
-            <p class="casc__cap">The people who ran it for world-class brands, now running it for you.</p>
+            <figure class="casc__photo"><img src="/img/photos/whiteboard.webp" alt="A strategist walking clients through a growth plan" loading="lazy" decoding="async"></figure>
+            <figure class="casc__photo casc__photo--2"><img src="/img/photos/counter.webp" alt="A restaurant owner at the counter during the lunch rush" loading="lazy" decoding="async"></figure>
+            <p class="casc__cap">The people who run it for world-class brands, running it for you.</p>
           </div>
         </div>
         <div class="cascade cascade--links" data-speed="22" data-follow="0.5" aria-label="Everything our data powers">

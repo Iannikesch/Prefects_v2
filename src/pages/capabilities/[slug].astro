@@ -23,6 +23,22 @@ const eyebrow = place.kind === 'spine'
   : `Where the progress happens · ${place.group.title}`;
 const pitch = place.kind === 'spine' ? place.step.line : cap.summary;
 const lede = place.kind === 'spine' ? place.step.body : cap.summary;
+// Overview photo per capability (from Assets/Images; brand-free shots only).
+const PHOTO = {
+  'identity-resolution': ['coffee', 'A man drinking coffee by a café window'],
+  'data-identity-infrastructure': ['dashboard', 'An analyst reading a customer dashboard'],
+  'audience-intent-development': ['party', 'Friends laughing under string lights'],
+  'ai-automation': ['notify', 'A woman smiling at a text on her phone'],
+  'analytics-attribution-optimization': ['owner-sheet', 'A bakery owner reviewing her numbers'],
+  'strategy-go-to-market': ['whiteboard', 'A strategist walking clients through a growth plan'],
+  'brand-creative-storytelling': ['team', 'A team talking through a plan around one table'],
+  'website-digital-experience': ['owner-typing', 'A bakery owner working on her laptop'],
+  'sales-enablement': ['owner-glasses', 'A business owner reading closely at her laptop'],
+  'paid-media-demand-generation': ['tv', 'Someone watching an ad on TV at night'],
+  'loyalty-lifecycle': ['counter', 'A restaurant owner at the counter during the lunch rush'],
+  'direct-mail-offline-media': ['mail', 'A woman opening a letter on her front step'],
+  'social-media-management': ['opensign', 'A shop owner turning the sign to Open'],
+};
 const benefits = cap.items.slice(0, 3);
 const [closeLine, closeEm, closeBtn] = cap.close || DEFAULT_CLOSE;
 const stories = (casesFor(cap.slug).length ? casesFor(cap.slug) : CASE_STUDIES).slice(0, 3);
@@ -82,7 +98,7 @@ const FAQ = [
           </div>
         ))}
       </div>
-      <div class="cap-media"><span>Photo or diagram · {cap.name}</span></div>
+      <div class="cap-media">{PHOTO[cap.slug] ? <img src={`/img/photos/${PHOTO[cap.slug][0]}.webp`} alt={PHOTO[cap.slug][1]} loading="lazy" decoding="async" /> : <span>Photo or diagram · {cap.name}</span>}</div>
     </div>
   </section>
 

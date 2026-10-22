@@ -89,10 +89,10 @@ export const EDGE = [
 // at scale, run by people, shown to you step by step. Compared against a
 // creative agency and "a big data company" (no rival named).
 export const DIFFERENT = [
-  ['One customer at a time, at any size.', "Each person gets the message, channel and moment that fits them, whether that's a thousand customers or a few million.", 'One customer in a candid moment (coffee, phone in hand), face soft, a single data tag beside her'],
-  ['Data and creative in the same room.', 'The people who read the data also shape the message, so nothing gets lost in a hand-off between two agencies.', 'An analyst and a designer at one screen, charts on one side, an ad layout on the other'],
-  ['Nothing hidden.', 'You see who we reached, what they did next, and which dollar caused it. Attribution is part of the work, not an extra.', 'A client reading a clear report over coffee, one chart showing what each dollar earned'],
-  ['Proudly independent.', 'No holding company and no media to sell you. We answer to you and the number you hired us to move.', 'Our team working together in a real, lived-in space, not a corporate lobby'],
+  ['One customer at a time, at any size.', "Each person gets the message, channel and moment that fits them, whether that's a thousand customers or a few million.", 'A woman opening a letter on her front step', 'mail'],
+  ['Data and creative in the same room.', 'The people who read the data also shape the message, so nothing gets lost in a hand-off between two agencies.', 'A team talking through a plan around one table', 'team'],
+  ['Nothing hidden.', 'You see who we reached, what they did next, and which dollar caused it. Attribution is part of the work, not an extra.', 'A bakery owner reviewing her numbers', 'owner-sheet'],
+  ['Proudly independent.', 'No holding company and no media to sell you. We answer to you and the number you hired us to move.', 'A shop owner turning the sign to Open', 'opensign'],
 ];
 // Photo slots above the three columns: what each picture should show.
 export const EDGE3_PHOTOS = [

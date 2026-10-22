@@ -1020,3 +1020,9 @@ em.foil-text, .edge__num.foil-text {
 @media (max-width: 1000px) { .edge__points { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 900px) { .edge__points { grid-template-columns: minmax(0, 1fr); } }
 .edge__row--head .edge__ph span, .edge__ph span { color: rgba(255, 255, 255, 0.92) !important; }
+
+/* ---------- Real photos (Oct 22, Assets/Images → public/img/photos) ---------- */
+.ucard__media, .edge__ph, .casc__photo, .cap-media { position: relative; overflow: hidden; }
+.ucard__media img, .edge__ph img, .casc__photo img, .cap-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.edge__ph { padding: 0; }
+.cap-media img { object-position: 50% 35%; }
