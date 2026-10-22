@@ -1084,3 +1084,28 @@ em.foil-text, .edge__num.foil-text {
 .legal__sec h2 { font: 400 26px/1.2 var(--pf-serif); letter-spacing: -0.02em; margin: 0 0 8px; }
 .legal__sec p, .legal__contact { margin: 0; color: var(--rw-ink-2); }
 .legal__contact a { color: #6E62E6; }
+
+/* ---------- "Personalization at scale": one customer, drawn as a web ----------
+   Static graphic: her photo in a ring, six facts around her on thin lines.
+   Example profile, not a real person. */
+.pweb { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: radial-gradient(closest-side, #ECEAFD, #F7F6FC 70%, #FBFAFE); }
+.pweb__lines { position: absolute; inset: 0; width: 100%; height: 100%; }
+.pweb__lines line { stroke: rgba(110, 98, 230, 0.35); stroke-width: 1; vector-effect: non-scaling-stroke; stroke-dasharray: 3 4; }
+.pweb__lines circle { fill: none; stroke: rgba(110, 98, 230, 0.25); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.pweb__me { position: absolute; left: 50%; top: 50%; width: 34%; aspect-ratio: 1; margin: 0; translate: -50% -50%; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 6px #fff, 0 0 0 7px rgba(110, 98, 230, 0.5), 0 20px 50px rgba(20, 16, 40, 0.18); }
+.pweb__me img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 45% 30%; }
+.pweb__tag { position: absolute; translate: -50% -50%; display: grid; gap: 3px; padding: 9px 12px; border-radius: 8px; background: #fff; box-shadow: 0 6px 20px rgba(20, 16, 40, 0.10); font: 500 14px/1.2 var(--pf-sans); color: var(--rw-ink); white-space: nowrap; text-align: left; }
+.pweb__tag b { font: 400 11px/1 var(--pf-mono); letter-spacing: .04em; color: #6E62E6; font-weight: 400; }
+.pweb__tag--stat b { font: 400 24px/1 var(--pf-serif); letter-spacing: -0.03em; color: #6E62E6; }
+.pweb__tag--stat { max-width: 30%; white-space: normal; }
+@media (max-width: 600px) { .pweb__tag { font-size: 11px; padding: 6px 8px; } .pweb__tag b { font-size: 9px; } .pweb__tag--stat b { font-size: 18px; } }
+/* beat the grey-placeholder rules that target .uses .ucard__media */
+.uses .ucard__media.pweb { background: radial-gradient(closest-side, #ECEAFD, #F7F6FC 70%, #FBFAFE); }
+.uses .pweb .pweb__tag { font: 500 14px/1.2 var(--pf-sans); text-transform: none; letter-spacing: 0; color: var(--rw-ink); }
+.uses .pweb .pweb__tag--stat { font-size: 13px; color: var(--rw-ink-2); }
+@media (max-width: 600px) { .uses .pweb .pweb__tag { font-size: 11px; } }
+@media (max-width: 600px) {
+  .uses .pweb .pweb__tag:nth-of-type(3) { left: 21% !important; }
+  .uses .pweb .pweb__tag:nth-of-type(4) { left: 82% !important; }
+  .uses .pweb .pweb__tag--stat { max-width: 38%; }
+}
