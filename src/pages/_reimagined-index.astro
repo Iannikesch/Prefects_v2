@@ -1,0 +1,11 @@
+---
+// Homepage, reimagined (Oct 22): the owner's viewpoint, real photos, and
+// the Epsilon / Infinite motion. Content lives in src/reimagined/home.html
+// (ported from the prototype); the previous homepage is _prev-index.astro.
+import Fresh from '../layouts/Fresh.astro';
+import '../reimagined/reimagined.css';
+import body from '../reimagined/home.html?raw';
+---
+<Fresh>
+  <div class="rm"><script is:inline>document.currentScript.parentElement.classList.add('js');</script><Fragment set:html={body} /></div>
+</Fresh>
