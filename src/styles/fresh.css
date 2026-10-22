@@ -883,3 +883,28 @@ em.foil-text, .edge__num.foil-text {
    missing in an earlier change; the script has been toggling it all along. */
 .fnav.is-hidden { transform: translateY(-100%); }
 .fnav.is-hidden::after { opacity: 0; }
+
+/* ---------- Homepage rework (Oct 22) ----------
+   "Put our data to work": the white galaxy instead of the black one. Same
+   left-to-right fade and top/bottom mask; the plate shown as a negative. */
+.uses__galaxy--light { background: transparent; }
+.uses__galaxy--light .pf-nebula__plate { filter: invert(1) hue-rotate(180deg) saturate(1.15) brightness(1.03); }
+.uses__galaxy--light .pf-nebula__breath::after { display: none; }
+
+/* "Everything our data powers": black galaxy, white type, and the eight
+   services as clickable cards streaming down the right. */
+.casc--dark { background: #000; color: var(--pf-white); }
+.casc--dark::after { display: none; }
+.casc--dark > .pf-nebula { opacity: 0.95; z-index: -1; }
+.casc--dark > .pf-nebula .pf-nebula__plate { filter: grayscale(1) sepia(1) saturate(2.6) hue-rotate(-8deg) brightness(1.1) contrast(1.15); }
+.casc--dark .lh2 { color: var(--pf-white); }
+.casc--dark .lh2 em { color: var(--pf-violet); }
+.casc--dark .pf-eyebrow { color: rgba(238, 234, 255, 0.7); }
+.casc--dark .casc__lead { color: rgba(238, 234, 255, 0.72); }
+.casc__all { justify-self: start; margin-top: 6px; font: 500 15px/1 var(--pf-sans); color: var(--pf-white); text-decoration: none; border-bottom: 1px solid var(--rw-gold-500); padding-bottom: 4px; }
+.cascade--links .cascade__card { text-decoration: none; color: var(--rw-ink); cursor: pointer; gap: 8px;
+  transition: scale 300ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 300ms ease; }
+.cascade--links .cascade__card:hover, .cascade--links .cascade__card:focus-visible { scale: 1.03; box-shadow: 0 0 0 2px #6E62E6, 0 18px 40px rgba(0, 0, 0, 0.35); }
+.cascade--links .cascade__card .cascade__name { font: 400 24px/1.1 var(--pf-serif); letter-spacing: -0.03em; color: var(--rw-ink); }
+.cascade--links .cascade__card .cascade__sum { font: 400 15px/1.4 var(--pf-sans); letter-spacing: 0; color: var(--rw-ink-2); }
+.cascade--links .cascade__go { font: 500 14px/1 var(--pf-sans); color: #6E62E6; }

@@ -11,7 +11,12 @@
 // Grab and drag (mouse/trackpad): drag the cards, throw them, and they
 // glide back into the drift. A real drag never triggers a card's link.
 //
-// Markup: <div class="cascade" data-speed="14" data-cols="1|2 (optional)"><article class="cascade__card">…</article>…</div>
+// Hover a card (mouse/trackpad): the drift eases to a stop so it can be
+// read and clicked, and eases back when the pointer leaves.
+// data-follow="0.5" (optional): scrolling the page also moves the cards, at
+// that fraction of the scroll distance, so the stream follows you down.
+//
+// Markup: <div class="cascade" data-speed="14" data-cols="1|2 (optional)" data-follow="0.5 (optional)"><article class="cascade__card">…</article>…</div>
 
 const FADE = 140;     // px of dissolve at the bottom
 const GAP = 40;       // px between cards
@@ -19,6 +24,7 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function setup(lane) {
   const speed = parseFloat(lane.dataset.speed) || 14;
+  const follow = parseFloat(lane.dataset.follow) || 0;
   const source = [...lane.querySelectorAll(':scope > .cascade__card')];
   if (!source.length) return;
   source.forEach((c) => c.remove());
@@ -69,13 +75,14 @@ function setup(lane) {
   }
 
   let raf = 0, last = 0, visible = false;
-  let held = false, vel = 0;
+  let held = false, vel = 0, hover = false, ease = 1;   // ease: 1 drifting, 0 stopped
   const frame = (now) => {
     raf = requestAnimationFrame(frame);
     const dt = Math.min(0.05, (now - (last || now)) / 1000);   // clamp hiccups
     last = now;
+    ease += ((hover ? 0 : 1) - ease) * Math.min(1, dt * 6);   // ~200ms to stop or restart
     if (!held) {
-      shift += (speed + vel) * dt;
+      shift += (speed * ease + vel) * dt;
       vel *= Math.exp(-dt * 3.5);              // momentum from a throw dies away
     }
     draw();
@@ -114,6 +121,17 @@ function setup(lane) {
   // A drag shouldn't count as a click on the card underneath.
   lane.addEventListener('click', (e) => { if (moved > 4) { e.preventDefault(); e.stopPropagation(); } }, true);
   lane.addEventListener('dragstart', (e) => e.preventDefault());
+  lane.addEventListener('pointerover', (e) => { if (e.pointerType === 'mouse' && e.target.closest('.cascade__card')) hover = true; });
+  lane.addEventListener('pointerleave', () => { hover = false; });
+
+  // Scroll-follow: page scroll nudges the stream the same way.
+  if (follow && !reduce) {
+    let lastScroll = scrollY;
+    addEventListener('scroll', () => {
+      const dy = scrollY - lastScroll; lastScroll = scrollY;
+      if (visible) { shift += dy * follow; if (!raf) draw(); }
+    }, { passive: true });
+  }
 
   build();
   new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible ? run() : stop(); }).observe(lane);

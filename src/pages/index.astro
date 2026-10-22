@@ -3,7 +3,8 @@
 // The previous homepage is kept at src/pages/_old-index.astro for reference
 // (the underscore keeps it from being published as a page).
 import Fresh from '../layouts/Fresh.astro';
-import { WHY, EDGE } from '../data/site.js';
+import { EDGE } from '../data/site.js';
+import { bySlug, SERVICE_GROUPS } from '../data/capabilities.js';
 import { CASE_STUDIES } from '../data/caseStudies.js';
 // "Reach real people" slides: the four case studies plus a placeholder.
 // Photos and client logos are placeholders until supplied.
@@ -24,6 +25,9 @@ const CLIENTS = [
   { name: 'General Motors', src: '/logos/baked-general-motors.webp?v=2', w: 60, h: 60 },
   { name: 'Sitka', src: '/logos/baked-sitka.webp?v=2', w: 120, h: 33 },
 ];
+// "Everything our data powers": the eight service capabilities, Win them
+// then Reach them, as cards in the cascade.
+const POWERS = [...SERVICE_GROUPS].reverse().flatMap((g) => g.slugs.map((slug) => ({ group: g.title, ...bySlug(slug) })));
 ---
 <Fresh>
   <section class="rhero" data-hero>
@@ -88,9 +92,9 @@ const CLIENTS = [
        as this wrapper, so it lets go once "Why Profectus" has covered it. -->
   <div class="stack">
   <section class="uses light" data-pin>
-    <!-- Black, gold and violet galaxy: fades in from the left, full strength
-         behind the cascade on the right, a little above and below the cards. -->
-    <div class="uses__galaxy" aria-hidden="true"><div class="pf-nebula" data-src="/img/nebula-violet" data-theme="gold"></div></div>
+    <!-- White galaxy (the cloud photo as a negative, ink stars): fades in
+         from the left, full strength behind the cascade on the right. -->
+    <div class="uses__galaxy uses__galaxy--light" aria-hidden="true"><div class="pf-nebula" data-src="/img/nebula-violet" data-theme="light"></div></div>
     <div class="uses__inner">
       <div class="uses__head">
         <p class="pf-eyebrow">What we do</p>
@@ -170,63 +174,29 @@ const CLIENTS = [
   </div>
 
 
-  <!-- PREVIEW: the Silver Bullet-style cascade, with draft text cards.
-       Placement and card copy still to be decided together. -->
-  <section class="casc light">
-    <!-- Same muted glow as Reach: soft teal, violet and gold washes, faded to white top and bottom -->
-    <div class="reach__bg" aria-hidden="true"></div>
+  <!-- Everything our data powers: the eight Win them / Reach them services
+       stream down on the black galaxy. Hover a card to stop the stream,
+       click to open that capability. Scrolling the page pushes the stream
+       along with you. -->
+  <section class="casc casc--dark">
+    <div class="pf-nebula" data-src="/img/nebula-violet" data-theme="gold" aria-hidden="true"></div>
     <div class="casc__inner">
       <div class="casc__copy">
-        <p class="pf-eyebrow">Cascade preview · draft cards</p>
+        <p class="pf-eyebrow">Win them · Reach them</p>
         <h2 class="lh2">Everything our data <em class="v">powers</em>.</h2>
-        <p class="casc__lead">A first look at the cascading carousel. The cards drift down at Silver Bullet's measured 14px per second and dissolve at the bottom. Card copy is a placeholder until we write it together.</p>
+        <p class="casc__lead">Eight services that run on the same 230 million people. Four win customers over, four reach them where they are. Hover one to stop the stream, click to go deeper.</p>
+        <a class="casc__all" href="/capabilities">All capabilities →</a>
       </div>
-      <div class="cascade" data-speed="14" aria-label="What our data powers">
-          <article class="cascade__card"><p class="pf-eyebrow">Lifecycle &amp; loyalty</p><p>Know which customers are about to leave, before they do.</p></article>
-          <article class="cascade__card"><p class="pf-eyebrow">Cookieless reach</p><p>Up to 95% of identifiable audiences on one major platform.</p></article>
-          <article class="cascade__card"><p class="pf-eyebrow">Loyalty &amp; Lifecycle</p><p>Programs that turn a first purchase into a lifetime.</p></article>
-          <article class="cascade__card"><p class="pf-eyebrow">Identity</p><p>One record per customer, across every device and channel.</p></article>
-          <article class="cascade__card"><p class="pf-eyebrow">Attribution</p><p>See which dollar actually drove the sale.</p></article>
-          <article class="cascade__card"><p class="pf-eyebrow">Audiences</p><p>Find more people who look like your best customers.</p></article>
-          <article class="cascade__card"><p class="pf-eyebrow">Creative</p><p>Campaigns built from what your audience actually responds to.</p></article>
-          <article class="cascade__card"><p class="pf-eyebrow">Proof</p><p>$14+ back for every $1 on one client's direct channel.</p></article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Experiment: the "Why Profectus" galaxy, reworked for a white page.
-       The cloud photo is shown as a negative; stars are ink, glints are gold. -->
-  <section class="why-light light">
-    <div class="pf-nebula" data-src="/img/nebula-violet" data-theme="light" aria-hidden="true"></div>
-    <div class="why-light__rules pf-rules" aria-hidden="true"></div>
-    <div class="why-light__inner">
-      <div class="lhead">
-        <p class="pf-eyebrow">Why Profectus</p>
-        <h2 class="lh2">Our Data Changes Everything<span class="foil-text">.</span></h2>
-      </div>
-      <ol class="why-light__cards">
-        {WHY.map((w, i) => (
-          <li><div class="pf-glass"><span class="pf-eyebrow num">{String(i + 1).padStart(2, '0')}</span><h3>{w.title}</h3><p>{w.text}</p></div></li>
+      <div class="cascade cascade--links" data-speed="22" data-follow="0.5" aria-label="Everything our data powers">
+        {POWERS.map((c) => (
+          <a class="cascade__card" href={`/capabilities/${c.slug}`}>
+            <p class="pf-eyebrow">{c.group}</p>
+            <p class="cascade__name">{c.name}</p>
+            <p class="cascade__sum">{c.summary}</p>
+            <span class="cascade__go">Explore →</span>
+          </a>
         ))}
-      </ol>
-    </div>
-  </section>
-
-  <!-- Experiment: the same galaxy in black and gold. The cloud photo is
-       re-toned to gold, stars are warm white and gold. -->
-  <section class="why-gold">
-    <div class="pf-nebula" data-src="/img/nebula-violet" data-theme="gold" aria-hidden="true"></div>
-    <div class="why-light__rules pf-rules" aria-hidden="true"></div>
-    <div class="why-light__inner">
-      <div class="lhead">
-        <p class="pf-eyebrow">Why Profectus · black, gold &amp; violet</p>
-        <h2 class="lh2">Our Data Changes Everything<span class="foil-text">.</span></h2>
       </div>
-      <ol class="why-light__cards">
-        {WHY.map((w, i) => (
-          <li><div class="pf-glass"><span class="pf-eyebrow num">{String(i + 1).padStart(2, '0')}</span><h3>{w.title}</h3><p>{w.text}</p></div></li>
-        ))}
-      </ol>
     </div>
   </section>
 
@@ -240,7 +210,6 @@ const CLIENTS = [
     </div>
   </section>
 
-  <section class="next"><p>Next section goes here</p></section>
   <script>
     // Stack-over: "Put our data to work" pins once its bottom reaches the
     // bottom of the screen, and "Why Profectus" slides up over it. The pin
