@@ -908,3 +908,8 @@ em.foil-text, .edge__num.foil-text {
 .cascade--links .cascade__card .cascade__name { font: 400 24px/1.1 var(--pf-serif); letter-spacing: -0.03em; color: var(--rw-ink); }
 .cascade--links .cascade__card .cascade__sum { font: 400 15px/1.4 var(--pf-sans); letter-spacing: 0; color: var(--rw-ink-2); }
 .cascade--links .cascade__go { font: 500 14px/1 var(--pf-sans); color: #6E62E6; }
+
+/* "Put our data to work" photo slots: plain mid grey, about the average
+   brightness of a real photo, so contrast can be judged before photos land. */
+.uses .ucard__media { background: #8E8E93; }
+.uses .ucard__media span { color: rgba(255, 255, 255, 0.85); }
