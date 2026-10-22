@@ -41,7 +41,7 @@ const pad = (n) => String(n).padStart(2, '0');
               <h3 class="vert__line"><a href={`/capabilities/${s.slug}`}>{s.line}</a></h3>
               <p class="vert__name"><a href={`/capabilities/${s.slug}`}>{s.name} →</a></p>
               <p class="vert__body">{s.body}</p>
-              <ul class="vert__does">{s.does.map((d) => <li>{d}</li>)}</ul>
+              <ul class="vert__does" data-stagger>{s.does.map((d, j) => <li style={`--i:${j}`}>{d}</li>)}</ul>
               <a class="vert__link" href={`/capabilities/${s.slug}`}>Explore {s.name} →</a>
             </li>
           ))}
@@ -81,6 +81,17 @@ const pad = (n) => String(n).padStart(2, '0');
   </section>
 
   <script>
+    // Staggered reveal: each step's three chips slide in from the left, one
+    // after another (150ms apart), the first time that step comes into view.
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('is-in');
+        io.unobserve(e.target);
+      }), { threshold: 0.5 });
+      document.querySelectorAll('.vert__does[data-stagger]').forEach((ul) => { ul.classList.add('is-armed'); io.observe(ul); });
+    }
+
     // Spine dot: its position follows how far the track has scrolled past the
     // middle of the screen. One write per frame, transform and text only.
     const track = document.querySelector('[data-spine]');

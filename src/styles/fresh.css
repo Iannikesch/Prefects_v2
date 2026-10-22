@@ -847,4 +847,9 @@ em.foil-text, .edge__num.foil-text {
 /* Stack-over: "Put our data to work" sticks once fully shown; "Why Profectus"
    is a sheet with rounded top corners and a soft shadow that slides over it. */
 .uses[data-pin] { position: sticky; top: var(--pin-top, 0px); z-index: 0; }
-.uses[data-pin] + .edge { position: relative; z-index: 1; border-radius: 24px 24px 0 0; box-shadow: 0 -24px 60px rgba(11, 11, 12, 0.12); }
+.uses[data-pin] + .edge { position: relative; z-index: 1; border-radius: 24px 24px 0 0; box-shadow: 0 -30px 40px -20px rgba(11, 11, 12, 0.14); }   /* negative spread: shadow on the top edge only, none below */
+
+/* Capabilities overview: each step's three chips get the same staggered
+   slide-in from the left as the capability-page overview cards. */
+.vert__does.is-armed li { opacity: 0; transform: translate3d(-48px, 0, 0); transition: opacity 500ms ease, transform 700ms cubic-bezier(0.22, 1, 0.36, 1); transition-delay: calc(var(--i, 0) * 150ms); }
+.vert__does.is-in li { opacity: 1; transform: none; }
