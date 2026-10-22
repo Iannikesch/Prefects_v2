@@ -913,3 +913,4 @@ em.foil-text, .edge__num.foil-text {
    brightness of a real photo, so contrast can be judged before photos land. */
 .uses .ucard__media { background: #8E8E93; }
 .uses .ucard__media span { color: rgba(255, 255, 255, 0.85); }
+.casc--dark .cascade__card .pf-eyebrow { color: #6E62E6; }   /* the card labels stay purple; the white is for the section text only */
