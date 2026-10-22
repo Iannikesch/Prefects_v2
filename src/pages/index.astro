@@ -84,7 +84,7 @@ const CLIENTS = [
   <!-- Section 2 (Epsilon's "what we can do" framing, original copy):
        one big card on the left, two stacked on the right. Cards grow on hover. -->
 
-  <section class="uses light">
+  <section class="uses light" data-pin>
     <!-- Black, gold and violet galaxy: fades in from the left, full strength
          behind the cascade on the right, a little above and below the cards. -->
     <div class="uses__galaxy" aria-hidden="true"><div class="pf-nebula" data-src="/img/nebula-violet" data-theme="gold"></div></div>
@@ -235,4 +235,16 @@ const CLIENTS = [
   </section>
 
   <section class="next"><p>Next section goes here</p></section>
+  <script>
+    // Stack-over: "Put our data to work" pins once its bottom reaches the
+    // bottom of the screen, and "Why Profectus" slides up over it. The pin
+    // point depends on the section's height, so it's measured on load and resize.
+    const pin = document.querySelector('[data-pin]');
+    if (pin) {
+      const set = () => pin.style.setProperty('--pin-top', `${Math.min(0, innerHeight - pin.offsetHeight)}px`);
+      addEventListener('resize', set);
+      addEventListener('load', set);
+      set();
+    }
+  </script>
 </Fresh>

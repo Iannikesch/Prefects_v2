@@ -837,3 +837,14 @@ em.foil-text, .edge__num.foil-text {
   background: none; -webkit-text-fill-color: currentColor; color: #6E62E6;
 }
 .rhero em.foil-text, .close em.foil-text { color: var(--pf-violet); }
+
+/* Overview cards: staggered reveal. Each card slides in from the left and
+   fades up, 150ms after the one before. Hidden only once the script arms it,
+   so the cards still show with JS off or reduced motion on. */
+.cap-benefits.is-armed .cap-benefit { opacity: 0; transform: translate3d(-64px, 0, 0); transition: opacity 600ms ease, transform 800ms cubic-bezier(0.22, 1, 0.36, 1); transition-delay: calc(var(--i, 0) * 150ms); }
+.cap-benefits.is-in .cap-benefit { opacity: 1; transform: none; }
+
+/* Stack-over: "Put our data to work" sticks once fully shown; "Why Profectus"
+   is a sheet with rounded top corners and a soft shadow that slides over it. */
+.uses[data-pin] { position: sticky; top: var(--pin-top, 0px); z-index: 0; }
+.uses[data-pin] + .edge { position: relative; z-index: 1; border-radius: 24px 24px 0 0; box-shadow: 0 -24px 60px rgba(11, 11, 12, 0.12); }

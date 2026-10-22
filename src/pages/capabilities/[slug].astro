@@ -73,9 +73,9 @@ const FAQ = [
         <p class="pf-eyebrow">Overview</p>
         <h2 class="lh2">{pitch}</h2>
       </div>
-      <div class="cap-benefits">
+      <div class="cap-benefits" data-stagger>
         {benefits.map(([name, desc], i) => (
-          <div class="cap-benefit">
+          <div class="cap-benefit" style={`--i:${i}`}>
             <span class="cap-benefit__n">{pad(i + 1)}</span>
             <h3>{name}</h3>
             <p>{firstSentence(desc)}</p>
@@ -215,6 +215,18 @@ const FAQ = [
       spy();
       const start = new URLSearchParams(location.search).get('tab');
       if (start && ids.includes(start)) requestAnimationFrame(() => go(start, false));
+    }
+
+    // Staggered reveal: the three overview cards slide in from the left one
+    // after another (150ms apart) the first time they come into view.
+    const stag = document.querySelector('[data-stagger]');
+    if (stag && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      stag.classList.add('is-armed');
+      new IntersectionObserver(([e], o) => {
+        if (!e.isIntersecting) return;
+        stag.classList.add('is-in');
+        o.disconnect();
+      }, { threshold: 0.25 }).observe(stag);
     }
 
     // Accordion (Epsilon, measured): several rows can be open at once; 350ms.
