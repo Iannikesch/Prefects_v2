@@ -3,7 +3,7 @@
 // The previous homepage is kept at src/pages/_old-index.astro for reference
 // (the underscore keeps it from being published as a page).
 import Fresh from '../layouts/Fresh.astro';
-import { DIFFERENT, EDGE3 } from '../data/site.js';
+import { DIFFERENT, EDGE3, EDGE3_PHOTOS } from '../data/site.js';
 import { bySlug, SERVICE_GROUPS } from '../data/capabilities.js';
 import { CASE_STUDIES } from '../data/caseStudies.js';
 // "Reach real people" slides: the four case studies plus a placeholder.
@@ -153,14 +153,14 @@ const POWERS = [...SERVICE_GROUPS].reverse().flatMap((g) => g.slugs.map((slug) =
       </div>
       <div class="edge__stat" aria-hidden="true"><span class="edge__num foil-text">230M</span><span class="edge__unit">people in our own database</span></div>
       <ul class="edge__points">
-        {DIFFERENT.map(([h, t]) => <li><h3>{h}</h3><p>{t}</p></li>)}
+        {DIFFERENT.map(([h, t, ph]) => <li><figure class="edge__ph"><span>Photo · {ph}</span></figure><h3>{h}</h3><p>{t}</p></li>)}
       </ul>
       <div class="edge__table edge__table--3" role="table" aria-label="A creative agency, a big data company and Profectus, compared">
         <div class="edge__row edge__row--head" role="row">
           <span role="columnheader"></span>
-          <span role="columnheader">A creative agency</span>
-          <span role="columnheader">A big data company</span>
-          <span role="columnheader">Profectus</span>
+          <span role="columnheader"><figure class="edge__ph edge__ph--col"><span>Photo · {EDGE3_PHOTOS[0]}</span></figure>A creative agency</span>
+          <span role="columnheader"><figure class="edge__ph edge__ph--col"><span>Photo · {EDGE3_PHOTOS[1]}</span></figure>A big data company</span>
+          <span role="columnheader"><figure class="edge__ph edge__ph--col edge__ph--us"><span>Photo · {EDGE3_PHOTOS[2]}</span></figure>Profectus</span>
         </div>
         {EDGE3.map(([k, a, b, us]) => (
           <div class="edge__row" role="row">

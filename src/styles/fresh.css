@@ -1007,3 +1007,16 @@ em.foil-text, .edge__num.foil-text {
   .edge__table--3 .edge__row { grid-template-columns: 1fr; }
   .edge__table--3 .edge__them::before { content: attr(data-who) ": "; }
 }
+
+/* Why Profectus photo slots: plain grey, labelled with the photo that goes there. */
+.edge__ph { margin: 0 0 6px; display: grid; place-items: center; aspect-ratio: 4 / 3; border-radius: 10px; background: #8E8E93; padding: 16px; text-align: center; }
+.edge__ph span { font: 400 11px/1.45 var(--pf-mono); text-transform: uppercase; letter-spacing: .04em; color: rgba(255, 255, 255, 0.9); }
+.edge__points li { border-top: 0; padding-top: 0; }
+.edge__points h3 { padding-top: 14px; border-top: 2px solid #6E62E6; }
+.edge__ph--col { aspect-ratio: 16 / 10; margin-bottom: 14px; text-transform: none; }
+.edge__ph--us { box-shadow: 0 0 0 2px #6E62E6; }
+.edge__table--3 .edge__row--head { align-items: end; }
+.edge__points { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 1000px) { .edge__points { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 900px) { .edge__points { grid-template-columns: minmax(0, 1fr); } }
+.edge__row--head .edge__ph span, .edge__ph span { color: rgba(255, 255, 255, 0.92) !important; }
