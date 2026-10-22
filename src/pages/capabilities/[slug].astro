@@ -6,7 +6,7 @@
 // Our copy throughout; anything not yet written is a marked placeholder.
 // The previous template is kept at _old-slug.astro for reference.
 import Fresh from '../../layouts/Fresh.astro';
-import { CAPABILITIES, bySlug, placeOf } from '../../data/capabilities.js';
+import { CAPABILITIES, DEFAULT_CLOSE, bySlug, placeOf } from '../../data/capabilities.js';
 import { CASE_STUDIES, casesFor } from '../../data/caseStudies.js';
 import { EDGE } from '../../data/site.js';
 
@@ -24,6 +24,7 @@ const eyebrow = place.kind === 'spine'
 const pitch = place.kind === 'spine' ? place.step.line : cap.summary;
 const lede = place.kind === 'spine' ? place.step.body : cap.summary;
 const benefits = cap.items.slice(0, 3);
+const [closeLine, closeEm, closeBtn] = cap.close || DEFAULT_CLOSE;
 const stories = (casesFor(cap.slug).length ? casesFor(cap.slug) : CASE_STUDIES).slice(0, 3);
 
 // Jump bar, Epsilon style: buttons that scroll to each section and write ?tab=
@@ -178,8 +179,8 @@ const FAQ = [
 
   <section class="close" aria-labelledby="close-h">
     <p class="pf-eyebrow">Built for world-class brands. Sized for the business down the street.</p>
-    <h2 class="close__h" id="close-h">Ready to make <em class="foil-text">progress</em>?</h2>
-    <a class="pf-pill btn-gold" href="/contact">Talk to an operator →</a>
+    <h2 class="close__h" id="close-h">{closeLine} <em class="foil-text">{closeEm}</em></h2>
+    <a class="pf-pill btn-gold" href="/contact">{closeBtn}</a>
   </section>
 
   <script>

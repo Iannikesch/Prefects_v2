@@ -814,3 +814,26 @@ a { color: inherit; }
    Tags keep their pill shape; only things you click to act are squared up. ---------- */
 :root { --rw-r-btn: 6px; }
 .pf-pill:not(.pf-pill--tag), .fnav__cta, .pill-ink, .fnav__menu a.btn-gold { border-radius: var(--rw-r-btn); }
+
+/* Closing slab: each page has its own two-line close now, longer than the old
+   three words, so the heading drops from 8vw to 5.5vw and wraps at 18ch. */
+.close__h { font-size: max(40px, 5.5vw); max-width: 18ch; }
+.close__h em { display: block; }
+
+/* ---------- Purple leads, gold accents (Oct 22) ----------
+   Every button is purple. Big gold words become purple too. Gold is kept
+   for small accents only (rules, dots, eyebrows, periods, small links) and
+   the falling characters in the hero. */
+.btn-gold, .fnav__cta.btn-gold, .fnav.is-light .fnav__cta.btn-gold {
+  background: #6E62E6 !important; background-size: auto !important;
+  color: var(--pf-white) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+  transition: background-color 200ms ease !important;
+}
+.btn-gold:hover, .fnav.is-light .fnav__cta.btn-gold:hover { background: #5B4FD9 !important; }
+/* Big italic words and the 230M figure: purple, not foil. The light violet
+   reads on black (hero, closing slab); the deeper one holds up on white. */
+em.foil-text, .edge__num.foil-text {
+  background: none; -webkit-text-fill-color: currentColor; color: #6E62E6;
+}
+.rhero em.foil-text, .close em.foil-text { color: var(--pf-violet); }

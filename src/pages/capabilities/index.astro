@@ -3,7 +3,7 @@
 // then the services where that progress shows up. The previous listing is
 // kept at _old-index.astro for reference.
 import Fresh from '../../layouts/Fresh.astro';
-import { bySlug, SPINE as STEPS, SERVICE_GROUPS as SERVICES } from '../../data/capabilities.js';
+import { DEFAULT_CLOSE, bySlug, SPINE as STEPS, SERVICE_GROUPS as SERVICES } from '../../data/capabilities.js';
 
 // The five steps and the two service groups live in capabilities.js, so the
 // detail pages read the same order.
@@ -76,8 +76,8 @@ const pad = (n) => String(n).padStart(2, '0');
 
   <section class="close" aria-labelledby="close-h">
     <p class="pf-eyebrow">Built for world-class brands. Sized for the business down the street.</p>
-    <h2 class="close__h" id="close-h">Ready to make <em class="foil-text">progress</em>?</h2>
-    <a class="pf-pill btn-gold" href="/contact">Talk to an operator →</a>
+    <h2 class="close__h" id="close-h">{DEFAULT_CLOSE[0]} <em class="foil-text">{DEFAULT_CLOSE[1]}</em></h2>
+    <a class="pf-pill btn-gold" href="/contact">{DEFAULT_CLOSE[2]}</a>
   </section>
 
   <script>
