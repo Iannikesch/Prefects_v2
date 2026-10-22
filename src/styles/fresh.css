@@ -714,3 +714,30 @@ a { color: inherit; }
 /* When the nav slides back in, the jump bar steps down under it (same 200ms). */
 .jump { transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1); }
 .fnav:not(.is-hidden) ~ main .jump.is-stuck { transform: translateY(var(--rw-nav-h)); }
+
+/* ---------- Reach, on white (owner, Oct 21) ----------
+   Sides: the "Our infrastructure" watercolour washes. Centre: the white
+   galaxy from "The Data Spine Changes Everything", about as wide as the
+   heading (R of "Reach" to the u of "results"), fading out into the sides.
+   Top and bottom fade into the white above and below. */
+.reach { background: var(--rw-paper); color: var(--rw-ink); }
+.reach__bg { inset: 0; filter: none;
+  background:
+    radial-gradient(40% 70% at 6% 85%, color-mix(in srgb, var(--pf-g-teal-lit) 38%, transparent), transparent 70%),
+    radial-gradient(38% 65% at 94% 15%, color-mix(in srgb, var(--pf-g-violet) 34%, transparent), transparent 70%),
+    radial-gradient(30% 50% at 92% 88%, color-mix(in srgb, var(--rw-gold-300) 34%, transparent), transparent 72%),
+    radial-gradient(30% 55% at 8% 12%, color-mix(in srgb, var(--pf-g-periwinkle) 26%, transparent), transparent 72%),
+    var(--rw-paper); }
+.reach__bg::before { content: ""; position: absolute; inset: 0; background: var(--rw-foil-grain); background-size: 160px; opacity: 0.18; mix-blend-mode: multiply; }
+.reach__galaxy { position: absolute; z-index: -1; top: 0; bottom: 0; left: 50%; width: min(100%, 1040px); translate: -50% 0; pointer-events: none;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 24%, #000 76%, transparent);
+  mask: linear-gradient(90deg, transparent, #000 24%, #000 76%, transparent); }
+.reach__galaxy .pf-nebula { opacity: 0.9; }
+.reach__galaxy .pf-nebula__plate { filter: invert(1) hue-rotate(180deg) saturate(1.15) brightness(1.03); }
+.reach::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(var(--rw-paper), transparent 18%, transparent 82%, var(--rw-paper)); }
+.reach__h { color: var(--rw-ink); }
+.cflow__arrow { background: rgba(11, 11, 12, 0.72); color: var(--pf-white); }
+.cflow__arrow:hover { background: var(--rw-ink); }
+.cflow__dot { border-color: var(--rw-ink); }
+.cflow__dot[aria-current="true"] { background: var(--rw-ink); }
