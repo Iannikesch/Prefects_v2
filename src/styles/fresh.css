@@ -954,3 +954,6 @@ em.foil-text, .edge__num.foil-text {
   .casc__stick { padding: var(--rw-sec) 0; }
   .casc__stage { display: grid; gap: 56px; }
 }
+.casc__stick { margin-block: -1px; }   /* close the hairline seam against the blends */
+.casc__photo { width: 74%; }
+.casc__photo--2 { width: 52%; margin-top: -16%; }
