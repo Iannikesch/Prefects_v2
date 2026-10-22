@@ -13,7 +13,7 @@ export const THEMES = [
 const IDENTITY_ITEM = ['Identity Resolution', 'Connect fragmented customer data into a single, unified profile through deterministic matching. We translate CRM records, transaction histories, loyalty data, and telecommunications signals into addressable digital identities at scale with industry-leading match rates.'];
 
 // The closing slab for pages without their own: the homepage, the overview and anything general.
-export const DEFAULT_CLOSE = ['Tell us the number.', "We'll show you how we'd move it.", 'Start the conversation →'];
+export const DEFAULT_CLOSE = ['Your next customer is probably in our database.', "Let's go find them.", 'Start the conversation →'];
 
 export const CAPABILITIES = [
   {
