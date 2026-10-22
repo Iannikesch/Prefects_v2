@@ -809,3 +809,8 @@ a { color: inherit; }
 .uses__lane { box-shadow: 0 0 0 1px var(--rw-gold-500); }
 .edge__us::before { box-shadow: none; }
 .spine__dot::before { box-shadow: 0 0 0 4px rgba(211, 167, 84, 0.18); }
+
+/* ---------- Sharper buttons: a slight 6px corner instead of the full pill.
+   Tags keep their pill shape; only things you click to act are squared up. ---------- */
+:root { --rw-r-btn: 6px; }
+.pf-pill:not(.pf-pill--tag), .fnav__cta, .pill-ink, .fnav__menu a.btn-gold { border-radius: var(--rw-r-btn); }
