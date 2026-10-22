@@ -853,3 +853,17 @@ em.foil-text, .edge__num.foil-text {
    slide-in from the left as the capability-page overview cards. */
 .vert__does.is-armed li { opacity: 0; transform: translate3d(-48px, 0, 0); transition: opacity 500ms ease, transform 700ms cubic-bezier(0.22, 1, 0.36, 1); transition-delay: calc(var(--i, 0) * 150ms); }
 .vert__does.is-in li { opacity: 1; transform: none; }
+
+/* "Everything our data powers" wears Reach's muted glow. overflow: clip (not
+   hidden) so the sticky heading on the left still sticks. */
+.casc { position: relative; isolation: isolate; overflow: clip; }
+.casc::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(var(--rw-paper), transparent 18%, transparent 82%, var(--rw-paper)); }
+
+/* Nav hover: the gold foil rule slides in under the top-level link, left to
+   right, 300ms; it slides back out to the right on leave. Top-level links
+   only, not the dropdown. Also shows while the Capabilities menu is open. */
+.fnav__links > li > a { position: relative; }
+.fnav__links > li > a::after { content: ""; position: absolute; left: 20px; right: 20px; bottom: 12px; height: 2px; border-radius: 2px;
+  background: var(--rw-foil); transform: scaleX(0); transform-origin: right; transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1); }
+.fnav__links > li > a:hover::after, .fnav__links > li > a:focus-visible::after, .fnav__has-drop:hover > a::after, .fnav__has-drop:focus-within > a::after { transform: scaleX(1); transform-origin: left; }
