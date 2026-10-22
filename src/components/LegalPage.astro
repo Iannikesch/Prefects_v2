@@ -1,0 +1,24 @@
+---
+// One template for the legal pages. The text is the owner's (or their
+// lawyer's) to supply; until then each page says exactly what goes there.
+import Fresh from '../layouts/Fresh.astro';
+const { title, need, sections = [] } = Astro.props;
+---
+<Fresh title={`${title} · Profectus Agency`}>
+  <section class="rhero rhero--page legal-hero" data-hero>
+    <div class="rhero__inner">
+      <p class="pf-eyebrow">Legal</p>
+      <h1 class="pf-display rhero__title">{title}</h1>
+      <p class="rhero__lead">Last updated: [date]</p>
+    </div>
+  </section>
+  <section class="legal light">
+    <div class="legal__inner">
+      <p class="legal__need"><b>Placeholder.</b> {need}</p>
+      {sections.map((h) => (
+        <div class="legal__sec"><h2>{h}</h2><p>[Text to be supplied.]</p></div>
+      ))}
+      <p class="legal__contact">Questions about this page? Email <a href="mailto:[privacy@profectusagency.com]">[privacy@profectusagency.com]</a>.</p>
+    </div>
+  </section>
+</Fresh>

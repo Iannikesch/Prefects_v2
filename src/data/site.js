@@ -108,3 +108,23 @@ export const EDGE3 = [
   ['Priced for', 'The campaign', 'Enterprise contracts', "Any business that's ready to grow"],
   ['Answers to', 'Often a holding company', 'A holding company', 'You'],
 ];
+
+// Footer (Oct 22). Everything in [brackets] is a placeholder for the owner.
+export const FOOTER = {
+  line: 'Personal to every customer. Proof for every dollar.',
+  contact: { email: '[hello@profectusagency.com]', phone: '[(000) 000-0000]', address: '[Street address, City, State ZIP]' },
+  links: [
+    ['Capabilities', '/capabilities'],
+    ['Case Studies', '/case-studies'],
+    ['About', '/about'],
+    ['Contact', '/contact'],
+  ],
+  social: [['LinkedIn', '[LinkedIn URL]'], ['Instagram', '[Instagram URL]'], ['X', '[X URL]']],
+  legal: [
+    ['Privacy Policy', '/privacy'],
+    ['Terms of Use', '/terms'],
+    ['Cookie Policy', '/cookies'],
+    ['Do Not Sell or Share My Personal Information', '/do-not-sell'],
+    ['Accessibility', '/accessibility'],
+  ],
+};
