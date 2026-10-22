@@ -9,7 +9,7 @@ const STAGES = SPINE.map((s) => ({ slug: s.slug, name: bySlug(s.slug).name }));
   <section class="rhero rhero--page nf" data-hero>
     <div class="pf-rain" data-ramp="violet" data-accent="gold" aria-hidden="true"></div>
     <div class="rhero__inner">
-      <p class="nf__tag" aria-hidden="true"><b>?</b>visitor 404 · unmatched</p>
+      <p class="nf__tag" aria-hidden="true" data-nf-tag><b>?</b><span><span class="nf__who">visitor 404</span><span class="nf__status" data-nf-status>unmatched</span></span></p>
       <h1 class="pf-display rhero__title">We put a name to every click. <em class="foil-text">Except this one.</em></h1>
       <p class="rhero__lead">The page you were looking for has moved, or it never existed. Here's where people usually go next.</p>
       <div class="rhero__pills">
@@ -33,4 +33,23 @@ const STAGES = SPINE.map((s) => ({ slug: s.slug, name: bySlug(s.slug).name }));
       </ul>
     </div>
   </section>
+  <script>
+    // The tag tries to match this visitor, like everyone else, and fails.
+    // Runs once on load; reduced motion goes straight to the result.
+    const tag = document.querySelector('[data-nf-tag]');
+    const status = document.querySelector('[data-nf-status]');
+    if (tag && status && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const fmt = new Intl.NumberFormat('en-US');
+      tag.classList.add('is-matching');
+      status.textContent = 'matching…';
+      const start = performance.now() + 500, dur = 1600;
+      const tick = (now) => {
+        const t = Math.min(1, Math.max(0, (now - start) / dur));
+        if (t > 0) status.textContent = `checked ${fmt.format(Math.round(230000000 * (1 - Math.pow(1 - t, 3))))} people`;
+        if (t < 1) requestAnimationFrame(tick);
+        else setTimeout(() => { tag.classList.remove('is-matching'); tag.classList.add('is-failed'); status.textContent = 'no match'; }, 450);
+      };
+      requestAnimationFrame(tick);
+    }
+  </script>
 </Fresh>

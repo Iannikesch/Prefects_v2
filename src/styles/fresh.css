@@ -1043,3 +1043,19 @@ em.foil-text, .edge__num.foil-text {
 @media (max-width: 900px) { .nf-next__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .nf-next__grid { grid-template-columns: minmax(0, 1fr); } }
 .rhero.nf { padding-bottom: 240px; }   /* room for the fade below the buttons, so they sit on black */
+
+/* 404, centred: the unmatched-visitor tag is the centrepiece. */
+.rhero.nf .rhero__inner { text-align: center; justify-items: center; margin-inline: auto; }
+.rhero.nf .rhero__lead { margin-inline: auto; }
+.rhero.nf .rhero__pills { justify-content: center; }
+.rhero.nf .foil-rule { margin-inline: auto; }
+.nf__tag { justify-self: center; gap: 18px; margin-bottom: 40px; padding: 18px 26px 18px 18px; border-radius: 16px; font-size: clamp(20px, 2.4vw, 30px); filter: blur(1.4px); transition: filter 600ms ease, border-color 600ms ease, background-color 600ms ease; }
+.nf__tag b { width: 52px; height: 52px; font-size: 26px; flex: none; }
+.nf__tag > span { display: grid; gap: 6px; text-align: left; }
+.nf__who { color: rgba(255, 255, 255, 0.85); }
+.nf__status { font-size: 0.5em; letter-spacing: .06em; text-transform: uppercase; color: rgba(255, 255, 255, 0.5); font-variant-numeric: tabular-nums; min-width: 20ch; }
+.nf__tag.is-matching { filter: blur(0.3px); border-color: rgba(156, 147, 255, 0.55); background: rgba(156, 147, 255, 0.10); }
+.nf__tag.is-matching b { animation: nf-pulse 900ms ease-in-out infinite; }
+.nf__tag.is-failed { filter: blur(1.4px); }
+.nf__tag.is-failed .nf__status { color: var(--rw-gold-300); }
+@keyframes nf-pulse { 50% { opacity: .35; } }
