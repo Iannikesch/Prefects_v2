@@ -38,11 +38,11 @@ const pad = (n) => String(n).padStart(2, '0');
             <li class="vert" data-state={s.state}>
               <span class="vert__node" aria-hidden="true"></span>
               <p class="vert__num">{pad(i + 1)} · {s.verb}</p>
-              <h3 class="vert__line">{s.line}</h3>
-              <p class="vert__name">{s.name}</p>
+              <h3 class="vert__line"><a href={`/capabilities/${s.slug}`}>{s.line}</a></h3>
+              <p class="vert__name"><a href={`/capabilities/${s.slug}`}>{s.name} →</a></p>
               <p class="vert__body">{s.body}</p>
               <ul class="vert__does">{s.does.map((d) => <li>{d}</li>)}</ul>
-              <a class="vert__link" href={`/capabilities/${s.slug}`}>{i < SPINE.length - 1 ? `${s.verb}, then ${SPINE[i + 1].verb.toLowerCase()} →` : 'See how we prove it →'}</a>
+              <a class="vert__link" href={`/capabilities/${s.slug}`}>Explore {s.name} →</a>
             </li>
           ))}
         </ol>
