@@ -1111,3 +1111,5 @@ em.foil-text, .edge__num.foil-text {
 }
 .edge__journey { grid-column: 1 / -1; }
 .edge__inner:has(.edge__journey) { grid-template-columns: 1fr; }
+.uses .pweb__me img { object-position: 50% 25%; }
+.uses .ucard--lane .ucard__media img { object-fit: cover; object-position: 50% 45%; }

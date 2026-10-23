@@ -65,7 +65,7 @@
 .pj__ln { height: .7cqw; border-radius: .35cqw; background: #EFEDF3; }
 .pj__ln--s { width: 60%; }
 .pj__adbox { display: grid; grid-template-columns: 7cqw 1fr; gap: 1cqw; padding: .8cqw; border-radius: .6cqw; background: linear-gradient(135deg, #6E62E6, #9C7BE0); color: #fff; }
-.pj__adimg { border-radius: .4cqw; background: url(/img/photos/boutique.webp) 30% 30% / cover; min-height: 7cqw; }
+.pj__adimg { border-radius: .4cqw; background: url(/img/photos/maria-bag.webp) 40% 30% / cover; min-height: 7cqw; }
 .pj__adbox b { font: 700 1cqw/1 var(--pf-sans); opacity: .85; }
 .pj__adbox p { margin: .5cqw 0 .8cqw; font: 600 1.15cqw/1.25 var(--pf-sans); }
 .pj__adbox em { display: inline-block; padding: .4cqw .7cqw; border-radius: .4cqw; background: #fff; color: #6E62E6; font: 700 .9cqw/1 var(--pf-sans); font-style: normal; }
