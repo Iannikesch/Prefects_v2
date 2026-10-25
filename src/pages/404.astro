@@ -1,13 +1,12 @@
 ---
 // 404: the one click we can't put a name to. Same hero as the homepage
-// (black, code rain, fade to white), then the places people usually go next.
+// (black, fade to white, no code rain since Oct 25), then the places people usually go next.
 import Fresh from '../layouts/Fresh.astro';
 import { bySlug, SPINE } from '../data/capabilities.js';
 const STAGES = SPINE.map((s) => ({ slug: s.slug, name: bySlug(s.slug).name }));
 ---
 <Fresh title="Page not found · Profectus Agency">
   <section class="rhero rhero--page nf" data-hero>
-    <div class="pf-rain" data-ramp="violet" data-accent="gold" aria-hidden="true"></div>
     <div class="rhero__inner">
       <p class="nf__tag" aria-hidden="true" data-nf-tag><b>?</b><span><span class="nf__who">visitor 404</span><span class="nf__status" data-nf-status>unmatched</span></span></p>
       <h1 class="pf-display rhero__title">We put a name to every click. <em class="foil-text">Except this one.</em></h1>
