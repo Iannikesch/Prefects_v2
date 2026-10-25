@@ -22,3 +22,4 @@
 .rose__sig { font: 400 var(--pf-fs-mono)/1.2 var(--pf-mono); color: var(--rw-gold-500); }
 .rose__sig { text-decoration: none; }
 .rose__sig:hover { text-decoration: underline; text-underline-offset: 3px; }
+.rose__readout.is-idle { visibility: hidden; }

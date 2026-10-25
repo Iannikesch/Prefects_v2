@@ -163,6 +163,7 @@ function initRose(root) {
     targetSpeed = i === null ? 1 : HOVER_SPEED;
     out.classList.add('is-swap');
     setTimeout(() => {
+      out.classList.toggle('is-idle', sel === null);
       if (sel === null) {
         outK.textContent = IDLE.k;
         outSum.textContent = HINT;

@@ -48,7 +48,8 @@ const CLIENTS = [
         <div class="rose__chart" data-rose-chart tabindex="0" role="group" aria-label="Capabilities chart. Use the left and right arrow keys to step through the five steps. Press Enter to open one.">
           <canvas aria-hidden="true"></canvas>
         </div>
-        <div class="rose__readout" data-rose-readout aria-live="polite">
+        <!-- Shows only while a petal is hovered or tapped (owner, Oct 25). -->
+        <div class="rose__readout is-idle" data-rose-readout aria-live="polite">
           <p class="rose__k">Capabilities</p>
           <p class="rose__sum">Hover a petal to see what it does.</p>
           <a class="rose__sig" href="/capabilities">See all capabilities →</a>
