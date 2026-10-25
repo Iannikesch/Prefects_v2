@@ -32,39 +32,20 @@ html { background: var(--rw-paper); }
 body { background: var(--rw-paper); color: var(--rw-ink); font: 400 16px/1.4 var(--pf-sans); -webkit-font-smoothing: antialiased; overflow-x: clip; }
 a { color: inherit; }
 
-/* ---------- Nav (Inbound pattern, our frosted glass) ----------
-   Clear over the black hero, then fades to frosted white over the first
-   175px of scroll, scrubbed by --p (0 to 1) from the script, with Inbound's
-   ~300ms lag. Height never changes. */
-.fnav {
-  position: fixed; inset: 0 0 auto; z-index: 100; height: var(--rw-nav-h);
-  color: var(--pf-white);
-}
-/* Deloitte: clear while the bar is over the hero, white once it's past the
-   hero's bottom edge. The white fades in over 200ms; text and logo colours
-   swap at once (as measured). A light shadow, not Deloitte's grey haze. */
-.fnav::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background: rgba(255, 255, 255, 0.86);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06), 0 8px 24px rgba(20, 16, 40, 0.06);
-  opacity: 0; transition: opacity 200ms ease;
-}
-.fnav.is-light { color: var(--rw-ink); }
-.fnav.is-light::before { opacity: 1; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
-.fnav__bar { width: var(--rw-container); margin-inline: auto; height: 100%; display: flex; align-items: center; justify-content: space-between; }
-.fnav__logo { font: 400 clamp(30px, 2.6vw, 40px)/1 var(--pf-serif); letter-spacing: -0.035em; text-decoration: none; }
-/* Inbound's links: 14px uppercase, 1.4px tracking, 20px padding, no gaps */
-.fnav__links { display: flex; list-style: none; padding: 0; margin-left: auto; margin-right: 10px; }
-.fnav__links a { display: block; padding: 20px; font: 500 14px/1 var(--pf-sans); letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; opacity: .85; transition: opacity 200ms ease; }
-.fnav__links a:hover { opacity: 1; }
-.fnav__cta {
-  font: 500 15px/1 var(--pf-sans); letter-spacing: -0.02em; text-decoration: none;
-  padding: 13px 18px; border-radius: var(--pf-r-pill);
-  background: var(--pf-fill-cta); color: var(--pf-white);
-  -webkit-backdrop-filter: var(--pf-blur-pill); backdrop-filter: var(--pf-blur-pill);
-  transition: background-color var(--rw-fade) ease;
-}
-@media (max-width: 900px) { .fnav__links { display: none; } :root { --rw-nav-h: 72px; } }
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 900px) {  :root { --rw-nav-h: 72px; } }
 
 /* ---------- Hero: Inbound's background. Black holds to 76%, then fades
    to white by the bottom edge, so it joins the white page with no seam. ---------- */
@@ -370,9 +351,9 @@ a { color: inherit; }
 .cascade.is-grabbing .cascade__card { transition: none; }
 @media (pointer: fine) { .cascade { touch-action: none; } }
 
-/* Nav: links sit on the right, grouped with the button (logo alone on the left). */
-.fnav__bar > nav { margin-left: auto; }
-.fnav__links { margin-left: 0; }
+
+
+
 
 
 /* A screen of white between the dark-backed sections, so they never fade
@@ -380,13 +361,10 @@ a { color: inherit; }
 .spacer { height: 100svh; display: grid; place-items: center; background: var(--rw-paper); }
 .spacer span { font: 400 11px/1 var(--pf-mono); text-transform: uppercase; letter-spacing: .06em; color: rgba(11, 11, 12, 0.18); }
 
-/* Nav button: gold over the hero, purple once the nav has turned white. */
-.fnav.is-light .fnav__cta.btn-gold {
-  background: #6E62E6 !important; color: var(--pf-white) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 6px 20px rgba(110, 98, 230, 0.25) !important;
-}
-.fnav.is-light .fnav__cta.btn-gold:hover { background: #5B4FD9 !important; }
-.fnav.is-light .fnav__cta.btn-gold::after { display: none; }   /* no gold glow on white */
+
+
+
+   /* no gold glow on white */
 
 
 /* ---------- Companies who trust us, on the hero's fade line ----------
@@ -507,11 +485,9 @@ a { color: inherit; }
 /* Text selection: Profectus purple, white letters. */
 ::selection { background: #6E62E6; color: #FFFFFF; -webkit-text-fill-color: #FFFFFF; }
 
-/* Nav: frosted again over the hero, with the Profectus nav glass
-   (rgba(3,3,3,0.2) + 10px blur, measured on the live site). Past the hero
-   it still turns frosted white. */
-.fnav { background: var(--pf-fill-nav); -webkit-backdrop-filter: var(--pf-blur-bar); backdrop-filter: var(--pf-blur-bar); transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1), background-color 200ms ease; }
-.fnav.is-light { background: transparent; }
+
+
+
 
 /* ---------- Why Profectus: operators, not a platform (homepage) ----------
    White band after the coverflow. Head on the left, the 230M figure on the
@@ -713,7 +689,7 @@ a { color: inherit; }
 @media (prefers-reduced-motion: reduce) { .acc__panel, .acc__icon::before, .acc__icon::after, .cap-story__photo { transition: none; } }
 /* When the nav slides back in, the jump bar steps down under it (same 200ms). */
 .jump { transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1); }
-.fnav:not(.is-hidden) ~ main .jump.is-stuck { transform: translateY(var(--rw-nav-h)); }
+
 
 /* ---------- Reach, on white (owner, Oct 21) ----------
    Sides: the "Our infrastructure" watercolour washes. Centre: the white
@@ -742,25 +718,15 @@ a { color: inherit; }
 .cflow__dot { border-color: var(--rw-ink); }
 .cflow__dot[aria-current="true"] { background: var(--rw-ink); }
 
-/* ---------- Nav menu for phones and narrow windows (under 900px) ---------- */
-.fnav__toggle { display: none; position: relative; width: 44px; height: 44px; margin-left: 8px; border: 0; background: none; color: inherit; cursor: pointer; }
-.fnav__toggle i { position: absolute; left: 11px; width: 22px; height: 2px; border-radius: 2px; background: currentColor; transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1); }
-.fnav__toggle i:first-child { top: 17px; } .fnav__toggle i:last-child { top: 25px; }
-.fnav.is-open .fnav__toggle i:first-child { transform: translateY(4px) rotate(45deg); }
-.fnav.is-open .fnav__toggle i:last-child { transform: translateY(-4px) rotate(-45deg); }
-.fnav__menu { display: none; }
-@media (max-width: 900px) {
-  .fnav__toggle { display: block; }
-  .fnav__bar .fnav__cta { display: none; }
-  .fnav__menu { display: grid; position: absolute; top: 100%; left: 0; right: 0; gap: 4px; padding: 12px 16px 24px;
-    background: rgba(255, 255, 255, 0.97); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); color: var(--rw-ink);
-    box-shadow: 0 16px 32px rgba(20, 16, 40, 0.12);
-    opacity: 0; visibility: hidden; translate: 0 -8px; transition: opacity 200ms ease, translate 200ms cubic-bezier(0.4, 0, 0.2, 1), visibility 0s 200ms; }
-  .fnav.is-open .fnav__menu { opacity: 1; visibility: visible; translate: 0 0; transition: opacity 200ms ease, translate 200ms cubic-bezier(0.4, 0, 0.2, 1); }
-  .fnav__menu a { padding: 14px 4px; font: 500 15px/1 var(--pf-sans); letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-bottom: 1px solid rgba(11, 11, 12, 0.08); }
-  .fnav__menu a.btn-gold { margin-top: 12px; padding: 14px 20px; border-radius: var(--pf-r-pill); border: 0; text-align: center; letter-spacing: 0; text-transform: none; }
-}
-@media (max-width: 900px) { .fnav__menu { background: var(--rw-paper); -webkit-backdrop-filter: none; backdrop-filter: none; } }
+
+
+
+ 
+
+
+
+
+
 /* Reach, revised (owner, Oct 21): no galaxy. The infrastructure blend runs
    the full width, same washes as .mood-light. */
 .reach__galaxy { display: none; }
@@ -777,29 +743,21 @@ a { color: inherit; }
 .vert__line a:hover { color: #6E62E6; }
 .vert__name a:hover { text-decoration: underline; }
 
-/* ---------- Capabilities dropdown (Epsilon-style menu) ----------
-   Opens on hover or keyboard focus; a white panel under the bar with every
-   capability page in three columns. 200ms fade, Deloitte's curve. */
-.fnav__has-drop { position: static; }
-.fnav__drop { position: absolute; left: 0; right: 0; top: 100%; padding-top: 0; color: var(--rw-ink);
-  opacity: 0; visibility: hidden; translate: 0 -6px; transition: opacity 200ms ease, translate 200ms cubic-bezier(0.4, 0, 0.2, 1), visibility 0s 200ms; }
-.fnav__has-drop:hover .fnav__drop, .fnav__has-drop:focus-within .fnav__drop { opacity: 1; visibility: visible; translate: 0 0; transition: opacity 200ms ease, translate 200ms cubic-bezier(0.4, 0, 0.2, 1); }
-.fnav__drop-inner { width: var(--rw-container); margin: 0 auto; padding: 32px; display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 24px 40px;
-  background: var(--rw-paper); border-radius: 0 0 15px 15px; box-shadow: 0 24px 48px rgba(20, 16, 40, 0.14), 0 1px 0 rgba(11, 11, 12, 0.06) inset; }
-.fnav__col-h { margin-bottom: 12px; font: 400 var(--pf-fs-mono)/1.3 var(--pf-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--rw-gold-900); }
-.fnav__col ul { list-style: none; padding: 0; display: grid; gap: 2px; }
-.fnav__links .fnav__col a { display: flex; align-items: baseline; gap: 10px; padding: 9px 0; font: 500 16px/1.3 var(--pf-sans); letter-spacing: -0.01em; text-transform: none; opacity: 1; color: var(--rw-ink); }
-.fnav__links .fnav__col a:hover { color: #6E62E6; }
-.fnav__col a span { flex: none; width: 92px; font: 400 11px/1 var(--pf-mono); text-transform: uppercase; letter-spacing: .05em; color: var(--rw-ink-2); }
-.fnav__links .fnav__drop-all { grid-column: 1 / -1; justify-self: start; padding: 12px 0 0; font: 500 15px/1 var(--pf-sans); letter-spacing: 0; text-transform: none; opacity: 1; color: var(--rw-ink); border-top: 1px solid rgba(11, 11, 12, 0.08); width: 100%; }
-.fnav__bar { position: relative; }
-@media (max-width: 900px) {
-  .fnav__menu-caps { display: grid; padding: 4px 0 8px 16px; border-bottom: 1px solid rgba(11, 11, 12, 0.08); }
-  .fnav__menu .fnav__menu-caps a { padding: 9px 0; border: 0; font: 500 15px/1.2 var(--pf-sans); letter-spacing: 0; text-transform: none; color: var(--rw-ink-2); }
-  .fnav__menu { max-height: calc(100svh - var(--rw-nav-h)); overflow-y: auto; }
-}
-.fnav__drop-inner { width: 100%; }
-.fnav__col a span { width: 112px; white-space: nowrap; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* No glow around the gold (owner, Oct 21). The foil itself stays; every
    halo, bloom and gold drop shadow is switched off. */
@@ -813,7 +771,7 @@ a { color: inherit; }
 /* ---------- Sharper buttons: a slight 6px corner instead of the full pill.
    Tags keep their pill shape; only things you click to act are squared up. ---------- */
 :root { --rw-r-btn: 6px; }
-.pf-pill:not(.pf-pill--tag), .fnav__cta, .pill-ink, .fnav__menu a.btn-gold { border-radius: var(--rw-r-btn); }
+.pf-pill:not(.pf-pill--tag), .pill-ink { border-radius: var(--rw-r-btn); }
 
 /* Closing slab: each page has its own two-line close now, longer than the old
    three words, so the heading drops from 8vw to 5.5vw and wraps at 18ch. */
@@ -824,13 +782,13 @@ a { color: inherit; }
    Every button is purple. Big gold words become purple too. Gold is kept
    for small accents only (rules, dots, eyebrows, periods, small links) and
    the falling characters in the hero. */
-.btn-gold, .fnav__cta.btn-gold, .fnav.is-light .fnav__cta.btn-gold {
+.btn-gold {
   background: #6E62E6 !important; background-size: auto !important;
   color: var(--pf-white) !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
   transition: background-color 200ms ease !important;
 }
-.btn-gold:hover, .fnav.is-light .fnav__cta.btn-gold:hover { background: #5B4FD9 !important; }
+.btn-gold:hover { background: #5B4FD9 !important; }
 /* Big italic words and the 230M figure: purple, not foil. The light violet
    reads on black (hero, closing slab); the deeper one holds up on white. */
 em.foil-text, .edge__num.foil-text {
@@ -860,29 +818,18 @@ em.foil-text, .edge__num.foil-text {
 .casc::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background: linear-gradient(var(--rw-paper), transparent 18%, transparent 82%, var(--rw-paper)); }
 
-/* Nav hover: the gold foil rule slides in under the top-level link, left to
-   right, 300ms; it slides back out to the right on leave. Top-level links
-   only, not the dropdown. Also shows while the Capabilities menu is open. */
-.fnav__links > li > a { position: relative; }
-.fnav__links > li > a::after { content: ""; position: absolute; left: 20px; right: 20px; bottom: 12px; height: 2px; border-radius: 2px;
-  background: var(--rw-foil); transform: scaleX(0); transform-origin: right; transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1); }
-.fnav__links > li > a:hover::after, .fnav__links > li > a:focus-visible::after, .fnav__has-drop:hover > a::after, .fnav__has-drop:focus-within > a::after { transform: scaleX(1); transform-origin: left; }
 
-/* ---------- Nav: black frost, always (Oct 22) ----------
-   One dark frosted bar over every section, white text throughout. Below it,
-   a soft dark fade bleeds down onto the page, the way the hero fades into
-   white. The fade is a plain gradient (no blur or mask), so it costs nothing
-   on scroll. The white "is-light" state is switched off. */
-.fnav, .fnav.is-light { color: var(--pf-white); background: none; -webkit-backdrop-filter: none; backdrop-filter: none; transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1); }
-.fnav::before, .fnav.is-light::before { opacity: 1; box-shadow: none;
-  background: linear-gradient(rgba(7, 6, 13, 0.94), rgba(7, 6, 13, 0.86));
-  -webkit-backdrop-filter: blur(16px) saturate(1.2); backdrop-filter: blur(16px) saturate(1.2); }
-.fnav::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 64px; z-index: -1; pointer-events: none;
-  background: linear-gradient(rgba(7, 6, 13, 0.86), rgba(7, 6, 13, 0.45) 30%, rgba(7, 6, 13, 0.12) 65%, rgba(7, 6, 13, 0)); transition: opacity 200ms ease; }
-/* Hide on scroll down, back on scroll up (Deloitte, 200ms). This rule went
-   missing in an earlier change; the script has been toggling it all along. */
-.fnav.is-hidden { transform: translateY(-100%); }
-.fnav.is-hidden::after { opacity: 0; }
+
+
+
+
+
+
+
+
+
+
+
 
 /* ---------- Homepage rework (Oct 22) ----------
    "Put our data to work": the white galaxy instead of the black one. Same

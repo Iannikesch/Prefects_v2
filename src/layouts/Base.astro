@@ -1,21 +1,22 @@
 ---
 // Every page is wrapped in this: head, header, footer, contact pop-up, and
-// the kit (texture pack + motion system) loaded once.
+// the kit (texture pack + motion system) loaded once. The header is the
+// shared FreshNav (Oct 25), the same nav as the rest of the site.
 import '../../kit/texture-pack/profectus-texture.css';
 import '../../kit/motion-system/motion-system.css';
 import '../styles/site.css';
 import ContactForm from '../components/ContactForm.astro';
-import { SITE, NAV, AI_NAME, AI_PATH } from '../data/site.js';
+import { SITE, AI_NAME, AI_PATH } from '../data/site.js';
 import { CAPABILITIES } from '../data/capabilities.js';
 import { CASE_STUDIES } from '../data/caseStudies.js';
 import Aurora from '../components/Aurora.astro';
+import FreshNav from '../components/FreshNav.astro';
 import { LAYERS, mv } from '../data/layers.js';
 
 const { title, description = SITE.description, footerCta = true } = Astro.props;
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const fullTitle = title ? `${title} | ${SITE.name}` : SITE.name;
 const canonical = new URL(path, SITE.url).href;
-const current = (href) => (path === href || path.startsWith(href + '/') ? 'page' : undefined);
 ---
 <!doctype html>
 <html lang="en" data-smooth={LAYERS.smooth ? "on" : undefined} data-nav-hide={LAYERS.navHide ? "on" : undefined}>
@@ -43,25 +44,7 @@ const current = (href) => (path === href || path.startsWith(href + '/') ? 'page'
 <body data-pm-cursor={LAYERS.cursor ? "" : undefined}>
   <a class="skip pf-pill" href="#main">Skip to content</a>
 
-  <header class="pf-nav site-nav">
-    <div class="wrap site-nav__bar">
-      <a class="site-nav__logo" href="/">Profectus</a>
-      <nav aria-label="Main">
-        <ul class="site-nav__links">
-          {NAV.map((n) => <li><a href={n.href} aria-current={current(n.href)}>{n.label}</a></li>)}
-        </ul>
-      </nav>
-      <a class="pf-pill" href="/contact" data-contact>Get in Touch →</a>
-      <button class="site-nav__toggle" type="button" aria-controls="site-menu" aria-expanded="false" aria-label="Menu"><i></i><i></i></button>
-    </div>
-  </header>
-  <div class="site-menu" id="site-menu">
-    <ul>
-      <li><a href="/">Home</a></li>
-      {NAV.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
-      <li><a href="/contact">Contact</a></li>
-    </ul>
-  </div>
+  <FreshNav />
 
   <main id="main"><slot /></main>
 
