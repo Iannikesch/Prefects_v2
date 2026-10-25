@@ -333,3 +333,5 @@
 .pj__crow i.pj__no ~ b { color: #C9473B; }
 .pj__ir--no { color: #C9473B; }
 .pj__ir--no i { background: #C9473B; }
+.pj__q span b { display: block; margin-bottom: .3cqw; font: 700 1.05cqw/1 var(--pf-mono); letter-spacing: .04em; text-transform: uppercase; color: #C9473B; }
+.pj__q { max-width: 23cqw; }
