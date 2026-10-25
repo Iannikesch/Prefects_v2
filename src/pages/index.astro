@@ -7,6 +7,7 @@ import PeopleJourney from '../components/PeopleJourney.astro';
 import '../styles/people-journey.css';
 import B2BFlow from '../components/B2BFlow.astro';
 import '../styles/b2b-flow.css';
+import '../styles/rose.css';
 import { CASE_STUDIES } from '../data/caseStudies.js';
 // "Reach real people" slides: the four case studies plus a placeholder.
 // Photos and client logos are placeholders until supplied.
@@ -29,8 +30,7 @@ const CLIENTS = [
 ];
 ---
 <Fresh>
-  <section class="rhero" data-hero>
-    <div class="pf-rain" data-ramp="violet" data-accent="gold" aria-hidden="true"></div>
+  <section class="rhero rhero--rose" data-hero>
     <div class="rhero__inner">
       <h1 class="pf-display rhero__title">Personalization through <em class="foil-text glow">data</em> and customer experience.</h1>
       <span class="foil-rule glow" aria-hidden="true"></span>
@@ -38,6 +38,18 @@ const CLIENTS = [
       <div class="rhero__pills">
         <a class="pf-pill btn-gold glow" href="/contact">Get in Touch →</a>
         <a class="pf-pill pf-pill--ghost" href="/capabilities">See what we do →</a>
+      </div>
+      <!-- Capability rose: the hero's mover, in place of the code rain. -->
+      <div class="rose" data-rose>
+        <div class="rose__chart" data-rose-chart tabindex="0" role="group" aria-label="Capabilities chart. Use the left and right arrow keys to step through the six capabilities.">
+          <canvas aria-hidden="true"></canvas>
+        </div>
+        <div class="rose__readout" data-rose-readout aria-live="polite">
+          <p class="rose__k">Capabilities</p>
+          <p class="rose__name">Six channels, one customer.</p>
+          <p class="rose__sum">Hover a petal to see what it does.</p>
+          <p class="rose__sig">&nbsp;</p>
+        </div>
       </div>
     </div>
     <!-- Companies who trust us: sits on the hero's fade line. Each logo is
@@ -232,4 +244,7 @@ const CLIENTS = [
       }
     }
   </script>
+<script>
+  import '../scripts/rose.js';
+</script>
 </Fresh>
