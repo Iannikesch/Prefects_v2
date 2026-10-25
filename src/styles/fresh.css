@@ -1098,6 +1098,7 @@ em.foil-text, .edge__num.foil-text {
 .pweb__tag b { font: 400 11px/1 var(--pf-mono); letter-spacing: .04em; color: #6E62E6; font-weight: 400; }
 .pweb__tag--stat b { font: 400 24px/1 var(--pf-serif); letter-spacing: -0.03em; color: #6E62E6; }
 .pweb__tag--stat { max-width: 30%; white-space: normal; }
+.pweb__tag--no b { color: #C9473B; }   /* what she didn't do */
 @media (max-width: 600px) { .pweb__tag { font-size: 11px; padding: 6px 8px; } .pweb__tag b { font-size: 9px; } .pweb__tag--stat b { font-size: 18px; } }
 /* beat the grey-placeholder rules that target .uses .ucard__media */
 .uses .ucard__media.pweb { background: radial-gradient(closest-side, #ECEAFD, #F7F6FC 70%, #FBFAFE); }

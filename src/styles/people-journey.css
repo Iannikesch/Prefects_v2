@@ -327,3 +327,9 @@
 .pj__stage[data-scene="3"] [data-p="ltv"] { --x:53; --y:57; --s:1; --o:0; --d:0ms; }
 .pj__stage[data-scene="4"] [data-p="ltv"] { --x:53; --y:57; --s:1; --o:0; --d:0ms; }
 .pj__stage[data-scene="5"] [data-p="ltv"] { --x:53; --y:57; --s:1; --o:1; --d:1500ms; }
+
+/* Did / didn't (Oct 25): a red mark for what she ignored */
+.pj__crow i.pj__no { background: #FBE7E5; color: #C9473B; }
+.pj__crow i.pj__no ~ b { color: #C9473B; }
+.pj__ir--no { color: #C9473B; }
+.pj__ir--no i { background: #C9473B; }
