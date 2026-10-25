@@ -1,7 +1,7 @@
 // Capability rose: the homepage hero mover (Nightingale rose / polar area
-// chart). Six petals breathe on unrelated periods so the shape never repeats,
+// chart). Five petals, one per step, breathe on unrelated periods so the shape never repeats,
 // the rose turns once every 90s inside a fixed dial, and hovering or tapping a
-// petal names the capability. Pauses offscreen and in hidden tabs; still under
+// petal names the step and its capability; clicking opens that page. Pauses offscreen and in hidden tabs; still under
 // reduced motion. Markup: [data-rose] holding [data-rose-chart] (with a canvas)
 // and [data-rose-readout] (four <p>s).
 
@@ -13,16 +13,17 @@ function initRose(root) {
   const GAP_DEG      = 7;         // gap between petals
   const FPS_CAP      = 30;
 
-  // Each petal: resting length (0-1), breathing period (s) and phase.
-  // The periods share no common beat, so the shape never repeats.
-  const PETALS = [
-    { name: 'Paid Media',      sum: 'Ads on 500+ platforms, sent to people, not cookies.',   sig: '· clicked a Meta ad',            color: '#6FA8BF', len: .97, period: 13, phase: 0.0 },
-    { name: 'Email',           sum: 'The right email, timed to what they just did.',          sig: '· opened your email',            color: '#B5C2C2', len: .62, period: 17, phase: 1.7 },
-    { name: 'SMS',             sum: 'Texts sent when they are most likely to act.',           sig: '· didn’t open the text',     color: '#A99CE0', len: .46, period: 19, phase: 3.1 },
-    { name: 'In-Store',        sum: 'Store visits, tied back to the marketing that drove them.', sig: '· visited the downtown store', color: '#7E86C9', len: .86, period: 23, phase: 4.4 },
-    { name: 'Sales Outreach',  sum: 'Your reps arrive knowing what the buyer wants.',         sig: '· rep visit booked, Thu 10am',   color: '#A585C9', len: .70, period: 29, phase: 2.2 },
-    { name: 'AI & Automation', sum: 'Picks the next best step for every customer.',           sig: '· next step picked: send the postcard', color: '#7C93C4', len: .54, period: 31, phase: 5.3 },
+  // Each petal is one of the five steps (names and links come from the page,
+  // see data-petals); the look here is resting length (0-1), breathing period
+  // (s) and phase. The periods share no common beat, so the shape never repeats.
+  const LOOK = [
+    { color: '#6FA8BF', len: .97, period: 13, phase: 0.0 },
+    { color: '#B5C2C2', len: .62, period: 17, phase: 1.7 },
+    { color: '#A99CE0', len: .80, period: 19, phase: 3.1 },
+    { color: '#7E86C9', len: .70, period: 23, phase: 4.4 },
+    { color: '#A585C9', len: .54, period: 29, phase: 2.2 },
   ];
+  const PETALS = JSON.parse(root.dataset.petals).map((p, i) => ({ ...p, ...LOOK[i % LOOK.length] }));
 
   const VIOLET = '#8E84F7', GOLD = '#D3A754';
   const TAU = Math.PI * 2, N = PETALS.length, SLICE = TAU / N, GAP = GAP_DEG * Math.PI / 180;
@@ -32,6 +33,7 @@ function initRose(root) {
   const ctx = canvas.getContext('2d');
   const out = root.querySelector('[data-rose-readout]');
   const [outK, outName, outSum, outSig] = out.children;
+  const IDLE = { k: outK.textContent, name: outName.textContent, sig: outSig.textContent, href: outSig.getAttribute('href') };
   const HINT = matchMedia('(hover: none)').matches ? 'Tap a petal to see what it does.' : 'Hover a petal to see what it does.';
   outSum.textContent = HINT;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -52,7 +54,7 @@ function initRose(root) {
     // widest label still fits beside it.
     labelSize = Math.max(9.5, Math.min(12, H / 40));
     ctx.font = `400 ${labelSize}px "PT Mono", monospace`;
-    const widest = Math.max(...PETALS.map(p => ctx.measureText(p.name.toUpperCase()).width));
+    const widest = Math.max(...PETALS.map(p => ctx.measureText(p.verb.toUpperCase()).width));
     R = Math.min(H * 0.40, W / 2 - widest - 30);
     HUB = R * 0.2;
     draw();
@@ -120,7 +122,7 @@ function initRose(root) {
       ctx.textAlign = c > 0.25 ? 'left' : c < -0.25 ? 'right' : 'center';
       ctx.globalAlpha = on ? 1 : 0.7 * Math.max(g, .6);
       ctx.fillStyle = on ? '#FFFFFF' : '#C2C2C2';
-      ctx.fillText(p.name.toUpperCase(), lx, ly + (Math.abs(c) <= 0.25 ? Math.sign(Math.sin(mid)) * 4 : 0));
+      ctx.fillText(p.verb.toUpperCase(), lx, ly + (Math.abs(c) <= 0.25 ? Math.sign(Math.sin(mid)) * 4 : 0));
     }
 
     // Hub
@@ -162,16 +164,18 @@ function initRose(root) {
     out.classList.add('is-swap');
     setTimeout(() => {
       if (sel === null) {
-        outK.textContent = 'Capabilities';
-        outName.textContent = 'Six channels, one customer.';
+        outK.textContent = IDLE.k;
+        outName.textContent = IDLE.name;
         outSum.textContent = HINT;
-        outSig.innerHTML = '&nbsp;';
+        outSig.textContent = IDLE.sig;
+        outSig.href = IDLE.href;
       } else {
         const p = PETALS[sel];
-        outK.textContent = `Capability 0${sel + 1} / 0${N}`;
+        outK.textContent = `Step 0${sel + 1} / 0${N} · ${p.verb}`;
         outName.textContent = p.name;
-        outSum.textContent = p.sum;
-        outSig.textContent = p.sig;
+        outSum.textContent = p.line;
+        outSig.textContent = `See ${p.name} →`;
+        outSig.href = p.href;
       }
       out.classList.remove('is-swap');
     }, 140);
@@ -190,6 +194,15 @@ function initRose(root) {
 
   canvas.addEventListener('pointermove', e => { if (e.pointerType === 'mouse') select(petalAt(e)); });
   canvas.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse' && !pinned) select(null); });
+  // Mouse click opens the petal's page. On touch the first tap only picks it;
+  // the link under the chart opens it (not every browser tags click with a type).
+  let lastType = 'mouse';
+  canvas.addEventListener('pointerdown', e => { lastType = e.pointerType; });
+  canvas.addEventListener('click', e => {
+    if (lastType !== 'mouse') return;
+    const i = petalAt(e);
+    if (i !== null) location.href = PETALS[i].href;
+  });
   canvas.addEventListener('pointerdown', e => {
     if (e.pointerType === 'mouse') return;
     const i = petalAt(e);
@@ -200,6 +213,7 @@ function initRose(root) {
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { select(sel === null ? 0 : (sel + 1) % N); e.preventDefault(); }
     else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { select(sel === null ? N - 1 : (sel + N - 1) % N); e.preventDefault(); }
     else if (e.key === 'Escape') select(null);
+    else if (e.key === 'Enter' && sel !== null) location.href = PETALS[sel].href;
   });
   wrap.addEventListener('blur', () => { if (!pinned) select(null); });
 

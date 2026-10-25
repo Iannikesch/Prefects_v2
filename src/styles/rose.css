@@ -11,7 +11,7 @@
 
 .rose__chart { border-radius: 6px; outline: none; }
 .rose__chart:focus-visible { outline: 1px solid var(--pf-violet); outline-offset: 4px; }
-.rose__chart canvas { display: block; width: 100%; aspect-ratio: 7 / 5; cursor: crosshair; touch-action: manipulation; }
+.rose__chart canvas { display: block; width: 100%; aspect-ratio: 7 / 5; cursor: pointer; touch-action: manipulation; }
 
 .rose__readout { min-height: 96px; margin-top: 8px; display: grid; gap: 6px; justify-items: center; text-align: center; }
 .rose__readout > * { margin: 0; transition: opacity 240ms var(--pf-ease); }
@@ -20,3 +20,5 @@
 .rose__name { font: 400 clamp(26px, 22px + 1vw, 36px)/1 var(--pf-serif); letter-spacing: -0.06em; color: var(--pf-white); }
 .rose__sum { font-size: var(--pf-fs-ui); letter-spacing: var(--pf-ls-ui); color: var(--pf-text); max-width: 30em; }
 .rose__sig { font: 400 var(--pf-fs-mono)/1.2 var(--pf-mono); color: var(--rw-gold-500); }
+.rose__sig { text-decoration: none; }
+.rose__sig:hover { text-decoration: underline; text-underline-offset: 3px; }

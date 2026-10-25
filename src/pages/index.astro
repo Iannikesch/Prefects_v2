@@ -9,6 +9,10 @@ import B2BFlow from '../components/B2BFlow.astro';
 import '../styles/b2b-flow.css';
 import '../styles/rose.css';
 import { CASE_STUDIES } from '../data/caseStudies.js';
+import { SPINE, bySlug } from '../data/capabilities.js';
+// Hero rose: one petal per step of the five steps, read from the same data
+// as the Capabilities menu so the two always match.
+const ROSE = SPINE.map((s) => ({ verb: s.verb, name: bySlug(s.slug).name, line: s.line, href: `/capabilities/${s.slug}` }));
 // "Reach real people" slides: the four case studies plus a placeholder.
 // Photos and client logos are placeholders until supplied.
 const REACH = [
@@ -40,15 +44,15 @@ const CLIENTS = [
         <a class="pf-pill pf-pill--ghost" href="/capabilities">See what we do →</a>
       </div>
       <!-- Capability rose: the hero's mover, in place of the code rain. -->
-      <div class="rose" data-rose>
-        <div class="rose__chart" data-rose-chart tabindex="0" role="group" aria-label="Capabilities chart. Use the left and right arrow keys to step through the six capabilities.">
+      <div class="rose" data-rose data-petals={JSON.stringify(ROSE)}>
+        <div class="rose__chart" data-rose-chart tabindex="0" role="group" aria-label="Capabilities chart. Use the left and right arrow keys to step through the five steps. Press Enter to open one.">
           <canvas aria-hidden="true"></canvas>
         </div>
         <div class="rose__readout" data-rose-readout aria-live="polite">
           <p class="rose__k">Capabilities</p>
-          <p class="rose__name">Six channels, one customer.</p>
+          <p class="rose__name">Five steps forward.</p>
           <p class="rose__sum">Hover a petal to see what it does.</p>
-          <p class="rose__sig">&nbsp;</p>
+          <a class="rose__sig" href="/capabilities">See all capabilities →</a>
         </div>
       </div>
     </div>
