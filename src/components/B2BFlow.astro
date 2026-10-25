@@ -1,61 +1,63 @@
 ---
-// B2B flow (owner's call notes, Oct 25): one business account, cause and
-// effect. What we know about the account, then the three people in the room
+// B2B flow (owner's call notes, Oct 25), told through a real client, Hill
+// Country Dairies (cleared to name, Oct 25). The customer accounts, people and
+// results are made up and labelled so. Cause and effect: What we know about the account, then the three people in the room
 // each getting their own message, then the rep's visit and what it earned.
 // Two stories on tabs: win back a lapsed customer, upsell a current one.
 // Example accounts, not clients. Pinned like the consumer journey: the
 // section is three screens tall and scroll picks the step.
+const CLIENT = 'Hill Country Dairies';
 const STORIES = [
   {
-    key: 'win', tab: 'Win back',
-    account: 'Hill Country Supply', where: 'Distributor · Austin, TX',
+    key: 'win', tab: 'Win back', customer: 'Cedar Row Steakhouse', what: 'a restaurant that stopped ordering',
+    account: 'Cedar Row Steakhouse', where: 'Restaurant · Austin, TX',
     facts: [
-      { k: 'Customer since', v: '2019' },
-      { k: 'Last order', v: 'Apr 12 · 40 cases, cleaning line' },
-      { k: 'Portal logins', v: 'None in 6 months', s: 'no' },
-      { k: 'Win-back emails', v: '3 sent · 2 opened', s: 'yes' },
-      { k: 'Clicked', v: '"Bulk pricing" in the last email', s: 'yes' },
+      { k: 'HCD customer since', v: '2018' },
+      { k: 'Usual order', v: 'Weekly · cream, butter, cheese' },
+      { k: 'Last order', v: '5 weeks ago', s: 'no' },
+      { k: 'Customer portal', v: 'No logins since', s: 'no' },
+      { k: 'Holiday ordering email', v: 'Opened', s: 'yes' },
+      { k: 'Clicked', v: '"Cream & ice cream mix"', s: 'yes' },
       { k: 'Text reminder', v: 'Not opened', s: 'no' },
-      { k: 'Pricing page', v: '2 visits last week', s: 'yes' },
-      { k: 'Rep note, Jul', v: '"Asked about the paper line"' },
+      { k: 'Route rep note', v: '"New chef started in September"' },
     ],
     people: [
-      { img: 'hs-01', name: 'Dana R.', role: 'CFO', cares: 'Cost', ch: 'Email · Mon 7:40am', msg: 'Lock this year’s pricing and save 8%.', st: 'Opened', s: 'yes' },
-      { img: 'hs-07', name: 'Marcus T.', role: 'CMO', cares: 'Growth', ch: 'Meta + LinkedIn ads · Tue', msg: 'Co-marketing funds on the paper line.', st: 'Clicked Meta ad', s: 'yes' },
-      { img: 'hs-13', name: 'Tom H.', role: 'CEO', cares: 'The relationship', ch: 'Handwritten note · Wed', msg: 'Five years in. Here’s what’s next.', st: 'Not opened yet', s: 'no' },
+      { img: 'hs-04', name: 'Ray M.', role: 'Owner', cares: 'Cost', ch: 'Email from HCD · Mon 6:30am', msg: 'Lock holiday pricing on cream and butter before November.', st: 'Opened', s: 'yes' },
+      { img: 'hs-05', name: 'Ana G.', role: 'Executive chef', cares: 'Never running out', ch: 'Meta + Instagram ads · Tue', msg: 'Short on a Saturday? Our weekend team runs a hotshot.', st: 'Clicked Meta ad', s: 'yes' },
+      { img: 'hs-11', name: 'Chris L.', role: 'General manager', cares: 'Nothing going wrong', ch: 'Letter from the branch · Wed', msg: 'Your cooler, stocked and rotated every visit.', st: 'Not opened yet', s: 'no' },
     ],
     days: [
-      { d: 'Mon', t: 'Emails land with the CFO and CMO' },
-      { d: 'Tue', t: 'Ads run within 5 miles of their office' },
-      { d: 'Wed', t: 'The rep walks in' },
+      { d: 'Mon', t: 'HCD’s email lands with the owner' },
+      { d: 'Tue', t: 'HCD’s ads reach the chef near the restaurant' },
+      { d: 'Wed', t: 'The HCD rep walks in' },
     ],
-    brief: 'Interested in the paper line. Pricing matters to Dana. Skip janitorial.',
-    result: { k: 'Reorder', v: '$48,200', note: 'Back to ordering monthly' },
+    brief: 'New chef, hasn’t met us. Lead with cream and the weekend team. Ray wants holiday pricing.',
+    result: { k: 'Back on the route', v: 'Every Tuesday', note: 'Cream, butter and ice cream mix' },
   },
   {
-    key: 'up', tab: 'Upsell',
-    account: 'Lakeline Foods', where: 'Restaurant group · Round Rock, TX',
+    key: 'up', tab: 'Upsell', customer: 'Bluebonnet Coffee', what: 'a café group that only buys milk',
+    account: 'Bluebonnet Coffee', where: 'Four cafés · San Antonio, TX',
     facts: [
-      { k: 'Customer since', v: '2021 · orders monthly' },
-      { k: 'Buys', v: 'Takeout packaging · $9k a month' },
-      { k: 'Call, Jul 18', v: '"Open to compostable next year"', s: 'yes' },
-      { k: 'Compostable guide', v: 'Email opened', s: 'yes' },
-      { k: 'Product videos', v: 'Watched 2 of 3', s: 'yes' },
-      { k: 'Webinar invite', v: 'Didn’t register', s: 'no' },
-      { k: 'Showroom', v: 'Visited Austin, Sep 30', s: 'yes' },
+      { k: 'HCD customer since', v: '2022' },
+      { k: 'Buys', v: 'Whole milk · 3 deliveries a week' },
+      { k: 'Rep visit, Jul', v: '"Customers keep asking for oat"', s: 'yes' },
+      { k: 'Oat milk page', v: '3 visits this month', s: 'yes' },
+      { k: 'Creamers email', v: 'Opened', s: 'yes' },
+      { k: 'Tasting invite', v: 'Didn’t reply', s: 'no' },
+      { k: 'Fifth café', v: 'Opening in December', s: 'yes' },
     ],
     people: [
-      { img: 'hs-08', name: 'Ellen P.', role: 'CFO', cares: 'Margins', ch: 'Email · cost per box', msg: 'Compostable for 3¢ more a box.', st: 'Opened', s: 'yes' },
-      { img: 'hs-03', name: 'Daniel C.', role: 'CMO', cares: 'The brand', ch: 'Instagram ads', msg: 'Your customers notice the box.', st: 'Clicked Instagram ad', s: 'yes' },
-      { img: 'hs-09', name: 'Mark E.', role: 'CEO', cares: 'The long run', ch: 'LinkedIn ad + note', msg: 'Where packaging is heading, and how to get there first.', st: 'Viewed', s: 'yes' },
+      { img: 'hs-16', name: 'Grace H.', role: 'Owner', cares: 'Margins', ch: 'Email from HCD', msg: 'Oat, creamers and milk on one invoice.', st: 'Opened', s: 'yes' },
+      { img: 'hs-02', name: 'Jordan K.', role: 'Head barista', cares: 'What steams well', ch: 'Instagram ads', msg: 'Oat milk that foams like whole.', st: 'Clicked Instagram ad', s: 'yes' },
+      { img: 'hs-12', name: 'Mei L.', role: 'Operations manager', cares: 'Fewer deliveries', ch: 'Email + LinkedIn ad', msg: 'Everything dairy, one delivery.', st: 'Viewed', s: 'yes' },
     ],
     days: [
-      { d: '2 wks out', t: 'Emails and ads start on the compostable line' },
-      { d: 'Visit week', t: 'Ads run near their head office' },
-      { d: 'Thu', t: 'The rep walks in, samples in hand' },
+      { d: '2 wks out', t: 'HCD’s emails and ads start on oat and creamers' },
+      { d: 'Visit week', t: 'Ads run near all four cafés' },
+      { d: 'Thu', t: 'The HCD rep walks in with samples' },
     ],
-    brief: 'Ellen wants unit cost. Daniel wants the brand story. Bring samples.',
-    result: { k: 'Added', v: '+$3,100/mo', note: 'Compostable line, on top of their order' },
+    brief: 'Grace wants one invoice. Jordan wants oat that foams. Ask about the new café.',
+    result: { k: 'Added to every delivery', v: 'Oat + creamers', note: 'All four cafés, and the fifth when it opens' },
   },
 ];
 const STEPS = ['What we know', 'Who’s in the room', 'The rep walks in'];
@@ -73,7 +75,14 @@ const mark = (s) => (s === 'yes' ? '✓' : s === 'no' ? '✕' : '');
     </div>
 
     {STORIES.map((s, si) => (
-      <div class="bf__board" data-bf-story={s.key} data-step="1" hidden={si !== 0} role="tabpanel">
+      <div class="bf__story" data-bf-story={s.key} hidden={si !== 0} role="tabpanel">
+      <!-- Who's who: the client, their customer, and us -->
+      <ul class="bf__cast">
+        <li><b>Our client</b>{CLIENT}<span>Texas dairy distributor with sales reps</span></li>
+        <li><b>Their customer</b>{s.customer}<span>Example: {s.what}</span></li>
+        <li><b>Profectus</b>Runs HCD’s emails and ads<span>and briefs the HCD rep</span></li>
+      </ul>
+      <div class="bf__board" data-step="1">
         <!-- 1 · The account and everything we know about it -->
         <article class="bf__col bf__acct">
           <header class="bf__acct-h">
@@ -116,7 +125,7 @@ const mark = (s) => (s === 'yes' ? '✓' : s === 'no' ? '✕' : '');
             {s.days.map((d, i) => <li style={`--r:${i}`}><b>{d.d}</b><span>{d.t}</span></li>)}
           </ol>
           <div class="bf__brief">
-            <p class="bf__brief-h">Rep’s brief</p>
+            <p class="bf__brief-h">HCD rep’s brief</p>
             <p>{s.brief}</p>
           </div>
           <div class="bf__result">
@@ -126,7 +135,9 @@ const mark = (s) => (s === 'yes' ? '✓' : s === 'no' ? '✕' : '');
           </div>
         </article>
       </div>
+      </div>
     ))}
+    <p class="bf__fine">Hill Country Dairies is a Profectus client. The customer accounts, people and results here are made up to show how it works.</p>
   </div>
 </div>
 
@@ -135,7 +146,8 @@ const mark = (s) => (s === 'yes' ? '✓' : s === 'no' ? '✕' : '');
   // step (1 to 3). Tabs swap the example; the step carries over.
   const root = document.querySelector('[data-bf]');
   if (root) {
-    const boards = [...root.querySelectorAll('[data-bf-story]')];
+    const boards = [...root.querySelectorAll('.bf__board')];
+    const stories = [...root.querySelectorAll('[data-bf-story]')];
     const tabs = [...root.querySelectorAll('[data-bf-tab]')];
     const steps = [...root.querySelectorAll('.bf__steps li')];
     let step = 1, queued = false;
@@ -152,7 +164,7 @@ const mark = (s) => (s === 'yes' ? '✓' : s === 'no' ? '✕' : '');
     };
     tabs.forEach((t) => t.addEventListener('click', () => {
       tabs.forEach((x) => x.setAttribute('aria-selected', String(x === t)));
-      boards.forEach((b) => { b.hidden = b.dataset.bfStory !== t.dataset.bfTab; });
+      stories.forEach((b) => { b.hidden = b.dataset.bfStory !== t.dataset.bfTab; });
     }));
     addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(set); } }, { passive: true });
     set(); paint();
