@@ -3,7 +3,7 @@
 // the rose turns once every 90s inside a fixed dial, and hovering or tapping a
 // petal names the step and its capability; clicking opens that page. Pauses offscreen and in hidden tabs; still under
 // reduced motion. Markup: [data-rose] holding [data-rose-chart] (with a canvas)
-// and [data-rose-readout] (four <p>s).
+// and [data-rose-readout] (label, line, link).
 
 function initRose(root) {
   // ── Settings ────────────────────────────────────────────────────────────
@@ -32,8 +32,8 @@ function initRose(root) {
   const canvas = wrap.querySelector('canvas');
   const ctx = canvas.getContext('2d');
   const out = root.querySelector('[data-rose-readout]');
-  const [outK, outName, outSum, outSig] = out.children;
-  const IDLE = { k: outK.textContent, name: outName.textContent, sig: outSig.textContent, href: outSig.getAttribute('href') };
+  const [outK, outSum, outSig] = out.children;
+  const IDLE = { k: outK.textContent, sig: outSig.textContent, href: outSig.getAttribute('href') };
   const HINT = matchMedia('(hover: none)').matches ? 'Tap a petal to see what it does.' : 'Hover a petal to see what it does.';
   outSum.textContent = HINT;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -165,14 +165,12 @@ function initRose(root) {
     setTimeout(() => {
       if (sel === null) {
         outK.textContent = IDLE.k;
-        outName.textContent = IDLE.name;
         outSum.textContent = HINT;
         outSig.textContent = IDLE.sig;
         outSig.href = IDLE.href;
       } else {
         const p = PETALS[sel];
         outK.textContent = `Step 0${sel + 1} / 0${N} · ${p.verb}`;
-        outName.textContent = p.name;
         outSum.textContent = p.line;
         outSig.textContent = `See ${p.name} →`;
         outSig.href = p.href;

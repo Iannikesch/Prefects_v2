@@ -13,7 +13,7 @@
 .rose__chart:focus-visible { outline: 1px solid var(--pf-violet); outline-offset: 4px; }
 .rose__chart canvas { display: block; width: 100%; aspect-ratio: 7 / 5; cursor: pointer; touch-action: manipulation; }
 
-.rose__readout { min-height: 96px; margin-top: 8px; display: grid; gap: 6px; justify-items: center; text-align: center; }
+.rose__readout { min-height: 64px; margin-top: 8px; display: grid; gap: 6px; justify-items: center; text-align: center; }
 .rose__readout > * { margin: 0; transition: opacity 240ms var(--pf-ease); }
 .rose__readout.is-swap > * { opacity: 0; }
 .rose__k { font: 400 var(--pf-fs-mono)/1.2 var(--pf-mono); text-transform: uppercase; color: var(--pf-text); opacity: .7; }
