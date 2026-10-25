@@ -1,0 +1,172 @@
+---
+// B2B flow (owner's call notes, Oct 25), told through a real client, Hill
+// Country Dairies (cleared to name, Oct 25). The customer accounts, people and
+// results are made up and labelled so. Cause and effect: What we know about the account, then the three people in the room
+// each getting their own message, then the rep's visit and what it earned.
+// Two stories on tabs: win back a lapsed customer, upsell a current one.
+// Example accounts, not clients. Pinned like the consumer journey: the
+// section is three screens tall and scroll picks the step.
+const CLIENT = 'Hill Country Dairies';
+const STORIES = [
+  {
+    key: 'win', tab: 'Win back', customer: 'Cedar Row Steakhouse', what: 'a restaurant that stopped ordering',
+    account: 'Cedar Row Steakhouse', where: 'Restaurant · Austin, TX',
+    facts: [
+      { k: 'HCD customer since', v: '2018' },
+      { k: 'Usual order', v: 'Weekly · cream, butter, cheese' },
+      { k: 'Last order', v: '5 weeks ago', s: 'no' },
+      { k: 'Customer portal', v: 'No logins since', s: 'no' },
+      { k: 'Holiday ordering email', v: 'Opened', s: 'yes' },
+      { k: 'Clicked', v: '"Cream & ice cream mix"', s: 'yes' },
+      { k: 'Text reminder', v: 'Not opened', s: 'no' },
+      { k: 'Route rep note', v: '"New chef started in September"' },
+    ],
+    people: [
+      { img: 'hs-04', name: 'Ray M.', role: 'Owner', cares: 'Cost', ch: 'Email from HCD · Mon 6:30am', msg: 'Lock holiday pricing on cream and butter before November.', st: 'Opened', s: 'yes' },
+      { img: 'hs-05', name: 'Ana G.', role: 'Executive chef', cares: 'Never running out', ch: 'Meta + Instagram ads · Tue', msg: 'Short on a Saturday? Our weekend team runs a hotshot.', st: 'Clicked Meta ad', s: 'yes' },
+      { img: 'hs-11', name: 'Chris L.', role: 'General manager', cares: 'Nothing going wrong', ch: 'Letter from the branch · Wed', msg: 'Your cooler, stocked and rotated every visit.', st: 'Not opened yet', s: 'no' },
+    ],
+    days: [
+      { d: 'Mon', t: 'HCD’s email lands with the owner' },
+      { d: 'Tue', t: 'HCD’s ads reach the chef near the restaurant' },
+      { d: 'Wed', t: 'The HCD rep walks in' },
+    ],
+    brief: 'New chef, hasn’t met us. Lead with cream and the weekend team. Ray wants holiday pricing.',
+    result: { k: 'Back on the route', v: 'Every Tuesday', note: 'Cream, butter and ice cream mix' },
+  },
+  {
+    key: 'up', tab: 'Upsell', customer: 'Bluebonnet Coffee', what: 'a café group that only buys milk',
+    account: 'Bluebonnet Coffee', where: 'Four cafés · San Antonio, TX',
+    facts: [
+      { k: 'HCD customer since', v: '2022' },
+      { k: 'Buys', v: 'Whole milk · 3 deliveries a week' },
+      { k: 'Rep visit, Jul', v: '"Customers keep asking for oat"', s: 'yes' },
+      { k: 'Oat milk page', v: '3 visits this month', s: 'yes' },
+      { k: 'Creamers email', v: 'Opened', s: 'yes' },
+      { k: 'Tasting invite', v: 'Didn’t reply', s: 'no' },
+      { k: 'Fifth café', v: 'Opening in December', s: 'yes' },
+    ],
+    people: [
+      { img: 'hs-16', name: 'Grace H.', role: 'Owner', cares: 'Margins', ch: 'Email from HCD', msg: 'Oat, creamers and milk on one invoice.', st: 'Opened', s: 'yes' },
+      { img: 'hs-02', name: 'Jordan K.', role: 'Head barista', cares: 'What steams well', ch: 'Instagram ads', msg: 'Oat milk that foams like whole.', st: 'Clicked Instagram ad', s: 'yes' },
+      { img: 'hs-12', name: 'Mei L.', role: 'Operations manager', cares: 'Fewer deliveries', ch: 'Email + LinkedIn ad', msg: 'Everything dairy, one delivery.', st: 'Viewed', s: 'yes' },
+    ],
+    days: [
+      { d: '2 wks out', t: 'HCD’s emails and ads start on oat and creamers' },
+      { d: 'Visit week', t: 'Ads run near all four cafés' },
+      { d: 'Thu', t: 'The HCD rep walks in with samples' },
+    ],
+    brief: 'Grace wants one invoice. Jordan wants oat that foams. Ask about the new café.',
+    result: { k: 'Added to every delivery', v: 'Oat + creamers', note: 'All four cafés, and the fifth when it opens' },
+  },
+];
+const STEPS = ['What we know', 'Who’s in the room', 'The rep walks in'];
+const mark = (s) => (s === 'yes' ? '✓' : s === 'no' ? '✕' : '');
+---
+<div class="bf" data-bf>
+  <div class="bf__sticky">
+    <div class="bf__bar">
+      <div class="bf__tabs" role="tablist" aria-label="Example">
+        {STORIES.map((s, i) => <button class="bf__tab" type="button" role="tab" aria-selected={i === 0 ? 'true' : 'false'} data-bf-tab={s.key}>{s.tab}</button>)}
+      </div>
+      <ol class="bf__steps" aria-hidden="true">
+        {STEPS.map((t, i) => <li class={i === 0 ? 'is-on' : ''}><b>{i + 1}</b>{t}</li>)}
+      </ol>
+    </div>
+
+    {STORIES.map((s, si) => (
+      <div class="bf__story" data-bf-story={s.key} hidden={si !== 0} role="tabpanel">
+      <!-- Who's who: the client, their customer, and us -->
+      <ul class="bf__cast">
+        <li><b>Our client</b>{CLIENT}<span>Texas dairy distributor with sales reps</span></li>
+        <li><b>Their customer</b>{s.customer}<span>Example: {s.what}</span></li>
+        <li><b>Profectus</b>Runs HCD’s emails and ads<span>and briefs the HCD rep</span></li>
+      </ul>
+      <div class="bf__board" data-step="1">
+        <!-- 1 · The account and everything we know about it -->
+        <article class="bf__col bf__acct">
+          <header class="bf__acct-h">
+            <span class="bf__ex">Example account</span>
+            <h3>{s.account}</h3>
+            <p>{s.where}</p>
+          </header>
+          <dl class="bf__facts">
+            {s.facts.map((f, i) => (
+              <div class={`bf__fact${f.s ? ' bf__fact--' + f.s : ''}`} style={`--r:${i}`}>
+                <dt>{f.k}</dt><dd>{f.v}</dd>{f.s && <i aria-label={f.s === 'yes' ? 'yes' : 'no'}>{mark(f.s)}</i>}
+              </div>
+            ))}
+          </dl>
+        </article>
+
+        <p class="bf__arrow bf__arrow--1" aria-hidden="true"><span>because of this</span></p>
+
+        <!-- 2 · Three people at the account, three different messages -->
+        <div class="bf__col bf__people">
+          {s.people.map((p, i) => (
+            <article class="bf__person" style={`--r:${i}`}>
+              <span class="bf__num">{i + 1}</span>
+              <img src={`/img/photos/${p.img}.webp`} alt="" loading="lazy" decoding="async" />
+              <div class="bf__who">
+                <p class="bf__role"><b>{p.role}</b> · {p.name} <span>Cares about: {p.cares}</span></p>
+                <p class="bf__ch">{p.ch}</p>
+                <p class="bf__msg">“{p.msg}”</p>
+                <p class={`bf__st bf__st--${p.s}`}><i>{mark(p.s)}</i>{p.st}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <p class="bf__arrow bf__arrow--2" aria-hidden="true"><span>so by the visit</span></p>
+
+        <!-- 3 · The week of the visit, the rep's brief, the result -->
+        <article class="bf__col bf__visit">
+          <ol class="bf__days">
+            {s.days.map((d, i) => <li style={`--r:${i}`}><b>{d.d}</b><span>{d.t}</span></li>)}
+          </ol>
+          <div class="bf__brief">
+            <p class="bf__brief-h">HCD rep’s brief</p>
+            <p>{s.brief}</p>
+          </div>
+          <div class="bf__result">
+            <p class="bf__result-k">{s.result.k}</p>
+            <p class="bf__result-v">{s.result.v}</p>
+            <p class="bf__result-n">{s.result.note}</p>
+          </div>
+        </article>
+      </div>
+      </div>
+    ))}
+    <p class="bf__fine">Hill Country Dairies is a Profectus client. The customer accounts, people and results here are made up to show how it works.</p>
+  </div>
+</div>
+
+<script>
+  // Locked: three screens tall, contents pinned; scroll progress picks the
+  // step (1 to 3). Tabs swap the example; the step carries over.
+  const root = document.querySelector('[data-bf]');
+  if (root) {
+    const boards = [...root.querySelectorAll('.bf__board')];
+    const stories = [...root.querySelectorAll('[data-bf-story]')];
+    const tabs = [...root.querySelectorAll('[data-bf-tab]')];
+    const steps = [...root.querySelectorAll('.bf__steps li')];
+    let step = 1, queued = false;
+    const paint = () => {
+      boards.forEach((b) => { b.dataset.step = step; });
+      steps.forEach((el, i) => el.classList.toggle('is-on', i < step));
+    };
+    const set = () => {
+      queued = false;
+      const r = root.getBoundingClientRect();
+      const p = Math.max(0, Math.min(0.9999, -r.top / Math.max(1, root.offsetHeight - innerHeight)));
+      const n = Math.floor(p * 3) + 1;
+      if (n !== step) { step = n; paint(); }
+    };
+    tabs.forEach((t) => t.addEventListener('click', () => {
+      tabs.forEach((x) => x.setAttribute('aria-selected', String(x === t)));
+      stories.forEach((b) => { b.hidden = b.dataset.bfStory !== t.dataset.bfTab; });
+    }));
+    addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(set); } }, { passive: true });
+    set(); paint();
+  }
+</script>

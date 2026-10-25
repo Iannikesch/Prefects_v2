@@ -1,14 +1,55 @@
 ---
-import Base from '../layouts/Base.astro';
-import Aurora from '../components/Aurora.astro';
+// 404: the one click we can't put a name to. Same hero as the homepage
+// (black, code rain, fade to white), then the places people usually go next.
+import Fresh from '../layouts/Fresh.astro';
+import { bySlug, SPINE } from '../data/capabilities.js';
+const STAGES = SPINE.map((s) => ({ slug: s.slug, name: bySlug(s.slug).name }));
 ---
-<Base title="Page not found" footerCta={false}>
-  <section class="hero">
-    <Aurora />
-    <div class="hero__inner">
-      <p class="pf-eyebrow">404</p>
-      <h1 class="t-h1">This page made <em>other</em> progress.</h1>
-      <div class="pills pills--center"><a class="pf-pill" href="/">Back to Home →</a><a class="pf-pill pf-pill--ghost" href="/capabilities">See Capabilities →</a></div>
+<Fresh title="Page not found · Profectus Agency">
+  <section class="rhero rhero--page nf" data-hero>
+    <div class="pf-rain" data-ramp="violet" data-accent="gold" aria-hidden="true"></div>
+    <div class="rhero__inner">
+      <p class="nf__tag" aria-hidden="true" data-nf-tag><b>?</b><span><span class="nf__who">visitor 404</span><span class="nf__status" data-nf-status>unmatched</span></span></p>
+      <h1 class="pf-display rhero__title">We put a name to every click. <em class="foil-text">Except this one.</em></h1>
+      <p class="rhero__lead">The page you were looking for has moved, or it never existed. Here's where people usually go next.</p>
+      <div class="rhero__pills">
+        <a class="pf-pill btn-gold" href="/">Back to the homepage →</a>
+        <a class="pf-pill pf-pill--ghost" href="/contact">Talk to us</a>
+      </div>
     </div>
   </section>
-</Base>
+
+  <section class="nf-next light" aria-labelledby="nf-h">
+    <div class="nf-next__inner">
+      <h2 class="pf-eyebrow" id="nf-h">Where people go next</h2>
+      <div class="nf-next__grid">
+        <a class="nf-next__card" href="/capabilities"><span>Capabilities</span><b>What we do, in five stages</b></a>
+        <a class="nf-next__card" href="/case-studies"><span>Case studies</span><b>Results we can put numbers on</b></a>
+        <a class="nf-next__card" href="/about"><span>About</span><b>Who runs it</b></a>
+        <a class="nf-next__card" href="/contact"><span>Contact</span><b>Start the conversation</b></a>
+      </div>
+      <ul class="nf-next__stages">
+        {STAGES.map((s) => <li><a href={`/capabilities/${s.slug}`}>{s.name} →</a></li>)}
+      </ul>
+    </div>
+  </section>
+  <script>
+    // The tag tries to match this visitor, like everyone else, and fails.
+    // Runs once on load; reduced motion goes straight to the result.
+    const tag = document.querySelector('[data-nf-tag]');
+    const status = document.querySelector('[data-nf-status]');
+    if (tag && status && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const fmt = new Intl.NumberFormat('en-US');
+      tag.classList.add('is-matching');
+      status.textContent = 'matching…';
+      const start = performance.now() + 500, dur = 1600;
+      const tick = (now) => {
+        const t = Math.min(1, Math.max(0, (now - start) / dur));
+        if (t > 0) status.textContent = `checked ${fmt.format(Math.round(230000000 * (1 - Math.pow(1 - t, 3))))} people`;
+        if (t < 1) requestAnimationFrame(tick);
+        else setTimeout(() => { tag.classList.remove('is-matching'); tag.classList.add('is-failed'); status.textContent = 'no match'; }, 450);
+      };
+      requestAnimationFrame(tick);
+    }
+  </script>
+</Fresh>

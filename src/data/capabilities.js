@@ -1,4 +1,4 @@
-// The 12 capabilities, with the same URLs as the live site
+// The 13 capabilities (12 from the live site plus Identity Resolution), with the same URLs as the live site
 // (/capabilities/<slug>) so old links and search ranking carry over.
 // Item copy is from the live pages, with em dashes rewritten.
 // `summary` is new: one line per capability, written from its own items.
@@ -6,9 +6,14 @@
 export const THEMES = [
   { id: 'strategy', name: 'Strategy & Brand', blurb: 'Know who you are for, then say it so it lands.' },
   { id: 'media', name: 'Media & Audience', blurb: 'Reach the right person, in the right channel, at the right moment.' },
-  { id: 'data', name: 'Data & Intelligence', blurb: 'The spine underneath everything, and the models on top of it.' },
+  { id: 'data', name: 'Data & Intelligence', blurb: 'The data underneath everything, and the models on top of it.' },
   { id: 'lifecycle', name: 'Lifecycle & Revenue', blurb: 'Turn every customer you reach into revenue that compounds.' },
 ];
+
+const IDENTITY_ITEM = ['Identity Resolution', 'Connect fragmented customer data into a single, unified profile through deterministic matching. We translate CRM records, transaction histories, loyalty data, and telecommunications signals into addressable digital identities at scale with industry-leading match rates.'];
+
+// The closing slab for pages without their own: the homepage, the overview and anything general.
+export const DEFAULT_CLOSE = ['Your next customer is probably in our database.', "Let's go find them.", 'Start the conversation →'];
 
 export const CAPABILITIES = [
   {
@@ -16,6 +21,7 @@ export const CAPABILITIES = [
     name: 'Strategy & Go-to-Market',
     theme: 'strategy',
     summary: 'Research, positioning and launch plans grounded in who actually buys, so every dollar has a job.',
+    close: ['Every dollar needs a job.', 'Let\'s write the plan.', 'Start the plan →'],   // the closing slab: line, italic line, button
     items: [
       ['Market & Competitive Research', 'Deep analysis of your competitive landscape, market dynamics, category trends, and whitespace opportunities. We map the terrain so your strategy is grounded in reality, not assumptions.'],
       ['Ideal Customer Profile Definition', 'We define your highest-value audiences with precision using firmographic, demographic, behavioral, and psychographic criteria. Every campaign, channel, and message flows from a clearly defined ICP.'],
@@ -34,6 +40,7 @@ export const CAPABILITIES = [
     name: 'Brand, Creative & Storytelling',
     theme: 'strategy',
     summary: 'Identity, campaigns and content that turn audience intelligence into work people remember.',
+    close: ['Your story is better than your ads.', 'Let\'s prove it.', 'Talk to our creative team →'],   // the closing slab: line, italic line, button
     items: [
       ['Brand Identity & Voice Development', 'Logos, color systems, typography, iconography, pattern libraries, and complete visual identity packages crafted with strategic intention. We deliver comprehensive brand guidelines (60 to 120+ pages) ensuring consistency across every application, location, and channel. Voice and tone frameworks ensure your brand sounds like itself everywhere.'],
       ['Creative Direction & Concepting', 'Big ideas that travel. We concept and produce integrated campaigns from initial insight through final delivery, spanning video, static, motion, audio, experiential, and interactive formats. Every campaign is built to work across channels, not just one.'],
@@ -55,6 +62,7 @@ export const CAPABILITIES = [
     name: 'Website & Digital Experience',
     theme: 'strategy',
     summary: 'Sites, landing systems and apps designed to convert, and wired to your data from day one.',
+    close: ['Your site gets the traffic.', 'Let\'s make it close.', 'Talk about your site →'],   // the closing slab: line, italic line, button
     items: [
       ['Website Strategy & Information Architecture', 'Decision-driven site structure and navigation.'],
       ['UX & Conversion Rate Optimization', 'Research-backed design and A/B testing programs.'],
@@ -75,6 +83,7 @@ export const CAPABILITIES = [
     name: 'Paid Media & Demand Generation',
     theme: 'media',
     summary: 'Search, social, programmatic, CTV and more, targeted with first-party data and measured against revenue.',
+    close: ['Stop paying to meet', 'the same stranger twice.', 'Talk to a media operator →'],   // the closing slab: line, italic line, button
     items: [
       ['Paid Search & Keyword Strategy', 'Capture intent at the moment it happens. We manage full-funnel SEM programs across Google, Bing, and emerging search platforms, from keyword strategy to bid management to landing page optimization.'],
       ['Paid Social Across Major Platforms', 'Reach and engage audiences across Meta, TikTok, LinkedIn, Pinterest, Snapchat, Reddit, and X. We develop platform-native strategies paired with custom audience targeting powered by your first-party data.'],
@@ -94,11 +103,19 @@ export const CAPABILITIES = [
     ],
   },
   {
-    slug: 'enterprise-email-text-messaging',
-    name: 'Enterprise Email & Text Messaging',
+    slug: 'loyalty-lifecycle',
+    name: 'Loyalty & Lifecycle',
     theme: 'lifecycle',
-    summary: 'High-volume email and SMS on infrastructure we built ourselves, priced so frequency finally makes sense.',
+    summary: 'Loyalty programs and lifecycle journeys that turn a first purchase into a lifetime, sent on email and SMS we built ourselves.',
+    // Renamed Oct 22 from Enterprise Email & Text Messaging (old URL redirects).
+    // The first five items are new drafts; the rest are the live site's copy.
+    close: ['One purchase is a start.', 'Let\'s make it a lifetime.', 'Build your program →'],   // the closing slab: line, italic line, button
     items: [
+      ['Loyalty Program Design', 'Tiers, points, perks and the economics behind them. We design programs members actually want to climb, priced so the rewards pay for themselves.'],
+      ['Member Lifecycle Journeys', 'Every stage of membership mapped and automated: join, first reward, tier up, lapse, return. Each member gets the next move that fits where they are.'],
+      ['VIP & Tier Experiences', 'Recognition for the customers who matter most. Early access, surprise rewards and service that makes your best members feel known.'],
+      ['Churn Prediction & Winback', 'Models that spot a member drifting before they leave, and journeys that bring them back with the right offer at the right moment.'],
+      ['Loyalty Value Measurement', 'What the program is really worth: member lifetime value, incremental visits and the true cost of every reward, reported honestly.'],
       ['ESP Architecture & Setup', 'Full email service provider selection, configuration, and deployment. We build the technical foundation for high-volume, high-deliverability email programs from the ground up.'],
       ['Lifecycle & Journey Orchestration', 'End-to-end email programs mapped to customer lifecycle stages. Welcome series, onboarding sequences, nurture tracks, re-engagement campaigns, winback flows, and post-purchase journeys, all automated and behavioral.'],
       ['Behavioral & Event-Triggered Email', 'Real-time email triggers based on customer actions, inactions, milestones, and signals. Browse abandonment, cart abandonment, purchase confirmation, usage alerts, and custom behavioral triggers.'],
@@ -118,13 +135,29 @@ export const CAPABILITIES = [
     ],
   },
   {
-    slug: 'data-identity-infrastructure',
-    name: 'Data, Identity & Infrastructure',
+    slug: 'identity-resolution',
+    name: 'Identity Resolution',
     theme: 'data',
-    summary: 'The data layer, identity resolution and governance everything else runs on.',
+    summary: 'Every email, device and purchase traced back to one real person.',
+    // New capability (Oct 21), split out of Data, Identity & Infrastructure.
+    // The first item is the live site's copy; the rest are new drafts.
+    close: ['Somebody clicked today.', 'Let\'s put a name to it.', 'Find out who visited →'],   // the closing slab: line, italic line, button
+    items: [
+      IDENTITY_ITEM,
+      ['Website Visitor Identification', "We put a name to a click. One line of code on your site matches visitors against our database of 230 million people, so a visit that would have ended as an anonymous session becomes a real profile in your CRM: who they are, how to reach them and what they read. Then they go straight into retargeting across direct mail, paid social and email, with a message that picks up where they left off."],
+      ['Cross-Device & Cross-Channel Linking', 'Phones, laptops, inboxes, loyalty cards and store visits tied back to the same person, so one customer stops looking like five.'],
+      ['Known & Unknown Audience Resolution', 'Resolve the customers you already have and the prospects you have never met against our database of 230 million people, including high-value audiences outside your program today.'],
+      ['Match Rate Diagnostics', 'See how much of your file we can recognize, where the gaps are and what it takes to close them, before you spend a dollar on media.'],
+    ],
+  },
+  {
+    slug: 'data-identity-infrastructure',
+    name: 'Customer Data & Infrastructure',
+    theme: 'data',
+    summary: 'The data layer, real-time profiles and governance everything else runs on.',
+    close: ['Your customer lives in five systems.', 'Let\'s make it one.', 'Talk to a data operator →'],   // the closing slab: line, italic line, button
     items: [
       ['Data Layer Design & Deployment', 'We architect and deploy the foundational data layer that captures, normalizes, and routes customer interaction data across your entire digital ecosystem. This is the infrastructure everything else runs on.'],
-      ['Identity Resolution', 'Connect fragmented customer data into a single, unified profile through deterministic matching. We translate CRM records, transaction histories, loyalty data, and telecommunications signals into addressable digital identities at scale with industry-leading match rates.'],
       ['First-Party Data Capture', 'Design and implement systems that capture valuable first-party data at every customer touchpoint: website, app, email, SMS, events, point-of-sale, and customer service interactions.'],
       ['Audience Enrichment', 'Layer additional behavioral, demographic, psychographic, and intent signals onto your existing customer profiles. Enrichment creates a more complete picture that powers better targeting and personalization.'],
       ['Proprietary Database Activation', 'Activate your owned data assets across 500+ platforms in the advertising ecosystem. We serve as your neutral data hub, connecting walled gardens, DSPs, SSPs, social platforms, CTV partners, and retail media networks.'],
@@ -139,6 +172,7 @@ export const CAPABILITIES = [
     name: 'Audience & Intent Development',
     theme: 'media',
     summary: 'Audiences defined by what people actually do, scored by how ready they are to buy.',
+    close: ['Your best customers are out there.', 'Let\'s go find them.', 'Find your audience →'],   // the closing slab: line, italic line, button
     items: [
       ['Custom Audience Creation', 'Audiences built from your first-party data, enrichment layers, and behavioral signals. We go beyond demographics to create segments defined by what people actually do, buy, search for, and respond to.'],
       ['Lookalike & Expansion Modeling', 'Find more of your best customers. We build statistical models based on your highest-value profiles and activate expansion audiences across programmatic, social, CTV, and direct channels.'],
@@ -154,6 +188,7 @@ export const CAPABILITIES = [
     name: 'Sales Enablement',
     theme: 'lifecycle',
     summary: 'Narratives, tools and handoffs that let marketing and sales work as one revenue team.',
+    close: ['Your reps deserve better leads.', 'Let\'s hand them some.', 'Arm your sales team →'],   // the closing slab: line, italic line, button
     items: [
       ['Sales Narrative & Positioning', 'Clear, compelling sales narratives that align with your brand positioning and speak directly to buyer pain points, objections, and decision criteria.'],
       ['Objection Handling Frameworks', 'Documented frameworks for the most common objections your sales team encounters, with data-backed responses, proof points, and competitive positioning.'],
@@ -169,6 +204,7 @@ export const CAPABILITIES = [
     name: 'Analytics, Attribution & Optimization',
     theme: 'data',
     summary: "An honest picture of what's working, and a plan to act on it.",
+    close: ['Which dollar moved which customer?', 'Let\'s get you a receipt.', 'Get the real numbers →'],   // the closing slab: line, italic line, button
     items: [
       ['KPI Definition & Alignment', 'We define the metrics that actually matter for your business and align every team, channel, and campaign to those outcomes. Clarity on what success looks like prevents wasted effort and misaligned incentives.'],
       ['Funnel Diagnostics', 'Stage-by-stage analysis of your marketing and sales funnel identifying conversion bottlenecks, drop-off points, and optimization opportunities at every step from impression to revenue.'],
@@ -184,6 +220,7 @@ export const CAPABILITIES = [
     name: 'AI & Automation',
     theme: 'data',
     summary: 'Chatbots, voice agents, workflows and custom models that take the manual work out of growth.',
+    close: ['Let the model pick the moment.', 'You pick the goal.', 'Put AI to work →'],   // the closing slab: line, italic line, button
     items: [
       ['AI Chatbots (Website, SMS, Social)', 'Deploy intelligent conversational agents that answer FAQs, qualify leads, book appointments, take reservations, process simple orders, and escalate to humans when needed, 24/7 across every channel.'],
       ['Workflow Automation', 'Eliminate manual bottlenecks. We design and implement automated workflows across marketing, sales, and operations using platforms like Zapier, Make, HubSpot, and custom integrations.'],
@@ -199,6 +236,7 @@ export const CAPABILITIES = [
     name: 'Social Media Management',
     theme: 'media',
     summary: 'Always-on social that builds community and, increasingly, sells.',
+    close: ['Followers are nice.', 'Customers are better.', 'Talk social →'],   // the closing slab: line, italic line, button
     items: [
       ['Social Media Strategy & Content Creation', 'Platform-specific content strategies, publishing calendars, and original content creation for Instagram, TikTok, LinkedIn, Facebook, X, YouTube, Pinterest, and emerging platforms.'],
       ['Platform Management & Community', 'Daily management, engagement, community building, comment moderation, and audience development across all active platforms.'],
@@ -211,6 +249,7 @@ export const CAPABILITIES = [
     name: 'Direct Mail & Offline Media',
     theme: 'media',
     summary: 'Physical media triggered by the same data that runs your digital programs.',
+    close: ['The mailbox still works.', 'Let\'s prove it.', 'Plan a drop →'],   // the closing slab: line, italic line, button
     items: [
       ['Data-Driven Direct Mail', 'Trigger personalized direct mail pieces using the same audience data and behavioral signals that power your digital campaigns. We manage creative, production, printing, and fulfillment.'],
       ['Print & Collateral Design', 'Brochures, catalogs, sell sheets, event materials, packaging, and more, designed to extend your brand into the physical world with the same quality and consistency as your digital presence.'],
@@ -220,3 +259,45 @@ export const CAPABILITIES = [
 
 export const bySlug = (slug) => CAPABILITIES.find((c) => c.slug === slug);
 export const inTheme = (id) => CAPABILITIES.filter((c) => c.theme === id);
+
+// The spine: five capabilities in order, each moving one customer one step.
+// `state` is what the customer becomes once the step is done.
+export const SPINE = [
+  { slug: 'identity-resolution', verb: 'Recognize', state: 'Someone',
+    line: 'A stranger becomes someone.',
+    body: 'Every email, device and purchase traced back to one real person. Matched deterministically against our own database of 230 million people, not guessed from a rented graph.',
+    does: ['Deterministic matching', 'Cross-device and cross-channel', 'Known customers and unknown prospects'] },
+  { slug: 'data-identity-infrastructure', verb: 'Unify', state: 'Whole picture',
+    line: 'Someone becomes a whole picture.',
+    body: 'Your CRM, site, store and inbox finally agree. One profile per person, updated the moment they act, with consent built in from day one.',
+    does: ['Data layer and event tracking', 'CDP setup and integration', 'Real-time profiles', 'Privacy and consent'] },
+  { slug: 'audience-intent-development', verb: 'Understand', state: 'Priority',
+    line: 'A picture becomes a priority.',
+    body: 'Know who is worth the most, who is ready to buy now and who is about to walk. Then find more people just like your best.',
+    does: ['Intent scoring', 'Lookalike expansion', 'Enrichment', 'Suppression of wasted spend'] },
+  { slug: 'ai-automation', verb: 'Decide', state: 'Next move',
+    line: 'A priority gets the right next move.',
+    body: 'AI picks what to send, where and when, and sends it. Models trained on your own first-party data. Workflows that run while your team sleeps.',
+    does: ['Predictive models', 'Trigger-based journeys', 'Chat and voice agents'] },
+  { slug: 'analytics-attribution-optimization', verb: 'Prove', state: 'Proven',
+    line: 'Every move gets a receipt.',
+    body: 'Which dollar moved which person, counted honestly. Incrementality tests instead of vanity metrics, and a dashboard your CFO will actually read.',
+    does: ['Multi-touch attribution', 'Incrementality testing', 'Executive dashboards'] },
+];
+
+// The services the spine runs through, in two groups.
+export const SERVICE_GROUPS = [
+  { title: 'Reach them', blurb: 'The channels where the next move lands.',
+    slugs: ['paid-media-demand-generation', 'loyalty-lifecycle', 'direct-mail-offline-media', 'social-media-management'] },
+  { title: 'Win them', blurb: 'The story, the site and the team that close it.',
+    slugs: ['strategy-go-to-market', 'brand-creative-storytelling', 'website-digital-experience', 'sales-enablement'] },
+];
+
+// Where a capability sits: its spine step or its service group, and what comes next.
+export function placeOf(slug) {
+  const i = SPINE.findIndex((s) => s.slug === slug);
+  if (i >= 0) return { kind: 'spine', index: i, step: SPINE[i], next: SPINE[i + 1] ? bySlug(SPINE[i + 1].slug) : null, nextStep: SPINE[i + 1] || null };
+  const g = SERVICE_GROUPS.find((g) => g.slugs.includes(slug));
+  const j = g.slugs.indexOf(slug);
+  return { kind: 'service', group: g, next: bySlug(g.slugs[(j + 1) % g.slugs.length]), nextStep: null };
+}

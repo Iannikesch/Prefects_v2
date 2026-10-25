@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paid Media &amp; Demand Generation · Reimagined</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Instrument+Serif:ital@1&family=PT+Mono&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=erode@400,500&display=swap" rel="stylesheet">
+<style>
+/* A reference shot, not the site. The homepage with the copy rewrite
+   (COPY-REWRITE.md) and the motion from two teardowns combined:
+   - Infinite: piece-by-piece fade-up (100px, 0.6s, ease, 200ms apart)
+     and a pinned card swap scrubbed by scroll (kept short, no dead space).
+   - Epsilon: a pinned picture that changes scene beside free-scrolling text
+     (0.3s out, 0.15s stagger in) and hover-reveal cards on one 0.4s curve.
+   Opacity and transform only. Reduced motion: everything shown, nothing moves. */
+:root {
+  --ink: #0B0B0C; --ink-2: #4a4a52; --night: #07060D; --paper: #FFFFFF; --mist: #F4F3F8;
+  --violet: #6E62E6; --violet-lt: #9C93FF; --violet-wash: #ECEAFD; --gold: #D3A754; --gold-dk: #9C7A35;
+  --serif: "Erode", Georgia, serif; --italic: "Instrument Serif", Georgia, serif;
+  --sans: "Geist", system-ui, sans-serif; --mono: "PT Mono", ui-monospace, monospace;
+  --gutter: max(16px, 5vw); --sec: 96px;
+  --curve: cubic-bezier(0.4, 0, 0.2, 1);   /* Epsilon's one curve */
+}
+@media (max-width: 768px) { :root { --sec: 64px; } }
+@media (max-width: 420px) { :root { --sec: 40px; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.5 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+a { color: inherit; }
+em { font-family: var(--italic); font-style: italic; font-weight: 400; letter-spacing: -0.02em; }
+.wrap { width: min(1240px, 100% - 2 * var(--gutter)); margin-inline: auto; }
+.label { font: 400 13px/1.3 var(--mono); letter-spacing: .04em; color: var(--ink-2); margin: 0 0 16px; }
+.h2 { font: 400 clamp(36px, 4.6vw, 64px)/1.04 var(--serif); letter-spacing: -0.04em; margin: 0; }
+.h2 em { color: var(--violet); }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; border-radius: 6px; background: var(--violet); color: #fff; font: 600 15px/1 var(--sans); text-decoration: none; transition: background-color 200ms ease; }
+.btn:hover { background: #5B4FD9; }
+.btn--ghost { background: rgba(255,255,255,.1); }
+.btn--ghost:hover { background: rgba(255,255,255,.18); }
+
+/* Infinite's fade-up: each [data-rise] piece rises 100px and fades in,
+   0.6s ease, 200ms after the one before it (--d), once. */
+.js [data-rise] { opacity: 0; transform: translate3d(0, 100px, 0); transition: opacity .6s ease, transform .6s ease; transition-delay: calc(var(--d, 0) * 200ms); }
+.js [data-rise].is-in { opacity: 1; transform: none; }
+
+/* Prototype chrome */
+.proto { position: fixed; right: 16px; bottom: 16px; z-index: 60; display: flex; gap: 8px; font: 500 13px/1 var(--sans); }
+.proto a, .proto button { padding: 10px 14px; border-radius: 6px; border: 1px solid rgba(255,255,255,.18); background: rgba(7,6,13,.92); color: #fff; cursor: pointer; text-decoration: none; font: inherit; }
+.proto button[aria-pressed="true"] { background: #FFE9A8; color: var(--ink); border-color: #FFE9A8; }
+.note { display: none; max-width: 400px; margin: 0 0 20px; padding: 10px 12px; border-radius: 6px; background: #FFF4CC; color: #4b3a00; font: 400 13px/1.45 var(--sans); box-shadow: 0 2px 10px rgba(0,0,0,.08); position: relative; z-index: 5; }
+.note b { font-weight: 600; }
+body.show-notes .note { display: block; }
+
+/* ---------- Nav (static, for context) ---------- */
+.nav { position: absolute; inset: 0 0 auto; z-index: 10; color: #fff; }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 90px; }
+.nav__logo { font: 400 34px/1 var(--serif); letter-spacing: -0.035em; }
+.nav__links { display: flex; gap: 36px; font: 500 13px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; }
+@media (max-width: 760px) { .nav__links { display: none; } }
+
+/* ---------- Hero ---------- */
+.hero { position: relative; background: linear-gradient(#000 70%, #1a1730 88%, var(--paper)); color: #fff; padding: 180px 0 120px; }
+.hero h1 { margin: 0; max-width: 15ch; font: 400 clamp(46px, 7vw, 104px)/0.98 var(--serif); letter-spacing: -0.045em; }
+.hero h1 em { display: block; color: var(--violet-lt); }
+.hero__lead { margin: 32px 0 0; max-width: 36em; font-size: 19px; color: rgba(255,255,255,.76); }
+.hero__btns { margin-top: 36px; display: flex; gap: 12px; flex-wrap: wrap; }
+.logos { margin-top: 96px; display: flex; flex-wrap: wrap; gap: 18px 48px; align-items: center; font: 400 15px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.5); }
+.logos span:first-child { color: rgba(255,255,255,.3); letter-spacing: .04em; }
+
+/* ---------- Proof strip ---------- */
+.proof { padding: var(--sec) 0; }
+.proof__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+.proof__item { border-top: 2px solid var(--ink); padding-top: 18px; }
+.proof__n { display: block; font: 400 clamp(40px, 4.2vw, 64px)/1 var(--serif); letter-spacing: -0.045em; color: var(--violet); }
+.proof__n i { font: 300 .5em/1 var(--sans); font-style: normal; color: var(--gold-dk); vertical-align: .35em; margin: 0 .12em; }
+.proof__t { margin: 12px 0 0; font-size: 15px; color: var(--ink-2); }
+.proof__t b { color: var(--ink); font-weight: 500; display: block; }
+@media (max-width: 900px) { .proof__grid { grid-template-columns: 1fr 1fr; } }
+
+/* ---------- Journey: Epsilon's pinned picture, scene by scene ---------- */
+.journey { padding: var(--sec) 0 0; background: var(--mist); }
+.journey__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 64px; }
+.journey__panel { padding: 22vh 0; max-width: 30em; }
+.journey__panel:first-child { padding-top: 10vh; }
+.journey__panel:last-child { padding-bottom: 30vh; }
+.journey__step { font: 400 13px/1 var(--mono); color: var(--gold-dk); letter-spacing: .04em; }
+.journey__panel h3 { margin: 14px 0 0; font: 400 clamp(28px, 3vw, 42px)/1.1 var(--serif); letter-spacing: -0.035em; }
+.journey__panel p { margin: 16px 0 0; color: var(--ink-2); font-size: 18px; }
+.art { position: sticky; top: 12vh; height: 76vh; margin-top: 10vh; border-radius: 20px; background: var(--night); overflow: hidden; color: #fff; }
+.scene { position: absolute; inset: 0; display: grid; place-items: center; padding: 40px; pointer-events: none; }
+.pc { opacity: 0; transform: translate3d(0, 16px, 0); transition: opacity .3s var(--curve), transform .3s var(--curve); }
+.scene.is-on .pc { opacity: 1; transform: none; transition-delay: calc(450ms + var(--i, 0) * 150ms); }  /* wait for the old scene to leave (0.3s + 0.15s gap), then pieces 150ms apart */
+.scene__cap { position: absolute; left: 28px; bottom: 24px; font: 400 12px/1 var(--mono); letter-spacing: .06em; color: rgba(255,255,255,.45); text-transform: uppercase; }
+/* scene 1: anonymous visitors */
+.visitors { display: grid; grid-template-columns: repeat(3, auto); gap: 14px; }
+.visitor { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 10px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); font: 400 14px/1 var(--mono); color: rgba(255,255,255,.55); filter: blur(1.2px); }
+.visitor b { width: 26px; height: 26px; border-radius: 50%; background: rgba(255,255,255,.14); display: grid; place-items: center; font: 600 13px/1 var(--sans); color: rgba(255,255,255,.7); }
+/* scene 2: one record */
+.record { width: min(380px, 90%); padding: 24px 26px; border-radius: 14px; background: #fff; color: var(--ink); box-shadow: 0 30px 80px rgba(0,0,0,.5); }
+.record > b { display: block; font: 400 28px/1 var(--serif); letter-spacing: -0.02em; margin-bottom: 16px; }
+.record dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 9px 18px; font-size: 15px; }
+.record dt { font: 400 12px/1.6 var(--mono); color: var(--gold-dk); }
+.record dd { margin: 0; }
+/* scene 3: who's worth the most */
+.rank { width: min(440px, 92%); display: grid; gap: 12px; }
+.rank__row { display: grid; grid-template-columns: 110px 1fr auto; align-items: center; gap: 14px; font-size: 15px; }
+.rank__bar { height: 10px; border-radius: 5px; background: rgba(255,255,255,.1); overflow: hidden; }
+.rank__bar span { display: block; height: 100%; border-radius: 5px; background: var(--violet-lt); transform-origin: left; }
+.rank__tag { font: 400 12px/1 var(--mono); color: var(--gold); }
+/* scene 4: the next move */
+.move { width: min(360px, 90%); display: grid; gap: 14px; }
+.move__phone { padding: 18px; border-radius: 18px; background: #1b1930; border: 1px solid rgba(255,255,255,.1); }
+.move__msg { padding: 14px 16px; border-radius: 16px 16px 16px 4px; background: var(--violet); font-size: 16px; line-height: 1.4; }
+.move__chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.move__chips span { padding: 7px 11px; border-radius: 6px; background: rgba(255,255,255,.08); font: 400 12px/1 var(--mono); color: rgba(255,255,255,.75); }
+/* scene 5: the receipt */
+.receipt { width: min(360px, 90%); padding: 24px 26px; border-radius: 6px; background: #fff; color: var(--ink); font: 400 14px/1.4 var(--mono); box-shadow: 0 30px 80px rgba(0,0,0,.5); }
+.receipt div { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px dashed rgba(11,11,12,.2); }
+.receipt div:last-child { border: 0; padding-top: 14px; font: 500 18px/1 var(--sans); color: var(--violet); }
+.receipt s { color: #999; }
+@media (max-width: 900px) {
+  .journey__grid { grid-template-columns: 1fr; gap: 0; }
+  .art { order: -1; top: 70px; height: 46vh; margin-top: 0; z-index: 2; }
+  .journey__panel { padding: 14vh 0; }
+  .visitors { grid-template-columns: repeat(2, auto); }
+}
+
+/* ---------- Services: Epsilon's hover reveal + Infinite's entrance ---------- */
+.svc { padding: var(--sec) 0; }
+.svc__head { display: flex; justify-content: space-between; align-items: end; gap: 32px; flex-wrap: wrap; margin-bottom: 48px; }
+.svc__group { font: 400 13px/1 var(--mono); letter-spacing: .04em; color: var(--ink-2); margin: 36px 0 14px; }
+.svc__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.card { position: relative; height: 330px; overflow: hidden; border-top: 2px solid var(--violet); border-bottom: 2px solid var(--violet); text-decoration: none; color: var(--ink); background: var(--paper); }
+.card__tint { position: absolute; inset: 0; background: var(--violet-wash); opacity: 0; transition: opacity .4s var(--curve); }
+.card__body { position: absolute; inset: 0; padding: 26px 20px; transform: translate3d(0, 108px, 0); transition: transform .4s var(--curve); }
+.card__name { margin: 0; font: 400 26px/1.08 var(--serif); letter-spacing: -0.03em; transition: transform .4s var(--curve); }
+.card__sum { margin: 12px 0 0; font-size: 15px; color: var(--ink-2); transition: opacity .4s var(--curve); }
+.card__list { list-style: none; margin: 0; padding: 0; position: absolute; left: 20px; right: 20px; top: 112px; display: grid; gap: 8px; font-size: 15px; opacity: 0; transform: translate3d(0, 30px, 0); transition: opacity .4s var(--curve), transform .4s var(--curve); }
+.card__list li::before { content: "→ "; color: var(--violet); }
+.card__chev { position: absolute; right: 18px; bottom: 16px; color: var(--violet); font: 400 20px/1 var(--sans); transition: transform .4s var(--curve); }
+.card:hover .card__tint, .card:focus-visible .card__tint { opacity: 1; }
+.card:hover .card__body, .card:focus-visible .card__body { transform: none; }
+.card:hover .card__sum, .card:focus-visible .card__sum { opacity: 0; }
+.card:hover .card__list, .card:focus-visible .card__list { opacity: 1; transform: none; }
+.card:hover .card__chev, .card:focus-visible .card__chev { transform: rotate(-90deg); }
+@media (hover: none) {   /* phones: show the open state, no hover needed */
+  .card { height: auto; } .card__tint { opacity: .5; }
+  .card__body { position: relative; transform: none; } .card__sum { display: none; }
+  .card__list { position: static; opacity: 1; transform: none; margin-top: 14px; }
+}
+@media (max-width: 1000px) { .svc__grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .svc__grid { grid-template-columns: 1fr; } }
+
+/* ---------- Comparison: Infinite's pinned card swap, kept short ---------- */
+.swap { position: relative; height: calc(100svh + 4 * 42vh); background: var(--night); color: #fff; }
+.swap__stick { position: sticky; top: 0; height: 100svh; display: grid; align-items: center; overflow: hidden; }
+.swap__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: center; }
+.swap .h2 { color: #fff; }
+.swap .h2 em { color: var(--violet-lt); display: block; }
+.swap__sub { margin: 24px 0 0; max-width: 28em; color: rgba(255,255,255,.7); font-size: 18px; }
+.swap__count { margin-top: 32px; font: 400 14px/1 var(--mono); color: var(--gold); }
+.swap__stack { position: relative; height: 460px; }
+.swap__pic { position: relative; display: block; height: 220px; margin: -34px -34px 6px; overflow: hidden; }
+.swap__pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.swap__card { grid-template-rows: 1fr auto auto; align-content: stretch; }
+.swap__pic { height: auto; min-height: 200px; }
+.swap__card { position: absolute; inset: 0; padding: 34px; border-radius: 18px; border: 1px solid rgba(255,255,255,.18); background: #0f0d1c; display: grid; align-content: end; gap: 18px; overflow: hidden; will-change: transform, opacity; }
+.swap__k { font: 400 13px/1 var(--mono); letter-spacing: .04em; color: var(--gold); }
+.swap__them { font: 400 18px/1.4 var(--sans); color: rgba(255,255,255,.45); text-decoration: line-through; text-decoration-color: rgba(255,255,255,.6); }
+.swap__them::before { content: "A platform: "; text-decoration: none; display: inline; }
+.swap__us { font: 400 clamp(26px, 2.6vw, 38px)/1.15 var(--serif); letter-spacing: -0.03em; }
+.swap__us mark { background: none; color: #FFE08A; font: 400 12px/1 var(--mono); letter-spacing: 0; vertical-align: middle; }
+@media (max-width: 900px) {
+  .swap { height: auto; padding: var(--sec) 0; }
+  .swap__stick { position: static; height: auto; }
+  .swap__grid { grid-template-columns: 1fr; gap: 32px; }
+  .swap__stack { height: auto; display: grid; gap: 14px; }
+  .swap__card { position: relative; transform: none !important; opacity: 1 !important; min-height: 220px; }
+}
+
+/* ---------- Questions ---------- */
+.ask { padding: var(--sec) 0; }
+.ask__grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 64px; }
+.ask details { border-top: 1px solid rgba(11,11,12,.12); }
+.ask summary { cursor: pointer; list-style: none; padding: 22px 0; font: 400 22px/1.3 var(--serif); letter-spacing: -0.02em; display: flex; justify-content: space-between; gap: 24px; }
+.ask summary::after { content: "+"; font-family: var(--sans); color: var(--violet); }
+.ask details[open] summary::after { content: "–"; }
+.ask details p { margin: 0 0 24px; color: var(--ink-2); }
+.ask mark { background: #FFF4CC; padding: 0 4px; }
+@media (max-width: 900px) { .ask__grid { grid-template-columns: 1fr; gap: 24px; } }
+
+/* ---------- Close ---------- */
+.close { background: var(--night); color: #fff; text-align: center; padding: calc(var(--sec) * 1.5) var(--gutter); }
+.close h2 { margin: 0 auto 36px; max-width: 18ch; font: 400 max(40px, 5vw)/1.02 var(--serif); letter-spacing: -0.04em; }
+.close h2 em { display: block; color: var(--violet-lt); }
+
+/* Photos (Assets/Images, converted in REIMAGINE-assets) */
+.hero { overflow: hidden; }
+.hero .wrap { position: relative; z-index: 1; }
+.hero__photo { position: absolute; top: 0; right: 0; bottom: 0; width: 50%;
+  -webkit-mask: linear-gradient(90deg, transparent 6%, #000 50%), linear-gradient(180deg, #000 55%, transparent 82%); -webkit-mask-composite: source-in;
+  mask: linear-gradient(90deg, transparent 6%, #000 50%), linear-gradient(180deg, #000 55%, transparent 82%); mask-composite: intersect; }
+.hero__photo img { width: 100%; height: 100%; object-fit: cover; opacity: .7; }
+.people { padding: 0 0 var(--sec); }
+.people__row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.person { position: relative; margin: 0; aspect-ratio: 3 / 4; border-radius: 14px; overflow: hidden; background: #ddd; }
+.person img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--curve); }
+.person:hover img { transform: scale(1.04); }
+.person figcaption { position: absolute; left: 10px; right: 10px; bottom: 10px; display: grid; gap: 3px; padding: 9px 11px; border-radius: 8px; background: rgba(255,255,255,.94); font: 500 13px/1.25 var(--sans); }
+.person figcaption b { font: 400 11px/1 var(--mono); color: var(--violet); font-weight: 400; }
+.people__note { margin: 18px 0 0; font: 400 13px/1.4 var(--mono); color: var(--ink-2); }
+@media (max-width: 900px) { .people__row { grid-template-columns: 1fr 1fr; } .hero__photo { width: 100%; opacity: .45; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+  .js [data-rise] { opacity: 1; transform: none; }
+}
+
+.swap { height: calc(100svh + 4 * 42vh); }
+.swap__card { align-content: end; gap: 18px; overflow: hidden; }
+.swap__stack { height: 460px; }
+.swap__pic { position: relative; display: block; height: 220px; margin: -34px -34px 6px; overflow: hidden; }
+.swap__pic img, .swap__pic .slot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.slot { display: grid; place-items: center; padding: 24px; background: #8E8E93; text-align: center; }
+.slot span { max-width: 34em; font: 400 12px/1.5 var(--mono); text-transform: uppercase; letter-spacing: .04em; color: rgba(255,255,255,.92); }
+.ph .slot { position: absolute; inset: 0; }
+.hero__photo .slot { position: absolute; inset: 0; background: #3a3a40; }
+.swap__card { grid-template-rows: 1fr auto auto; align-content: stretch; }
+.swap__pic { height: auto; min-height: 200px; }
+.ph .slot { place-items: end center; padding: 0 28px 112px; text-align: center; }
+.ph .slot span { max-width: 80%; position: relative; z-index: 2; color: #fff; }
+@media (max-width: 900px) { .swap__stack { height: auto; } .swap__pic { min-height: 180px; } }
+/* ---------- Scenes: photos with live data, and purpose-built visuals ---------- */
+.art { background: #0b0a14; }
+/* The whole scene fades (0.3s out), then its pieces come in 150ms apart. */
+.scene { opacity: 0; transition: opacity .3s var(--curve); }
+.scene.is-on { opacity: 1; transition-delay: .3s; }
+.scene { padding: 0; }
+.scene > :not(.ph):not(.scene__cap) { margin: 40px; }
+.ph { position: absolute; inset: 0; }
+.ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ph__shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,6,13,.15), rgba(7,6,13,.05) 40%, rgba(7,6,13,.75)); }
+.pin { position: absolute; display: grid; gap: 3px; max-width: 40%; padding: 9px 12px; border-radius: 8px; background: rgba(255,255,255,.94); color: var(--ink); font: 500 14px/1.25 var(--sans); box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+.pin b { font: 400 11px/1 var(--mono); color: var(--violet); font-weight: 400; }
+.ph__tag { position: absolute; left: 28px; bottom: 56px; padding: 8px 12px; border-radius: 6px; background: var(--violet); color: #fff; font: 600 15px/1 var(--sans); }
+.scene__cap { z-index: 2; color: rgba(255,255,255,.7); }
+.visitors--two { grid-template-columns: repeat(2, auto); }
+.visitor--known { filter: none; color: #fff; border-color: rgba(156,147,255,.6); background: rgba(156,147,255,.16); font-family: var(--sans); }
+.visitor--known b { background: var(--violet); color: #fff; }
+.vbars { width: min(460px, 90%); display: grid; gap: 16px; }
+.vbars__t { margin: 0 0 4px; font: 400 13px/1 var(--mono); color: var(--gold); letter-spacing: .04em; }
+.vbars__row { display: grid; gap: 8px; }
+.vbars__top { display: flex; justify-content: space-between; gap: 16px; font-size: 15px; }
+.vbars__top b { font: 400 22px/1 var(--serif); color: #fff; font-weight: 400; }
+.flag { font-style: normal; font: 600 11px/1 var(--sans); color: #fff; background: var(--violet); padding: 2px 5px; border-radius: 4px; vertical-align: 2px; }
+.bub { max-width: 82%; margin: 0 0 10px; padding: 11px 14px; border-radius: 16px; font-size: 15px; line-height: 1.4; }
+.bub--in { background: rgba(255,255,255,.1); border-bottom-left-radius: 4px; }
+.bub--out { margin-left: auto; background: var(--violet); border-bottom-right-radius: 4px; }
+.mail { width: min(420px, 90%); border-radius: 12px; background: #fff; color: var(--ink); padding: 22px 24px; display: grid; gap: 14px; box-shadow: 0 30px 80px rgba(0,0,0,.5); }
+.mail__top { display: grid; gap: 4px; padding-bottom: 12px; border-bottom: 1px solid rgba(11,11,12,.1); }
+.mail__top span { font: 400 12px/1 var(--mono); color: var(--ink-2); }
+.mail__top b { font: 400 22px/1.15 var(--serif); font-weight: 400; }
+.mail__body { margin: 0; font-size: 15px; color: var(--ink-2); }
+.mail .move__chips span { background: var(--violet-wash); color: var(--violet); }
+.funnel { width: min(460px, 90%); display: grid; gap: 10px; }
+.funnel__row { position: relative; display: flex; justify-content: space-between; gap: 12px; padding: 12px 14px; font-size: 15px; }
+.funnel__bar { position: absolute; inset: 0 auto 0 0; border-radius: 8px; background: rgba(156,147,255,.22); z-index: -1; }
+.funnel__row { isolation: isolate; }
+.funnel__row b { font: 400 18px/1 var(--serif); font-weight: 400; }
+.funnel__row--leak .funnel__bar { background: rgba(211,167,84,.35); }
+.funnel__row--leak::after { content: "leak"; position: absolute; right: -52px; top: 50%; translate: 0 -50%; font: 400 11px/1 var(--mono); color: var(--gold); }
+.flow { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; max-width: 92%; }
+.flow__node { display: grid; gap: 4px; padding: 12px 14px; border-radius: 10px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14); text-align: center; }
+.flow__node b { font: 500 15px/1.2 var(--sans); }
+.flow__node span { font: 400 11px/1.3 var(--mono); color: var(--gold); }
+.flow__node:last-child { background: var(--violet); border-color: var(--violet); }
+.flow__node:last-child span { color: #fff; }
+.flow__arr { font-style: normal; color: rgba(255,255,255,.4); }
+.cmp { width: min(460px, 90%); display: grid; gap: 14px; }
+.cmp__a, .cmp__b { padding: 20px 22px; border-radius: 12px; }
+.cmp span { font: 400 12px/1 var(--mono); letter-spacing: .04em; }
+.cmp p { margin: 10px 0 0; font: 400 24px/1.2 var(--serif); letter-spacing: -0.02em; }
+.cmp__a { background: rgba(255,255,255,.05); color: rgba(255,255,255,.5); }
+.cmp__a p { text-decoration: line-through; text-decoration-color: rgba(255,255,255,.5); }
+.cmp__b { background: #fff; color: var(--ink); }
+.cmp__b span { color: var(--violet); }
+.adc { width: min(400px, 90%); padding: 22px 24px; border-radius: 12px; background: #fff; color: var(--ink); display: grid; gap: 10px; box-shadow: 0 30px 80px rgba(0,0,0,.5); }
+.adc__k { font: 400 12px/1 var(--mono); color: var(--ink-2); }
+.adc b { font: 400 24px/1.15 var(--serif); font-weight: 400; letter-spacing: -0.02em; }
+.adc p { margin: 0; color: var(--ink-2); font-size: 15px; }
+.adc .move__chips span { background: var(--violet-wash); color: var(--violet); }
+.wire { display: grid; gap: 16px; justify-items: center; }
+.wire__page { width: min(300px, 80vw); padding: 14px; border-radius: 10px; background: #fff; display: grid; gap: 8px; }
+.wire__b { padding: 14px 12px; border-radius: 6px; background: #EEEDF3; color: var(--ink-2); font-size: 13px; }
+.wire__b--hot { background: var(--violet); color: #fff; }
+.wire__stat { margin: 0; font: 400 22px/1 var(--serif); }
+.hero { overflow: hidden; }
+.hero__photo { position: absolute; top: 0; right: 0; bottom: 0; width: 46%; }
+.hero__photo img { width: 100%; height: 100%; object-fit: cover; opacity: .75; }
+.hero__photo { -webkit-mask: linear-gradient(90deg, transparent 6%, #000 50%), linear-gradient(180deg, #000 55%, transparent 80%); -webkit-mask-composite: source-in; mask: linear-gradient(90deg, transparent 6%, #000 50%), linear-gradient(180deg, #000 55%, transparent 80%); mask-composite: intersect; }
+.hero .wrap { position: relative; z-index: 1; }
+@media (max-width: 900px) { .hero__photo { width: 100%; opacity: .4; } .pin { max-width: 60%; font-size: 12px; } }
+
+/* ---------- Capability pages: the service board scene ---------- */
+.board { width: min(520px, 92%); display: grid; gap: 22px; }
+.board ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.board li { display: flex; gap: 12px; align-items: baseline; font: 400 15px/1.3 var(--sans); color: rgba(255,255,255,.32); }
+.board li span { font: 400 11px/1 var(--mono); width: 22px; color: rgba(255,255,255,.25); }
+.board li.on { color: #fff; }
+.board li.on span { color: var(--gold); }
+.board li.on::after { content: ""; flex: 1; height: 1px; margin-left: 8px; background: linear-gradient(90deg, var(--violet-lt), transparent); align-self: center; }
+.board__detail { padding: 18px 20px; border-radius: 12px; background: rgba(156,147,255,.12); border: 1px solid rgba(156,147,255,.3); font-size: 15px; line-height: 1.5; color: rgba(255,255,255,.85); }
+.card__desc { position: absolute; left: 20px; right: 20px; top: 104px; margin: 0; font-size: 14px; line-height: 1.5; color: var(--ink); opacity: 0; transform: translate3d(0, 30px, 0); transition: opacity .4s var(--curve), transform .4s var(--curve); }
+.card:hover .card__desc, .card:focus-visible .card__desc { opacity: 1; transform: none; }
+.svc__grid--all .card { height: 360px; }
+.svc__grid--all .card__name { font-size: 22px; }
+@media (hover: none) { .card__desc { position: static; opacity: 1; transform: none; margin-top: 12px; } }
+.hero__where { font: 400 13px/1 var(--mono); letter-spacing: .06em; color: var(--gold); margin: 0 0 26px; }
+.hero__where a { color: rgba(255,255,255,.55); text-decoration: none; }
+.proof--one { padding: var(--sec) 0 0; }
+.proof--one .proof__item { max-width: 640px; border-top: 0; padding: 0; }
+.proof--one .proof__n { font-size: clamp(64px, 9vw, 140px); }
+.proof--one .proof__t { font-size: 19px; }
+.nextcap { display: block; padding: 56px 0; border-top: 1px solid rgba(11,11,12,.1); text-decoration: none; }
+.nextcap span { font: 400 13px/1 var(--mono); color: var(--ink-2); }
+.nextcap b { display: block; margin-top: 10px; font: 400 clamp(30px, 3.6vw, 52px)/1.05 var(--serif); letter-spacing: -0.035em; font-weight: 400; }
+.nextcap b em { color: var(--violet); }
+</style>
+</head>
+<body>
+<script>document.body.classList.add('js');</script>
+
+<div class="proto">
+  <a href="/reimagined">All 13</a>
+  <a href="https://profectus-rework.vercel.app/capabilities/paid-media-demand-generation" target="_blank" rel="noopener">Compare: current page ↗</a>
+  <button type="button" aria-pressed="false" data-notes>Show notes</button>
+</div>
+
+<header class="nav"><div class="wrap"><span class="nav__logo">Profectus</span><nav class="nav__links"><span>Capabilities</span><span>Case Studies</span><span>About</span></nav></div></header>
+
+<section class="hero">
+  <div class="hero__photo" aria-hidden="true"><img src="/reimagine/assets/tv.webp" alt=""></div>
+  <div class="wrap">
+    <p class="note"><b>Copy:</b> a hook made for this capability, then its one-line summary. No breadcrumb, no tab bar. <b>Motion:</b> Infinite's fade-up, piece by piece.</p>
+    <p class="hero__where" data-rise style="--d:0"><a href="/reimagined">Capabilities</a> · Reach them</p>
+    <h1 data-rise style="--d:0">Ads for people, <em>not cookies.</em></h1>
+    <p class="hero__lead" data-rise style="--d:1">Paid Media &amp; Demand Generation. Search, social, programmatic, CTV and more, targeted with first-party data and measured against revenue.</p>
+    <div class="hero__btns" data-rise style="--d:2"><a class="btn" href="#">Talk to a media operator →</a><a class="btn btn--ghost" href="#services">What's included</a></div>
+  </div>
+</section>
+
+<section class="proof proof--one">
+  <div class="wrap">
+    <p class="note"><b>Copy:</b> one number, huge, right after the hero. <b>Motion:</b> fade-up.</p>
+    <div class="proof__item" data-rise><span class="proof__n">500+</span><p class="proof__t">platforms we can put an audience on</p></div>
+  </div>
+</section>
+
+<section class="journey">
+  <div class="wrap">
+    <p class="note"><b>Copy:</b> the first 5 services, one at a time. <b>Visual:</b> each one shows the service happening, either a real photo with the data we'd attach to that person, or the thing itself (the message, the chart, the receipt). <b>Motion:</b> Epsilon's scene swap.</p>
+    <p class="label" data-rise>How it works</p>
+    <h2 class="h2" data-rise style="--d:1">Paid Media &amp; Demand Generation, <em>step by step.</em></h2>
+    <div class="journey__grid">
+      <div class="journey__panels">
+        <div class="journey__panel" data-scene="0"><span class="journey__step">01</span><h3>Paid Search &amp; Keyword Strategy</h3><p>Capture intent at the moment it happens.</p></div>
+        <div class="journey__panel" data-scene="1"><span class="journey__step">02</span><h3>Paid Social Across Major Platforms</h3><p>Reach and engage audiences across Meta, TikTok, LinkedIn, Pinterest, Snapchat, Reddit, and X.</p></div>
+        <div class="journey__panel" data-scene="2"><span class="journey__step">03</span><h3>Programmatic &amp; Display Media</h3><p>Access premium inventory across the open web, private marketplaces, and curated deals.</p></div>
+        <div class="journey__panel" data-scene="3"><span class="journey__step">04</span><h3>Retargeting &amp; Remarketing</h3><p>Re-engage visitors who showed intent but didn't convert.</p></div>
+        <div class="journey__panel" data-scene="4"><span class="journey__step">05</span><h3>Lookalike &amp; Expansion Modeling</h3><p>Find more of your best customers.</p></div>
+      </div>
+      <div class="art" aria-hidden="true">
+        <div class="scene is-on"><div class="adc pc"><span class="adc__k">Search · Sponsored</span><b class="pc" style="--i:1">Bakery POS that knows your regulars</b><p class="pc" style="--i:2">Set up in a day. See who comes back, and who stopped.</p><div class="move__chips pc" style="--i:3"><span>Bid only when the searcher matches a buyer</span></div></div><span class="scene__cap pc">Paid search, for people not keywords</span></div>
+        <div class="scene"><div class="adc pc"><span class="adc__k">Social · Sponsored</span><b class="pc" style="--i:1">Your booth by the window is free Friday</b><p class="pc" style="--i:2">Nonna’s Table · Book in one tap</p><div class="move__chips pc" style="--i:3"><span>Shown to lapsed guests only</span></div></div><span class="scene__cap pc">Paid social</span></div>
+        <div class="scene"><div class="ph"><img src="/reimagine/assets/tv.webp" alt=""><span class="ph__shade"></span>
+      <span class="pin pc" style="--i:1;left:4%;top:10%"><b>Household</b>matched · J. Alvarez</span><span class="pin pc" style="--i:2;left:4%;top:28%"><b>Served</b>9:42pm, streaming</span><span class="pin pc" style="--i:3;left:4%;top:46%"><b>Followed by</b>the same ad on her phone</span>
+      <span class="ph__tag pc" style="--i:4">CTV, to a known home</span></div><span class="scene__cap pc">Programmatic and connected TV</span></div>
+        <div class="scene"><div class="ph"><img src="/reimagine/assets/dogwalk.webp" alt=""><span class="ph__shade"></span>
+      <span class="pin pc" style="--i:1;left:56%;top:10%"><b>Tuesday</b>left her cart</span><span class="pin pc" style="--i:2;left:56%;top:28%"><b>Wednesday</b>saw the ad on her phone</span><span class="pin pc" style="--i:3;left:56%;top:46%"><b>Thursday</b>bought</span>
+      <span class="ph__tag pc" style="--i:4">Retargeted, by name</span></div><span class="scene__cap pc">Retargeting that follows a person</span></div>
+        <div class="scene"><div class="vbars"><p class="vbars__t pc" style="--i:0">From your best 1,000 customers</p><div class="vbars__row pc" style="--i:1"><div class="vbars__top"><span>Your best 1,000</span><b>1,000</b></div><span class="rank__bar"><span style="width:2%"></span></span></div><div class="vbars__row pc" style="--i:2"><div class="vbars__top"><span>Lookalikes we found</span><b>84,000</b></div><span class="rank__bar"><span style="width:84%"></span></span></div><div class="vbars__row pc" style="--i:3"><div class="vbars__top"><span>Reached in week one</span><b>51,000</b></div><span class="rank__bar"><span style="width:61%"></span></span></div></div><span class="scene__cap pc">Lookalike expansion (example)</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="svc" id="services">
+  <div class="wrap">
+    <p class="note"><b>Copy:</b> every service on this page (15), as cards instead of an accordion. <b>Motion:</b> fade-up on arrival, then Epsilon's hover reveal: the card tints, slides up, and the full description comes in. One 0.4s curve.</p>
+    <div class="svc__head"><div><p class="label" data-rise>Everything included</p><h2 class="h2" data-rise style="--d:1">15 services, <em>one data foundation.</em></h2></div></div>
+    <div class="svc__grid svc__grid--all">
+      <a class="card" href="#" data-rise style="--d:0"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Paid Search &amp; Keyword Strategy</h3><p class="card__sum">Capture intent at the moment it happens.</p><p class="card__desc">Capture intent at the moment it happens. We manage full-funnel SEM programs across Google, Bing, and emerging search platforms, from keyword strategy to bid management to landing page optimization.</p></div><span class="card__chev">↓</span></a>
+      <a class="card" href="#" data-rise style="--d:1"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Paid Social Across Major Platforms</h3><p class="card__sum">Reach and engage audiences across Meta, TikTok, LinkedIn, Pinterest, Snapchat, Reddit, and X.</p><p class="card__desc">Reach and engage audiences across Meta, TikTok, LinkedIn, Pinterest, Snapchat, Reddit, and X. We develop platform-native strategies paired with custom audience targeting powered by your first-party data.</p></div><span class="card__chev">↓</span></a>
+      <a class="card" href="#" data-rise style="--d:2"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Programmatic &amp; Display Media</h3><p class="card__sum">Access premium inventory across the open web, private marketplaces, and curated deals.</p><p class="card__desc">Access premium inventory across the open web, private marketplaces, and curated deals. We build and optimize programmatic campaigns using first-party data activation, contextual targeting, and real-time bidding strategies.</p></div><span class="card__chev">↓</span></a>
+      <a class="card" href="#" data-rise style="--d:3"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Retargeting &amp; Remarketing</h3><p class="card__sum">Re-engage visitors who showed intent but didn't convert.</p><p class="card__desc">Re-engage visitors who showed intent but didn't convert. We build sophisticated retargeting programs across display, social, and CTV with frequency management and sequential messaging.</p></div><span class="card__chev">↓</span></a>
+      <a class="card" href="#" data-rise style="--d:0"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Lookalike &amp; Expansion Modeling</h3><p class="card__sum">Find more of your best customers.</p><p class="card__desc">Find more of your best customers. We build custom lookalike and expansion audiences based on your highest-value customer profiles and activate them across every major platform.</p></div><span class="card__chev">↓</span></a>
+      <a class="card" href="#" data-rise style="--d:1"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Geo-Targeting &amp; Conquesting</h3><p class="card__sum">Location-based targeting, geo-fencing around competitor locations, proximity targeting, and market-specific…</p><p class="card__desc">Location-based targeting, geo-fencing around competitor locations, proximity targeting, and market-specific campaigns that reach the right people in the right places.</p></div><span class="card__chev">↓</span></a>
+      <a class="card" href="#" data-rise style="--d:2"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Connected TV (CTV) &amp; Over-the-Top (OTT)</h3><p class="card__sum">Bring the precision of digital to the impact of television.</p><p class="card__desc">Bring the precision of digital to the impact of television. We plan and execute CTV and OTT campaigns with household-level targeting, frequency management, and closed-loop measurement tied back to your customer data.</p></div><span class="card__chev">↓</span></a>
+      <a class="card" href="#" data-rise style="--d:3"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Streaming Audio &amp; Podcast Advertising</h3><p class="card__sum">Reach audiences through Spotify, Pandora, iHeart, and podcast placements with precise audience targeting and…</p><p class="card__desc">Reach audiences through Spotify, Pandora, iHeart, and podcast placements with precise audience targeting and attribution. Host-read, programmatic, and branded options.</p></div><span class="card__chev">↓</span></a>
+      <a class="card" href="#" data-rise style="--d:0"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Out-of-Home (OOH): Billboards, Transit, Digital Screens</h3><p class="card__sum">Activate data-driven audiences in the physical world through traditional and programmatic digital out-of-home…</p><p class="card__desc">Activate data-driven audiences in the physical world through traditional and programmatic digital out-of-home placements. Location-targeted, dayparted, and measurable.</p></div><span class="card__chev">↓</span></a>
+      <a class="card" href="#" data-rise style="--d:1"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Radio &amp; Print Media</h3><p class="card__sum">Traditional and streaming radio, magazines, newspapers, and trade publications.</p><p class="card__desc">Traditional and streaming radio, magazines, newspapers, and trade publications. Strategic placements backed by audience data and circulation alignment.</p></div><span class="card__chev">↓</span></a>
+      <a class="card" href="#" data-rise style="--d:2"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Native Advertising</h3><p class="card__sum">In-feed, content recommendation, and sponsored content placements that match the publisher environment while…</p><p class="card__desc">In-feed, content recommendation, and sponsored content placements that match the publisher environment while driving measurable engagement.</p></div><span class="card__chev">↓</span></a>
+      <a class="card" href="#" data-rise style="--d:3"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Retail Media Networks</h3><p class="card__sum">Reach high-intent shoppers at the digital shelf.</p><p class="card__desc">Reach high-intent shoppers at the digital shelf. We manage campaigns across Amazon, Walmart Connect, Instacart, Target Roundel, and other retail media networks, connecting shopper data to closed-loop sales measurement.</p></div><span class="card__chev">↓</span></a>
+      <a class="card" href="#" data-rise style="--d:0"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Creative Testing Frameworks</h3><p class="card__sum">Structured creative testing across formats, messages, audiences, and placements.</p><p class="card__desc">Structured creative testing across formats, messages, audiences, and placements. We build testing roadmaps that continuously improve performance and surface insights that inform strategy.</p></div><span class="card__chev">↓</span></a>
+      <a class="card" href="#" data-rise style="--d:1"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Budget Pacing &amp; Optimization</h3><p class="card__sum">Real-time budget management that maximizes performance across channels.</p><p class="card__desc">Real-time budget management that maximizes performance across channels. We optimize pacing, allocation, and bidding to ensure your spend is always working its hardest.</p></div><span class="card__chev">↓</span></a>
+      <a class="card" href="#" data-rise style="--d:2"><span class="card__tint"></span><div class="card__body"><h3 class="card__name">Attribution &amp; Performance Analysis</h3><p class="card__sum">Multi-touch attribution, media mix modeling, and incrementality analysis that give you an honest picture of…</p><p class="card__desc">Multi-touch attribution, media mix modeling, and incrementality analysis that give you an honest picture of marketing's contribution to revenue. We build the frameworks. We report the truth.</p></div><span class="card__chev">↓</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="swap" data-swap>
+  <div class="swap__stick">
+    <div class="wrap swap__grid">
+      <div>
+        <p class="note"><b>Copy:</b> the owner's four points (one customer at a time, data and creative together, nothing hidden, independent), written for Paid Media &amp; Demand Generation. No comparison chart. <b>Motion:</b> Infinite's pinned card swap.</p>
+        <h2 class="h2">Every customer gets their own journey. <em>You get to see all of it.</em></h2>
+        <p class="swap__sub">Built by people who run marketing for world-class brands. Independent, and open about every dollar.</p>
+        <p class="swap__count"><span data-swap-n>1</span> / 4</p>
+      </div>
+      <div class="swap__stack">
+        <div class="swap__card"><span class="swap__pic"><img src="/reimagine/assets/mail.webp" alt=""></span><span class="swap__k">01 · One customer at a time</span><span class="swap__us">Ads sent to people, matched one by one, not cookie guesses.</span></div>
+        <div class="swap__card"><span class="swap__pic"><img src="/reimagine/assets/team.webp" alt=""></span><span class="swap__k">02 · Data and creative in the same room</span><span class="swap__us">Media buyers and the creative team plan every flight together.</span></div>
+        <div class="swap__card"><span class="swap__pic"><img src="/reimagine/assets/owner-sheet.webp" alt=""></span><span class="swap__k">03 · Nothing hidden</span><span class="swap__us">Spend, reach and revenue reported per channel, plainly.</span></div>
+        <div class="swap__card"><span class="swap__pic"><img src="/reimagine/assets/opensign.webp" alt=""></span><span class="swap__k">04 · Proudly independent</span><span class="swap__us">No inventory of our own, so your budget goes where it works.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ask">
+  <div class="wrap ask__grid">
+    <div><p class="label" data-rise>Before you call</p><h2 class="h2" data-rise style="--d:1">What people <em>ask us first.</em></h2></div>
+    <div data-rise style="--d:2">
+      <details><summary>Can I start with Paid Media &amp; Demand Generation on its own?</summary><p>Yes. Most clients start with one capability and add more once it's paying for itself. <mark>[Confirm]</mark></p></details>
+      <details><summary>How long until we see results?</summary><p><mark>[Need: a real range for Paid Media &amp; Demand Generation.]</mark></p></details>
+      <details><summary>Who owns the data when we're done?</summary><p>You own your customer data, always. <mark>[Confirm wording]</mark></p></details>
+      <details><summary>What does it cost to start?</summary><p><mark>[Need: a starting price or range.]</mark></p></details>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><a class="nextcap" href="/reimagine/capabilities/loyalty-lifecycle"><span>Next · Reach them</span><b>Loyalty &amp; Lifecycle <em>→</em></b></a></div>
+
+<section class="close">
+  <h2 data-rise>Stop paying to meet <em>the same stranger twice.</em></h2>
+  <a class="btn" href="#" data-rise style="--d:1">Talk to a media operator →</a>
+</section>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp = (v) => Math.max(0, Math.min(1, v));
+
+  // Notes switch
+  const nb = document.querySelector('[data-notes]');
+  nb.addEventListener('click', () => { const on = document.body.classList.toggle('show-notes'); nb.setAttribute('aria-pressed', on); nb.textContent = on ? 'Hide notes' : 'Show notes'; });
+
+  // Infinite's fade-up: once, when the piece is ~10% into the screen.
+  const rise = [...document.querySelectorAll('[data-rise]')];
+  // The hero plays on load; it's all on the first screen anyway.
+  document.querySelectorAll('.hero [data-rise]').forEach((el) => requestAnimationFrame(() => el.classList.add('is-in')));
+  if (reduce) rise.forEach((el) => el.classList.add('is-in'));
+  else {
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px 0px 0px' });
+    rise.forEach((el) => io.observe(el));
+  }
+
+  // Epsilon's scene swap: whichever step's text crosses the middle of the
+  // screen sets the scene. CSS plays the change (out 0.3s, in 150ms apart).
+  const scenes = [...document.querySelectorAll('.scene')];
+  const sio = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    const n = +e.target.dataset.scene;
+    scenes.forEach((s, i) => s.classList.toggle('is-on', i === n));
+  }), { rootMargin: '-50% 0px -50% 0px' });
+  document.querySelectorAll('[data-scene]').forEach((p) => sio.observe(p));
+
+  // Infinite's card swap: progress through the pinned section slides the
+  // current card up and out while the next comes up from below. Linear
+  // scrub, like theirs: opacity = 1 - |offset| / distance.
+  const swap = document.querySelector('[data-swap]');
+  const cards = [...swap.querySelectorAll('.swap__card')];
+  const count = swap.querySelector('[data-swap-n]');
+  let queued = false, lastN = 0;
+  const draw = () => {
+    queued = false;
+    if (innerWidth <= 900 || reduce) return;
+    const r = swap.getBoundingClientRect();
+    const p = clamp(-r.top / (swap.offsetHeight - innerHeight));
+    const pos = p * (cards.length - 1);           // 0 .. 5: which card is centred
+    const D = 420;                                 // px a card travels on its way in or out
+    cards.forEach((c, i) => {
+      const off = i - pos;                         // 0 = centred, 1 = next one down
+      const y = Math.max(-1, Math.min(1, off)) * D;
+      c.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
+      c.style.opacity = (1 - Math.min(1, Math.abs(off))).toFixed(3);
+      c.style.zIndex = String(10 - Math.round(Math.abs(off) * 2));
+    });
+    const n = Math.round(pos) + 1;
+    if (n !== lastN) { lastN = n; count.textContent = n; }
+  };
+  addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(draw); } }, { passive: true });
+  addEventListener('resize', draw);
+  draw();
+})();
+</script>
+</body>
+</html>

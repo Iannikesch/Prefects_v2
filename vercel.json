@@ -3,6 +3,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
+    { "source": "/capabilities/enterprise-email-text-messaging", "destination": "/capabilities/loyalty-lifecycle", "permanent": true },
     { "source": "/case-studies/filters/:filter", "destination": "/case-studies", "permanent": true },
     { "source": "/portfolio", "destination": "/case-studies", "permanent": true },
     { "source": "/vision", "destination": "/about", "permanent": true },

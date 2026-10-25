@@ -1,18 +1,7 @@
 ---
-// The live privacy page is another company's policy ("Anker"), so it can't
-// be carried over. The client needs to supply a real one.
-import Base from '../layouts/Base.astro';
+// The live site's policy belongs to another company, so it can't be reused.
+import LegalPage from '../components/LegalPage.astro';
 ---
-<Base title="Privacy Policy" footerCta={false}>
-  <section class="hero hero--page hero--left">
-    <div class="wrap hero__inner">
-      <p class="pf-eyebrow">Legal</p>
-      <h1 class="t-h1">Privacy Policy</h1>
-    </div>
-  </section>
-  <section class="section section--flush-top">
-    <div class="wrap stack measure">
-      <p class="ph" style="place-items:start;text-align:left"><span>Placeholder · The client must supply a privacy policy for The Profectus Agency. The live site's policy belongs to another company and can't be reused.</span></p>
-    </div>
-  </section>
-</Base>
+<LegalPage title="Privacy Policy"
+  need="The owner's lawyer needs to supply this. Because we hold data on 230 million people, it should cover how that data is sourced, used and shared, and every state privacy right (California and others)."
+  sections={['What we collect', 'Where our consumer data comes from', 'How we use it', 'Who we share it with', 'Your rights and choices', 'How we protect it', 'Children', 'Changes to this policy', 'Contact us']} />

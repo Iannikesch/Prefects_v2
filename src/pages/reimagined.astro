@@ -1,0 +1,49 @@
+---
+// Reimagined: a hub for the reference prototypes (built locally, copied to
+// public/reimagine/) so the owner can see them on the live link. They are
+// drafts, not the site: each one is marked noindex.
+import Fresh from '../layouts/Fresh.astro';
+import { bySlug, SPINE, SERVICE_GROUPS } from '../data/capabilities.js';
+const GROUPS = [
+  { title: 'The five stages', slugs: SPINE.map((s) => s.slug) },
+  ...[...SERVICE_GROUPS].reverse().map((g) => ({ title: g.title, slugs: g.slugs })),
+];
+---
+<Fresh title="Reimagined · Profectus Agency">
+  <section class="rhero rhero--page" data-hero>
+    <div class="rhero__inner">
+      <p class="pf-eyebrow">Drafts for review</p>
+      <h1 class="pf-display rhero__title">The site, <em class="foil-text">reimagined</em>.</h1>
+      <p class="rhero__lead">Reference prototypes, not the live pages. Built around the owner's viewpoint: personalization at scale, run by people, nothing hidden, proudly independent. Real photos where we have them, labelled grey slots naming the exact shot where we don't, and scroll motion borrowed from Epsilon and The Infinite Agency. Every page has a "Show notes" button that explains each choice, and a link to compare it with the current version.</p>
+    </div>
+  </section>
+
+  <section class="rmg light">
+    <div class="rmg__inner">
+      <a class="rmg__feature" href="/reimagine/homepage">
+        <img src="/reimagine/assets/coffee.webp" alt="" loading="lazy">
+        <span class="rmg__k">Homepage</span>
+        <span class="rmg__t">Personal to every customer. <em>Proof for every dollar.</em></span>
+        <span class="rmg__go">Open the homepage →</span>
+      </a>
+      <a class="rmg__feature rmg__feature--alt" href="/reimagine/identity-reframe">
+        <img src="/reimagine/assets/dogwalk.webp" alt="" loading="lazy">
+        <span class="rmg__k">Earlier take · Identity Resolution</span>
+        <span class="rmg__t">The forced journey: a stranger becomes <em>someone.</em></span>
+        <span class="rmg__go">Open it →</span>
+      </a>
+      {GROUPS.map((g) => (
+        <div class="rmg__group">
+          <p class="pf-eyebrow">{g.title}</p>
+          {g.slugs.map((slug) => { const c = bySlug(slug); return (
+            <a class="rmg__row" href={`/reimagine/capabilities/${slug}`}>
+              <span class="rmg__name">{c.name}</span>
+              <span class="rmg__sum">{c.summary}</span>
+              <span class="rmg__arrow">→</span>
+            </a>
+          ); })}
+        </div>
+      ))}
+    </div>
+  </section>
+</Fresh>

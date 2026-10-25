@@ -1,184 +1,250 @@
 ---
-// Homepage. Twelve bands. Movers (time-driven backgrounds) are spaced so
-// only one is on screen at a time: aurora, marquee, globe, code rain,
-// galaxy, footer aurora. Every other band is still.
-import Base from '../layouts/Base.astro';
-import Ph from '../components/Ph.astro';
-import CaseRail from '../components/CaseRail.astro';
-import Mood from '../components/Mood.astro';
-import { AI_NAME, AI_PATH, STATS, INDUSTRIES, WHY, PROCESS } from '../data/site.js';
-import { THEMES, inTheme } from '../data/capabilities.js';
-import { CASE_STUDIES, caseBySlug } from '../data/caseStudies.js';
-import Aurora from '../components/Aurora.astro';
-import CodeRain from '../components/CodeRain.astro';
-import Galaxy from '../components/Galaxy.astro';
-import Globe from '../components/Globe.astro';
-import Marquee from '../components/Marquee.astro';
-import { LAYERS, mv } from '../data/layers.js';
-
-const featured = caseBySlug('serenity-collective');
-const pad = (n) => String(n).padStart(2, '0');
+// Rework homepage, built fresh section by section. Section 1: the hero.
+// The previous homepage is kept at src/pages/_old-index.astro for reference
+// (the underscore keeps it from being published as a page).
+import Fresh from '../layouts/Fresh.astro';
+import PeopleJourney from '../components/PeopleJourney.astro';
+import '../styles/people-journey.css';
+import B2BFlow from '../components/B2BFlow.astro';
+import '../styles/b2b-flow.css';
+import '../styles/rose.css';
+import { CASE_STUDIES } from '../data/caseStudies.js';
+// "Reach real people" slides: the four case studies plus a placeholder.
+// Photos and client logos are placeholders until supplied.
+const REACH = [
+  ...CASE_STUDIES.map((c) => ({ client: c.client, title: c.title, href: `/case-studies/${c.slug}` })),
+  { client: '[Client 5]', title: '[Case study headline]', href: '/case-studies' },
+];
+// Clients cleared to name (owner, Oct 21). Sizes follow Silver Bullet's
+// measured logos at 1440; Sitka is a temporary wordmark until its logo arrives.
+// The images are pre-baked (fill already applied, 2x for Retina) so scrolling
+// never has to re-mask them; sources are the plain files beside them.
+const CLIENTS = [
+  { name: 'OpenAI', src: '/logos/baked-openai.webp?v=4', w: 193, h: 38 },
+  { name: 'Smoothie King', src: '/logos/baked-smoothie-king.webp?v=4', w: 107, h: 80 },
+  { name: 'Essentials Provisions', src: '/logos/baked-essentials-mark.webp?v=4', w: 60, h: 60 },   // their E mark (Oct 22), source: essentials-provisions-mark.png
+  { name: 'Skyrizi', src: '/logos/baked-skyrizi.webp?v=4', w: 108, h: 49 },
+  { name: 'Marriott', src: '/logos/baked-marriott.webp?v=4', w: 130, h: 67 },
+  { name: 'General Motors', src: '/logos/baked-general-motors.webp?v=4', w: 60, h: 60 },
+  { name: 'Sitka', src: '/logos/baked-sitka.webp?v=4', w: 120, h: 33 },
+];
 ---
-<Base>
-  <!-- 1 · Hero: Profectus, unchanged. Mover: aurora. -->
-  <section class="hero">
-    <Aurora />
-    <div class="hero__inner">
-      <span class="pf-pill pf-pill--tag">The Profectus Agency</span>
-      <h1 class="pf-display"><em>Your</em> Progress,<br />Our Purpose.</h1>
-      <p class="t-lead">Profectus is powered by a proprietary data spine with near-full domestic coverage. We've spent decades building this capability inside Fortune 50 organizations.</p>
-      <div class="pills pills--center">
-        <a class="pf-pill" href="/contact" data-contact>Get in Touch →</a>
-        <a class="pf-pill pf-pill--ghost" href={AI_PATH}>Meet {AI_NAME} →</a>
+<Fresh>
+  <section class="rhero rhero--rose" data-hero>
+    <div class="rhero__inner">
+      <h1 class="pf-display rhero__title">Personalization through <em class="foil-text glow">data</em> and customer experience.</h1>
+      <span class="foil-rule glow" aria-hidden="true"></span>
+      <p class="rhero__lead">Profectus is an independent marketing agency. We give every customer the message, channel and moment that fits them, at scale and in real time, and show you what each one earned. Run by people who run marketing for world-class brands.</p>
+      <div class="rhero__pills">
+        <a class="pf-pill btn-gold glow" href="/contact">Get in Touch →</a>
+        <a class="pf-pill pf-pill--ghost" href="/capabilities">See what we do →</a>
+      </div>
+      <!-- Capability rose: the hero's mover, in place of the code rain. -->
+      <div class="rose" data-rose>
+        <div class="rose__chart" data-rose-chart tabindex="0" role="group" aria-label="Capabilities chart. Use the left and right arrow keys to step through the six capabilities.">
+          <canvas aria-hidden="true"></canvas>
+        </div>
+        <div class="rose__readout" data-rose-readout aria-live="polite">
+          <p class="rose__k">Capabilities</p>
+          <p class="rose__name">Six channels, one customer.</p>
+          <p class="rose__sum">Hover a petal to see what it does.</p>
+          <p class="rose__sig">&nbsp;</p>
+        </div>
       </div>
     </div>
-    <svg class="hero__cue" viewBox="0 0 28 14" fill="none" aria-hidden="true"><path d="M1 1l13 12L27 1" stroke="#fff" /></svg>
+    <!-- Companies who trust us: sits on the hero's fade line. Each logo is
+         filled light at the top and dark at the bottom, the reverse of the
+         fade behind it. Hover rolls it up to a copy of itself (Silver Bullet). -->
+    <p class="trusted__label" id="trusted-label">Companies who trust Profectus</p>
+    <ul class="trusted" aria-labelledby="trusted-label" data-trusted>
+      {CLIENTS.map((c, i) => (
+        <li class="tlogo" style={`--logo:url(${c.src});--w:${c.w}px;--h:${c.h}px;--i:${i}`}>
+          <span class="tlogo__track" aria-hidden="true"><img src={c.src} alt="" width={c.w} height={c.h} decoding="async" /><img src={c.src} alt="" width={c.w} height={c.h} decoding="async" /></span>
+          <span class="sr-only">{c.name}</span>
+        </li>
+      ))}
+    </ul>
   </section>
 
-  <!-- 2 · Statement: the page's one scroll-scrubbed headline (Profectus) -->
-  <section class="section">
-    <div class="wrap statement">
-      <p class="pf-eyebrow">Services overview</p>
-      <h2 class:list={['pf-h2', mv.scrub]}>Everything You Need to Move Forward. Nothing You Don't.</h2>
-      <div class="statement__cols">
-        <p class="t-soft">We sit at the intersection of data science, strategic media, and performance creative, connected by a proprietary data spine with near-full domestic coverage. Identity resolution. Cookieless activation. Audience intelligence.</p>
-        <p class="t-soft">Our team spent decades running marketing and data programs inside Fortune 50 organizations. We built Profectus to make that capability available to every brand we work with.</p>
+  <!-- "Reach real people, drive real results": Epsilon's coverflow band,
+       measured. White text, gold calls to action, purple overlay on the
+       selected card, darker purple on the sides. Placeholder photos/logos. -->
+  <section class="reach" aria-labelledby="reach-h">
+    <!-- Background: the "Our infrastructure" blend across the whole band,
+         faded into the white above and below. -->
+    <div class="reach__bg" aria-hidden="true"></div>
+    <h2 class="reach__h" id="reach-h">Reach real people, drive real results</h2>
+    <div class="cflow" data-cflow tabindex="0" aria-roledescription="carousel" aria-label="Case studies">
+      <div class="cflow__track">
+        {[0, 1, 2].map(() => REACH.map((r) => (
+          <a class="cflow__slide" href={r.href}>
+            <span class="cflow__photo"><span>Photo · {r.client}</span></span>
+            <span class="cflow__shade" aria-hidden="true"></span>
+            <span class="cflow__panel">
+              <span class="cflow__logo">{r.client}</span>
+              <span class="cflow__title">{r.title}</span>
+              <span class="cflow__cta">Read the case study →</span>
+            </span>
+          </a>
+        )))}
       </div>
+      <button class="cflow__arrow cflow__prev" type="button" aria-label="Previous case study">←</button>
+      <button class="cflow__arrow cflow__next" type="button" aria-label="Next case study">→</button>
+      <div class="cflow__dots">{REACH.map((r, k) => <button class="cflow__dot" type="button" aria-label={`Go to ${r.client}`}></button>)}</div>
     </div>
+    <a class="reach__all btn-gold pf-pill" href="/case-studies">See all</a>
   </section>
 
-  <!-- 3 · Capabilities: IBM title-plus-items. 12 services grouped into 4 themes. -->
-  <section class="section section--flush-top">
-    <div class="wrap ti">
-      <div class="head">
-        <p class="pf-eyebrow">Capabilities</p>
-        <h2 class="pf-h2">Every Capability. One Spine.</h2>
-        <p class="t-soft">Each capability works independently or as part of a fully integrated engagement.</p>
-        <div class="pills"><a class="pf-pill pf-pill--ghost" href="/capabilities">View All Capabilities →</a></div>
+
+  <!-- Section 2 (Epsilon's "what we can do" framing, original copy):
+       one big card on the left, two stacked on the right. Cards grow on hover. -->
+
+  <!-- Stack-over pair: the pin on "Put our data to work" lasts only as long
+       as this wrapper, so it lets go once "Why Profectus" has covered it. -->
+  <div class="stack">
+  <section class="uses light" data-pin>
+    <!-- White galaxy (the cloud photo as a negative, ink stars): fades in
+         from the left, full strength behind the cascade on the right. -->
+    <div class="uses__galaxy uses__galaxy--light" aria-hidden="true"><div class="pf-nebula" data-src="/img/nebula-violet" data-theme="light"></div></div>
+    <div class="uses__inner">
+      <div class="uses__head">
+        <p class="pf-eyebrow">What we do</p>
+        <h2 class="lh2">Personalization at scale, <em class="v">in real time</em>.</h2>
       </div>
-      <div class="ti__items">
-        {THEMES.map((t, i) => (
-          <div class:list={['tile', mv.lag]} data-anchor="parent" data-speed={i % 2 ? 0.07 : 0.03} data-max="36">
-            <p class="pf-eyebrow">{pad(i + 1)} · {t.name}</p>
-            <p class="t-soft">{t.blurb}</p>
-            <ul>{inTheme(t.id).map((c) => <li><a href={`/capabilities/${c.slug}`}>{c.name}</a></li>)}</ul>
+      <div class="uses__grid">
+        <a class="ucard ucard--big" href="/capabilities/audience-intent-development">
+          <!-- One customer, everything we know about her, drawn as a web around her photo. Example profile. -->
+          <div class="ucard__media pweb" aria-label="Example customer profile: Maria A., 34, Austin TX. Clicked a Meta ad Tuesday 9:12pm, visited the store 3 times this month, 73% more likely to buy on iOS, didn't open her last 4 texts">
+            <svg class="pweb__lines" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
+              <circle cx="200" cy="150" r="96" />
+              <line x1="200" y1="150" x2="70" y2="48" /><line x1="200" y1="150" x2="330" y2="48" />
+              <line x1="200" y1="150" x2="48" y2="150" /><line x1="200" y1="150" x2="352" y2="150" />
+              <line x1="200" y1="150" x2="78" y2="256" /><line x1="200" y1="150" x2="322" y2="256" />
+            </svg>
+            <figure class="pweb__me"><img src="/img/photos/hs-14.webp" alt="" loading="lazy" decoding="async"></figure>
+            <span class="pweb__tag" style="left:17%;top:16%"><b>Name</b>Maria A., 34</span>
+            <span class="pweb__tag" style="left:83%;top:16%"><b>Lives in</b>Austin, TX</span>
+            <span class="pweb__tag" style="left:12%;top:50%"><b>Clicked a Meta ad</b>Tue, 9:12 pm</span>
+            <span class="pweb__tag" style="left:88%;top:50%"><b>Visited the store</b>3x this month</span>
+            <span class="pweb__tag pweb__tag--stat" style="left:19%;top:85%"><b>73%</b>more likely to buy on iOS</span>
+            <span class="pweb__tag pweb__tag--no" style="left:81%;top:85%"><b>Texts ✕</b>Last 4 not opened</span>
           </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- 4 · Industries: Profectus marquee, 50px/s. Mover. -->
-  <section class="section--sm">
-    <div class="wrap head" style="margin-bottom:40px">
-      <p class="pf-eyebrow">Who we work with</p>
-      <h2 class="pf-h2">Target Industries</h2>
-    </div>
-    <Marquee items={INDUSTRIES} />
-  </section>
-
-  <!-- 5 · Featured case study: one big story (Deloitte featured card) -->
-  <section class="section">
-    <div class="wrap feature">
-      <Ph class="feature__media" label={`${featured.client} hero photo`} />
-      <div class="stack-lg">
-        <div class="head">
-          <p class="pf-eyebrow">Featured · {featured.client}</p>
-          <h2 class="pf-h2">Zero to <em>85%</em> occupancy in six months.</h2>
-        </div>
-        <p class="t-soft">{featured.summary}</p>
-        <div class="feature__stats">
-          {featured.stats.slice(1, 4).map((s) => <div><b>{s.value}</b><span class="pf-eyebrow">{s.label}</span></div>)}
-        </div>
-        <a class="link-arrow" href={`/case-studies/${featured.slug}`}>Read the case study →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6 · Results: heading + globe (mover), static stat row under a hairline (Merkle) -->
-  <section class="section section--flush-top">
-    <div class="wrap">
-      <div class="results">
-        <div class="head">
-          <p class="pf-eyebrow">Firm highlights</p>
-          <h2 class="pf-h2">These are results our team has delivered for brands ranging from regional startups to Fortune 500 enterprises.</h2>
-        </div>
-        <Globe />
-      </div>
-      <div class="stat-row" style="--n:5;margin-top:48px">
-        {STATS.map((s) => <div><span class="pf-stat">{s.value}</span><span class="pf-eyebrow">{s.label}</span></div>)}
-      </div>
-    </div>
-  </section>
-
-  <!-- 7 · How it works: three numbered steps (live About copy) -->
-  <section class="section">
-    <div class="wrap">
-      <div class="head">
-        <p class="pf-eyebrow">Our process</p>
-        <h2 class="pf-h2">How It Works</h2>
-      </div>
-      <ol class="steps">
-        {PROCESS.map((s, i) => <li><span class="pf-eyebrow">{pad(i + 1)}</span><h3 class="t-h3">{s.title}</h3><p class="t-soft">{s.text}</p></li>)}
-      </ol>
-    </div>
-  </section>
-
-  <!-- 8 · Mid-page CTA over a parallax photo (Profectus) -->
-  <section class:list={[mv.parallax, 'band-photo']}>
-    <Ph class="pm-parallax__plate" label="Mid-page photo (live site: skyscraper)" />
-    <div class="band-photo__inner">
-      <h2 class="t-h1">We built the infrastructure. Now we put it to work for you<span class="pf-accent-dot">.</span></h2>
-      <a class="pf-pill pf-pill--ghost" href="/about">About Us →</a>
-    </div>
-  </section>
-
-  <!-- 9 · The AI product: code rain on one side. Mover. -->
-  <section class="section clip">
-    <div class="ai-band__rain" aria-hidden="true"><CodeRain /></div>
-    <div class="wrap ai-band layer">
-      <div class="stack-lg">
-        <div class="head">
-          <p class="pf-eyebrow">{AI_NAME}</p>
-          <h2 class="pf-h2">Your company's <em>own</em> AI.</h2>
-        </div>
-        <p class="t-soft measure">It knows your business, plugs into the tools you already use, and doesn't just answer questions. It does the work. Built for you, owned by you.</p>
-        <ul class="beats">
-          <li><span class="pf-eyebrow">Sees</span><span class="t-soft">One view of your whole business, in plain language.</span></li>
-          <li><span class="pf-eyebrow">Answers</span><span class="t-soft">Ask about your numbers and get answers from your own data.</span></li>
-          <li><span class="pf-eyebrow">Builds</span><span class="t-soft">Drafts, files, follows up, and builds the sites and apps you ask for.</span></li>
-        </ul>
-        <div class="pills">
-          <a class="pf-pill" href={AI_PATH}>Meet {AI_NAME} →</a>
-          <a class="pf-pill pf-pill--ghost" href="/contact" data-contact>Book a Demo →</a>
+          <div class="ucard__body">
+            <p class="pf-eyebrow">Use case · One customer, fully known</p>
+            <h3>Find, and keep, your highest-value customers.</h3>
+            <p>Maria has bought from you 14 times since 2021. She shops on her iPhone after 8pm and opens email, but never texts. So she hears from you by email, on her phone, in the evening, with the offer she's most likely to take. Now picture that for every customer you have.</p>
+            <span class="ucard__link">See how it works →</span>
+          </div>
+        </a>
+        <!-- Right side: the cards cascade down a lane on a black, gold-edged panel -->
+        <div class="uses__lane cascade" data-speed="18.2" data-cols="1" aria-label="More of what we do">
+          <a class="cascade__card ucard ucard--lane" href="/capabilities/identity-resolution?tab=inside">
+            <div class="ucard__media"><img src="/img/photos/g-unconnected.webp" alt="One customer's scattered records: an address, an email, a loyalty account" loading="lazy" decoding="async"></div>
+            <div class="ucard__body">
+              <p class="pf-eyebrow">Website visitors</p>
+              <h3>We put a name to a click.</h3>
+              <span class="ucard__link">See how it works →</span>
+            </div>
+          </a>
+          <a class="cascade__card ucard ucard--lane" href="/capabilities/data-identity-infrastructure">
+            <div class="ucard__media"><img src="/img/photos/g-propensity.webp" alt="A customer profile with her propensity score, quiz answers and last purchase, routed to email and SMS" loading="lazy" decoding="async"></div>
+            <div class="ucard__body">
+              <p class="pf-eyebrow">Data &amp; identity</p>
+              <h3>Turn scattered data into one record per customer.</h3>
+              <span class="ucard__link">See how it works →</span>
+            </div>
+          </a>
+          <a class="cascade__card ucard ucard--lane" href="/capabilities/paid-media-demand-generation">
+            <div class="ucard__media"><img src="/img/photos/g-channels.webp" alt="One customer connected to search, social and display" loading="lazy" decoding="async"></div>
+            <div class="ucard__body">
+              <p class="pf-eyebrow">Paid &amp; owned media</p>
+              <h3>Keep every channel telling the same story.</h3>
+              <span class="ucard__link">See how it works →</span>
+            </div>
+          </a>
         </div>
       </div>
-      <div class="pf-glass ai-band__panel"><Ph label="Product screenshot or demo still" style="position:absolute;inset:32px;background-color:transparent" /></div>
     </div>
   </section>
 
-  <!-- 10 · More work: Merkle heading-left rail -->
-  <section class="section">
-    <div class="wrap"><CaseRail cases={CASE_STUDIES} /></div>
-  </section>
-
-  <!-- 11 · Why Profectus: glass cards alternating over the galaxy. Mover. -->
-  <section class="section why clip">
-    <Galaxy />
-    <div class="why__rules pf-rules" aria-hidden="true"></div>
-    <div class="wrap layer">
-      <div class="head head--center">
+  <!-- Why Profectus (Oct 22, owner's notes): personalization at scale, run by
+       people, shown to you step by step. Four points, each with a photo. -->
+  <section class="edge" aria-labelledby="edge-h">
+    <div class="edge__inner">
+      <div class="edge__head">
         <p class="pf-eyebrow">Why Profectus</p>
-        <h2 class="pf-h2">The Data Spine Changes Everything.</h2>
+        <h2 class="edge__h" id="edge-h">Every customer gets their own journey. <em class="foil-text">You get to see all of it.</em></h2>
+        <p class="edge__lead">Most agencies make one great ad and hope it lands with everyone. We tailor every message to the person getting it, and show you every step and what it earned. Here's what that looks like for one customer.</p>
       </div>
-      <ol class="why__cards">
-        {WHY.map((w, i) => (
-          <li><div class="pf-glass"><span class="pf-eyebrow">{pad(i + 1)}</span><h3 class="t-h3">{w.title}</h3><p class="t-body">{w.text}</p></div></li>
-        ))}
-      </ol>
+      <div class="edge__journey"><PeopleJourney /></div>
+      <div class="edge__foot">
+        <p class="edge__line">Built for world-class brands. <em class="v">Sized for the business down the street.</em></p>
+        <a class="pf-pill btn-gold" href="/contact">Start the conversation →</a>
+      </div>
+    </div>
+  </section>
+  </div>
+
+
+  <!-- B2B flow (owner's call, Oct 25): replaces "Everything our data powers".
+       The consumer story above, the business story here, then book a call. -->
+  <section class="b2b" aria-labelledby="b2b-h">
+    <div class="b2b__inner">
+      <div class="b2b__head">
+        <p class="pf-eyebrow">For businesses that sell to businesses</p>
+        <h2 class="b2b__h" id="b2b-h">Your rep walks in. <em class="foil-text">Everyone in the room has already heard from us.</em></h2>
+        <p class="b2b__lead">Here's how it works for our client Hill Country Dairies, who deliver dairy to kitchens across Texas. When one of their customers goes quiet, or is ready to buy more, we work out who makes the call there and what each of them cares about. Each one hears from HCD in the week before the visit, and the HCD rep walks in knowing what to pitch.</p>
+      </div>
+      <B2BFlow />
+      <div class="b2b__foot">
+        <p class="b2b__line">Selling to people or to businesses? <em class="v">We do both.</em></p>
+        <a class="pf-pill btn-gold" href="/contact">Interested? Book a call →</a>
+      </div>
     </div>
   </section>
 
-  <!-- 12 · Mood band (Deloitte), still glow. Then the footer. -->
-  <Mood eyebrow="Our infrastructure" title="Most agencies resell someone else's data. <em>This</em> is ours." pill="About Our Firm" href="/about" />
-</Base>
+  <!-- Experiment: the "Our infrastructure" mood band, repainted as light
+       washes of the same teal, violet and navy, with a little gold. -->
+  <section class="mood-light light">
+    <div class="mood-light__inner">
+      <p class="pf-eyebrow">Our infrastructure</p>
+      <p class="mood-light__title">Most agencies resell someone else's data. <em class="v">This</em> is ours.</p>
+      <a class="pill-ink" href="/about">About Our Firm →</a>
+    </div>
+  </section>
+
+  <script>
+    // Stack-over: "Put our data to work" pins once its bottom reaches the
+    // bottom of the screen, and "Why Profectus" slides up over it. The pin
+    // point depends on the section's height, so it's measured on load and resize.
+    const pin = document.querySelector('[data-pin]');
+    if (pin) {
+      const set = () => pin.style.setProperty('--pin-top', `${Math.min(0, innerHeight - pin.offsetHeight)}px`);
+      addEventListener('resize', set);
+      addEventListener('load', set);
+      set();
+
+      // As "Why Profectus" comes up over it, the pinned section fades and
+      // sinks back a touch (to 35% and 96% at full cover), so the hand-off
+      // flows. Scroll-linked; opacity and transform only.
+      const sheet = pin.nextElementSibling;
+      if (sheet && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        let queued = false, last = -1;
+        const fade = () => {
+          queued = false;
+          const top = sheet.getBoundingClientRect().top;
+          const p = Math.max(0, Math.min(1, (innerHeight - top) / innerHeight));
+          if (Math.abs(p - last) < 0.002) return;
+          last = p;
+          pin.style.opacity = (1 - p * 0.65).toFixed(3);
+          pin.style.transform = p ? `scale(${(1 - p * 0.04).toFixed(4)})` : '';
+        };
+        addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(fade); } }, { passive: true });
+        fade();
+      }
+    }
+  </script>
+<script>
+  import '../scripts/rose.js';
+</script>
+</Fresh>

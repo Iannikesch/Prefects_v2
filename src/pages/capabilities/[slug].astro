@@ -1,95 +1,19 @@
 ---
-// Service detail template (IBM + Epsilon + Deloitte). One template, all 12
-// capabilities, same URLs as the live site.
-import Base from '../../layouts/Base.astro';
-import Accordion from '../../components/Accordion.astro';
-import CaseCard from '../../components/CaseCard.astro';
-import Mood from '../../components/Mood.astro';
-import { CAPABILITIES, THEMES, bySlug } from '../../data/capabilities.js';
-import { CASE_STUDIES, casesFor } from '../../data/caseStudies.js';
-import { AI_NAME, AI_PATH } from '../../data/site.js';
-import Aurora from '../../components/Aurora.astro';
+// One page per capability, reimagined (Oct 22). Content per slug lives in
+// src/reimagined/<slug>.html (ported from the prototypes); the previous
+// template is _prev-slug.astro.
+import Fresh from '../../layouts/Fresh.astro';
+import '../../reimagined/reimagined.css';
+import '../../reimagined/tight.css';
+import { CAPABILITIES, bySlug } from '../../data/capabilities.js';
 
+const pages = import.meta.glob('../../reimagined/*.html', { query: '?raw', import: 'default', eager: true });
 export function getStaticPaths() {
   return CAPABILITIES.map((c) => ({ params: { slug: c.slug } }));
 }
 const cap = bySlug(Astro.params.slug);
-const theme = THEMES.find((t) => t.id === cap.theme);
-const related = CAPABILITIES.filter((c) => c.theme === cap.theme && c.slug !== cap.slug)
-  .concat(CAPABILITIES.filter((c) => c.theme !== cap.theme))
-  .slice(0, 4);
-const cases = casesFor(cap.slug);
-const shown = (cases.length ? cases : CASE_STUDIES).slice(0, 2);
-const isAI = cap.slug === 'ai-automation';
+const body = pages[`../../reimagined/${cap.slug}.html`];
 ---
-<Base title={cap.name} description={cap.summary}>
-  <section class="hero hero--page hero--left">
-    <Aurora />
-    <div class="wrap hero__inner">
-      <ol class="crumbs pf-eyebrow"><li><a href="/capabilities">Capabilities</a></li><li>{theme.name}</li></ol>
-      <h1 class="t-h1">{cap.name}</h1>
-      <p class="t-lead measure">{cap.summary}</p>
-      <div class="pills">
-        <a class="pf-pill" href="/contact" data-contact>Talk to Us About This →</a>
-        <a class="pf-pill pf-pill--ghost" href="#services">See All {cap.items.length} Services ↓</a>
-      </div>
-    </div>
-  </section>
-
-  {isAI && (
-    <section class="section--sm">
-      <div class="wrap">
-        <a class="next-pick" href={AI_PATH}>
-          <div class="ph" style="aspect-ratio:auto;height:100%;min-height:180px"><span>Placeholder · {AI_NAME} visual</span></div>
-          <div class="next-pick__body">
-            <p class="pf-eyebrow">Go further</p>
-            <h2 class="t-h3s">Want an AI that runs on your whole business? Meet {AI_NAME}.</h2>
-            <span class="link-arrow">See how it works →</span>
-          </div>
-        </a>
-      </div>
-    </section>
-  )}
-
-  <!-- How we help: every service on the live page, as a numbered accordion -->
-  <section class="section" id="services">
-    <div class="wrap ti">
-      <div class="head">
-        <p class="pf-eyebrow">Service offering</p>
-        <h2 class="pf-h2">How We Help</h2>
-        <p class="t-soft">Every engagement runs on the same data spine, so each of these works better alongside the others.</p>
-      </div>
-      <Accordion items={cap.items} />
-    </div>
-  </section>
-
-  <Mood eyebrow="The Profectus difference" title="We built the infrastructure. We didn't <em>license</em> it." pill="Why Profectus" href="/about" />
-
-  <section class="section">
-    <div class="wrap">
-      <div class="head">
-        <p class="pf-eyebrow">Proof</p>
-        <h2 class="pf-h2">Where This Shows Up in Our Work</h2>
-      </div>
-      <ul class="cards">{shown.map((cs) => <li><CaseCard cs={cs} /></li>)}</ul>
-    </div>
-  </section>
-
-  <section class="section section--flush-top">
-    <div class="wrap ti">
-      <div class="head">
-        <p class="pf-eyebrow">Related services</p>
-        <h2 class="pf-h2">Works Well With</h2>
-      </div>
-      <div class="ti__items">
-        {related.map((c) => (
-          <a class="tile tile--link" href={`/capabilities/${c.slug}`}>
-            <h3 class="t-h3">{c.name}</h3>
-            <p class="t-body">{c.summary}</p>
-            <span class="link-arrow">Explore →</span>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-</Base>
+<Fresh title={`${cap.name} · Profectus Agency`}>
+  <div class="rm"><script is:inline>document.currentScript.parentElement.classList.add('js');</script><Fragment set:html={body} /></div>
+</Fresh>

@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Identity Resolution · Reframe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Instrument+Serif:ital@1&family=PT+Mono&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=erode@400,500&display=swap" rel="stylesheet">
+<style>
+/* A prototype of one capability page without the section scaffolding:
+   no eyebrows, no "Overview / What's inside / Why Profectus / FAQ" labels,
+   no 01-02-03 numbering. One continuous scroll where each fact arrives on
+   its own. Same copy as the live page. Animates opacity and transform only. */
+:root {
+  --ink: #0B0B0C; --ink-2: #4a4a52; --night: #07060D; --paper: #FFFFFF;
+  --violet: #6E62E6; --violet-lt: #9C93FF; --gold: #D3A754; --gold-dk: #9C7A35;
+  --serif: "Erode", Georgia, serif; --italic: "Instrument Serif", Georgia, serif;
+  --sans: "Geist", system-ui, sans-serif; --mono: "PT Mono", ui-monospace, monospace;
+  --gutter: max(16px, 5vw);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.5 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+a { color: inherit; }
+em { font-family: var(--italic); font-style: italic; font-weight: 400; letter-spacing: -0.02em; }
+.wrap { width: min(1180px, 100% - 2 * var(--gutter)); margin-inline: auto; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 20px; border-radius: 6px; background: var(--violet); color: #fff; font: 600 15px/1 var(--sans); text-decoration: none; transition: background-color 200ms ease; }
+.btn:hover { background: #5B4FD9; }
+
+/* ---------- Prototype chrome: compare link + notes switch ---------- */
+.proto { position: fixed; right: 16px; bottom: 16px; z-index: 50; display: flex; gap: 8px; font: 500 13px/1 var(--sans); }
+.proto a, .proto button { padding: 10px 14px; border-radius: 6px; border: 1px solid rgba(255,255,255,.18); background: rgba(7,6,13,.9); color: #fff; cursor: pointer; text-decoration: none; font: inherit; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.proto button[aria-pressed="true"] { background: #FFE9A8; color: var(--ink); border-color: #FFE9A8; }
+.note { display: none; max-width: 340px; margin: 0 0 18px; padding: 10px 12px; border-radius: 6px; background: #FFF4CC; color: #4b3a00; font: 400 13px/1.45 var(--sans); box-shadow: 0 2px 10px rgba(0,0,0,.08); }
+.note b { font-weight: 600; }
+body.show-notes .note { display: block; }
+.note--float { position: absolute; z-index: 5; top: 88px; left: var(--gutter); }
+
+/* ---------- 1. Opening: black, one sentence, fades to white ---------- */
+.open { position: relative; min-height: 92svh; display: grid; align-content: end; padding: 120px 0 96px; color: #fff;
+  background: linear-gradient(180deg, var(--night) 0%, var(--night) 70%, #3a3946 86%, var(--paper) 100%); }
+.open__name { font: 400 15px/1 var(--mono); letter-spacing: .04em; color: rgba(255,255,255,.6); margin: 0 0 28px; }
+.open__h { font: 400 clamp(52px, 9vw, 132px)/0.95 var(--serif); letter-spacing: -0.045em; margin: 0; max-width: 11ch; }
+.open__h em { color: var(--violet-lt); }
+.open__sub { margin: 32px 0 0; max-width: 34em; font-size: 19px; color: rgba(255,255,255,.75); }
+
+/* ---------- 2. The counter: 230,000,000 counts up as you scroll ---------- */
+.count { height: 220vh; position: relative; }
+.count__stick { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; text-align: center; overflow: hidden; }
+.count__n { font: 400 clamp(64px, 15vw, 240px)/0.9 var(--serif); letter-spacing: -0.05em; font-variant-numeric: tabular-nums; color: var(--violet); }
+.count__cap { margin: 20px auto 0; max-width: 26em; font-size: 20px; color: var(--ink-2); opacity: 0; transform: translate3d(0, 16px, 0); transition: opacity 500ms ease, transform 600ms cubic-bezier(.16,1,.3,1); }
+.count.is-done .count__cap { opacity: 1; transform: none; }
+
+/* ---------- 3. The story: one line at a time, pinned ---------- */
+.story { height: 420vh; position: relative; background: var(--night); color: #fff; }
+.story__stick { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; overflow: hidden; }
+.story__line { position: absolute; width: min(1000px, 100% - 2 * var(--gutter)); text-align: center; font: 400 clamp(34px, 5.4vw, 76px)/1.08 var(--serif); letter-spacing: -0.035em;
+  opacity: 0; transform: translate3d(0, 40px, 0); transition: opacity 500ms ease, transform 700ms cubic-bezier(.16,1,.3,1); }
+.story__line.is-on { opacity: 1; transform: none; }
+.story__line.is-past { opacity: 0; transform: translate3d(0, -40px, 0); }
+.story__line em { color: var(--violet-lt); }
+.story__line small { display: block; margin-top: 22px; font: 400 18px/1.5 var(--sans); letter-spacing: 0; color: rgba(255,255,255,.62); }
+.story__tick { position: absolute; bottom: 40px; left: 50%; translate: -50% 0; display: flex; gap: 8px; }
+.story__tick i { width: 22px; height: 2px; background: rgba(255,255,255,.2); border-radius: 2px; transition: background-color 300ms ease; }
+.story__tick i.is-on { background: var(--gold); }
+
+/* ---------- 4. Five fragments become one person (scroll-linked) ---------- */
+.merge { height: 260vh; position: relative; background: linear-gradient(var(--night), var(--paper) 30vh); }
+.merge__stick { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; overflow: hidden; }
+.merge__stage { position: relative; width: min(760px, 100% - 2 * var(--gutter)); height: 420px; }
+.frag { position: absolute; left: 50%; top: 50%; padding: 12px 16px; border-radius: 8px; background: #fff; color: var(--ink); font: 500 15px/1.2 var(--sans); white-space: nowrap;
+  box-shadow: 0 8px 30px rgba(20,16,40,.18); translate: -50% -50%; will-change: transform; }
+.frag span { display: block; font: 400 12px/1 var(--mono); color: var(--gold-dk); margin-bottom: 6px; }
+.merge__card { position: absolute; left: 50%; top: 36%; width: min(360px, 90%); padding: 20px 22px; border-radius: 10px; background: #fff; box-shadow: 0 18px 50px rgba(20,16,40,.18); border: 1px solid rgba(110,98,230,.25);
+  translate: -50% -50%; opacity: 0; transform: scale(.94); transition: opacity 350ms ease, transform 500ms cubic-bezier(.16,1,.3,1); }
+.merge__card b { display: block; font: 400 26px/1.1 var(--serif); letter-spacing: -0.02em; margin-bottom: 12px; }
+.merge__card dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 14px; }
+.merge__card dt { font: 400 12px/1.6 var(--mono); color: var(--gold-dk); }
+.merge__card dd { margin: 0; }
+.merge.is-one .merge__card { opacity: 1; transform: none; }
+.merge__one { position: absolute; inset: auto 0 -60px; text-align: center; font: 400 clamp(30px, 4.4vw, 60px)/1.05 var(--serif); letter-spacing: -0.035em; color: var(--ink); opacity: 0; transition: opacity 400ms ease; }
+.merge__one em { color: var(--violet); }
+.merge.is-one .merge__one { opacity: 1; }
+
+/* ---------- 5. What we do: one paragraph that inks in as you read ---------- */
+.prose { padding: 140px 0 120px; }
+.prose__p { margin: 0; max-width: 24em; font: 400 clamp(28px, 3.6vw, 50px)/1.22 var(--serif); letter-spacing: -0.03em; }
+.prose__p .w { color: rgba(11,11,12,.14); transition: color 250ms ease; }
+.prose__p .w.is-on { color: var(--ink); }
+.prose__p b { font-weight: 400; }
+.prose__p b .w.is-on { color: var(--violet); }
+.prose__more { margin-top: 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px 40px; }
+.prose__more details { border-top: 1px solid rgba(11,11,12,.12); padding: 16px 0; }
+.prose__more summary { cursor: pointer; list-style: none; font: 500 16px/1.3 var(--sans); display: flex; justify-content: space-between; gap: 16px; }
+.prose__more summary::after { content: "+"; color: var(--violet); }
+.prose__more details[open] summary::after { content: "–"; }
+.prose__more p { margin: 10px 0 0; color: var(--ink-2); font-size: 15px; }
+
+/* ---------- 6. Them vs us: each row strikes through, then answers ---------- */
+.vs { padding: 40px 0 140px; }
+.vs__lead { font: 400 clamp(40px, 6vw, 88px)/1 var(--serif); letter-spacing: -0.045em; margin: 0 0 72px; max-width: 12ch; }
+.vs__lead em { color: var(--violet); }
+.vs__row { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: baseline; padding: 34px 0; border-top: 1px solid rgba(11,11,12,.1); }
+.vs__them { font: 400 clamp(20px, 2vw, 26px)/1.3 var(--sans); color: #8a8a93; }
+.vs__them span { background: linear-gradient(var(--ink), var(--ink)) no-repeat 0 56% / 0% 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone; transition: background-size 600ms cubic-bezier(.4,0,.2,1); }
+.vs__us { font: 400 clamp(24px, 2.6vw, 36px)/1.2 var(--serif); letter-spacing: -0.025em; opacity: 0; transform: translate3d(40px, 0, 0); transition: opacity 500ms ease 350ms, transform 700ms cubic-bezier(.16,1,.3,1) 350ms; }
+.vs__row.is-in .vs__them span { background-size: 100% 2px; }
+.vs__row.is-in .vs__us { opacity: 1; transform: none; }
+
+/* ---------- 7. Proof: two numbers, full width, sliding in ---------- */
+.proof { background: var(--night); color: #fff; padding: 140px 0; overflow: hidden; }
+.proof__item { padding: 40px 0; }
+.proof__n { display: block; font: 400 clamp(72px, 13vw, 210px)/0.9 var(--serif); letter-spacing: -0.05em; color: var(--violet-lt); opacity: 0; transform: translate3d(-60vw, 0, 0); transition: opacity 700ms ease, transform 1100ms cubic-bezier(.16,1,.3,1); }
+.proof__n i { font: 300 0.42em/1 var(--sans); font-style: normal; color: var(--gold); vertical-align: 0.5em; margin: 0 0.15em; }
+.proof__t { margin: 18px 0 0; max-width: 30em; font-size: 20px; color: rgba(255,255,255,.72); opacity: 0; transition: opacity 600ms ease 500ms; }
+.proof__t b { color: #fff; font-weight: 500; }
+.proof__item.is-in .proof__n { opacity: 1; transform: none; }
+.proof__item.is-in .proof__t { opacity: 1; }
+.proof__item:nth-child(even) { text-align: right; }
+.proof__item:nth-child(even) .proof__n { transform: translate3d(60vw, 0, 0); }
+.proof__item:nth-child(even) .proof__t { margin-left: auto; }
+.proof__item:nth-child(even).is-in .proof__n { transform: none; }
+
+/* ---------- 8. Questions, asked plainly ---------- */
+.ask { padding: 140px 0 100px; }
+.ask__h { font: 400 clamp(34px, 4.4vw, 60px)/1.05 var(--serif); letter-spacing: -0.035em; margin: 0 0 40px; }
+.ask details { border-top: 1px solid rgba(11,11,12,.12); }
+.ask summary { cursor: pointer; list-style: none; padding: 24px 0; font: 400 clamp(20px, 2vw, 26px)/1.3 var(--serif); letter-spacing: -0.02em; display: flex; justify-content: space-between; gap: 24px; }
+.ask summary::after { content: "+"; font-family: var(--sans); color: var(--violet); }
+.ask details[open] summary::after { content: "–"; }
+.ask details p { margin: 0 0 26px; max-width: 40em; color: var(--ink-2); }
+.ask mark { background: #FFF4CC; padding: 0 4px; }
+
+/* ---------- 9. Close ---------- */
+.close { background: var(--night); color: #fff; text-align: center; padding: 160px var(--gutter); }
+.close h2 { margin: 0 auto 36px; max-width: 16ch; font: 400 max(40px, 5.5vw)/1 var(--serif); letter-spacing: -0.04em; }
+.close h2 em { display: block; color: var(--violet-lt); }
+
+@media (max-width: 720px) {
+  .vs__row { grid-template-columns: 1fr; gap: 10px; }
+  .proof__item:nth-child(even) { text-align: left; }
+  .proof__item:nth-child(even) .proof__t { margin-left: 0; }
+  .merge__stage { height: 380px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+  .count__cap, .vs__us, .proof__n, .proof__t { opacity: 1 !important; transform: none !important; }
+  .vs__them span { background-size: 100% 2px; }
+}
+</style>
+</head>
+<body>
+
+<div class="proto">
+  <a href="https://profectus-rework.vercel.app/capabilities/identity-resolution" target="_blank" rel="noopener">Compare: current page ↗</a>
+  <button type="button" aria-pressed="false" data-notes>Show notes</button>
+</div>
+
+<!-- 1. Opening -->
+<section class="open">
+  <p class="note note--float"><b>Was:</b> breadcrumb eyebrow "Capabilities · Step 01 · Recognize", title, gold rule, paragraph, two buttons, then a jump bar of five tabs. <b>Now:</b> the name, small, and one sentence. No tabs: the page is one story, so there's nothing to jump between.</p>
+  <div class="wrap">
+    <p class="open__name">Identity Resolution</p>
+    <h1 class="open__h">A stranger becomes <em>someone.</em></h1>
+    <p class="open__sub">Every email, device and purchase traced back to one real person.</p>
+  </div>
+</section>
+
+<!-- 2. Counter -->
+<section class="count" data-count>
+  <div class="count__stick">
+    <div>
+      <p class="note"><b>Was:</b> "230 million" buried in a paragraph. <b>Now:</b> the number fills the screen and counts up as you scroll, then the caption lands.</p>
+      <div class="count__n" aria-label="230,000,000">0</div>
+      <p class="count__cap">People in our own database. Matched deterministically, not guessed from a rented graph.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Story -->
+<section class="story" data-story>
+  <div class="story__stick">
+    <p class="note note--float"><b>Was:</b> "Overview" heading plus three benefit cards. <b>Now:</b> the Website Visitor Identification copy, told as a scene. The screen holds still and each line replaces the last as you scroll.</p>
+    <p class="story__line">Someone read your pricing page at 11pm.</p>
+    <p class="story__line">Then they left. No form, no email, no name.</p>
+    <p class="story__line">On most websites, that's where it ends.</p>
+    <p class="story__line">On yours, they have a name <em>by morning.</em><small>One line of code matches visitors against our 230 million people. The ones we recognize land in your CRM: who they are, how to reach them and what they read.</small></p>
+    <p class="story__line">Then they hear from you again, <em>picking up where they left off.</em><small>By direct mail, paid social or email.</small></p>
+    <div class="story__tick" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+</section>
+
+<!-- 4. Merge -->
+<section class="merge" data-merge>
+  <div class="merge__stick">
+    <p class="note note--float"><b>Was:</b> accordion item "Cross-Device &amp; Cross-Channel Linking". <b>Now:</b> you watch it happen. Five fragments of one person drift together as you scroll and become one.</p>
+    <div class="merge__stage">
+      <div class="frag" data-x="-260" data-y="-150" data-r="-8"><span>Phone</span>iPhone, Safari, 11:04pm</div>
+      <div class="frag" data-x="250" data-y="-130" data-r="6"><span>Inbox</span>j.alvarez@…mail.com</div>
+      <div class="frag" data-x="-300" data-y="60" data-r="5"><span>Loyalty card</span>Member #48213</div>
+      <div class="frag" data-x="280" data-y="80" data-r="-6"><span>Store visit</span>Downtown, Saturday</div>
+      <div class="frag" data-x="0" data-y="-200" data-r="3"><span>Laptop</span>Chrome, pricing page</div>
+      <div class="merge__card" aria-hidden="true"><b>J. Alvarez</b><dl><dt>Email</dt><dd>j.alvarez@…mail.com</dd><dt>Devices</dt><dd>iPhone, laptop</dd><dt>Loyalty</dt><dd>Member #48213</dd><dt>Store</dt><dd>Downtown, Saturdays</dd><dt>Last read</dt><dd>Your pricing page</dd></dl></div>
+      <p class="merge__one">One customer stops looking <em>like five.</em></p>
+    </div>
+  </div>
+</section>
+
+<!-- 5. What we do -->
+<section class="prose">
+  <div class="wrap">
+    <p class="note"><b>Was:</b> "What's inside · 5 services", a sticky heading, and a numbered 01 to 05 accordion. <b>Now:</b> the five services written as one paragraph that darkens word by word as you read. The service names are in purple. The full descriptions are still there, tucked in below for anyone who wants them.</p>
+    <p class="prose__p" data-ink>We take your CRM records, transactions and loyalty data and <b>match each one to a real person</b>. We <b>put a name to the clicks</b> on your website. We <b>link the phones, laptops, inboxes and store visits</b> that belong to the same customer. We find the customers you already have and <b>the prospects you've never met</b>. And before you spend a dollar on media, <b>we show you how much of your list we can recognize</b>.</p>
+    <div class="prose__more">
+      <details><summary>Identity Resolution</summary><p>Connect fragmented customer data into a single, unified profile through deterministic matching. We translate CRM records, transaction histories, loyalty data, and telecommunications signals into addressable digital identities at scale with industry-leading match rates.</p></details>
+      <details><summary>Website Visitor Identification</summary><p>We put a name to a click. One line of code on your site matches visitors against our database of 230 million people, so a visit that would have ended as an anonymous session becomes a real profile in your CRM.</p></details>
+      <details><summary>Cross-Device &amp; Cross-Channel Linking</summary><p>Phones, laptops, inboxes, loyalty cards and store visits tied back to the same person, so one customer stops looking like five.</p></details>
+      <details><summary>Known &amp; Unknown Audience Resolution</summary><p>Resolve the customers you already have and the prospects you have never met against our database of 230 million people, including high-value audiences outside your program today.</p></details>
+      <details><summary>Match Rate Diagnostics</summary><p>See how much of your file we can recognize, where the gaps are and what it takes to close them, before you spend a dollar on media.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Them vs us -->
+<section class="vs">
+  <div class="wrap">
+    <p class="note"><b>Was:</b> "Why Profectus" eyebrow and a three-column table. <b>Now:</b> no label. Each row arrives on its own: the platform's answer gets struck through, then ours slides in.</p>
+    <h2 class="vs__lead">Platforms sell you a login. <em>We bring the people who built it.</em></h2>
+    <div class="vs__row"><span class="vs__them"><span>A login and a support ticket.</span></span><span class="vs__us">The operators who ran it for world-class brands, on your account.</span></div>
+    <div class="vs__row"><span class="vs__them"><span>4,212 anonymous sessions.</span></span><span class="vs__us">A name to every click we can match, and what they read.</span></div>
+    <div class="vs__row"><span class="vs__them"><span>Rented from someone else's graph.</span></span><span class="vs__us">Our own database of 230 million people.</span></div>
+    <div class="vs__row"><span class="vs__them"><span>Your budget goes into their network first.</span></span><span class="vs__us">Wherever it works. 500+ platforms, no inventory to protect.</span></div>
+    <div class="vs__row"><span class="vs__them"><span>Answers to shareholders and a holding company.</span></span><span class="vs__us">Answers to you, and the number you hired us to move.</span></div>
+  </div>
+</section>
+
+<!-- 7. Proof -->
+<section class="proof">
+  <div class="wrap">
+    <p class="note" style="background:#FFF4CC"><b>Was:</b> "Progress stories" eyebrow and three identical cards with photo placeholders. <b>Now:</b> two results, huge, sliding in from opposite sides. No cards, no labels.</p>
+    <div class="proof__item">
+      <span class="proof__n">$420<i>→</i>$680</span>
+      <p class="proof__t"><b>Nonna's Table.</b> Three locations, three separate guest lists. Once every guest became one record, lifetime value went up by more than half.</p>
+    </div>
+    <div class="proof__item">
+      <span class="proof__n">8<i>→</i>1</span>
+      <p class="proof__t"><b>Morning Grounds Coffee.</b> Eight locations on one data foundation, and $14 back for every $1 on the direct channel.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 8. Questions -->
+<section class="ask">
+  <div class="wrap">
+    <p class="note"><b>Was:</b> "FAQ" eyebrow, "Questions, answered." and [Question] placeholders. <b>Now:</b> a plain heading in our voice and real questions. Answers marked in yellow still need the owner's OK.</p>
+    <h2 class="ask__h">What people ask us first.</h2>
+    <details><summary>How do you know who 230 million people are?</summary><p><mark>[Answer to confirm: sourcing and compliance in one honest paragraph.]</mark></p></details>
+    <details><summary>How many of my website visitors can you name?</summary><p><mark>[Answer to confirm: our real match rate.]</mark></p></details>
+    <details><summary>Who owns the data when we're done?</summary><p>You own your customer data, always. Every match and audience we build for you is yours to keep. <mark>[Confirm wording]</mark></p></details>
+    <details><summary>Can I start with this and nothing else?</summary><p>Yes. Identity Resolution is where most clients start, because everything after it works better once you know who you're talking to. <mark>[Confirm]</mark></p></details>
+  </div>
+</section>
+
+<!-- 9. Close -->
+<section class="close">
+  <p class="note" style="margin-inline:auto"><b>Same as now:</b> the custom closing line for this page.</p>
+  <h2>Somebody clicked today. <em>Let's put a name to it.</em></h2>
+  <a class="btn" href="#">Find out who visited →</a>
+</section>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp = (v) => Math.max(0, Math.min(1, v));
+  // Progress through a tall section with a pinned child: 0 when it pins, 1 when it lets go.
+  const progress = (el) => { const r = el.getBoundingClientRect(); return clamp(-r.top / (r.height - innerHeight)); };
+
+  // Notes switch
+  const nb = document.querySelector('[data-notes]');
+  nb.addEventListener('click', () => { const on = document.body.classList.toggle('show-notes'); nb.setAttribute('aria-pressed', on); nb.textContent = on ? 'Hide notes' : 'Show notes'; });
+
+  // Counter
+  const count = document.querySelector('[data-count]');
+  const countN = count.querySelector('.count__n');
+  const fmt = new Intl.NumberFormat('en-US');
+  let lastCount = -1;
+
+  // Story lines
+  const story = document.querySelector('[data-story]');
+  const lines = [...story.querySelectorAll('.story__line')];
+  const ticks = [...story.querySelectorAll('.story__tick i')];
+  let lastLine = -2;
+
+  // Merge fragments
+  const merge = document.querySelector('[data-merge]');
+  const frags = [...merge.querySelectorAll('.frag')].map((f) => ({ el: f, x: +f.dataset.x, y: +f.dataset.y, r: +f.dataset.r }));
+
+  // Inking paragraph: wrap each word in a span
+  const ink = document.querySelector('[data-ink]');
+  const walk = (node) => [...node.childNodes].forEach((n) => {
+    if (n.nodeType === 3) {
+      const frag = document.createDocumentFragment();
+      n.textContent.split(/(\s+)/).forEach((t) => {
+        if (!t) return;
+        if (/^\s+$/.test(t)) { frag.append(t); return; }
+        const s = document.createElement('span'); s.className = 'w'; s.textContent = t; frag.append(s);
+      });
+      n.replaceWith(frag);
+    } else walk(n);
+  });
+  walk(ink);
+  const words = [...ink.querySelectorAll('.w')];
+  let lastWord = -1;
+
+  const frame = () => {
+    queued = false;
+    // Counter: eases up to 230M over the first 70% of its scroll, then the caption lands.
+    const pc = progress(count);
+    const n = reduce ? 230000000 : Math.round(230000000 * (1 - Math.pow(1 - clamp(pc / 0.7), 3)));
+    if (n !== lastCount) { lastCount = n; countN.textContent = fmt.format(n); }
+    count.classList.toggle('is-done', pc >= 0.7 || reduce);
+
+    // Story: which line is showing.
+    const ps = progress(story);
+    const idx = story.getBoundingClientRect().top > 0 ? -1 : Math.min(lines.length - 1, Math.floor(ps * lines.length));
+    if (idx !== lastLine) {
+      lastLine = idx;
+      lines.forEach((l, i) => { l.classList.toggle('is-on', i === idx); l.classList.toggle('is-past', i < idx); });
+      ticks.forEach((t, i) => t.classList.toggle('is-on', i <= idx));
+    }
+
+    // Merge: fragments travel from their scattered spots to the centre.
+    const pm = progress(merge);
+    const k = reduce ? 1 : 1 - Math.pow(1 - clamp(pm / 0.75), 3);
+    const scale = innerWidth < 720 ? 0.55 : 1;
+    frags.forEach((f, i) => {
+      const left = 1 - k;
+      f.el.style.transform = `translate3d(${(f.x * scale * left).toFixed(1)}px, ${(f.y * scale * left + i * 3 * k).toFixed(1)}px, 0) rotate(${(f.r * left).toFixed(2)}deg)`;
+      f.el.style.opacity = (k > 0.85 ? Math.max(0, 1 - (k - 0.85) * 14) : 1).toFixed(2);
+    });
+    merge.classList.toggle('is-one', k > 0.92);
+
+    // Ink: words darken from the start as the paragraph moves up the screen.
+    const r = ink.getBoundingClientRect();
+    const pi = reduce ? 1 : clamp((innerHeight * 0.85 - r.top) / (r.height + innerHeight * 0.35));
+    const upto = Math.round(pi * words.length);
+    if (upto !== lastWord) { lastWord = upto; words.forEach((w, i) => w.classList.toggle('is-on', i < upto)); }
+  };
+  let queued = false;
+  addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(frame); } }, { passive: true });
+  addEventListener('resize', frame);
+  frame();
+
+  // One-shot reveals: comparison rows and proof numbers, once well into view.
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -20% 0px', threshold: 0.2 });
+  document.querySelectorAll('.vs__row, .proof__item').forEach((el) => reduce ? el.classList.add('is-in') : io.observe(el));
+})();
+</script>
+</body>
+</html>

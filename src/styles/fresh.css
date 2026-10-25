@@ -1,0 +1,1116 @@
+/* Rework: white site, black accents. Colours and fonts still come from the
+   texture pack (--pf-*); these are the few new values. Spacing follows
+   inboundmedia.co, measured Oct 21 (kit/scouted/inboundmedia-co-hero.md). */
+:root {
+  --rw-paper:   #FFFFFF;   /* the new page background */
+  --rw-ink:     #0B0B0C;   /* text on white */
+  --rw-ink-2:   #4A4A50;   /* secondary text on white */
+  /* Gold, sampled from the owner's foil reference (Oct 21), shadow to glint. */
+  --rw-gold-900: #9A7537;
+  --rw-gold-700: #BA8D44;
+  --rw-gold-500: #D3A754;   /* the main gold */
+  --rw-gold-300: #E5BA61;
+  --rw-gold-100: #F7E17F;   /* glint */
+  /* Foil: a raking light streak across the gold, plus fine grain for the crinkle. */
+  --rw-foil-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35  0 0 0 0 .25  0 0 0 0 .08  0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --rw-foil: linear-gradient(115deg, var(--rw-gold-900) 0%, var(--rw-gold-500) 20%, var(--rw-gold-100) 36%, var(--rw-gold-700) 52%, var(--rw-gold-300) 68%, var(--rw-gold-900) 86%, var(--rw-gold-300) 100%);
+  /* Inbound's measured layout */
+  --rw-container: min(calc(100% - 32px), 1298px);  /* = min(100%,1330px) - 32px: 71px gutters at 1440, 16px on phones */
+  --rw-hero-w:    min(calc(100% - 32px), 1140px);  /* hero container */
+  --rw-gutter:    16px;
+  --rw-nav-h:     90px;      /* 89.6 measured */
+  --rw-nav-turn:  175px;     /* scroll distance over which the nav goes clear to white */
+  --rw-fade:      300ms;     /* the nav's lag behind scroll */
+  --rw-hero-pt:   140px;     /* hero padding: 140 top, 80 bottom */
+  --rw-hero-pb:   80px;
+  --rw-after:     90px;      /* gap below the hero (89.6 measured; 64 at 768, 32 at 390) */
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html { background: var(--rw-paper); }
+body { background: var(--rw-paper); color: var(--rw-ink); font: 400 16px/1.4 var(--pf-sans); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+a { color: inherit; }
+
+/* ---------- Nav (Inbound pattern, our frosted glass) ----------
+   Clear over the black hero, then fades to frosted white over the first
+   175px of scroll, scrubbed by --p (0 to 1) from the script, with Inbound's
+   ~300ms lag. Height never changes. */
+.fnav {
+  position: fixed; inset: 0 0 auto; z-index: 100; height: var(--rw-nav-h);
+  color: var(--pf-white);
+}
+/* Deloitte: clear while the bar is over the hero, white once it's past the
+   hero's bottom edge. The white fades in over 200ms; text and logo colours
+   swap at once (as measured). A light shadow, not Deloitte's grey haze. */
+.fnav::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06), 0 8px 24px rgba(20, 16, 40, 0.06);
+  opacity: 0; transition: opacity 200ms ease;
+}
+.fnav.is-light { color: var(--rw-ink); }
+.fnav.is-light::before { opacity: 1; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+.fnav__bar { width: var(--rw-container); margin-inline: auto; height: 100%; display: flex; align-items: center; justify-content: space-between; }
+.fnav__logo { font: 400 clamp(30px, 2.6vw, 40px)/1 var(--pf-serif); letter-spacing: -0.035em; text-decoration: none; }
+/* Inbound's links: 14px uppercase, 1.4px tracking, 20px padding, no gaps */
+.fnav__links { display: flex; list-style: none; padding: 0; margin-left: auto; margin-right: 10px; }
+.fnav__links a { display: block; padding: 20px; font: 500 14px/1 var(--pf-sans); letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; opacity: .85; transition: opacity 200ms ease; }
+.fnav__links a:hover { opacity: 1; }
+.fnav__cta {
+  font: 500 15px/1 var(--pf-sans); letter-spacing: -0.02em; text-decoration: none;
+  padding: 13px 18px; border-radius: var(--pf-r-pill);
+  background: var(--pf-fill-cta); color: var(--pf-white);
+  -webkit-backdrop-filter: var(--pf-blur-pill); backdrop-filter: var(--pf-blur-pill);
+  transition: background-color var(--rw-fade) ease;
+}
+@media (max-width: 900px) { .fnav__links { display: none; } :root { --rw-nav-h: 72px; } }
+
+/* ---------- Hero: Inbound's background. Black holds to 76%, then fades
+   to white by the bottom edge, so it joins the white page with no seam. ---------- */
+.rhero {
+  position: relative; overflow: hidden;
+  min-height: 760px;   /* Inbound's is 603px with one headline; ours carries more copy */
+  background: #000 linear-gradient(#000 76%, var(--rw-paper));
+  color: var(--pf-white);
+  display: grid; align-content: start;
+  padding: var(--rw-hero-pt) 0 var(--rw-hero-pb);
+}
+/* Code rain: invisible at the centre of the screen, stronger toward the
+   right edge, and gone before the fade to white. */
+.rhero .pf-rain {
+  opacity: 0.95;
+  -webkit-mask: linear-gradient(90deg, transparent 0%, transparent 46%, rgba(0,0,0,.25) 58%, rgba(0,0,0,.7) 74%, #000 90%),
+                linear-gradient(180deg, transparent 0%, #000 12%, #000 52%, transparent 74%);
+  -webkit-mask-composite: source-in;
+  mask: linear-gradient(90deg, transparent 0%, transparent 46%, rgba(0,0,0,.25) 58%, rgba(0,0,0,.7) 74%, #000 90%),
+        linear-gradient(180deg, transparent 0%, #000 12%, #000 52%, transparent 74%);
+  mask-composite: intersect;
+}
+/* Copy sits on the left of the hero container (Inbound: x 150 at 1440). */
+.rhero__inner {
+  position: relative; z-index: 2; width: var(--rw-hero-w); margin-inline: auto; text-align: left;
+  display: grid; justify-items: start; gap: 28px;
+}
+.rhero .pf-display { text-shadow: 0 2px 30px rgba(0,0,0,.6); }
+.rhero__lead { max-width: 30em; font-size: var(--pf-fs-lead); letter-spacing: var(--pf-ls-lead); line-height: 1.35; color: rgba(255,255,255,.9); text-shadow: 0 1px 16px rgba(0,0,0,.7); }
+.rhero__pills { display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-start; }
+@media (max-width: 760px) {
+  .rhero { min-height: 100svh; }
+  .rhero .pf-rain { -webkit-mask: linear-gradient(180deg, transparent, #000 15%, #000 50%, transparent 70%); mask: linear-gradient(180deg, transparent, #000 15%, #000 50%, transparent 70%); opacity: .45; }
+}
+
+/* ---------- Gold, sprinkled (not everywhere) ----------
+   1. The italic word in the headline, as gold foil.
+   2. The dot in the eyebrow tag.
+   3. The main button: gold foil with black text.
+   4. A short foil rule above the subtext. */
+.foil-text {
+  background: var(--rw-foil-grain), var(--rw-foil); background-size: 160px 160px, 220% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.rhero .pf-display em { font-family: var(--pf-italic); text-shadow: none; }  /* glow comes from .glow */
+.rhero .pf-pill--tag::before { background: var(--rw-gold-300); box-shadow: 0 0 10px var(--rw-gold-500); }
+.btn-gold {
+  background: var(--rw-foil-grain), var(--rw-foil) !important; background-size: 160px 160px, 220% 100% !important;
+  background-position: 0 0, 0% 0 !important;
+  color: var(--rw-ink) !important; font-weight: 600 !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 6px 24px rgba(211,167,84,.22);
+  transition: background-position 700ms var(--pf-ease), box-shadow 300ms ease !important;
+}
+.btn-gold:hover { background-position: 0 0, 100% 0 !important; }   /* the light streak slides across */
+.foil-rule { width: 64px; height: 2px; border-radius: 2px; background: var(--rw-foil); }
+
+/* ---------- Everything below the hero: white, built section by section ---------- */
+.next { min-height: 90vh; padding: var(--rw-after) var(--rw-gutter) 120px; display: grid; place-items: center; text-align: center; color: var(--rw-ink-2); }
+.next p { font: 400 13px/1.4 var(--pf-mono); text-transform: uppercase; letter-spacing: .04em; }
+
+
+
+/* Longer headline: one step smaller than the old two-line tagline, so it
+   sets in about three lines instead of five. */
+.rhero__title { font-size: clamp(40px, 26px + 3.6vw, 82px); line-height: 0.95; max-width: 9.6em; text-wrap: balance; }
+@media (max-width: 768px) { :root { --rw-after: 64px; } }
+@media (max-width: 390px) { :root { --rw-after: 32px; --rw-hero-pb: 60px; } }
+
+
+/* ---------- Light sections: the kit's dark-page pieces, adapted for white ---------- */
+.light { --pf-hairline: rgba(11, 11, 12, 0.07); --pf-bracket: rgba(11, 11, 12, 0.32); color: var(--rw-ink); }
+.light .pf-eyebrow { color: var(--rw-ink-2); }
+.lhead { display: grid; gap: 16px; justify-items: center; text-align: center; }
+.lh2 { font: 400 var(--pf-fs-h2)/var(--pf-lh-h2) var(--pf-serif); letter-spacing: var(--pf-ls-h2); color: var(--rw-ink); text-wrap: balance; }
+
+/* Galaxy on white: the cloud photo as a negative (dark navy becomes lavender
+   mist), lifted a touch so it reads as a wash, not a stain. */
+.why-light { position: relative; overflow: hidden; padding: 140px 0 160px; background: var(--rw-paper); }
+.why-light .pf-nebula { opacity: 0.9; }
+.why-light .pf-nebula__plate { filter: invert(1) hue-rotate(180deg) saturate(1.15) brightness(1.03); }
+.why-light__rules { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.why-light__inner { position: relative; z-index: 2; width: var(--rw-container); margin-inline: auto; }
+.why-light__cards { list-style: none; padding: 0; display: grid; gap: 64px; margin-top: 80px; }
+.why-light__cards > li { width: min(100%, 420px); }
+.why-light__cards > li:nth-child(even) { justify-self: end; }
+/* Glass on white: milky instead of smoky, with a hairline edge and a soft lift. */
+.light .pf-glass {
+  display: grid; gap: 14px;
+  background: rgba(255, 255, 255, 0.58);
+  box-shadow: inset 0 0 0 1px rgba(11, 11, 12, 0.06), 0 18px 50px rgba(40, 30, 90, 0.07);
+}
+.light .pf-glass h3 { font: 500 var(--pf-fs-h3)/1.2 var(--pf-sans); letter-spacing: -0.04em; color: var(--rw-ink); }
+.light .pf-glass p { font-size: 16px; line-height: 1.45; color: var(--rw-ink-2); }
+.light .pf-glass .num { color: var(--rw-gold-700); }
+
+/* Infrastructure band on white: the same teal / violet / navy glow as light
+   watercolour washes, a gold bloom, fine grain, faded to white at the edges. */
+.mood-light {
+  position: relative; overflow: hidden; text-align: center;
+  padding: clamp(140px, 16vw, 220px) 16px;
+  background:
+    radial-gradient(55% 80% at 16% 100%, color-mix(in srgb, var(--pf-g-teal-lit) 34%, transparent), transparent 66%),
+    radial-gradient(50% 75% at 86% 0%, color-mix(in srgb, var(--pf-g-violet) 30%, transparent), transparent 66%),
+    radial-gradient(38% 60% at 64% 72%, color-mix(in srgb, var(--rw-gold-300) 34%, transparent), transparent 70%),
+    radial-gradient(70% 90% at 45% 40%, color-mix(in srgb, var(--pf-g-periwinkle) 16%, transparent), transparent 76%),
+    var(--rw-paper);
+}
+.mood-light::before { content: ""; position: absolute; inset: 0; background: var(--rw-foil-grain); background-size: 160px; opacity: 0.18; mix-blend-mode: multiply; pointer-events: none; }
+.mood-light::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(var(--rw-paper), transparent 20%, transparent 80%, var(--rw-paper)); }
+.mood-light__inner { position: relative; z-index: 2; display: grid; gap: 24px; justify-items: center; }
+.mood-light__title { font: 400 clamp(36px, 24px + 2.6vw, 64px)/0.98 var(--pf-serif); letter-spacing: -0.05em; color: var(--rw-ink); max-width: 15em; text-wrap: balance; }
+.mood-light__title em { font-family: var(--pf-italic); font-size: var(--pf-italic-scale); letter-spacing: -0.04em; }
+.pill-ink { display: inline-flex; align-items: center; height: 41px; padding: 10px 16px; border-radius: var(--pf-r-pill); background: var(--rw-ink); color: var(--pf-white); font: 500 15px/1 var(--pf-sans); letter-spacing: -0.02em; text-decoration: none; transition: background-color 240ms ease; }
+.pill-ink:hover { background: #2a2a30; }
+@media (max-width: 760px) { .why-light__cards > li:nth-child(even) { justify-self: start; } }
+
+
+/* ---------- Gold glow (only while you're at the top) ----------
+   Each gold piece casts a warm light behind it, almost white at the core.
+   Built to stay smooth while scrolling: the light is a pre-drawn gradient
+   layer behind the piece, and only its opacity moves, which the graphics
+   card handles without repainting anything.
+   --glow (1 at the top, 0 once the nav has turned white) is set on the
+   hero and nav only, never on the whole page. */
+.glow { position: relative; }
+.glow::after {
+  content: ""; position: absolute; z-index: -1; pointer-events: none;
+  inset: -90% -45%; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 247, 226, 0.55), rgba(247, 225, 127, 0.32) 32%, rgba(211, 167, 84, 0.16) 58%, rgba(211, 167, 84, 0) 100%);
+  opacity: var(--glow, 1);
+  animation: rw-breathe 3.8s ease-in-out infinite alternate;
+  will-change: opacity;
+}
+/* Breathe by brightness only. (Breathing by size made the graphics card
+   redraw the gradient every frame: about 9x the raster work, measured.) */
+@keyframes rw-breathe { from { opacity: calc(0.45 * var(--glow, 1)); } to { opacity: var(--glow, 1); } }
+.glow:nth-child(2n)::after { animation-duration: 4.6s; animation-delay: -1.4s; }   /* out of step */
+/* Gold word: inline-block so its light sits behind the word itself */
+.foil-text.glow { display: inline-block; }
+.foil-text.glow::after { inset: -35% -30%; animation-duration: 4.4s; }
+.foil-rule.glow::after { inset: -900% -60%; animation-duration: 5s; }
+/* Buttons: no glass blur behind the opaque foil, so the light can sit
+   behind the button instead of on top of it */
+.btn-gold.glow { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+.btn-gold.glow::after { inset: -70% -30%; }
+/* The tag's gold dot: a small steady glow (too small to need motion) */
+.rhero .pf-pill--tag.glow::after { display: none; }
+.rhero .pf-pill--tag.glow::before { box-shadow: 0 0 12px 2px rgba(247, 225, 127, 0.8); }
+
+@media (prefers-reduced-motion: reduce) { .glow::after { animation: none; } }
+
+
+/* ---------- Section 2: "Put the data spine to work" ----------
+   Epsilon's framing (one big card left, two stacked right), Inbound's
+   spacing (90px under the hero, 1298px container), Profectus finish.
+   Hover grows the card by transform only, so it stays smooth. */
+.uses { padding: var(--rw-after) 0 140px; background: var(--rw-paper); }
+.uses__inner { width: var(--rw-container); margin-inline: auto; display: grid; gap: 56px; }
+.uses__head { display: grid; gap: 16px; }
+.uses__head .lh2 em { font-family: var(--pf-italic); font-size: var(--pf-italic-scale); letter-spacing: -0.04em; }
+.uses__grid { display: grid; grid-template-columns: 1.45fr 1fr; grid-template-rows: 1fr 1fr; gap: 24px; }
+.ucard {
+  display: grid; grid-template-rows: auto 1fr; text-decoration: none; color: var(--rw-ink);
+  background: var(--rw-paper); border-radius: 15px; overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(11, 11, 12, 0.07), 0 10px 30px rgba(20, 16, 40, 0.05);
+  transform: translateZ(0); transition: transform 450ms var(--pf-ease), box-shadow 450ms var(--pf-ease);
+}
+.ucard:hover, .ucard:focus-visible { transform: scale(1.03); box-shadow: 0 0 0 1px rgba(211, 167, 84, 0.45), 0 24px 60px rgba(20, 16, 40, 0.12); z-index: 1; }
+.ucard--big { grid-row: 1 / span 2; }
+.ucard__media {
+  position: relative; display: grid; place-items: center; aspect-ratio: 16 / 9;
+  background:
+    radial-gradient(60% 90% at 20% 100%, color-mix(in srgb, var(--pf-g-teal-lit) 30%, transparent), transparent 65%),
+    radial-gradient(55% 80% at 85% 0%, color-mix(in srgb, var(--pf-g-violet) 28%, transparent), transparent 65%),
+    radial-gradient(40% 60% at 60% 70%, color-mix(in srgb, var(--rw-gold-300) 30%, transparent), transparent 70%),
+    #F4F3F7;
+}
+.ucard--big .ucard__media { aspect-ratio: 4 / 3; }
+.ucard__media span { font: 400 11px/1.3 var(--pf-mono); text-transform: uppercase; letter-spacing: .04em; color: var(--rw-ink-2); }
+.ucard__body { display: grid; gap: 12px; align-content: start; padding: 24px 24px 28px; }
+.ucard h3 { font: 400 clamp(22px, 18px + 0.8vw, 30px)/1.1 var(--pf-serif); letter-spacing: -0.035em; text-wrap: balance; }
+.ucard--big h3 { font-size: clamp(28px, 20px + 1.4vw, 44px); line-height: 1.02; }
+.ucard__body > p:not(.pf-eyebrow) { font-size: 16px; line-height: 1.45; color: var(--rw-ink-2); max-width: 34em; }
+.ucard__link { font: 500 15px/1 var(--pf-sans); letter-spacing: -0.02em; color: var(--rw-gold-900); margin-top: 4px; }
+@media (max-width: 900px) {
+  .uses__grid { grid-template-columns: 1fr; grid-template-rows: none; }
+  .ucard--big { grid-row: auto; }
+  .ucard:hover { transform: scale(1.015); }
+}
+@media (prefers-reduced-motion: reduce) { .ucard { transition: box-shadow 200ms ease; } .ucard:hover { transform: none; } }
+
+
+/* ---------- Cascade (Silver Bullet belt, measured) ----------
+   The lane clips at the top so cards emerge from its edge; the script fades
+   them over the last 140px. 40px gaps, 5.12px corners, as measured. */
+.casc { padding: 40px 0 140px; background: var(--rw-paper); }
+.casc__inner { width: var(--rw-container); margin-inline: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.casc__copy { display: grid; gap: 18px; align-content: start; position: sticky; top: calc(var(--rw-nav-h) + 40px); }
+.casc__copy .lh2 em { font-family: var(--pf-italic); font-size: var(--pf-italic-scale); letter-spacing: -0.04em; }
+.casc__lead { color: var(--rw-ink-2); font-size: 17px; line-height: 1.45; max-width: 30em; }
+.cascade { position: relative; height: 720px; overflow: hidden; }
+.cascade__track { position: absolute; inset: 0; }
+.cascade__card {
+  position: absolute; top: 0; left: 0; display: grid; gap: 10px;
+  padding: 22px 22px 26px; border-radius: 5.12px;
+  background: var(--rw-paper);
+  box-shadow: 0 0 0 1px rgba(11, 11, 12, 0.08), 0 12px 30px rgba(20, 16, 40, 0.05);
+  will-change: transform, opacity;
+}
+.cascade__card .pf-eyebrow { color: var(--rw-gold-900); }
+.cascade__card p:not(.pf-eyebrow) { font: 400 22px/1.15 var(--pf-serif); letter-spacing: -0.03em; color: var(--rw-ink); }
+@media (max-width: 900px) { .casc__inner { grid-template-columns: 1fr; } .casc__copy { position: static; } .cascade { height: 560px; } }
+
+
+/* ---------- Galaxy, black and gold ----------
+   Same photo, re-toned: grey it, warm it to sepia, push the saturation
+   toward the foil gold. Stars and glints are gold (data-theme="gold"). */
+.why-gold { position: relative; overflow: hidden; padding: 140px 0 160px; background: #000; color: var(--pf-white); }
+.why-gold .pf-nebula { opacity: 0.95; }
+.why-gold .pf-nebula__plate { filter: grayscale(1) sepia(1) saturate(2.6) hue-rotate(-8deg) brightness(1.1) contrast(1.15); }
+.why-gold .lh2 { color: var(--pf-white); }
+.why-gold .pf-eyebrow { color: var(--pf-text); }
+.why-gold .pf-glass { display: grid; gap: 14px; }
+.why-gold .pf-glass h3 { font: 500 var(--pf-fs-h3)/1.2 var(--pf-sans); letter-spacing: -0.04em; color: var(--pf-white); }
+.why-gold .pf-glass p { font-size: 16px; line-height: 1.45; color: var(--pf-text); }
+.why-gold .pf-glass .num { color: var(--rw-gold-300); }
+.why-gold .pf-glass { box-shadow: inset 0 1px 0 rgba(247, 225, 127, 0.10); }
+
+
+/* ---------- Purple and gold, in balance ----------
+   Gold leads the hero and every button; violet takes the section accents
+   below it, so the page reads roughly half and half. */
+.v { font-family: var(--pf-italic); font-style: italic; font-size: var(--pf-italic-scale); letter-spacing: -0.04em; color: var(--pf-violet); }
+.light .v { color: #6E62E6; }   /* a touch deeper, so violet holds up on white */
+.ucard .pf-eyebrow { color: #6E62E6; }
+.ucard:nth-child(2):hover { box-shadow: 0 0 0 1px rgba(142, 132, 247, 0.5), 0 24px 60px rgba(20, 16, 40, 0.12); }
+.cascade__card:nth-child(even) .pf-eyebrow { color: #6E62E6; }
+.why-light .pf-glass .num { color: #6E62E6; }
+
+/* Gold galaxy, with violet drifting through it: the untoned violet photo
+   laid back over the gold in a few soft patches. */
+.why-gold .pf-nebula__breath::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: url("/img/nebula-violet.webp") center / cover no-repeat;
+  mix-blend-mode: screen; opacity: 0.85;
+  -webkit-mask: radial-gradient(42% 46% at 22% 32%, #000, transparent 70%), radial-gradient(38% 40% at 80% 72%, #000, transparent 70%), radial-gradient(26% 30% at 58% 12%, #000, transparent 70%);
+          mask: radial-gradient(42% 46% at 22% 32%, #000, transparent 70%), radial-gradient(38% 40% at 80% 72%, #000, transparent 70%), radial-gradient(26% 30% at 58% 12%, #000, transparent 70%);
+}
+.why-gold .pf-glass:nth-child(1) .num { color: var(--rw-gold-300); }
+.why-gold li:nth-child(even) .pf-glass .num { color: var(--pf-violet); }
+
+
+/* ---------- Section 2, segmented: black panel, gold edge, cascading right side ----------
+   The panel starts halfway across the big card (so that card straddles white
+   and black) and runs 5px past the right column on every side. The right
+   column is a one-column cascade (same engine as the Silver Bullet belt). */
+.uses__grid { position: relative; isolation: isolate; grid-template-rows: none; }
+.ucard--big { position: relative; z-index: 1; grid-row: auto; }
+.uses__lane { position: relative; z-index: 1; height: auto; min-height: 100%; align-self: stretch; overflow: hidden; border-radius: 15px;
+  box-shadow: 0 0 0 1px var(--rw-gold-500), 0 0 0 6px rgba(211, 167, 84, 0.10); }   /* the thin gold line */
+/* Lane cards move by transform (set every frame by the script), so they
+   grow on hover with the separate scale property instead. */
+.ucard--lane { transition: scale 450ms var(--pf-ease), box-shadow 450ms var(--pf-ease); }
+.ucard--lane:hover, .ucard--lane:focus-visible { transform: none; scale: 1.03; }
+.ucard--lane .ucard__media { aspect-ratio: 16 / 8; }
+@media (max-width: 900px) {
+  .uses__lane { height: 560px; }
+  .uses__galaxy { -webkit-mask: linear-gradient(transparent, #000 30%, #000 85%, transparent); mask: linear-gradient(transparent, #000 30%, #000 85%, transparent); }
+}
+
+
+/* ---------- Section 2 background: the black, gold and violet galaxy ----------
+   Covers the whole section (its padding gives the room above and below the
+   cards), fading in from the left so the big card's side stays white. */
+.uses { position: relative; overflow: hidden; }
+.uses__inner { position: relative; z-index: 1; }
+.uses__galaxy {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none; background: #000;
+  -webkit-mask: linear-gradient(90deg, transparent 0%, transparent 26%, rgba(0,0,0,.55) 44%, #000 62%),
+                linear-gradient(180deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask: linear-gradient(90deg, transparent 0%, transparent 26%, rgba(0,0,0,.55) 44%, #000 62%),
+        linear-gradient(180deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  mask-composite: intersect;
+}
+.uses__galaxy .pf-nebula { opacity: 1; -webkit-mask: none; mask: none; }
+.uses__galaxy .pf-nebula__plate { filter: grayscale(1) sepia(1) saturate(2.6) hue-rotate(-8deg) brightness(1.1) contrast(1.15); }
+.uses__galaxy .pf-nebula__breath::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: url("/img/nebula-violet.webp") center / cover no-repeat;
+  mix-blend-mode: screen; opacity: 0.85;
+  -webkit-mask: radial-gradient(40% 46% at 70% 30%, #000, transparent 70%), radial-gradient(34% 40% at 88% 78%, #000, transparent 70%);
+          mask: radial-gradient(40% 46% at 70% 30%, #000, transparent 70%), radial-gradient(34% 40% at 88% 78%, #000, transparent 70%);
+}
+
+
+/* Cascades are grabbable with a mouse or trackpad. On touch screens a
+   vertical swipe stays page scrolling. */
+.cascade { cursor: grab; user-select: none; -webkit-user-select: none; }
+.cascade.is-grabbing { cursor: grabbing; }
+.cascade.is-grabbing .cascade__card { transition: none; }
+@media (pointer: fine) { .cascade { touch-action: none; } }
+
+/* Nav: links sit on the right, grouped with the button (logo alone on the left). */
+.fnav__bar > nav { margin-left: auto; }
+.fnav__links { margin-left: 0; }
+
+
+/* A screen of white between the dark-backed sections, so they never fade
+   straight into each other. Temporary: real sections will go here. */
+.spacer { height: 100svh; display: grid; place-items: center; background: var(--rw-paper); }
+.spacer span { font: 400 11px/1 var(--pf-mono); text-transform: uppercase; letter-spacing: .06em; color: rgba(11, 11, 12, 0.18); }
+
+/* Nav button: gold over the hero, purple once the nav has turned white. */
+.fnav.is-light .fnav__cta.btn-gold {
+  background: #6E62E6 !important; color: var(--pf-white) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 6px 20px rgba(110, 98, 230, 0.25) !important;
+}
+.fnav.is-light .fnav__cta.btn-gold:hover { background: #5B4FD9 !important; }
+.fnav.is-light .fnav__cta.btn-gold::after { display: none; }   /* no gold glow on white */
+
+
+/* ---------- Companies who trust us, on the hero's fade line ----------
+   Hero gets a full screen so the logos sit in the fade below the copy.
+   Fill: light at the top, dark at the bottom, crossing over quickly in the
+   middle: the reverse of the black-to-white fade behind it. The fill is baked
+   into each image (public/logos/baked-*.webp) so scrolling costs nothing.
+   Motion, measured on Silver Bullet: logos rest at 0.5504 opacity; hover
+   rolls each up to a copy of itself (0.4s cubic-bezier(.76,0,.24,1)) and
+   brightens to 1 (0.3s). Reveal once: rise 30px and fade in, 83ms apart. */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.rhero { min-height: max(900px, 100svh); }
+.trusted {
+  position: absolute; z-index: 2; left: 50%; translate: -50% 0; bottom: calc(12% - 40px);
+  width: var(--rw-container); height: 80px; margin: 0; padding: 0; list-style: none;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 24px 64px;
+}
+.tlogo {
+  position: relative; width: var(--w); height: var(--h); overflow: hidden; flex: none;
+  opacity: 0; translate: 0 30px;
+  transition: opacity 650ms cubic-bezier(0.22, 1, 0.36, 1), translate 650ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(400ms + var(--i) * 83ms);
+}
+.trusted.is-in .tlogo { opacity: 0.5504; translate: 0 0; }
+.trusted.is-done .tlogo { transition: opacity 300ms ease; transition-delay: 0ms; }
+.trusted.is-done .tlogo:hover { opacity: 1; }
+.tlogo__track { display: flex; flex-direction: column; transition: transform 400ms cubic-bezier(0.76, 0, 0.24, 1); }
+.tlogo:hover .tlogo__track { transform: translateY(-50%); }
+.tlogo__track img { display: block; width: var(--w); height: var(--h); }
+.tlogo { will-change: transform; }   /* each logo on its own GPU layer: scrolling just moves it */
+@media (max-width: 1100px) { .trusted { height: auto; bottom: 24px; gap: 18px 40px; } .tlogo { scale: 0.8; } }
+@media (max-width: 768px) { .tlogo { width: calc(var(--w) * 0.674); height: calc(var(--h) * 0.674); scale: 1; } .tlogo__track img { width: calc(var(--w) * 0.674); height: calc(var(--h) * 0.674); } }
+@media (prefers-reduced-motion: reduce) {
+  .tlogo { opacity: 0.5504; translate: none; transition: opacity 300ms ease; transition-delay: 0ms; }
+  .tlogo__track { transition: none; }
+}
+
+
+/* ---------- "Reach real people, drive real results" (Epsilon, measured) ----------
+   Band: 48px padding, 48px heading, 48px to the carousel, dots 27px below the
+   card, "See all" 24px below that. Card 534.66 x 300.74 (16:9) at 1440, side
+   cards at 0.8 scale, slides overlapping by 50px. Track 300ms ease; scale
+   350ms ease-in-out. Background: Epsilon's blurred-blob band, in Profectus
+   violet and periwinkle on black. */
+.reach { position: relative; overflow: hidden; isolation: isolate; padding: 48px 0; color: var(--pf-white); text-align: center; background: #07060D; }
+.reach__bg { position: absolute; inset: -20%; z-index: -1; pointer-events: none; filter: blur(90px);
+  background:
+    radial-gradient(35% 45% at 22% 30%, rgba(119, 94, 153, 0.85), transparent 70%),
+    radial-gradient(35% 50% at 78% 65%, rgba(72, 83, 132, 0.85), transparent 70%),
+    radial-gradient(25% 30% at 55% 20%, rgba(142, 132, 247, 0.45), transparent 70%); }
+.reach__h { font: 400 clamp(32px, 22px + 1.8vw, 48px)/1.3 var(--pf-serif); letter-spacing: -0.03em; margin: 0 auto 48px; padding-inline: 16px; text-wrap: balance; }
+.cflow { position: relative; outline: none; --cw-half: min(267.33px, 18.565vw); }
+.cflow:focus-visible { outline: 1px solid var(--rw-gold-500); outline-offset: 8px; }
+.cflow__track { display: flex; align-items: center; padding-block: 15px 52px; transition: transform 300ms ease; will-change: transform; }
+.cflow__track.is-jumping, .cflow__track.is-jumping .cflow__slide { transition: none !important; }
+.cflow__slide {
+  --cw: min(534.66px, 37.13vw);
+  position: relative; flex: none; width: var(--cw); aspect-ratio: 16 / 9; margin-right: -50px;
+  border-radius: 15px; overflow: hidden; text-decoration: none; color: var(--pf-white);
+  transform: scale(0.8); transition: transform 350ms ease-in-out;
+}
+.cflow__slide.is-active { transform: scale(1); z-index: 1; }
+.cflow__photo { position: absolute; inset: 0; display: grid; place-items: center;
+  background: radial-gradient(60% 80% at 30% 30%, #3B3260, transparent 70%), radial-gradient(60% 80% at 75% 80%, #2A3A5C, transparent 70%), #16131F; }
+.cflow__photo span { font: 400 11px/1 var(--pf-mono); text-transform: uppercase; letter-spacing: .05em; color: rgba(255,255,255,.55); }
+/* The overlay that gives the selected card more: purple on the centre card,
+   a darker purple veil on the sides (Epsilon dims them to 0.3 instead). */
+.cflow__shade { position: absolute; inset: 0; pointer-events: none; background: rgba(28, 18, 66, 0.72); transition: background-color 350ms ease-in-out; }
+.cflow__slide.is-active .cflow__shade { background: linear-gradient(180deg, rgba(142, 132, 247, 0.10), rgba(110, 98, 230, 0.32)); }
+/* Panel: Epsilon's peek tab (89px showing at rest, 90% wide, 24px padding,
+   64px top-right corner), in dark glass so the text can be white. */
+.cflow__panel {
+  position: absolute; left: 0; bottom: 0; width: 90%; padding: 24px; display: grid; gap: 10px; justify-items: start; text-align: left;
+  background: rgba(12, 10, 24, 0.72); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border-top-right-radius: 64px;
+  transform: translateY(calc(100% - 89px)); transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.cflow__logo { font: 500 15px/55px var(--pf-sans); letter-spacing: .02em; height: 55px; min-width: 130px; padding-inline: 12px; border-radius: 8px; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); text-align: center; }
+.cflow__title { font: 400 18px/1.44 var(--pf-sans); letter-spacing: -0.01em; color: var(--pf-white); opacity: 0; transform: scaleX(0.7); transform-origin: left; transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1), transform 300ms cubic-bezier(0.4, 0, 0.2, 1); }
+.cflow__cta { font: 600 15px/1 var(--pf-sans); color: var(--rw-gold-300); opacity: 0; transition: opacity 300ms ease; }
+.cflow__slide.is-active:hover .cflow__panel, .cflow__slide.is-active:focus-visible .cflow__panel { transform: translateY(0); }
+.cflow__slide.is-active:hover .cflow__title, .cflow__slide.is-active:focus-visible .cflow__title { opacity: 1; transform: scaleX(1); }
+.cflow__slide.is-active:hover .cflow__cta, .cflow__slide.is-active:focus-visible .cflow__cta { opacity: 1; }
+/* Touch screens can't hover: show the panel open (Epsilon hides it for good). */
+@media (hover: none) { .cflow__slide.is-active .cflow__panel { transform: none; } .cflow__slide.is-active .cflow__title, .cflow__slide.is-active .cflow__cta { opacity: 1; transform: none; } }
+.cflow__arrow { position: absolute; top: calc(50% - 20px); z-index: 2; width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
+  background: rgba(255,255,255,0.12); color: var(--pf-white); font: 500 18px/1 var(--pf-sans); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); transition: background-color 200ms ease; }
+.cflow__arrow:hover { background: rgba(255,255,255,0.22); }
+.cflow__prev { left: calc(50% - var(--cw-half, 267px) - 64px); }
+.cflow__next { right: calc(50% - var(--cw-half, 267px) - 64px); }
+.cflow__dots { position: absolute; left: 0; right: 0; bottom: 13px; display: flex; justify-content: center; gap: 8px; }
+.cflow__dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--pf-white); background: transparent; padding: 0; cursor: pointer; }
+.cflow__dot[aria-current="true"] { background: var(--pf-white); }
+.reach__all { margin-top: 24px; height: 48px; padding: 0 28px; font-size: 18px; display: inline-flex; align-items: center; }
+@media (max-width: 900px) {
+  .cflow__slide { --cw: calc(100vw - 40px); margin-right: 20px; }
+  .cflow__slide:not(.is-active) { transform: scale(0.8); }
+  .cflow__arrow { display: none; }
+  .reach__all { width: calc(100% - 40px); justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) { .cflow__track, .cflow__slide, .cflow__panel, .cflow__title { transition: none; } }
+
+/* Reach band sits under the hero, after Inbound's 90px gap. */
+.rhero + .reach { margin-top: var(--rw-after); }
+
+/* "Companies who trust Profectus": dead centre above the logo strip, 24px
+   above it (Inbound's heading gap). Pale lavender, like the logos' tops. */
+.trusted__label {
+  position: absolute; z-index: 2; left: 0; right: 0; text-align: center;
+  bottom: calc(12% - 40px + 80px + 24px);
+  font: 400 var(--pf-fs-mono)/1.2 var(--pf-mono); text-transform: uppercase; letter-spacing: 0.08em;
+  color: rgba(238, 234, 255, 0.75);
+}
+@media (max-width: 1100px) { .trusted__label { position: relative; bottom: auto; margin-top: 24px; } }
+.trusted__label { font-size: calc(var(--pf-fs-mono) * 3); letter-spacing: 0.04em; }   /* 3x: 38.88px */
+@media (max-width: 760px) { .trusted__label { font-size: calc(var(--pf-fs-mono) * 1.8); } }
+
+/* Text selection: Profectus purple, white letters. */
+::selection { background: #6E62E6; color: #FFFFFF; -webkit-text-fill-color: #FFFFFF; }
+
+/* Nav: frosted again over the hero, with the Profectus nav glass
+   (rgba(3,3,3,0.2) + 10px blur, measured on the live site). Past the hero
+   it still turns frosted white. */
+.fnav { background: var(--pf-fill-nav); -webkit-backdrop-filter: var(--pf-blur-bar); backdrop-filter: var(--pf-blur-bar); transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1), background-color 200ms ease; }
+.fnav.is-light { background: transparent; }
+
+/* ---------- Why Profectus: operators, not a platform (homepage) ----------
+   White band after the coverflow. Head on the left, the 230M figure on the
+   right, then a three-column comparison: what it is, a platform, Profectus. */
+.edge { padding: var(--rw-after) 0 140px; background: var(--rw-paper); color: var(--rw-ink); }
+.edge__inner { width: var(--rw-container); margin-inline: auto; display: grid; grid-template-columns: 1.4fr 1fr; gap: 56px 64px; align-items: end; }
+.edge__head { display: grid; gap: 20px; }
+.edge .pf-eyebrow { color: var(--rw-ink-2); }
+.edge__h { font: 400 var(--pf-fs-h2)/var(--pf-lh-h2) var(--pf-serif); letter-spacing: var(--pf-ls-h2); text-wrap: balance; }
+.edge__h em { font-family: var(--pf-italic); font-size: var(--pf-italic-scale); letter-spacing: -0.02em; }
+.edge__lead { max-width: 36em; font-size: 18px; line-height: 1.45; color: var(--rw-ink-2); }
+.edge__lead .v, .edge__line .v { font-family: var(--pf-italic); font-size: 1.12em; }
+.edge__stat { display: grid; justify-items: end; text-align: right; }
+.edge__num { font: 400 clamp(88px, 40px + 7vw, 168px)/0.9 var(--pf-serif); letter-spacing: -0.05em; }
+.edge__unit { font: 400 var(--pf-fs-mono)/1.4 var(--pf-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--rw-ink-2); }
+.edge__table { grid-column: 1 / -1; border-top: 1px solid var(--rw-ink); }
+.edge__row { display: grid; grid-template-columns: 0.8fr 1fr 1.2fr; gap: 32px; padding: 22px 0; border-bottom: 1px solid rgba(11, 11, 12, 0.1); align-items: baseline; }
+.edge__row--head { padding: 14px 0; font: 400 var(--pf-fs-mono)/1.4 var(--pf-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--rw-ink-2); }
+.edge__row--head span:last-child { color: var(--rw-gold-900); }
+.edge__k { font: 500 15px/1.3 var(--pf-sans); }
+.edge__them { font-size: 17px; line-height: 1.4; color: rgba(11, 11, 12, 0.42); text-decoration: line-through; text-decoration-color: rgba(110, 98, 230, 0.55); text-decoration-thickness: 1px; }
+.edge__us { font: 500 19px/1.35 var(--pf-sans); letter-spacing: -0.02em; position: relative; padding-left: 22px; }
+.edge__us::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 8px; height: 8px; border-radius: 50%; background: var(--rw-foil); box-shadow: 0 0 10px rgba(211, 167, 84, .6); }
+.edge__foot { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
+.edge__line { font: 400 clamp(22px, 16px + 1vw, 30px)/1.25 var(--pf-serif); letter-spacing: -0.02em; }
+@media (max-width: 900px) {
+  .edge__inner { grid-template-columns: 1fr; }
+  .edge__stat { justify-items: start; text-align: left; }
+  .edge__row { grid-template-columns: 1fr; gap: 6px; }
+  .edge__row--head { display: none; }
+  .edge__them::before { content: "A platform: "; text-decoration: none; }
+}
+
+/* ---------- Capabilities page ---------- */
+.rhero.rhero--page { min-height: 640px; }
+.rhero--page .pf-eyebrow { color: var(--rw-gold-300); }
+.spine__head { display: grid; gap: 16px; margin-bottom: 72px; }
+.spine__head .lh2 em, .svc .lh2 em { font-family: var(--pf-italic); font-size: var(--pf-italic-scale); letter-spacing: -0.04em; }
+
+/* The spine: a gold rail down the left, a node per step, and one dot (the
+   customer) that rides the rail with scroll. Only transform and text change. */
+.spine { padding: var(--rw-after) 0 120px; background: var(--rw-paper); }
+.spine__inner, .svc__inner { width: var(--rw-container); margin-inline: auto; }
+.spine__track { position: relative; padding-left: 120px; }
+.spine__rail { position: absolute; left: 40px; top: 0; bottom: 0; width: 2px; background: rgba(11, 11, 12, 0.08); border-radius: 2px; overflow: hidden; }
+.spine__fill { position: absolute; inset: 0; background: linear-gradient(180deg, var(--rw-gold-300), var(--rw-gold-700) 60%, #6E62E6); transform-origin: top; transform: scaleY(0); will-change: transform; }
+.spine__dot { position: absolute; left: 41px; top: 0; z-index: 2; will-change: transform; pointer-events: none; }
+.spine__dot::before { content: ""; position: absolute; left: -9px; top: -9px; width: 18px; height: 18px; border-radius: 50%; background: var(--rw-foil); box-shadow: 0 0 0 5px rgba(211, 167, 84, 0.18), 0 0 24px rgba(211, 167, 84, 0.7); }
+.spine__label { position: absolute; left: 0; top: 18px; transform: translateX(-50%); white-space: nowrap; padding: 4px 9px; border-radius: 999px; background: var(--rw-ink); color: var(--rw-gold-100); font: 400 11px/1.2 var(--pf-mono); text-transform: uppercase; letter-spacing: .06em; }
+.spine__steps { list-style: none; padding: 0; display: grid; gap: 120px; }
+.vert { position: relative; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 12px 64px; padding-top: 4px; }
+.vert__node { position: absolute; left: -86px; top: 22px; width: 12px; height: 12px; border-radius: 50%; background: var(--rw-paper); border: 2px solid rgba(11, 11, 12, 0.2); transition: border-color 300ms ease, background-color 300ms ease; }
+.vert.is-passed .vert__node { border-color: var(--rw-gold-700); background: var(--rw-gold-300); }
+.vert__num { grid-column: 1; font: 400 var(--pf-fs-mono)/1.4 var(--pf-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--rw-gold-900); }
+.vert__line { grid-column: 1; font: 400 clamp(32px, 22px + 2vw, 56px)/1.05 var(--pf-serif); letter-spacing: -0.035em; text-wrap: balance; }
+.vert__name { grid-column: 1; font: 500 15px/1.3 var(--pf-sans); color: #6E62E6; }
+.vert__body { grid-column: 2; grid-row: 2 / span 2; font-size: 18px; line-height: 1.5; color: var(--rw-ink-2); }
+.vert__does { grid-column: 2; list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.vert__does li { padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(11, 11, 12, 0.12); font: 500 13px/1.2 var(--pf-sans); }
+.vert__link { grid-column: 2; justify-self: start; font: 500 15px/1.3 var(--pf-sans); text-decoration: none; border-bottom: 1px solid var(--rw-gold-500); padding-bottom: 2px; }
+.vert__link:hover { color: var(--rw-gold-900); }
+
+/* Services: two rows, label on the left, four cards on the right */
+.svc { padding: 40px 0 140px; background: var(--rw-paper); }
+.svc__group { display: grid; grid-template-columns: 240px 1fr; gap: 40px; padding: 40px 0; border-top: 1px solid rgba(11, 11, 12, 0.12); }
+.svc__label h3 { font: 400 32px/1.1 var(--pf-serif); letter-spacing: -0.03em; }
+.svc__label p { margin-top: 8px; color: var(--rw-ink-2); font-size: 15px; line-height: 1.45; }
+.svc__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.svc__card { display: grid; align-content: start; gap: 10px; min-height: 220px; padding: 22px; border-radius: 15px; background: #F6F5FA; text-decoration: none; transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), background-color 300ms ease, color 300ms ease; }
+.svc__card:hover { transform: translateY(-4px); background: var(--rw-ink); color: var(--pf-white); }
+.svc__name { font: 500 19px/1.2 var(--pf-sans); letter-spacing: -0.02em; }
+.svc__sum { font-size: 14px; line-height: 1.45; opacity: .72; }
+.svc__go { margin-top: auto; font: 500 14px/1 var(--pf-sans); color: var(--rw-gold-700); }
+
+/* Closing slab: Epsilon's one huge word, our line */
+.close { padding: 140px var(--rw-gutter); background: #07060D; color: var(--pf-white); text-align: center; display: grid; justify-items: center; gap: 28px; }
+.close .pf-eyebrow { color: rgba(238, 234, 255, 0.7); }
+.close__h { font: 400 max(48px, 8vw)/0.95 var(--pf-serif); letter-spacing: -0.04em; }
+.close__h em { font-family: var(--pf-italic); }
+
+@media (max-width: 1100px) { .svc__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 900px) {
+  .spine__track { padding-left: 56px; }
+  .spine__rail { left: 16px; } .spine__dot { left: 17px; }
+  .vert { grid-template-columns: 1fr; }
+  .vert__node { left: -46px; }
+  .vert__body, .vert__does, .vert__link { grid-column: 1; grid-row: auto; }
+  .spine__steps { gap: 80px; }
+  .svc__group { grid-template-columns: 1fr; gap: 20px; }
+}
+@media (max-width: 560px) { .svc__grid { grid-template-columns: 1fr; } .svc__card { min-height: 0; } }
+@media (prefers-reduced-motion: reduce) { .svc__card { transition: none; } .svc__card:hover { transform: none; } }
+@media (max-width: 900px) { .spine__label { display: none; } }
+
+/* ---------- Inbound spacing, everywhere (owner, Oct 21) ----------
+   Measured on inboundmedia.co: sections ~90-100px top and bottom at 1440,
+   64 at 768, ~40 at 390; heading to text 16-20px; the hero is sized by its
+   content (140 top, 80 bottom), never stretched to the screen. These rules
+   override the larger paddings above. */
+:root { --rw-sec: 96px; --rw-head-gap: 16px; }
+@media (max-width: 768px) { :root { --rw-sec: 64px; } }
+@media (max-width: 390px) { :root { --rw-sec: 40px; } }
+
+/* Hero: no forced height. The trusted label and logos follow the buttons in
+   the flow, one section gap below them, so there is no dead space. */
+.rhero, .rhero.rhero--page { min-height: 0; }
+.trusted__label { position: relative; bottom: auto; left: auto; right: auto; margin-top: var(--rw-sec); }
+.trusted { position: relative; left: auto; bottom: auto; translate: none; margin: 24px auto 0; height: auto; }
+
+.uses, .edge, .spine, .svc, .casc, .why-light, .why-gold { padding-top: var(--rw-sec); padding-bottom: var(--rw-sec); }
+.mood-light, .close { padding-top: calc(var(--rw-sec) * 1.25); padding-bottom: calc(var(--rw-sec) * 1.25); }
+.rhero + .reach { margin-top: var(--rw-after); }   /* Inbound: 90px after the hero */
+.reach { padding-top: var(--rw-sec); padding-bottom: var(--rw-sec); }
+.next { min-height: 0; padding: var(--rw-sec) var(--rw-gutter); }
+.spine__head { margin-bottom: 56px; }
+.spine__steps { gap: var(--rw-sec); }
+.lhead, .uses__head, .edge__head, .spine__head, .cap-head { gap: var(--rw-head-gap); }
+
+/* ---------- Capability detail pages (Epsilon's product skeleton) ---------- */
+/* Jump bar: pinned at the top once reached (Epsilon). Active tab gets a gold
+   underline; on phones the bar scrolls sideways. */
+.jump { position: sticky; top: 0; z-index: 90; background: rgba(255, 255, 255, 0.92); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(11, 11, 12, 0.08); }
+.jump.is-stuck { box-shadow: 0 8px 24px rgba(20, 16, 40, 0.06); }
+.jump__inner { width: var(--rw-container); margin-inline: auto; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.jump__inner::-webkit-scrollbar { display: none; }
+.jump__tab { flex: none; padding: 20px 16px 18px; border-bottom: 2px solid transparent; font: 500 14px/1 var(--pf-sans); letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; color: var(--rw-ink-2); transition: color 300ms cubic-bezier(0.4, 0, 0.2, 1), border-color 300ms cubic-bezier(0.4, 0, 0.2, 1); }
+.jump__tab:hover { color: var(--rw-ink); }
+.jump__tab.is-on { color: var(--rw-ink); border-bottom-color: var(--rw-gold-500); }
+.cap-sec { scroll-margin-top: 60px; padding: var(--rw-sec) 0; background: var(--rw-paper); }
+.cap-sec + .cap-sec { padding-top: 0; }
+.cap-sec__inner { width: var(--rw-container); margin-inline: auto; }
+.cap-head { display: grid; justify-items: start; margin-bottom: 48px; max-width: 860px; }
+.cap-head .lh2 em { font-family: var(--pf-italic); font-size: var(--pf-italic-scale); letter-spacing: -0.03em; }
+.cap-head__sub { font-size: 18px; line-height: 1.45; color: var(--rw-ink-2); }
+.rhero--page .pf-eyebrow a { text-decoration: none; }
+.rhero--page .pf-eyebrow a:hover { color: var(--pf-white); }
+
+/* Overview: three benefits, then a wide media slot */
+.cap-benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 21px; }
+.cap-benefit { display: grid; align-content: start; gap: 12px; padding: 28px 24px; border-top: 2px solid var(--rw-ink); }
+.cap-benefit__n { font: 400 var(--pf-fs-mono)/1 var(--pf-mono); color: var(--rw-gold-900); }
+.cap-benefit h3 { font: 500 var(--pf-fs-h3)/1.2 var(--pf-sans); letter-spacing: -0.03em; }
+.cap-benefit p { font-size: 16px; line-height: 1.5; color: var(--rw-ink-2); }
+.cap-media { margin-top: 48px; aspect-ratio: 16 / 6; border-radius: 15px; display: grid; place-items: center; background: linear-gradient(135deg, #F6F5FA, #EDEAF8 60%, #F7EEDB); }
+.cap-media span, .cap-story__photo span { font: 400 11px/1 var(--pf-mono); text-transform: uppercase; letter-spacing: .06em; color: rgba(11, 11, 12, 0.35); }
+
+/* Head on the left (sticky), list on the right */
+.cap-split { display: grid; grid-template-columns: 1fr 1.3fr; gap: 64px; align-items: start; }
+.cap-head--sticky { position: sticky; top: 100px; }
+
+/* Accordion (Epsilon: 350ms, several open at once). Height animates with
+   the grid 0fr to 1fr trick, so no max-height guessing. */
+.acc { list-style: none; padding: 0; border-top: 1px solid rgba(11, 11, 12, 0.14); }
+.acc__item { border-bottom: 1px solid rgba(11, 11, 12, 0.14); }
+.acc__btn { width: 100%; display: flex; align-items: center; gap: 20px; padding: 24px 0; background: none; border: 0; text-align: left; cursor: pointer; color: inherit; font: 500 20px/1.3 var(--pf-sans); letter-spacing: -0.02em; }
+.acc__n { font: 400 var(--pf-fs-mono)/1 var(--pf-mono); color: var(--rw-gold-900); }
+.acc__t { flex: 1; }
+.acc__icon { position: relative; width: 14px; height: 14px; flex: none; }
+.acc__icon::before, .acc__icon::after { content: ""; position: absolute; left: 0; top: 6px; width: 14px; height: 2px; background: currentColor; transition: transform 350ms cubic-bezier(0.4, 0, 0.2, 1); }
+.acc__icon::after { transform: rotate(90deg); }
+.acc__item.is-open .acc__icon::after { transform: rotate(0deg); }
+.acc__panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 350ms cubic-bezier(0.4, 0, 0.2, 1); }
+.acc__panel > div { overflow: hidden; }
+.acc__panel p { padding: 0 34px 24px; font-size: 17px; line-height: 1.55; color: var(--rw-ink-2); max-width: 44em; }
+.acc__item.is-open .acc__panel { grid-template-rows: 1fr; }
+
+/* Why: the homepage comparison on a soft lavender band */
+.cap-sec--why { background: #F6F5FA; padding: var(--rw-sec) 0; }
+.cap-sec--why + .cap-sec { padding-top: var(--rw-sec); }
+.cap-sec--why .lh2 em { font-family: var(--pf-italic); font-size: var(--pf-italic-scale); }
+
+/* Progress stories: three cards, photo on top */
+.cap-stories { display: grid; grid-template-columns: repeat(3, 1fr); gap: 21px; }
+.cap-story { display: grid; align-content: start; gap: 10px; text-decoration: none; }
+.cap-story__photo { aspect-ratio: 16 / 10; border-radius: 15px; display: grid; place-items: center; background: linear-gradient(135deg, #1C1242, #3A2C8A 55%, #6E62E6); margin-bottom: 8px; transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1); }
+.cap-story__photo span { color: rgba(238, 234, 255, 0.6); }
+.cap-story:hover .cap-story__photo { transform: scale(1.02); }
+.cap-story__client { font: 400 var(--pf-fs-mono)/1.3 var(--pf-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--rw-ink-2); }
+.cap-story__stat { font-size: 15px; color: var(--rw-ink-2); }
+.cap-story__stat b { font: 400 32px/1 var(--pf-serif); color: var(--rw-gold-900); margin-right: 4px; }
+.cap-story__title { font: 500 19px/1.3 var(--pf-sans); letter-spacing: -0.02em; }
+.cap-story__go { font: 500 14px/1 var(--pf-sans); color: #6E62E6; margin-top: 4px; }
+
+/* Next step: one wide link to the next capability */
+.cap-next { display: grid; gap: 12px; width: var(--rw-container); margin: 0 auto var(--rw-sec); padding: 48px; border-radius: 15px; background: var(--rw-ink); color: var(--pf-white); text-decoration: none; transition: background-color 300ms ease; }
+.cap-next:hover { background: #1a1730; }
+.cap-next .pf-eyebrow { color: var(--rw-gold-300); }
+.cap-next__h { font: 400 clamp(32px, 22px + 2vw, 56px)/1.05 var(--pf-serif); letter-spacing: -0.035em; }
+.cap-next__go { font: 500 16px/1 var(--pf-sans); color: var(--rw-gold-300); }
+
+@media (max-width: 900px) {
+  .cap-benefits, .cap-stories { grid-template-columns: 1fr; }
+  .cap-split { grid-template-columns: 1fr; gap: 24px; }
+  .cap-head--sticky { position: static; }
+  .cap-media { aspect-ratio: 16 / 10; }
+  .cap-next { padding: 28px; }
+  .jump__tab { padding: 16px 12px 14px; font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) { .acc__panel, .acc__icon::before, .acc__icon::after, .cap-story__photo { transition: none; } }
+/* When the nav slides back in, the jump bar steps down under it (same 200ms). */
+.jump { transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+.fnav:not(.is-hidden) ~ main .jump.is-stuck { transform: translateY(var(--rw-nav-h)); }
+
+/* ---------- Reach, on white (owner, Oct 21) ----------
+   Sides: the "Our infrastructure" watercolour washes. Centre: the white
+   galaxy from "The Data Spine Changes Everything", about as wide as the
+   heading (R of "Reach" to the u of "results"), fading out into the sides.
+   Top and bottom fade into the white above and below. */
+.reach { background: var(--rw-paper); color: var(--rw-ink); }
+.reach__bg { inset: 0; filter: none;
+  background:
+    radial-gradient(40% 70% at 6% 85%, color-mix(in srgb, var(--pf-g-teal-lit) 38%, transparent), transparent 70%),
+    radial-gradient(38% 65% at 94% 15%, color-mix(in srgb, var(--pf-g-violet) 34%, transparent), transparent 70%),
+    radial-gradient(30% 50% at 92% 88%, color-mix(in srgb, var(--rw-gold-300) 34%, transparent), transparent 72%),
+    radial-gradient(30% 55% at 8% 12%, color-mix(in srgb, var(--pf-g-periwinkle) 26%, transparent), transparent 72%),
+    var(--rw-paper); }
+.reach__bg::before { content: ""; position: absolute; inset: 0; background: var(--rw-foil-grain); background-size: 160px; opacity: 0.18; mix-blend-mode: multiply; }
+.reach__galaxy { position: absolute; z-index: -1; top: 0; bottom: 0; left: 50%; width: min(100%, 1040px); translate: -50% 0; pointer-events: none;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 24%, #000 76%, transparent);
+  mask: linear-gradient(90deg, transparent, #000 24%, #000 76%, transparent); }
+.reach__galaxy .pf-nebula { opacity: 0.9; }
+.reach__galaxy .pf-nebula__plate { filter: invert(1) hue-rotate(180deg) saturate(1.15) brightness(1.03); }
+.reach::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(var(--rw-paper), transparent 18%, transparent 82%, var(--rw-paper)); }
+.reach__h { color: var(--rw-ink); }
+.cflow__arrow { background: rgba(11, 11, 12, 0.72); color: var(--pf-white); }
+.cflow__arrow:hover { background: var(--rw-ink); }
+.cflow__dot { border-color: var(--rw-ink); }
+.cflow__dot[aria-current="true"] { background: var(--rw-ink); }
+
+/* ---------- Nav menu for phones and narrow windows (under 900px) ---------- */
+.fnav__toggle { display: none; position: relative; width: 44px; height: 44px; margin-left: 8px; border: 0; background: none; color: inherit; cursor: pointer; }
+.fnav__toggle i { position: absolute; left: 11px; width: 22px; height: 2px; border-radius: 2px; background: currentColor; transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+.fnav__toggle i:first-child { top: 17px; } .fnav__toggle i:last-child { top: 25px; }
+.fnav.is-open .fnav__toggle i:first-child { transform: translateY(4px) rotate(45deg); }
+.fnav.is-open .fnav__toggle i:last-child { transform: translateY(-4px) rotate(-45deg); }
+.fnav__menu { display: none; }
+@media (max-width: 900px) {
+  .fnav__toggle { display: block; }
+  .fnav__bar .fnav__cta { display: none; }
+  .fnav__menu { display: grid; position: absolute; top: 100%; left: 0; right: 0; gap: 4px; padding: 12px 16px 24px;
+    background: rgba(255, 255, 255, 0.97); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); color: var(--rw-ink);
+    box-shadow: 0 16px 32px rgba(20, 16, 40, 0.12);
+    opacity: 0; visibility: hidden; translate: 0 -8px; transition: opacity 200ms ease, translate 200ms cubic-bezier(0.4, 0, 0.2, 1), visibility 0s 200ms; }
+  .fnav.is-open .fnav__menu { opacity: 1; visibility: visible; translate: 0 0; transition: opacity 200ms ease, translate 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+  .fnav__menu a { padding: 14px 4px; font: 500 15px/1 var(--pf-sans); letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-bottom: 1px solid rgba(11, 11, 12, 0.08); }
+  .fnav__menu a.btn-gold { margin-top: 12px; padding: 14px 20px; border-radius: var(--pf-r-pill); border: 0; text-align: center; letter-spacing: 0; text-transform: none; }
+}
+@media (max-width: 900px) { .fnav__menu { background: var(--rw-paper); -webkit-backdrop-filter: none; backdrop-filter: none; } }
+/* Reach, revised (owner, Oct 21): no galaxy. The infrastructure blend runs
+   the full width, same washes as .mood-light. */
+.reach__galaxy { display: none; }
+.reach__bg {
+  background:
+    radial-gradient(55% 80% at 16% 100%, color-mix(in srgb, var(--pf-g-teal-lit) 34%, transparent), transparent 66%),
+    radial-gradient(50% 75% at 86% 0%, color-mix(in srgb, var(--pf-g-violet) 30%, transparent), transparent 66%),
+    radial-gradient(38% 60% at 64% 72%, color-mix(in srgb, var(--rw-gold-300) 34%, transparent), transparent 70%),
+    radial-gradient(70% 90% at 45% 40%, color-mix(in srgb, var(--pf-g-periwinkle) 16%, transparent), transparent 76%),
+    var(--rw-paper); }
+
+/* Step headlines and names link to their pages */
+.vert__line a, .vert__name a { text-decoration: none; }
+.vert__line a:hover { color: #6E62E6; }
+.vert__name a:hover { text-decoration: underline; }
+
+/* ---------- Capabilities dropdown (Epsilon-style menu) ----------
+   Opens on hover or keyboard focus; a white panel under the bar with every
+   capability page in three columns. 200ms fade, Deloitte's curve. */
+.fnav__has-drop { position: static; }
+.fnav__drop { position: absolute; left: 0; right: 0; top: 100%; padding-top: 0; color: var(--rw-ink);
+  opacity: 0; visibility: hidden; translate: 0 -6px; transition: opacity 200ms ease, translate 200ms cubic-bezier(0.4, 0, 0.2, 1), visibility 0s 200ms; }
+.fnav__has-drop:hover .fnav__drop, .fnav__has-drop:focus-within .fnav__drop { opacity: 1; visibility: visible; translate: 0 0; transition: opacity 200ms ease, translate 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+.fnav__drop-inner { width: var(--rw-container); margin: 0 auto; padding: 32px; display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 24px 40px;
+  background: var(--rw-paper); border-radius: 0 0 15px 15px; box-shadow: 0 24px 48px rgba(20, 16, 40, 0.14), 0 1px 0 rgba(11, 11, 12, 0.06) inset; }
+.fnav__col-h { margin-bottom: 12px; font: 400 var(--pf-fs-mono)/1.3 var(--pf-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--rw-gold-900); }
+.fnav__col ul { list-style: none; padding: 0; display: grid; gap: 2px; }
+.fnav__links .fnav__col a { display: flex; align-items: baseline; gap: 10px; padding: 9px 0; font: 500 16px/1.3 var(--pf-sans); letter-spacing: -0.01em; text-transform: none; opacity: 1; color: var(--rw-ink); }
+.fnav__links .fnav__col a:hover { color: #6E62E6; }
+.fnav__col a span { flex: none; width: 92px; font: 400 11px/1 var(--pf-mono); text-transform: uppercase; letter-spacing: .05em; color: var(--rw-ink-2); }
+.fnav__links .fnav__drop-all { grid-column: 1 / -1; justify-self: start; padding: 12px 0 0; font: 500 15px/1 var(--pf-sans); letter-spacing: 0; text-transform: none; opacity: 1; color: var(--rw-ink); border-top: 1px solid rgba(11, 11, 12, 0.08); width: 100%; }
+.fnav__bar { position: relative; }
+@media (max-width: 900px) {
+  .fnav__menu-caps { display: grid; padding: 4px 0 8px 16px; border-bottom: 1px solid rgba(11, 11, 12, 0.08); }
+  .fnav__menu .fnav__menu-caps a { padding: 9px 0; border: 0; font: 500 15px/1.2 var(--pf-sans); letter-spacing: 0; text-transform: none; color: var(--rw-ink-2); }
+  .fnav__menu { max-height: calc(100svh - var(--rw-nav-h)); overflow-y: auto; }
+}
+.fnav__drop-inner { width: 100%; }
+.fnav__col a span { width: 112px; white-space: nowrap; }
+
+/* No glow around the gold (owner, Oct 21). The foil itself stays; every
+   halo, bloom and gold drop shadow is switched off. */
+.glow::after { display: none !important; animation: none !important; }
+.btn-gold { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45) !important; }
+.rhero .pf-pill--tag.glow::before { box-shadow: none; }
+.uses__lane { box-shadow: 0 0 0 1px var(--rw-gold-500); }
+.edge__us::before { box-shadow: none; }
+.spine__dot::before { box-shadow: 0 0 0 4px rgba(211, 167, 84, 0.18); }
+
+/* ---------- Sharper buttons: a slight 6px corner instead of the full pill.
+   Tags keep their pill shape; only things you click to act are squared up. ---------- */
+:root { --rw-r-btn: 6px; }
+.pf-pill:not(.pf-pill--tag), .fnav__cta, .pill-ink, .fnav__menu a.btn-gold { border-radius: var(--rw-r-btn); }
+
+/* Closing slab: each page has its own two-line close now, longer than the old
+   three words, so the heading drops from 8vw to 5.5vw and wraps at 18ch. */
+.close__h { font-size: max(40px, 5.5vw); max-width: 18ch; }
+.close__h em { display: block; }
+
+/* ---------- Purple leads, gold accents (Oct 22) ----------
+   Every button is purple. Big gold words become purple too. Gold is kept
+   for small accents only (rules, dots, eyebrows, periods, small links) and
+   the falling characters in the hero. */
+.btn-gold, .fnav__cta.btn-gold, .fnav.is-light .fnav__cta.btn-gold {
+  background: #6E62E6 !important; background-size: auto !important;
+  color: var(--pf-white) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+  transition: background-color 200ms ease !important;
+}
+.btn-gold:hover, .fnav.is-light .fnav__cta.btn-gold:hover { background: #5B4FD9 !important; }
+/* Big italic words and the 230M figure: purple, not foil. The light violet
+   reads on black (hero, closing slab); the deeper one holds up on white. */
+em.foil-text, .edge__num.foil-text {
+  background: none; -webkit-text-fill-color: currentColor; color: #6E62E6;
+}
+.rhero em.foil-text, .close em.foil-text { color: var(--pf-violet); }
+
+/* Overview cards: staggered reveal. Each card slides in from the left and
+   fades up, 150ms after the one before. Hidden only once the script arms it,
+   so the cards still show with JS off or reduced motion on. */
+.cap-benefits.is-armed .cap-benefit { opacity: 0; transform: translate3d(-60vw, 0, 0); transition: opacity 700ms ease, transform 1000ms cubic-bezier(0.16, 1, 0.3, 1); transition-delay: calc(var(--i, 0) * 180ms); }
+.cap-benefits.is-in .cap-benefit { opacity: 1; transform: none; }
+
+/* Stack-over: "Put our data to work" sticks once fully shown; "Why Profectus"
+   is a sheet with rounded top corners and a soft shadow that slides over it. */
+.uses[data-pin] { position: sticky; top: var(--pin-top, 0px); z-index: 0; }
+.uses[data-pin] + .edge { position: relative; z-index: 1; border-radius: 24px 24px 0 0; box-shadow: 0 -30px 40px -20px rgba(11, 11, 12, 0.14); }   /* negative spread: shadow on the top edge only, none below */
+
+/* Capabilities overview: each of the five steps slides in from the left edge
+   of the screen as you reach it. Everything but the gold node on the line moves. */
+.vert.is-armed > :not(.vert__node) { opacity: 0; transform: translate3d(-50vw, 0, 0); transition: opacity 700ms ease, transform 1000ms cubic-bezier(0.16, 1, 0.3, 1); }
+.vert.is-in > :not(.vert__node) { opacity: 1; transform: none; }
+
+/* "Everything our data powers" wears Reach's muted glow. overflow: clip (not
+   hidden) so the sticky heading on the left still sticks. */
+.casc { position: relative; isolation: isolate; overflow: clip; }
+.casc::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(var(--rw-paper), transparent 18%, transparent 82%, var(--rw-paper)); }
+
+/* Nav hover: the gold foil rule slides in under the top-level link, left to
+   right, 300ms; it slides back out to the right on leave. Top-level links
+   only, not the dropdown. Also shows while the Capabilities menu is open. */
+.fnav__links > li > a { position: relative; }
+.fnav__links > li > a::after { content: ""; position: absolute; left: 20px; right: 20px; bottom: 12px; height: 2px; border-radius: 2px;
+  background: var(--rw-foil); transform: scaleX(0); transform-origin: right; transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1); }
+.fnav__links > li > a:hover::after, .fnav__links > li > a:focus-visible::after, .fnav__has-drop:hover > a::after, .fnav__has-drop:focus-within > a::after { transform: scaleX(1); transform-origin: left; }
+
+/* ---------- Nav: black frost, always (Oct 22) ----------
+   One dark frosted bar over every section, white text throughout. Below it,
+   a soft dark fade bleeds down onto the page, the way the hero fades into
+   white. The fade is a plain gradient (no blur or mask), so it costs nothing
+   on scroll. The white "is-light" state is switched off. */
+.fnav, .fnav.is-light { color: var(--pf-white); background: none; -webkit-backdrop-filter: none; backdrop-filter: none; transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+.fnav::before, .fnav.is-light::before { opacity: 1; box-shadow: none;
+  background: linear-gradient(rgba(7, 6, 13, 0.94), rgba(7, 6, 13, 0.86));
+  -webkit-backdrop-filter: blur(16px) saturate(1.2); backdrop-filter: blur(16px) saturate(1.2); }
+.fnav::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 64px; z-index: -1; pointer-events: none;
+  background: linear-gradient(rgba(7, 6, 13, 0.86), rgba(7, 6, 13, 0.45) 30%, rgba(7, 6, 13, 0.12) 65%, rgba(7, 6, 13, 0)); transition: opacity 200ms ease; }
+/* Hide on scroll down, back on scroll up (Deloitte, 200ms). This rule went
+   missing in an earlier change; the script has been toggling it all along. */
+.fnav.is-hidden { transform: translateY(-100%); }
+.fnav.is-hidden::after { opacity: 0; }
+
+/* ---------- Homepage rework (Oct 22) ----------
+   "Put our data to work": the white galaxy instead of the black one. Same
+   left-to-right fade and top/bottom mask; the plate shown as a negative. */
+.uses__galaxy--light { background: transparent; }
+.uses__galaxy--light .pf-nebula__plate { filter: invert(1) hue-rotate(180deg) saturate(1.15) brightness(1.03); }
+.uses__galaxy--light .pf-nebula__breath::after { display: none; }
+
+/* "Everything our data powers": black galaxy, white type, and the eight
+   services as clickable cards streaming down the right. */
+.casc--dark { background: #000; color: var(--pf-white); }
+.casc--dark::after { display: none; }
+.casc--dark > .pf-nebula { opacity: 0.95; z-index: -1; }
+.casc--dark > .pf-nebula .pf-nebula__plate { filter: grayscale(1) sepia(1) saturate(2.6) hue-rotate(-8deg) brightness(1.1) contrast(1.15); }
+.casc--dark .lh2 { color: var(--pf-white); }
+.casc--dark .lh2 em { color: var(--pf-violet); }
+.casc--dark .pf-eyebrow { color: rgba(238, 234, 255, 0.7); }
+.casc--dark .casc__lead { color: rgba(238, 234, 255, 0.72); }
+.casc__all { justify-self: start; margin-top: 6px; font: 500 15px/1 var(--pf-sans); color: var(--pf-white); text-decoration: none; border-bottom: 1px solid var(--rw-gold-500); padding-bottom: 4px; }
+.cascade--links .cascade__card { text-decoration: none; color: var(--rw-ink); cursor: pointer; gap: 8px;
+  transition: scale 300ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 300ms ease; }
+.cascade--links .cascade__card:hover, .cascade--links .cascade__card:focus-visible { scale: 1.03; box-shadow: 0 0 0 2px #6E62E6, 0 18px 40px rgba(0, 0, 0, 0.35); }
+.cascade--links .cascade__card .cascade__name { font: 400 24px/1.1 var(--pf-serif); letter-spacing: -0.03em; color: var(--rw-ink); }
+.cascade--links .cascade__card .cascade__sum { font: 400 15px/1.4 var(--pf-sans); letter-spacing: 0; color: var(--rw-ink-2); }
+.cascade--links .cascade__go { font: 500 14px/1 var(--pf-sans); color: #6E62E6; }
+
+/* "Put our data to work" photo slots: plain mid grey, about the average
+   brightness of a real photo, so contrast can be judged before photos land. */
+.uses .ucard__media { background: #8E8E93; }
+.uses .ucard__media span { color: rgba(255, 255, 255, 0.85); }
+.casc--dark .cascade__card .pf-eyebrow { color: #6E62E6; }   /* the card labels stay purple; the white is for the section text only */
+
+/* ---------- "Everything our data powers": pinned journey (Oct 22) ----------
+   The section is tall; .casc__stick pins for the middle of it. A 30vh blend
+   above (white to black) and below (black to white) softens both edges.
+   The left column stacks three beats in one spot; the script moves them.
+   Under 900px (or with reduced motion) nothing pins: the beats stack. */
+.casc--pin { height: auto; padding: 0; overflow: visible; background: none; }
+.casc--pin::before, .casc--pin::after { content: ""; display: block; position: static; inset: auto; z-index: auto; height: 30vh; pointer-events: none; }
+.casc--pin::before { background: linear-gradient(var(--rw-paper), #000); }
+.casc--pin::after { background: linear-gradient(#000, var(--rw-paper)); }
+.casc__stick { position: relative; isolation: isolate; overflow: hidden; background: #000; }
+.casc__stick > .pf-nebula { opacity: 0.95; z-index: -1; }
+.casc__stick > .pf-nebula .pf-nebula__plate { filter: grayscale(1) sepia(1) saturate(2.6) hue-rotate(-8deg) brightness(1.1) contrast(1.15); }
+.casc__stage { position: relative; }
+.casc__beat { display: grid; gap: 18px; align-content: start; will-change: transform, opacity; }
+/* Contrast: a soft dark pool behind the left-hand text, so it holds up over the bright gold cloud. */
+.casc__stage::before { content: ""; position: absolute; inset: -12% -18% -12% -30%; z-index: -1; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.45) 55%, transparent); }
+.casc--pin .casc__lead { color: rgba(238, 234, 255, 0.85); }
+.casc__stats { margin: 6px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 28px 40px; }
+.casc__stats div { display: grid; gap: 6px; border-top: 1px solid rgba(238, 234, 255, 0.18); padding-top: 14px; }
+.casc__stats dt { font: 400 clamp(44px, 4.4vw, 68px)/1 var(--pf-serif); letter-spacing: -0.04em; color: var(--pf-violet); }
+.casc__stats dd { margin: 0; font-size: 15px; line-height: 1.4; color: rgba(238, 234, 255, 0.8); }
+.casc__photo { margin: 0; display: grid; place-items: center; aspect-ratio: 16 / 10; width: 86%; border-radius: 12px; background: #8E8E93; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); }
+.casc__photo span { font: 400 11px/1.3 var(--pf-mono); text-transform: uppercase; letter-spacing: .04em; color: rgba(255, 255, 255, 0.85); }
+.casc__photo--2 { width: 62%; margin: -18% 0 0 auto; aspect-ratio: 4 / 5; }
+.casc__cap { margin: 4px 0 0; max-width: 26em; font: 400 22px/1.25 var(--pf-serif); letter-spacing: -0.02em; color: var(--pf-white); }
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  .casc--pin { height: calc(320vh + 60vh); }   /* ~3 screens of pinned travel, plus the two 30vh blends */
+  .casc__stick { position: sticky; top: 0; height: 100svh; display: grid; align-items: center; }
+  .casc--pin .casc__inner { align-items: center; }
+  .casc__stage { height: calc(100svh - 160px); }
+  .casc__beat { position: absolute; inset: 0; align-content: center; }
+  .casc__beat + .casc__beat { opacity: 0; }
+  .casc--pin .cascade { height: calc(100svh - 120px); }
+}
+@media (max-width: 900px), (prefers-reduced-motion: reduce) {
+  .casc__stick { padding: var(--rw-sec) 0; }
+  .casc__stage { display: grid; gap: 56px; }
+}
+.casc__stick { margin-block: -1px; }   /* close the hairline seam against the blends */
+.casc__photo { width: 74%; }
+.casc__photo--2 { width: 52%; margin-top: -16%; }
+
+/* ---------- Hero into Reach: one blend, no white band (Oct 22) ----------
+   The hero now fades from black to see-through over its last 240px instead
+   of to white, and Reach slides up underneath it by the same 240px, so the
+   black melts straight into Reach's glow. Reach keeps only its bottom fade. */
+:root { --rw-hero-blend: 240px; }
+.rhero { z-index: 1; background: linear-gradient(#000 calc(100% - var(--rw-hero-blend)), rgba(0, 0, 0, 0)); }
+.rhero + .reach { margin-top: calc(-1 * var(--rw-hero-blend)); padding-top: calc(var(--rw-hero-blend) + var(--rw-sec)); z-index: 0; }
+.rhero + .reach::after { background: linear-gradient(transparent 82%, var(--rw-paper)); }
+/* Eased fade (no crease where a straight-line gradient would end). */
+.rhero { --b: var(--rw-hero-blend);
+  background: linear-gradient(#000 calc(100% - var(--b)),
+    rgba(0,0,0,.86) calc(100% - var(--b) * .82), rgba(0,0,0,.66) calc(100% - var(--b) * .64),
+    rgba(0,0,0,.44) calc(100% - var(--b) * .46), rgba(0,0,0,.24) calc(100% - var(--b) * .3),
+    rgba(0,0,0,.1) calc(100% - var(--b) * .16), rgba(0,0,0,.03) calc(100% - var(--b) * .06), rgba(0,0,0,0)); }
+.uses[data-pin] { transform-origin: 50% 100%; }   /* sinks back toward its bottom edge as the sheet covers it */
+
+/* ---------- Reimagined hub ---------- */
+.rmg { padding: var(--rw-sec) 0; background: var(--rw-paper); }
+.rmg__inner { width: var(--rw-container); margin-inline: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 20px 24px; }
+.rmg__feature { position: relative; display: grid; align-content: end; gap: 10px; min-height: 380px; padding: 28px; border-radius: 16px; overflow: hidden; color: var(--pf-white); text-decoration: none; background: #000; isolation: isolate; }
+.rmg__feature img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1); }
+.rmg__feature::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,.8)); }
+.rmg__feature:hover img { transform: scale(1.04); }
+.rmg__k { font: 400 13px/1 var(--pf-mono); letter-spacing: .04em; color: rgba(238, 234, 255, 0.75); }
+.rmg__t { font: 400 clamp(26px, 2.6vw, 38px)/1.1 var(--pf-serif); letter-spacing: -0.03em; }
+.rmg__t em { font-family: var(--pf-italic); color: var(--pf-violet); }
+.rmg__go { font: 500 15px/1 var(--pf-sans); }
+.rmg__group { grid-column: 1 / -1; margin-top: 36px; }
+.rmg__group .pf-eyebrow { margin-bottom: 8px; }
+.rmg__row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) auto; gap: 24px; align-items: baseline; padding: 18px 0; border-top: 1px solid rgba(11, 11, 12, 0.1); text-decoration: none; color: var(--rw-ink); }
+.rmg__name { font: 400 24px/1.2 var(--pf-serif); letter-spacing: -0.02em; }
+.rmg__sum { font-size: 15px; color: var(--rw-ink-2); }
+.rmg__arrow { color: #6E62E6; transition: transform 200ms ease; }
+.rmg__row:hover .rmg__name { color: #6E62E6; }
+.rmg__row:hover .rmg__arrow { transform: translateX(4px); }
+@media (max-width: 900px) { .rmg__inner { grid-template-columns: 1fr; } .rmg__row { grid-template-columns: 1fr auto; } .rmg__sum { display: none; } }
+
+/* ---------- Why Profectus, Oct 22: four points and a three-way table ---------- */
+.edge__points { grid-column: 1 / -1; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+.edge__points li { display: grid; gap: 10px; align-content: start; padding-top: 18px; border-top: 2px solid #6E62E6; }
+.edge__points h3 { font: 400 22px/1.2 var(--pf-serif); letter-spacing: -0.02em; }
+.edge__points p { font-size: 15px; line-height: 1.5; color: var(--rw-ink-2); }
+.edge__table--3 .edge__row { grid-template-columns: 0.7fr 1fr 1fr 1.2fr; }
+@media (max-width: 1000px) { .edge__points { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 900px) {
+  .edge__points { grid-template-columns: 1fr; gap: 20px; }
+  .edge__table--3 .edge__row { grid-template-columns: 1fr; }
+  .edge__table--3 .edge__them::before { content: attr(data-who) ": "; }
+}
+
+/* Why Profectus photo slots: plain grey, labelled with the photo that goes there. */
+.edge__ph { margin: 0 0 6px; display: grid; place-items: center; aspect-ratio: 4 / 3; border-radius: 10px; background: #8E8E93; padding: 16px; text-align: center; }
+.edge__ph span { font: 400 11px/1.45 var(--pf-mono); text-transform: uppercase; letter-spacing: .04em; color: rgba(255, 255, 255, 0.9); }
+.edge__points li { border-top: 0; padding-top: 0; }
+.edge__points h3 { padding-top: 14px; border-top: 2px solid #6E62E6; }
+.edge__ph--col { aspect-ratio: 16 / 10; margin-bottom: 14px; text-transform: none; }
+.edge__ph--us { box-shadow: 0 0 0 2px #6E62E6; }
+.edge__table--3 .edge__row--head { align-items: end; }
+.edge__points { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 1000px) { .edge__points { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 900px) { .edge__points { grid-template-columns: minmax(0, 1fr); } }
+.edge__row--head .edge__ph span, .edge__ph span { color: rgba(255, 255, 255, 0.92) !important; }
+
+/* ---------- Real photos (Oct 22, Assets/Images → public/img/photos) ---------- */
+.ucard__media, .edge__ph, .casc__photo, .cap-media { position: relative; overflow: hidden; }
+.ucard__media img, .edge__ph img, .casc__photo img, .cap-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.edge__ph { padding: 0; }
+.cap-media img { object-position: 50% 35%; }
+
+/* ---------- 404 ---------- */
+.nf__tag { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 28px; padding: 10px 14px; border-radius: 10px; background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.14); font: 400 14px/1 var(--pf-mono); color: rgba(255, 255, 255, 0.65); filter: blur(0.6px); }
+.nf__tag b { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: rgba(255, 255, 255, 0.14); font: 600 13px/1 var(--pf-sans); color: rgba(255, 255, 255, 0.8); }
+.nf-next { padding: var(--rw-sec) 0; background: var(--rw-paper); }
+.nf-next__inner { width: var(--rw-container); margin-inline: auto; }
+.nf-next__grid { margin-top: 20px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.nf-next__card { display: grid; gap: 10px; padding: 22px 20px 26px; border-top: 2px solid #6E62E6; background: var(--rw-paper); text-decoration: none; color: var(--rw-ink); transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1); }
+.nf-next__card span { font: 400 var(--pf-fs-mono)/1 var(--pf-mono); text-transform: uppercase; letter-spacing: .06em; color: #6E62E6; }
+.nf-next__card b { font: 400 24px/1.15 var(--pf-serif); letter-spacing: -0.02em; font-weight: 400; }
+.nf-next__card:hover { background: #ECEAFD; }
+.nf-next__stages { list-style: none; margin: 40px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 28px; }
+.nf-next__stages a { font: 500 15px/1.4 var(--pf-sans); color: var(--rw-ink-2); text-decoration: none; }
+.nf-next__stages a:hover { color: #6E62E6; }
+@media (max-width: 900px) { .nf-next__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .nf-next__grid { grid-template-columns: minmax(0, 1fr); } }
+.rhero.nf { padding-bottom: 240px; }   /* room for the fade below the buttons, so they sit on black */
+
+/* 404, centred: the unmatched-visitor tag is the centrepiece. */
+.rhero.nf .rhero__inner { text-align: center; justify-items: center; margin-inline: auto; }
+.rhero.nf .rhero__lead { margin-inline: auto; }
+.rhero.nf .rhero__pills { justify-content: center; }
+.rhero.nf .foil-rule { margin-inline: auto; }
+.nf__tag { justify-self: center; gap: 18px; margin-bottom: 40px; padding: 18px 26px 18px 18px; border-radius: 16px; font-size: clamp(20px, 2.4vw, 30px); filter: blur(1.4px); transition: filter 600ms ease, border-color 600ms ease, background-color 600ms ease; }
+.nf__tag b { width: 52px; height: 52px; font-size: 26px; flex: none; }
+.nf__tag > span { display: grid; gap: 6px; text-align: left; }
+.nf__who { color: rgba(255, 255, 255, 0.85); }
+.nf__status { font-size: 0.5em; letter-spacing: .06em; text-transform: uppercase; color: rgba(255, 255, 255, 0.5); font-variant-numeric: tabular-nums; min-width: 20ch; }
+.nf__tag.is-matching { filter: blur(0.3px); border-color: rgba(156, 147, 255, 0.55); background: rgba(156, 147, 255, 0.10); }
+.nf__tag.is-matching b { animation: nf-pulse 900ms ease-in-out infinite; }
+.nf__tag.is-failed { filter: blur(1.4px); }
+.nf__tag.is-failed .nf__status { color: var(--rw-gold-300); }
+@keyframes nf-pulse { 50% { opacity: .35; } }
+
+/* ---------- Footer ---------- */
+.ffoot { background: #07060D; color: rgba(238, 234, 255, 0.72); padding: var(--rw-sec) 0 32px; }
+.ffoot a { color: inherit; text-decoration: none; transition: color 200ms ease; }
+.ffoot a:hover { color: var(--pf-white); }
+.ffoot__inner { width: var(--rw-container); margin-inline: auto; display: grid; grid-template-columns: 1.6fr 1.2fr 1fr 1fr; gap: 48px; padding-bottom: 56px; border-bottom: 1px solid rgba(238, 234, 255, 0.12); }
+.ffoot__brand { display: grid; gap: 18px; align-content: start; justify-items: start; }
+.ffoot__logo { font: 400 40px/1 var(--pf-serif); letter-spacing: -0.035em; color: var(--pf-white) !important; }
+.ffoot__line { max-width: 22em; font: 400 20px/1.3 var(--pf-serif); letter-spacing: -0.02em; color: rgba(238, 234, 255, 0.85); }
+.ffoot__h { margin: 0 0 16px; font: 400 var(--pf-fs-mono)/1 var(--pf-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--rw-gold-300); }
+.ffoot ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; font-size: 15px; line-height: 1.4; }
+.ffoot__base { width: var(--rw-container); margin: 24px auto 0; display: flex; justify-content: space-between; gap: 16px 32px; flex-wrap: wrap; font-size: 13px; }
+.ffoot__base p { margin: 0; }
+.ffoot__base ul { display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 13px; }
+@media (max-width: 1000px) { .ffoot__inner { grid-template-columns: 1fr 1fr; } .ffoot__brand { grid-column: 1 / -1; } }
+@media (max-width: 520px) { .ffoot__inner { grid-template-columns: 1fr; } }
+
+/* ---------- Legal pages ---------- */
+.legal-hero { padding-bottom: 120px; }
+.legal { padding: var(--rw-sec) 0; background: var(--rw-paper); }
+.legal__inner { width: min(760px, 100% - 32px); margin-inline: auto; display: grid; gap: 32px; }
+.legal__need { margin: 0; padding: 18px 20px; border-radius: 10px; background: #FFF4CC; color: #4b3a00; font-size: 15px; line-height: 1.5; }
+.legal__sec h2 { font: 400 26px/1.2 var(--pf-serif); letter-spacing: -0.02em; margin: 0 0 8px; }
+.legal__sec p, .legal__contact { margin: 0; color: var(--rw-ink-2); }
+.legal__contact a { color: #6E62E6; }
+
+/* ---------- "Personalization at scale": one customer, drawn as a web ----------
+   Static graphic: her photo in a ring, six facts around her on thin lines.
+   Example profile, not a real person. */
+.pweb { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: radial-gradient(closest-side, #ECEAFD, #F7F6FC 70%, #FBFAFE); }
+.pweb__lines { position: absolute; inset: 0; width: 100%; height: 100%; }
+.pweb__lines line { stroke: rgba(110, 98, 230, 0.35); stroke-width: 1; vector-effect: non-scaling-stroke; stroke-dasharray: 3 4; }
+.pweb__lines circle { fill: none; stroke: rgba(110, 98, 230, 0.25); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.pweb__me { position: absolute; left: 50%; top: 50%; width: 34%; aspect-ratio: 1; margin: 0; translate: -50% -50%; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 6px #fff, 0 0 0 7px rgba(110, 98, 230, 0.5), 0 20px 50px rgba(20, 16, 40, 0.18); }
+.pweb__me img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 45% 30%; }
+.pweb__tag { position: absolute; translate: -50% -50%; display: grid; gap: 3px; padding: 9px 12px; border-radius: 8px; background: #fff; box-shadow: 0 6px 20px rgba(20, 16, 40, 0.10); font: 500 14px/1.2 var(--pf-sans); color: var(--rw-ink); white-space: nowrap; text-align: left; }
+.pweb__tag b { font: 400 11px/1 var(--pf-mono); letter-spacing: .04em; color: #6E62E6; font-weight: 400; }
+.pweb__tag--stat b { font: 400 24px/1 var(--pf-serif); letter-spacing: -0.03em; color: #6E62E6; }
+.pweb__tag--stat { max-width: 30%; white-space: normal; }
+.pweb__tag--no b { color: #C9473B; }   /* what she didn't do */
+@media (max-width: 600px) { .pweb__tag { font-size: 11px; padding: 6px 8px; } .pweb__tag b { font-size: 9px; } .pweb__tag--stat b { font-size: 18px; } }
+/* beat the grey-placeholder rules that target .uses .ucard__media */
+.uses .ucard__media.pweb { background: radial-gradient(closest-side, #ECEAFD, #F7F6FC 70%, #FBFAFE); }
+.uses .pweb .pweb__tag { font: 500 14px/1.2 var(--pf-sans); text-transform: none; letter-spacing: 0; color: var(--rw-ink); }
+.uses .pweb .pweb__tag--stat { font-size: 13px; color: var(--rw-ink-2); }
+@media (max-width: 600px) { .uses .pweb .pweb__tag { font-size: 11px; } }
+@media (max-width: 600px) {
+  .uses .pweb .pweb__tag:nth-of-type(3) { left: 21% !important; }
+  .uses .pweb .pweb__tag:nth-of-type(4) { left: 82% !important; }
+  .uses .pweb .pweb__tag--stat { max-width: 38%; }
+}
+.edge__journey { grid-column: 1 / -1; }
+.edge__inner:has(.edge__journey) { grid-template-columns: 1fr; }
+.uses .pweb__me img { object-position: 50% 25%; }
+.uses .ucard--lane .ucard__media img { object-fit: cover; object-position: 50% 45%; }

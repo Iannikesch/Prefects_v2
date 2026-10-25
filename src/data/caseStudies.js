@@ -12,7 +12,7 @@ export const CASE_STUDIES = [
     // The live subheading was template text ("Understanding due diligence..."),
     // so this line is new, written from the page's own story.
     summary: 'Eight locations with declining sales and no customer data, rebuilt around identity, loyalty and direct channels. Four new locations opened within a year.',
-    services: ['brand-creative-storytelling', 'enterprise-email-text-messaging', 'data-identity-infrastructure', 'paid-media-demand-generation'],
+    services: ['brand-creative-storytelling', 'loyalty-lifecycle', 'data-identity-infrastructure', 'paid-media-demand-generation'],
     stats: [
       { value: '$14+', label: 'Returned for every $1 on the direct channel' },
       { value: '4', label: 'New locations opened within a year' },
@@ -29,7 +29,7 @@ export const CASE_STUDIES = [
     title: 'Family Restaurant Chain, Expansion & Modernization',
     date: '2025-10-02',
     summary: 'A three-location family restaurant with no customer data or unified infrastructure, modernized with CRM, behavioral email and SMS, AI engagement, and systems validated for a twelve-location expansion.',
-    services: ['data-identity-infrastructure', 'enterprise-email-text-messaging', 'ai-automation', 'brand-creative-storytelling'],
+    services: ['data-identity-infrastructure', 'loyalty-lifecycle', 'ai-automation', 'brand-creative-storytelling'],
     stats: [
       { value: '$680', label: 'Customer lifetime value, up from $420' },
       { value: '12', label: 'Locations the systems are validated for' },
@@ -54,7 +54,7 @@ export const CASE_STUDIES = [
       { value: '40%', label: 'Rebooking rate' },
     ],
     inherited: 'A world-class hospitality experience with no brand, no audience, and no bookings. Everything had been invested in building the product. Nothing had been built for being found by the people who would pay premium prices to experience it.',
-    built: 'A brand built from scratch with the precision that audience intelligence makes possible. Positioning that owned a specific, defensible space in the wellness landscape. Acquisition infrastructure built on our data spine, reaching the exact audience profile, by behavior and intent, most likely to book at premium pricing and come back. And retention programming designed to turn a first visit into a lasting relationship.',
+    built: 'A brand built from scratch with the precision that audience intelligence makes possible. Positioning that owned a specific, defensible space in the wellness landscape. Acquisition infrastructure built on our proprietary data, reaching the exact audience profile, by behavior and intent, most likely to book at premium pricing and come back. And retention programming designed to turn a first visit into a lasting relationship.',
     changed: 'Within six months: 85% occupancy at premium pricing, $425K in retreat bookings, a 4.9/5.0 guest satisfaction score, and a 40% rebooking rate. The brand launched with a data foundation that meant every subsequent season would be smarter than the last.',
   },
   {
