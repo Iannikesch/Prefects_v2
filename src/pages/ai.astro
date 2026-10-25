@@ -10,7 +10,6 @@ import Confirm from '../components/Confirm.astro';
 import Mood from '../components/Mood.astro';
 import Accordion from '../components/Accordion.astro';
 import { AI_NAME } from '../data/site.js';
-import CodeRain from '../components/CodeRain.astro';
 import { LAYERS, mv } from '../data/layers.js';
 
 const beats = [
@@ -40,9 +39,8 @@ const faq = [
 ];
 ---
 <Base title={AI_NAME} description={`${AI_NAME}: your company's own AI. Built for you, owned by you. It knows your business, plugs into the tools you use, and does the work.`}>
-  <!-- Hero: code rain behind, the page's signature. Mover. -->
+  <!-- Hero. The code rain is gone (Oct 25). -->
   <section class="hero clip">
-    <CodeRain />
     <div class="hero__inner">
       <span class="pf-pill pf-pill--tag">{AI_NAME} · by Profectus</span>
       <h1 class="pf-display">Your Company's<br /><em>Own</em> AI.</h1>
