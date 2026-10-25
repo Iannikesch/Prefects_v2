@@ -1,0 +1,160 @@
+---
+// B2B flow (owner's call notes, Oct 25): one business account, cause and
+// effect. What we know about the account, then the three people in the room
+// each getting their own message, then the rep's visit and what it earned.
+// Two stories on tabs: win back a lapsed customer, upsell a current one.
+// Example accounts, not clients. Pinned like the consumer journey: the
+// section is three screens tall and scroll picks the step.
+const STORIES = [
+  {
+    key: 'win', tab: 'Win back',
+    account: 'Hill Country Supply', where: 'Distributor · Austin, TX',
+    facts: [
+      { k: 'Customer since', v: '2019' },
+      { k: 'Last order', v: 'Apr 12 · 40 cases, cleaning line' },
+      { k: 'Portal logins', v: 'None in 6 months', s: 'no' },
+      { k: 'Win-back emails', v: '3 sent · 2 opened', s: 'yes' },
+      { k: 'Clicked', v: '"Bulk pricing" in the last email', s: 'yes' },
+      { k: 'Text reminder', v: 'Not opened', s: 'no' },
+      { k: 'Pricing page', v: '2 visits last week', s: 'yes' },
+      { k: 'Rep note, Jul', v: '"Asked about the paper line"' },
+    ],
+    people: [
+      { img: 'hs-01', name: 'Dana R.', role: 'CFO', cares: 'Cost', ch: 'Email · Mon 7:40am', msg: 'Lock this year’s pricing and save 8%.', st: 'Opened', s: 'yes' },
+      { img: 'hs-07', name: 'Marcus T.', role: 'CMO', cares: 'Growth', ch: 'Meta + LinkedIn ads · Tue', msg: 'Co-marketing funds on the paper line.', st: 'Clicked Meta ad', s: 'yes' },
+      { img: 'hs-13', name: 'Tom H.', role: 'CEO', cares: 'The relationship', ch: 'Handwritten note · Wed', msg: 'Five years in. Here’s what’s next.', st: 'Not opened yet', s: 'no' },
+    ],
+    days: [
+      { d: 'Mon', t: 'Emails land with the CFO and CMO' },
+      { d: 'Tue', t: 'Ads run within 5 miles of their office' },
+      { d: 'Wed', t: 'The rep walks in' },
+    ],
+    brief: 'Interested in the paper line. Pricing matters to Dana. Skip janitorial.',
+    result: { k: 'Reorder', v: '$48,200', note: 'Back to ordering monthly' },
+  },
+  {
+    key: 'up', tab: 'Upsell',
+    account: 'Lakeline Foods', where: 'Restaurant group · Round Rock, TX',
+    facts: [
+      { k: 'Customer since', v: '2021 · orders monthly' },
+      { k: 'Buys', v: 'Takeout packaging · $9k a month' },
+      { k: 'Call, Jul 18', v: '"Open to compostable next year"', s: 'yes' },
+      { k: 'Compostable guide', v: 'Email opened', s: 'yes' },
+      { k: 'Product videos', v: 'Watched 2 of 3', s: 'yes' },
+      { k: 'Webinar invite', v: 'Didn’t register', s: 'no' },
+      { k: 'Showroom', v: 'Visited Austin, Sep 30', s: 'yes' },
+    ],
+    people: [
+      { img: 'hs-08', name: 'Ellen P.', role: 'CFO', cares: 'Margins', ch: 'Email · cost per box', msg: 'Compostable for 3¢ more a box.', st: 'Opened', s: 'yes' },
+      { img: 'hs-03', name: 'Daniel C.', role: 'CMO', cares: 'The brand', ch: 'Instagram ads', msg: 'Your customers notice the box.', st: 'Clicked Instagram ad', s: 'yes' },
+      { img: 'hs-09', name: 'Mark E.', role: 'CEO', cares: 'The long run', ch: 'LinkedIn ad + note', msg: 'Where packaging is heading, and how to get there first.', st: 'Viewed', s: 'yes' },
+    ],
+    days: [
+      { d: '2 wks out', t: 'Emails and ads start on the compostable line' },
+      { d: 'Visit week', t: 'Ads run near their head office' },
+      { d: 'Thu', t: 'The rep walks in, samples in hand' },
+    ],
+    brief: 'Ellen wants unit cost. Daniel wants the brand story. Bring samples.',
+    result: { k: 'Added', v: '+$3,100/mo', note: 'Compostable line, on top of their order' },
+  },
+];
+const STEPS = ['What we know', 'Who’s in the room', 'The rep walks in'];
+const mark = (s) => (s === 'yes' ? '✓' : s === 'no' ? '✕' : '');
+---
+<div class="bf" data-bf>
+  <div class="bf__sticky">
+    <div class="bf__bar">
+      <div class="bf__tabs" role="tablist" aria-label="Example">
+        {STORIES.map((s, i) => <button class="bf__tab" type="button" role="tab" aria-selected={i === 0 ? 'true' : 'false'} data-bf-tab={s.key}>{s.tab}</button>)}
+      </div>
+      <ol class="bf__steps" aria-hidden="true">
+        {STEPS.map((t, i) => <li class={i === 0 ? 'is-on' : ''}><b>{i + 1}</b>{t}</li>)}
+      </ol>
+    </div>
+
+    {STORIES.map((s, si) => (
+      <div class="bf__board" data-bf-story={s.key} data-step="1" hidden={si !== 0} role="tabpanel">
+        <!-- 1 · The account and everything we know about it -->
+        <article class="bf__col bf__acct">
+          <header class="bf__acct-h">
+            <span class="bf__ex">Example account</span>
+            <h3>{s.account}</h3>
+            <p>{s.where}</p>
+          </header>
+          <dl class="bf__facts">
+            {s.facts.map((f, i) => (
+              <div class={`bf__fact${f.s ? ' bf__fact--' + f.s : ''}`} style={`--r:${i}`}>
+                <dt>{f.k}</dt><dd>{f.v}</dd>{f.s && <i aria-label={f.s === 'yes' ? 'yes' : 'no'}>{mark(f.s)}</i>}
+              </div>
+            ))}
+          </dl>
+        </article>
+
+        <p class="bf__arrow bf__arrow--1" aria-hidden="true"><span>because of this</span></p>
+
+        <!-- 2 · Three people at the account, three different messages -->
+        <div class="bf__col bf__people">
+          {s.people.map((p, i) => (
+            <article class="bf__person" style={`--r:${i}`}>
+              <span class="bf__num">{i + 1}</span>
+              <img src={`/img/photos/${p.img}.webp`} alt="" loading="lazy" decoding="async" />
+              <div class="bf__who">
+                <p class="bf__role"><b>{p.role}</b> · {p.name} <span>Cares about: {p.cares}</span></p>
+                <p class="bf__ch">{p.ch}</p>
+                <p class="bf__msg">“{p.msg}”</p>
+                <p class={`bf__st bf__st--${p.s}`}><i>{mark(p.s)}</i>{p.st}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <p class="bf__arrow bf__arrow--2" aria-hidden="true"><span>so by the visit</span></p>
+
+        <!-- 3 · The week of the visit, the rep's brief, the result -->
+        <article class="bf__col bf__visit">
+          <ol class="bf__days">
+            {s.days.map((d, i) => <li style={`--r:${i}`}><b>{d.d}</b><span>{d.t}</span></li>)}
+          </ol>
+          <div class="bf__brief">
+            <p class="bf__brief-h">Rep’s brief</p>
+            <p>{s.brief}</p>
+          </div>
+          <div class="bf__result">
+            <p class="bf__result-k">{s.result.k}</p>
+            <p class="bf__result-v">{s.result.v}</p>
+            <p class="bf__result-n">{s.result.note}</p>
+          </div>
+        </article>
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+  // Locked: three screens tall, contents pinned; scroll progress picks the
+  // step (1 to 3). Tabs swap the example; the step carries over.
+  const root = document.querySelector('[data-bf]');
+  if (root) {
+    const boards = [...root.querySelectorAll('[data-bf-story]')];
+    const tabs = [...root.querySelectorAll('[data-bf-tab]')];
+    const steps = [...root.querySelectorAll('.bf__steps li')];
+    let step = 1, queued = false;
+    const paint = () => {
+      boards.forEach((b) => { b.dataset.step = step; });
+      steps.forEach((el, i) => el.classList.toggle('is-on', i < step));
+    };
+    const set = () => {
+      queued = false;
+      const r = root.getBoundingClientRect();
+      const p = Math.max(0, Math.min(0.9999, -r.top / Math.max(1, root.offsetHeight - innerHeight)));
+      const n = Math.floor(p * 3) + 1;
+      if (n !== step) { step = n; paint(); }
+    };
+    tabs.forEach((t) => t.addEventListener('click', () => {
+      tabs.forEach((x) => x.setAttribute('aria-selected', String(x === t)));
+      boards.forEach((b) => { b.hidden = b.dataset.bfStory !== t.dataset.bfTab; });
+    }));
+    addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(set); } }, { passive: true });
+    set(); paint();
+  }
+</script>
