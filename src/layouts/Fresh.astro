@@ -18,6 +18,11 @@ import FreshFooter from '../components/FreshFooter.astro';
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=erode@400,500&display=swap" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Instrument+Serif:ital@1&family=PT+Mono&display=swap" />
+  <!-- Reload always starts at the top (owner, Oct 26), unless the link points to a section. -->
+  <script is:inline>
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    addEventListener('load', () => { if (!location.hash) scrollTo(0, 0); });
+  </script>
 </head>
 <body>
   <FreshNav />

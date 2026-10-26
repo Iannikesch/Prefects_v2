@@ -39,6 +39,11 @@ const canonical = new URL(path, SITE.url).href;
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Instrument+Serif:ital@1&family=PT+Mono&display=swap" />
   <!-- Failstop: if scripts never run, nothing that starts hidden stays hidden. -->
   <noscript><style>.pm-rise { opacity: 1 !important; translate: none !important; }</style></noscript>
+  <!-- Reload always starts at the top (owner, Oct 26), unless the link points to a section. -->
+  <script is:inline>
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    addEventListener('load', () => { if (!location.hash) scrollTo(0, 0); });
+  </script>
 </head>
 <body data-pm-cursor={LAYERS.cursor ? "" : undefined}>
   <a class="skip pf-pill" href="#main">Skip to content</a>
