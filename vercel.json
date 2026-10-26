@@ -9,6 +9,7 @@
     { "source": "/vision", "destination": "/about", "permanent": true },
     { "source": "/team", "destination": "/about", "permanent": true },
     { "source": "/newsroom", "destination": "/", "permanent": true },
-    { "source": "/faq", "destination": "/contact", "permanent": true }
+    { "source": "/faq", "destination": "/contact", "permanent": true },
+    { "source": "/ai", "destination": "/capabilities/ai-automation", "permanent": false }
   ]
 }
