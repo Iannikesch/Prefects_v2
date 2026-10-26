@@ -1,0 +1,36 @@
+---
+// The site footer (Oct 26): one component for both layouts, so every page
+// ends the same way. Styles in src/styles/ffoot.css.
+import '../styles/ffoot.css';
+import { FOOTER } from '../data/site.js';
+---
+<!-- Footer: brand and contact, a few quick links, legal. Bracketed values are placeholders. -->
+<footer class="ffoot">
+  <div class="ffoot__inner">
+    <div class="ffoot__brand">
+      <a class="ffoot__logo" href="/">Profectus</a>
+      <p class="ffoot__line">{FOOTER.line}</p>
+      <a class="pf-pill btn-gold" href="/contact">Get in Touch →</a>
+    </div>
+    <div class="ffoot__col">
+      <p class="ffoot__h">Contact</p>
+      <ul>
+        <li><a href={`mailto:${FOOTER.contact.email}`}>{FOOTER.contact.email}</a></li>
+        <li><a href="tel:">{FOOTER.contact.phone}</a></li>
+        <li>{FOOTER.contact.address}</li>
+      </ul>
+    </div>
+    <div class="ffoot__col">
+      <p class="ffoot__h">Company</p>
+      <ul>{FOOTER.links.map(([l, h]) => <li><a href={h}>{l}</a></li>)}</ul>
+    </div>
+    <div class="ffoot__col">
+      <p class="ffoot__h">Follow</p>
+      <ul>{FOOTER.social.map(([l, h]) => <li><a href="#" title={h}>{l}</a></li>)}</ul>
+    </div>
+  </div>
+  <div class="ffoot__base">
+    <p>© {new Date().getFullYear()} The Profectus Agency. Proudly independent.</p>
+    <ul>{FOOTER.legal.map(([l, h]) => <li><a href={h}>{l}</a></li>)}</ul>
+  </div>
+</footer>

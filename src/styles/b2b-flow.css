@@ -10,7 +10,7 @@
 .b2b__line { font: 400 clamp(26px, 2.2vw, 34px)/1.15 var(--pf-serif); letter-spacing: -0.02em; }
 .b2b__line em { font-family: var(--pf-italic); font-size: 1.1em; }
 
-.bf { position: relative; height: 300vh; margin-top: 40px; }
+.bf { position: relative; height: 260vh; margin-top: 32px; }
 .bf__sticky { position: sticky; top: 0; height: 100vh; display: grid; grid-template-rows: auto 1fr auto; gap: 16px; padding: 28px clamp(20px, 2.4vw, 40px); border-radius: 24px; overflow: hidden;
   background: radial-gradient(rgba(11, 11, 12, .055) 1px, transparent 1.2px) 0 0 / 22px 22px, #F2F1F6; }
 
