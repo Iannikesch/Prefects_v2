@@ -1,26 +1,26 @@
-/* Capability pages, tightened (Oct 22): Inbound-style spacing, less dead air
+/* Capability pages, tightened (Oct 22; tighter Oct 26, owner): Inbound-style spacing, less dead air
    between the pinned scenes and between sections. Loaded after reimagined.css. */
-.rm { --sec: 72px; }
+.rm { --sec: 56px; }
 @media (max-width: 768px) { .rm { --sec: 52px; } }
 @media (max-width: 420px) { .rm { --sec: 36px; } }
-.rm .hero { padding: 150px 0 88px; }
+.rm .hero { padding: 132px 0 64px; }
 .rm .hero h1 { font-size: clamp(42px, 6vw, 88px); }
-.rm .proof--one { padding-top: 56px; }
+.rm .proof--one { padding-top: 40px; }
 .rm .journey { padding-top: var(--sec); }
 .rm .journey__grid { margin-top: 8px; }
-.rm .journey__panel { padding: 13vh 0; }
-.rm .journey__panel:first-child { padding-top: 6vh; }
-.rm .journey__panel:last-child { padding-bottom: 18vh; }
+.rm .journey__panel { padding: 8vh 0; }
+.rm .journey__panel:first-child { padding-top: 4vh; }
+.rm .journey__panel:last-child { padding-bottom: 10vh; }
 .rm .art { top: 11vh; height: 72vh; margin-top: 6vh; }
 .rm .rmsvc__head { margin-bottom: 28px; }
 .rm .rmsvc__grid { gap: 12px; }
 .rm .rmsvc__grid--all .card { height: 300px; }
 .rm .card__body { padding: 22px 18px; }
-.rm .swap { height: calc(100svh + 4 * 30vh); }
+.rm .swap { height: calc(100svh + 4 * 20vh); }
 .rm .nextcap { padding: 36px 0; }
 .rm .rmclose { padding: calc(var(--sec) * 1.2) var(--gutter); }
 @media (max-width: 900px) {
-  .rm .journey__panel { padding: 9vh 0; }
+  .rm .journey__panel { padding: 6vh 0; }
   .rm .art { top: 70px; height: 44vh; margin-top: 0; }
   .rm .swap { height: auto; }
   .rm .rmsvc__grid--all .card { height: auto; }
