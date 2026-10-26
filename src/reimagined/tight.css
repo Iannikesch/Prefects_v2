@@ -31,3 +31,7 @@
 .rm .rmsvc .card:hover .card__body, .rm .rmsvc .card:focus-visible .card__body { transform: none; }
 .rm .rmsvc .card__desc { top: 92px; }
 @media (max-width: 900px) { .rm .rmsvc .rmsvc__grid--all .card { height: auto; } .rm .rmsvc .card__body { transform: none; } }
+/* Each service: 2-3 sentences, then a way to talk to us (Oct 26, owner). */
+.rm .journey__panel p { font-size: 17px; line-height: 1.55; }
+.rm .journey__more { display: inline-block; margin-top: 18px; font-weight: 500; font-size: 15px; color: var(--violet); text-decoration: none; }
+.rm .journey__more:hover { text-decoration: underline; text-underline-offset: 4px; }
