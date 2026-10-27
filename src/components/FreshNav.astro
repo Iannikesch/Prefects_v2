@@ -3,6 +3,7 @@
 // the same black frosted bar. Styles in src/styles/fnav.css.
 import '../styles/fnav.css';
 import { bySlug, SPINE, SERVICE_GROUPS } from '../data/capabilities.js';
+import { SHOW_CASE_STUDIES } from '../data/site.js';
 // Capabilities dropdown (Epsilon-style menu): every capability page, grouped.
 const MENU = [
   { title: 'Five steps forward', items: SPINE.map((s, i) => ({ slug: s.slug, name: bySlug(s.slug).name, tag: `0${i + 1} ${s.verb}` })) },
@@ -28,7 +29,7 @@ const MENU = [
             </div>
           </div>
         </li>
-        <li><a href="/case-studies">Case Studies</a></li>
+        {SHOW_CASE_STUDIES && <li><a href="/case-studies">Case Studies</a></li>}
         <li><a href="/about">About</a></li>
       </ul>
     </nav>
@@ -39,7 +40,7 @@ const MENU = [
   <nav class="fnav__menu" id="fnav-menu" aria-label="Main (menu)">
     <a href="/capabilities">Capabilities</a>
     <div class="fnav__menu-caps">{MENU.flatMap((c) => c.items).map((it) => <a href={`/capabilities/${it.slug}`}>{it.name}</a>)}</div>
-    <a href="/case-studies">Case Studies</a>
+    {SHOW_CASE_STUDIES && <a href="/case-studies">Case Studies</a>}
     <a href="/about">About</a>
     <a class="btn-gold" href="/contact">Get in Touch →</a>
   </nav>

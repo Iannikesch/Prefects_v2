@@ -9,6 +9,7 @@ import B2BFlow from '../components/B2BFlow.astro';
 import '../styles/b2b-flow.css';
 import '../styles/rose.css';
 import { CASE_STUDIES } from '../data/caseStudies.js';
+import { SHOW_CASE_STUDIES } from '../data/site.js';
 import { SPINE, bySlug } from '../data/capabilities.js';
 // Hero rose: one petal per step of the five steps, read from the same data
 // as the Capabilities menu so the two always match.
@@ -73,6 +74,7 @@ const CLIENTS = [
   <!-- "Reach real people, drive real results": Epsilon's coverflow band,
        measured. White text, gold calls to action, purple overlay on the
        selected card, darker purple on the sides. Placeholder photos/logos. -->
+  {SHOW_CASE_STUDIES && (
   <section class="reach" aria-labelledby="reach-h">
     <!-- Background: the "Our infrastructure" blend across the whole band,
          faded into the white above and below. -->
@@ -98,6 +100,7 @@ const CLIENTS = [
     </div>
     <a class="reach__all btn-gold pf-pill" href="/case-studies">See all</a>
   </section>
+  )}
 
 
   <!-- Section 2 (Epsilon's "what we can do" framing, original copy):

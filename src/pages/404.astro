@@ -3,6 +3,7 @@
 // (black, fade to white, no code rain since Oct 25), then the places people usually go next.
 import Fresh from '../layouts/Fresh.astro';
 import { bySlug, SPINE } from '../data/capabilities.js';
+import { SHOW_CASE_STUDIES } from '../data/site.js';
 const STAGES = SPINE.map((s) => ({ slug: s.slug, name: bySlug(s.slug).name }));
 ---
 <Fresh title="Page not found · Profectus Agency">
@@ -23,7 +24,7 @@ const STAGES = SPINE.map((s) => ({ slug: s.slug, name: bySlug(s.slug).name }));
       <h2 class="pf-eyebrow" id="nf-h">Where people go next</h2>
       <div class="nf-next__grid">
         <a class="nf-next__card" href="/capabilities"><span>Capabilities</span><b>What we do, in five stages</b></a>
-        <a class="nf-next__card" href="/case-studies"><span>Case studies</span><b>Results we can put numbers on</b></a>
+        {SHOW_CASE_STUDIES && <a class="nf-next__card" href="/case-studies"><span>Case studies</span><b>Results we can put numbers on</b></a>}
         <a class="nf-next__card" href="/about"><span>About</span><b>Who runs it</b></a>
         <a class="nf-next__card" href="/contact"><span>Contact</span><b>Start the conversation</b></a>
       </div>

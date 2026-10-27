@@ -2,7 +2,8 @@
 // The site footer (Oct 26): one component for both layouts, so every page
 // ends the same way. Styles in src/styles/ffoot.css.
 import '../styles/ffoot.css';
-import { FOOTER } from '../data/site.js';
+import { FOOTER, SHOW_CASE_STUDIES } from '../data/site.js';
+const LINKS = FOOTER.links.filter(([, h]) => SHOW_CASE_STUDIES || h !== '/case-studies');
 ---
 <!-- Footer: brand and contact, a few quick links, legal. Bracketed values are placeholders. -->
 <footer class="ffoot">
@@ -22,7 +23,7 @@ import { FOOTER } from '../data/site.js';
     </div>
     <div class="ffoot__col">
       <p class="ffoot__h">Company</p>
-      <ul>{FOOTER.links.map(([l, h]) => <li><a href={h}>{l}</a></li>)}</ul>
+      <ul>{LINKS.map(([l, h]) => <li><a href={h}>{l}</a></li>)}</ul>
     </div>
     <div class="ffoot__col">
       <p class="ffoot__h">Follow</p>

@@ -4,6 +4,10 @@
 export const AI_NAME = '[AI Product]';
 export const AI_PATH = '/ai';
 
+// Case studies are hidden until they're written (owner, Oct 27): no nav, footer
+// or homepage links. The pages still build. Set to true to bring them back.
+export const SHOW_CASE_STUDIES = false;
+
 export const SITE = {
   name: 'Profectus Agency',
   url: 'https://profectusagency.com',
