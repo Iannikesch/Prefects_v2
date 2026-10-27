@@ -1,5 +1,50 @@
 ---
+// Do Not Sell or Share (Oct 27). Epsilon's opt-out page (https://legal.epsilon.com/dsr/,
+// "Consumer Privacy Rights"), copied with permission, with our name and our contact
+// details swapped in. Their web form is written out as text: there is no backend yet.
 import LegalPage from '../components/LegalPage.astro';
 ---
-<LegalPage title="Do Not Sell or Share My Personal Information" need="Required under California law (and similar state laws) for a company holding consumer data. Needs a working opt-out request form and the process behind it, supplied by the owner's lawyer and data team."
-  sections={['Your right to opt out', 'How to submit a request', 'Verifying your request', 'Authorized agents', 'Global Privacy Control']} />
+<LegalPage title="Do Not Sell or Share My Personal Information" updated="October 27, 2026">
+  <div class="legal__sec">
+    <h2>Consumer Privacy Rights</h2>
+    <p>The Profectus Agency provides a variety of marketing services to its clients, such as personalized online and offline advertising and licensing of consumer data.</p>
+    <p>Please review the <a href="/privacy">Profectus Privacy Policy</a> for more information about how Profectus collects, uses, discloses, and deletes consumer personal information.</p>
+    <p>Please email your requests to <a href="mailto:[privacy@profectusagency.com]">[privacy@profectusagency.com]</a> with the information listed below. For US consumers who prefer not to submit your request online, please call [(000) 000-0000]. Profectus may keep a record of your request and our response to it as required by law.</p>
+    <p>If you are a Profectus employee or have applied for a role with Profectus, please send your request to <a href="mailto:[privacy@profectusagency.com]">[privacy@profectusagency.com]</a>.</p>
+    <p>If you are an agent submitting a request on behalf of a consumer, Profectus requires additional written proof showing your authority as an agent or other legal entitled individual depending on local laws.</p>
+  </div>
+  <div class="legal__sec">
+    <h2>Consumer Privacy Request Form</h2>
+    <p>To make a request, email <a href="mailto:[privacy@profectusagency.com]">[privacy@profectusagency.com]</a> or call [(000) 000-0000] with the information below.</p>
+    <h3>Country</h3>
+    <p>Tell us the country you live in.</p>
+    <h3>Request Type (Only one request per submission. Multiple submissions are accepted)</h3>
+    <ul>
+      <li><b>Do not sell my Personal Information.</b> The definition of a “sale” is defined broadly by the California Consumer Privacy Act (CCPA), which may include the disclosing of your personal information with third parties where Profectus receives a commercial benefit for doing so.</li>
+      <li><b>Do not share my Personal Information/Opt-out of Cross-Context Behavioral or Targeted Advertising.</b> Select this option if you would like for Profectus to stop using or sharing your personal information for personalized online advertising.</li>
+      <li><b>Access my Personal Information &amp; 3rd Party Disclosures.</b> Profectus will provide a report detailing your personal data, how it's processed, and the categories or specific third parties it's been shared with. Additional steps and exceptions may apply based on local laws.</li>
+      <li><b>Correct my Personal Information.</b> In response to your correction request, Profectus will delete your personal data. Exceptions may apply based on local laws.</li>
+      <li><b>Delete my Personal Information.</b> Select this option if you want Profectus to delete all personal information associated with you. Exceptions may apply based on local laws.</li>
+      <li><b>Opt-out of Profiling/Automated Decision-Making.</b> Select this option if you would like for Profectus to stop using your personal data to make a decision by automated means without any human involvement.</li>
+      <li><b>Opt-out/Revoke Consent of use of my Sensitive Personal Information.</b> Select this option if you would like for Profectus to stop using or sharing your sensitive personal information. Profectus follows local privacy laws (e.g. California Privacy Rights Act) to define and classify sensitive personal information.</li>
+      <li><b>Appeal the result of my prior privacy request.</b> If you have submitted a prior privacy request and Profectus has refused to take action on the request, you may submit an appeal to Profectus.</li>
+    </ul>
+    <h3>I am a...</h3>
+    <ul>
+      <li><b>Consumer.</b> By selecting “Consumer” you understand and agree that you are the individual concerning this request.</li>
+      <li><b>Authorized Agent.</b> If you are an authorized agent submitting a privacy request on behalf of a consumer, please include the additional written proof of your authority described above.</li>
+    </ul>
+    <h3>Your details</h3>
+    <ul>
+      <li>Email</li>
+      <li>First Name</li>
+      <li>Last Name</li>
+      <li>Street Address</li>
+      <li>City</li>
+      <li>State/Province</li>
+      <li>ZIP/Postal Code</li>
+    </ul>
+    <h3>Cookies</h3>
+    <p>To stop this website sharing your information for personalized online advertising, open our <button type="button" data-pfc-open aria-haspopup="dialog">Cookie Settings</button> and switch off Targeting cookies. Please note that cookie IDs are unique per browser so you will need to repeat this process on each browser/device you use. See our <a href="/cookies">Cookie Policy</a> for more.</p>
+  </div>
+</LegalPage>

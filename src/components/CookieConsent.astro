@@ -36,7 +36,7 @@ const GROUPS = [
   </div>
 </div>
 <script is:inline>
-  // Show the banner about 3s after load (as epsilon.com's does), only if no choice is saved yet.
+  // Show the banner about 3s after load, only if no choice is saved yet.
   if (!/(?:^|; )pf_consent=/.test(document.cookie)) setTimeout(() => { document.querySelector('[data-pfc]').hidden = false; }, 3000);
 </script>
 

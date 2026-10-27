@@ -1,5 +1,28 @@
 ---
+// Accessibility (Oct 27). epsilon.com has no accessibility statement to copy,
+// so this one is ours: the goal, what we do, and how to report a problem.
 import LegalPage from '../components/LegalPage.astro';
 ---
-<LegalPage title="Accessibility" need="A short statement of the site's accessibility goal (usually WCAG 2.2 AA) and how to report a problem."
-  sections={['Our commitment', 'Known limitations', 'Report a problem']} />
+<LegalPage title="Accessibility" updated="October 27, 2026">
+  <div class="legal__sec">
+    <h2>Our commitment</h2>
+    <p>The Profectus Agency wants everyone to be able to use this website, including people who use screen readers, keyboard navigation, magnification or other assistive technology. We aim to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at Level AA.</p>
+  </div>
+  <div class="legal__sec">
+    <h2>What we do</h2>
+    <ul>
+      <li>Every page can be used with a keyboard, and focus is visible as you move through it.</li>
+      <li>Pages use headings, landmarks and labels so screen readers can follow them.</li>
+      <li>Moving and animated parts of the site calm down when your device is set to reduce motion.</li>
+      <li>We check text and button colours for contrast as we build.</li>
+    </ul>
+  </div>
+  <div class="legal__sec">
+    <h2>Known limitations</h2>
+    <p>Some parts of the site rely on scrolling animation to tell a story. If any part of this website is hard to use, we want to hear about it so we can fix it.</p>
+  </div>
+  <div class="legal__sec">
+    <h2>Report a problem</h2>
+    <p>If you have trouble using any part of this website, email <a href="mailto:[hello@profectusagency.com]">[hello@profectusagency.com]</a> or call [(000) 000-0000]. Tell us the page and what went wrong, and we will get back to you and help you get the information you need.</p>
+  </div>
+</LegalPage>

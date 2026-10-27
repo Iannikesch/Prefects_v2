@@ -1051,3 +1051,9 @@ em.foil-text, .edge__num.foil-text {
 .legal__sec ul { margin: 0; padding-left: 20px; color: var(--rw-ink-2); display: grid; gap: 8px; }
 .legal__sec a, .legal__sec button { color: #6E62E6; }
 .legal__sec button { appearance: none; padding: 0; border: 0; background: none; font: inherit; text-decoration: underline; cursor: pointer; }
+.legal__sec h3 { margin: 20px 0 8px; font-size: 17px; font-weight: 600; color: var(--rw-ink, #1a1823); }
+.legal__sec ol { margin: 0; padding-left: 20px; color: var(--rw-ink-2); display: grid; gap: 8px; }
+.legal__sec p + ol, .legal__sec ol + p, .legal__sec h3 + ul, .legal__sec ul + ul { margin-top: 12px; }
+.legal__table { width: 100%; margin-top: 12px; border-collapse: collapse; font-size: 14px; line-height: 1.5; color: var(--rw-ink-2); display: block; overflow-x: auto; }
+.legal__table th, .legal__table td { padding: 10px 12px; border: 1px solid #ECEAF3; text-align: left; vertical-align: top; }
+.legal__table th { background: #F6F5FA; color: var(--rw-ink, #1a1823); font-weight: 600; }
