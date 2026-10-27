@@ -35,3 +35,9 @@
 .rm .journey__panel p { font-size: 17px; line-height: 1.55; }
 .rm .journey__more { display: inline-block; margin-top: 18px; font-weight: 500; font-size: 15px; color: var(--violet); text-decoration: none; }
 .rm .journey__more:hover { text-decoration: underline; text-underline-offset: 4px; }
+/* Phones: full paragraphs need more room below the pinned picture (Oct 27).
+   Smaller picture, pinned near the top, with a band of page colour above it
+   so text never peeks out over it once the nav hides. */
+@media (max-width: 900px) {
+  .rm .art { top: 12px; height: 34vh; box-shadow: 0 -12px 0 var(--mist); }
+}
