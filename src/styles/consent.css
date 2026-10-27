@@ -3,7 +3,7 @@
    in the footer's colours: near-black bar, purple buttons, gold label, 6px corners. */
 .pfc { position: fixed; inset: auto 0 0; z-index: 2147483000; background: #07060D; color: rgba(238, 234, 255, 0.82); border-top: 1px solid rgba(238, 234, 255, 0.12); box-shadow: 0 0 18px rgba(0, 0, 0, 0.2); }
 .pfc[hidden] { display: none; }
-.pfc__inner { width: var(--rw-container, min(1280px, 100% - 64px)); margin-inline: auto; padding: 24px 0; display: grid; grid-template-columns: 1fr 360px; gap: 24px 48px; align-items: center; }
+.pfc__inner { position: relative; width: var(--rw-container, min(1280px, 100% - 64px)); margin-inline: auto; padding: 24px 56px 24px 0; display: grid; grid-template-columns: 1fr 360px; gap: 24px 48px; align-items: center; }
 .pfc__k { margin: 0 0 8px; font: 400 var(--pf-fs-mono, 12px)/1 var(--pf-mono, monospace); text-transform: uppercase; letter-spacing: .06em; color: var(--rw-gold-300, #E9C66B); }
 .pfc__text { margin: 0; max-width: 62em; font-size: 14px; line-height: 1.55; }
 .pfc__text a { color: var(--pf-white, #fff); text-decoration: underline; text-underline-offset: 3px; }
@@ -13,8 +13,12 @@
 .pfc__btn--line { background: transparent; color: inherit; border-color: rgba(238, 234, 255, 0.4); }
 .pfc__btn--line:hover { background: transparent; border-color: #6E62E6; color: inherit; }
 .pfc__btn:focus-visible, .pfc-panel :focus-visible { outline: 2px solid var(--rw-gold-300, #E9C66B); outline-offset: 2px; }
+/* The X accepts all too, as on epsilon.com */
+.pfc__x { position: absolute; top: 50%; right: -12px; translate: 0 -50%; width: 44px; height: 48px; border: 0; background: none; color: rgba(238, 234, 255, 0.82); font-size: 28px; line-height: 1; cursor: pointer; }
+.pfc__x:hover { color: var(--pf-white, #fff); }
 @media (max-width: 900px) {
   .pfc__inner { grid-template-columns: 1fr; width: calc(100% - 32px); padding: 20px 0; }
+  .pfc__x { top: 4px; right: -12px; translate: none; }
   .pfc__btns { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 520px) {
