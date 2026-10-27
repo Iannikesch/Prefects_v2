@@ -32,6 +32,6 @@ const LINKS = FOOTER.links.filter(([, h]) => SHOW_CASE_STUDIES || h !== '/case-s
   </div>
   <div class="ffoot__base">
     <p>© {new Date().getFullYear()} The Profectus Agency. Proudly independent.</p>
-    <ul>{FOOTER.legal.map(([l, h]) => <li><a href={h}>{l}</a></li>)}</ul>
+    <ul>{FOOTER.legal.map(([l, h]) => <li><a href={h}>{l}</a></li>)}<li><button type="button" data-pfc-open aria-haspopup="dialog">Cookie Settings</button></li></ul>
   </div>
 </footer>

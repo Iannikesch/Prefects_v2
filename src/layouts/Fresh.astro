@@ -8,6 +8,7 @@ import '../styles/fresh.css';
 const { title = 'Profectus Agency' } = Astro.props;
 import FreshNav from '../components/FreshNav.astro';
 import FreshFooter from '../components/FreshFooter.astro';
+import CookieConsent from '../components/CookieConsent.astro';
 ---
 <!doctype html>
 <html lang="en">
@@ -30,6 +31,7 @@ import FreshFooter from '../components/FreshFooter.astro';
   <main><slot /></main>
 
   <FreshFooter />
+  <CookieConsent />
 
   <script>
     import '../../kit/texture-pack/nebula.js';

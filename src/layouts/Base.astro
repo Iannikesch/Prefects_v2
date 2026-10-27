@@ -9,6 +9,7 @@ import '../styles/site.css';
 import ContactForm from '../components/ContactForm.astro';
 import { SITE } from '../data/site.js';
 import FreshFooter from '../components/FreshFooter.astro';
+import CookieConsent from '../components/CookieConsent.astro';
 import FreshNav from '../components/FreshNav.astro';
 import { LAYERS } from '../data/layers.js';
 
@@ -53,6 +54,7 @@ const canonical = new URL(path, SITE.url).href;
   <main id="main"><slot /></main>
 
   <FreshFooter />
+  <CookieConsent />
 
   <dialog class="modal" id="contact-modal" aria-labelledby="contact-modal-title">
     <div class="modal__panel">

@@ -1047,3 +1047,7 @@ em.foil-text, .edge__num.foil-text {
 .edge__inner:has(.edge__journey) { grid-template-columns: 1fr; }
 .uses .pweb__me img { object-position: 50% 25%; }
 .uses .ucard--lane .ucard__media img { object-fit: cover; object-position: 50% 45%; }
+.legal__sec p + p, .legal__sec p + ul, .legal__sec ul + p { margin-top: 12px; }
+.legal__sec ul { margin: 0; padding-left: 20px; color: var(--rw-ink-2); display: grid; gap: 8px; }
+.legal__sec a, .legal__sec button { color: #6E62E6; }
+.legal__sec button { appearance: none; padding: 0; border: 0; background: none; font: inherit; text-decoration: underline; cursor: pointer; }

@@ -1,0 +1,68 @@
+/* Cookie banner and settings panel (Oct 27). Layout after epsilon.com's
+   (bottom bar, text left, three stacked buttons right; 575px centred panel),
+   in the footer's colours: near-black bar, purple buttons, gold label, 6px corners. */
+.pfc { position: fixed; inset: auto 0 0; z-index: 2147483000; background: #07060D; color: rgba(238, 234, 255, 0.82); border-top: 1px solid rgba(238, 234, 255, 0.12); box-shadow: 0 0 18px rgba(0, 0, 0, 0.2); }
+.pfc[hidden] { display: none; }
+.pfc__inner { width: var(--rw-container, min(1280px, 100% - 64px)); margin-inline: auto; padding: 24px 0; display: grid; grid-template-columns: 1fr 360px; gap: 24px 48px; align-items: center; }
+.pfc__k { margin: 0 0 8px; font: 400 var(--pf-fs-mono, 12px)/1 var(--pf-mono, monospace); text-transform: uppercase; letter-spacing: .06em; color: var(--rw-gold-300, #E9C66B); }
+.pfc__text { margin: 0; max-width: 62em; font-size: 14px; line-height: 1.55; }
+.pfc__text a { color: var(--pf-white, #fff); text-decoration: underline; text-underline-offset: 3px; }
+.pfc__btns { display: grid; gap: 8px; }
+.pfc__btn { appearance: none; cursor: pointer; padding: 12px 18px; border: 1px solid #6E62E6; border-radius: 6px; background: #6E62E6; color: #fff; font-family: inherit; font-size: 14px; font-weight: 600; line-height: 1.2; transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease; }
+.pfc__btn:hover { background: #5B4FD9; border-color: #5B4FD9; }
+.pfc__btn--line { background: transparent; color: inherit; border-color: rgba(238, 234, 255, 0.4); }
+.pfc__btn--line:hover { background: transparent; border-color: #6E62E6; color: inherit; }
+.pfc__btn:focus-visible, .pfc-panel :focus-visible { outline: 2px solid var(--rw-gold-300, #E9C66B); outline-offset: 2px; }
+@media (max-width: 900px) {
+  .pfc__inner { grid-template-columns: 1fr; width: calc(100% - 32px); padding: 20px 0; }
+  .pfc__btns { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 520px) {
+  .pfc__text { font-size: 13px; }
+  .pfc__btns { grid-template-columns: 1fr 1fr; }
+  .pfc__btns [data-pfc-open] { grid-column: 1 / -1; order: 1; }
+}
+
+/* Settings panel */
+.pfc-panel { margin: auto; inset: 0; width: min(575px, 100% - 32px); max-height: min(720px, 100svh - 48px); padding: 0; border: 0; border-radius: 6px; background: #fff; color: #1a1823; box-shadow: 0 2px 24px rgba(0, 0, 0, 0.25); overflow: hidden; }
+.pfc-panel[open] { display: flex; animation: pfc-in 0.3s ease; }
+.pfc-panel::backdrop { background: rgba(7, 6, 13, 0.6); animation: pfc-in 0.3s ease; }
+@keyframes pfc-in { from { opacity: 0; } }
+.pfc-panel__form { display: flex; flex-direction: column; width: 100%; min-height: 0; }
+.pfc-panel__head { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; border-bottom: 1px solid #ECEAF3; }
+.pfc-panel__logo { font: 400 26px/1 var(--pf-serif, serif); letter-spacing: -0.035em; }
+.pfc-panel__x { appearance: none; width: 44px; height: 44px; margin-right: -12px; border: 0; background: none; font-size: 28px; line-height: 1; color: #555; cursor: pointer; }
+.pfc-panel__body { padding: 20px 24px 8px; overflow-y: auto; font-size: 14px; line-height: 1.55; color: #3d3a48; }
+.pfc-panel__body h2 { margin: 0 0 12px; font: 400 26px/1.15 var(--pf-serif, serif); letter-spacing: -0.02em; color: #1a1823; }
+.pfc-panel__body h3 { margin: 24px 0 12px; font-size: 15px; font-weight: 600; color: #1a1823; }
+.pfc-panel__body p { margin: 0 0 12px; }
+.pfc-panel__body a { color: #6E62E6; font-weight: 600; }
+.pfc-panel__groups { border: 1px solid #ECEAF3; border-radius: 6px; }
+.pfc-group + .pfc-group { border-top: 1px solid #ECEAF3; }
+.pfc-group summary { display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 16px; cursor: pointer; list-style: none; }
+.pfc-group summary::-webkit-details-marker { display: none; }
+.pfc-group summary::before { content: '+'; width: 14px; font-size: 18px; color: #6E62E6; }
+.pfc-group[open] summary::before { content: '−'; }
+.pfc-group__name { flex: 1; font-weight: 600; color: #1a1823; }
+.pfc-group__always { font-size: 13px; font-weight: 600; color: #6E62E6; }
+.pfc-group p { padding: 0 16px 0 42px; font-size: 13px; }
+.pfc-group p:last-child { padding-bottom: 8px; }
+.pfc-switch { position: relative; display: inline-flex; cursor: pointer; }
+.pfc-switch input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.pfc-switch i { width: 40px; height: 22px; border-radius: 11px; background: #C9C6D6; transition: background-color 0.2s ease-in; }
+.pfc-switch i::after { content: ''; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: translate 0.2s ease-in; }
+.pfc-switch input:checked + i { background: #6E62E6; }
+.pfc-switch input:checked + i::after { translate: 18px 0; }
+.pfc-switch input:focus-visible + i { outline: 2px solid var(--rw-gold-300, #E9C66B); outline-offset: 2px; }
+.pfc-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.pfc-panel__foot { display: flex; justify-content: flex-end; gap: 12px; padding: 16px 24px; border-top: 1px solid #ECEAF3; }
+.pfc-panel__foot .pfc__btn--line { color: #1a1823; border-color: #C9C6D6; }
+@media (max-width: 520px) { .pfc-panel__foot { flex-direction: column-reverse; } }
+@media (prefers-reduced-motion: reduce) {
+  .pfc-panel[open], .pfc-panel::backdrop { animation: none; }
+  .pfc-switch i, .pfc-switch i::after { transition: none; }
+}
+
+/* Footer's Cookie Settings link is a button */
+.ffoot__base button[data-pfc-open] { appearance: none; padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; transition: color 200ms ease; }
+.ffoot__base button[data-pfc-open]:hover { color: var(--pf-white, #fff); }
