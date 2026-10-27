@@ -8,7 +8,8 @@
 .ffoot a:hover { color: var(--pf-white); }
 .ffoot__inner { width: var(--rw-container); margin-inline: auto; display: grid; grid-template-columns: 1.6fr 1.2fr 1fr 1fr; gap: 48px; padding-bottom: 56px; border-bottom: 1px solid rgba(238, 234, 255, 0.12); }
 .ffoot__brand { display: grid; gap: 18px; align-content: start; justify-items: start; }
-.ffoot__logo { font: 400 40px/1 var(--pf-serif); letter-spacing: -0.035em; color: var(--pf-white) !important; }
+.ffoot__logo { display: block; line-height: 0; }
+.ffoot__logo img { display: block; width: auto; height: 32px; }
 .ffoot__line { max-width: 22em; font: 400 20px/1.3 var(--pf-serif); letter-spacing: -0.02em; color: rgba(238, 234, 255, 0.85); }
 .ffoot__h { margin: 0 0 16px; font: 400 var(--pf-fs-mono)/1 var(--pf-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--rw-gold-300); }
 .ffoot ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; font-size: 15px; line-height: 1.4; }

@@ -34,7 +34,8 @@
 @keyframes pfc-in { from { opacity: 0; } }
 .pfc-panel__form { display: flex; flex-direction: column; width: 100%; min-height: 0; }
 .pfc-panel__head { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; border-bottom: 1px solid #ECEAF3; }
-.pfc-panel__logo { font: 400 26px/1 var(--pf-serif, serif); letter-spacing: -0.035em; }
+.pfc-panel__logo { line-height: 0; }
+.pfc-panel__logo img { display: block; width: auto; height: 22px; }
 .pfc-panel__x { appearance: none; width: 44px; height: 44px; margin-right: -12px; border: 0; background: none; font-size: 28px; line-height: 1; color: #555; cursor: pointer; }
 .pfc-panel__body { padding: 20px 24px 8px; overflow-y: auto; font-size: 14px; line-height: 1.55; color: #3d3a48; }
 .pfc-panel__body h2 { margin: 0 0 12px; font: 400 26px/1.15 var(--pf-serif, serif); letter-spacing: -0.02em; color: #1a1823; }
