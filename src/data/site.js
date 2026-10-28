@@ -7,14 +7,16 @@ export const AI_PATH = '/ai';
 // Case studies are hidden until they're written (owner, Oct 27): no nav, footer
 // or homepage links. The pages still build. Set to true to bring them back.
 export const SHOW_CASE_STUDIES = false;
+// The FAQ block on each capability page waits for Braxton's answers (Oct 28).
+export const SHOW_FAQS = false;
 
 export const SITE = {
   name: 'Profectus Agency',
   url: 'https://profectusagency.com',
   description:
     'Profectus is a data-driven marketing agency powered by a proprietary database with near-full domestic coverage, built by a team with decades of experience at world-class brands.',
-  // Where contact enquiries go. Placeholder until the client confirms.
-  contactEmail: '[CONTACT EMAIL]',
+  // Where contact enquiries go (Braxton, Oct 28).
+  contactEmail: 'hello@profectusagency.com',
 };
 
 export const NAV = [
@@ -115,14 +117,15 @@ export const EDGE3 = [
 // Footer (Oct 22). Everything in [brackets] is a placeholder for the owner.
 export const FOOTER = {
   line: 'Personal to every customer. Proof for every dollar.',
-  contact: { email: '[hello@profectusagency.com]', phone: '[(000) 000-0000]', address: '[Street address, City, State ZIP]' },
+  contact: { email: 'hello@profectusagency.com', address: 'Adolphus Tower, 1412 Main St, Suite 330, Dallas, TX 75202' },
   links: [
     ['Capabilities', '/capabilities'],
     ['Case Studies', '/case-studies'],
     ['About', '/about'],
     ['Contact', '/contact'],
   ],
-  social: [['LinkedIn', '[LinkedIn URL]'], ['Instagram', '[Instagram URL]'], ['X', '[X URL]']],
+  // LinkedIn and Instagram go back in once Braxton sends the profile URLs (Oct 28). X is gone.
+  social: [],
   legal: [
     ['Privacy Policy', '/privacy'],
     ['Terms of Use', '/terms'],

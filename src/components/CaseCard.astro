@@ -5,7 +5,6 @@ const { cs, isNew = false } = Astro.props;
 ---
 <a class="case-card" href={`/case-studies/${cs.slug}`}>
   <div class="case-card__media">
-    {isNew && <span class="pf-chip">New</span>}
     <Ph label={`${cs.client} photo`} style="position:absolute;inset:0" />
   </div>
   <div class="case-card__body">

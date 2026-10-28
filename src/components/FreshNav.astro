@@ -9,6 +9,8 @@ const MENU = [
   { title: 'Five steps forward', items: SPINE.map((s, i) => ({ slug: s.slug, name: bySlug(s.slug).name, tag: `0${i + 1} ${s.verb}` })) },
   ...SERVICE_GROUPS.map((g) => ({ title: g.title, items: g.slugs.map((slug) => ({ slug, name: bySlug(slug).name })) })),
 ];
+// On /contact the Get in Touch button would just reload the page, so it's hidden there.
+const onContact = Astro.url.pathname.replace(/\/$/, '') === '/contact';
 ---
 <header class="fnav" data-fnav>
   <div class="fnav__bar">
@@ -33,7 +35,7 @@ const MENU = [
         <li><a href="/about">About</a></li>
       </ul>
     </nav>
-    <a class="fnav__cta btn-gold glow" href="/contact">Get in Touch →</a>
+    {!onContact && <a class="fnav__cta btn-gold glow" href="/contact">Get in Touch →</a>}
     <button class="fnav__toggle" type="button" aria-controls="fnav-menu" aria-expanded="false" aria-label="Menu"><i></i><i></i></button>
   </div>
   <!-- Phones and narrow windows: the links move into a drop-down panel. -->
@@ -42,7 +44,7 @@ const MENU = [
     <div class="fnav__menu-caps">{MENU.flatMap((c) => c.items).map((it) => <a href={`/capabilities/${it.slug}`}>{it.name}</a>)}</div>
     {SHOW_CASE_STUDIES && <a href="/case-studies">Case Studies</a>}
     <a href="/about">About</a>
-    <a class="btn-gold" href="/contact">Get in Touch →</a>
+    {!onContact && <a class="btn-gold" href="/contact">Get in Touch →</a>}
   </nav>
 </header>
 

@@ -6,13 +6,15 @@ import Fresh from '../../layouts/Fresh.astro';
 import '../../reimagined/reimagined.css';
 import '../../reimagined/tight.css';
 import { CAPABILITIES, bySlug } from '../../data/capabilities.js';
+import { SHOW_FAQS } from '../../data/site.js';
 
 const pages = import.meta.glob('../../reimagined/*.html', { query: '?raw', import: 'default', eager: true });
 export function getStaticPaths() {
   return CAPABILITIES.map((c) => ({ params: { slug: c.slug } }));
 }
 const cap = bySlug(Astro.params.slug);
-const body = pages[`../../reimagined/${cap.slug}.html`];
+const raw = pages[`../../reimagined/${cap.slug}.html`];
+const body = SHOW_FAQS ? raw : raw.replace(/<section class="ask">[\s\S]*?<\/section>\s*/, '');
 ---
 <Fresh title={`${cap.name} · Profectus Agency`}>
   <div class="rm"><script is:inline>document.currentScript.parentElement.classList.add('js');</script><Fragment set:html={body} /></div>
