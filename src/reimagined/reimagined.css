@@ -302,6 +302,7 @@
 .rm .proof--one .proof__item { max-width: 640px; border-top: 0; padding: 0; }
 .rm .proof--one .proof__n { font-size: clamp(64px, 9vw, 140px); }
 .rm .proof--one .proof__t { font-size: 19px; }
+.rm .proof__stack { display: grid; gap: 40px; }
 .rm .nextcap { display: block; padding: 56px 0; border-top: 1px solid rgba(11,11,12,.1); text-decoration: none; }
 .rm .nextcap span { font: 400 13px/1 var(--mono); color: var(--ink-2); }
 .rm .nextcap b { display: block; margin-top: 10px; font: 400 clamp(30px, 3.6vw, 52px)/1.05 var(--serif); letter-spacing: -0.035em; font-weight: 400; }

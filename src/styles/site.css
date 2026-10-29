@@ -272,6 +272,17 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .alt__row:nth-child(even) .alt__media { order: -1; }
 .alt__media { aspect-ratio: 4 / 3; }
 @media (max-width: 900px) { .alt__row { grid-template-columns: 1fr; } .alt__row:nth-child(even) .alt__media { order: 0; } }
+/* About: the "Every source, one layer" graphic (from Customer Data & Infrastructure) and the team photo */
+.about-photo { width: 100%; height: auto; object-fit: cover; border-radius: 20px; }
+.about-flow { position: relative; display: grid; place-items: center; padding: 40px 24px 64px; border-radius: 20px; background: #0b0a14; color: var(--pf-white); }
+.about-flow__row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; max-width: 92%; }
+.about-flow__node { display: grid; gap: 4px; padding: 12px 14px; border-radius: 10px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14); text-align: center; }
+.about-flow__node b { font: 500 15px/1.2 var(--pf-sans); }
+.about-flow__node span { font: 400 11px/1.3 var(--pf-mono); color: var(--rw-gold-300, #E9C66B); }
+.about-flow__node:last-of-type { background: var(--pf-violet); border-color: var(--pf-violet); }
+.about-flow__node:last-of-type span { color: var(--pf-white); }
+.about-flow__arr { font-style: normal; color: rgba(255,255,255,.4); }
+.about-flow__cap { position: absolute; left: 28px; bottom: 24px; font: 400 12px/1 var(--pf-mono); letter-spacing: .06em; text-transform: uppercase; color: rgba(255,255,255,.7); }
 
 /* ---------- Jump nav (Epsilon): pins under the header ---------- */
 .jump { position: sticky; top: var(--pf-nav-h); z-index: 50; background: var(--pf-fill-nav); -webkit-backdrop-filter: var(--pf-blur-bar); backdrop-filter: var(--pf-blur-bar); box-shadow: inset 0 -1px 0 var(--pf-hairline); transition: top var(--site-nav-move) var(--site-ease-std); }

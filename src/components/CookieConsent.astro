@@ -1,7 +1,7 @@
 ---
 // Cookie banner and settings panel (Oct 27), modelled on epsilon.com's
 // (kit/scouted/epsilon-com-cookie-banner.md) in our colours. Behaves like
-// theirs, by the owner's call (Oct 27): their copy word for word, "Close" and
+// theirs, by the owner's call (Oct 27): their copy word for word (Braxton's three typo fixes Oct 29), "Close" and
 // the X accept all, optional cookies on by default (opt-out), and the banner
 // shows about 3s after load. The choice is a first-party cookie, pf_consent.
 // Scripts that need consent check window.pfConsent or listen for
@@ -11,12 +11,12 @@ const GROUPS = [
   { key: 'necessary', name: 'Strictly Necessary', always: true,
     text: ['These cookies are necessary for the website to function and cannot be switched off in our systems. Some of these cookies are only set in response to requests made by you, such as setting your preferences, logging in or filling out forms. They may also be set for certain security purposes and network management. You can manage these types of cookies using your browser settings, but it may affect your ability to use our website.'] },
   { key: 'functional', name: 'Functional',
-    text: ['These cookies enable the website to provide enhanced functionality and improve your experience. They may be set by us or by third party providers whose services have been added to our website. If you do not allow these cookies, you may not receive the best experience when visiting our website and parts of our website may not function properly.'] },
+    text: ['These cookies enable the website to provide enhanced functionality and improve your experience. They may be set by us or by third-party providers whose services have been added to our website. If you do not allow these cookies, you may not receive the best experience when visiting our website and parts of our website may not function properly.'] },
   { key: 'performance', name: 'Performance',
     text: ['These cookies allow us to engage in certain activities, such as counting visits and identifying traffic sources that assist us in measuring the performance of our website. They help us to know which pages are the most and least popular and see how visitors move around the website. If you do not allow these cookies we will not know when you have visited our website and will not be able to monitor our website’s performance.'] },
   { key: 'targeting', name: 'Targeting',
     text: [
-      'These cookies are used to collect information about your browser, device and website visit and use such formation to provide you with personalised experiences and advertising on this website and others across the internet. If these cookies are disabled, your data will not be shared with third parties for this purpose.',
+      'These cookies are used to collect information about your browser, device and website visit and use such information to provide you with personalized experiences and advertising on this website and others across the internet. If these cookies are disabled, your data will not be shared with third parties for this purpose.',
       'If you are located in the United States, local law may provide you with the right to opt-out of the sale or sharing of your personal information to third parties. You may exercise your right to opt out of this activity by disabling targeting cookies using this toggle switch. Additionally, you may find further information about exercising your consumer rights under local law by visiting our privacy notice.',
     ] },
 ];

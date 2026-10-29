@@ -1,12 +1,13 @@
 ---
 // About. Copy from the live About page.
 import Base from '../layouts/Base.astro';
-import Ph from '../components/Ph.astro';
 import Confirm from '../components/Confirm.astro';
 import Mood from '../components/Mood.astro';
 import { PROCESS } from '../data/site.js';
 import Aurora from '../components/Aurora.astro';
 import { LAYERS, mv } from '../data/layers.js';
+// The "Every source, one layer" graphic from the Customer Data & Infrastructure page (Braxton, Oct 29).
+const FLOW = [['Website', 'events'], ['Point of sale', 'transactions'], ['Email', 'opens'], ['App', 'sessions'], ['One data layer', 'clean, labeled, yours']];
 const pad = (n) => String(n).padStart(2, '0');
 // The live About stats contradict the homepage (84% vs 94% SMS open rate,
 // 75% vs 85% occupancy), so they're flagged until the client confirms.
@@ -39,12 +40,17 @@ const stats = [
       <div class="alt__row">
         <div class="stack"><p class="pf-eyebrow">Our infrastructure</p><h2 class="t-h3s">A proprietary database with near-full domestic coverage.</h2>
           <p class="t-soft measure">We sit at the intersection of data science, strategic media, and performance creative. Identity resolution. Cookieless activation. Audience intelligence. Direct channel economics that no platform or agency can match. This is the foundation every engagement is built on.</p></div>
-        <Ph class="alt__media" label="Infrastructure visual" />
+        <figure class="alt__media about-flow" aria-label="Website events, point-of-sale transactions, email opens and app sessions flow into one data layer">
+          <div class="about-flow__row" aria-hidden="true">
+            {FLOW.map(([b, s], i) => <>{i > 0 && <i class="about-flow__arr">→</i>}<div class="about-flow__node"><b>{b}</b><span>{s}</span></div></>)}
+          </div>
+          <figcaption class="about-flow__cap">Every source, one layer</figcaption>
+        </figure>
       </div>
       <div class="alt__row">
         <div class="stack"><p class="pf-eyebrow">Our experience</p><h2 class="t-h3s">Decades inside world-class brands.</h2>
           <p class="t-soft measure">Our team spent decades running marketing and data programs inside world-class brands, driving performance through digital paid activation, first-party customer data infrastructure, and direct channel programs at a scale where the cost of getting it wrong is measured in tens of millions of dollars. We built Profectus to make that capability available to every brand we work with.</p></div>
-        <Ph class="alt__media" label="Team photo" />
+        <img class="alt__media about-photo" src="/img/photos/team.webp" width="1400" height="1400" loading="lazy" alt="Four colleagues talking around a meeting table with laptops open, a project plan on the whiteboard behind them" />
       </div>
     </div>
   </section>
