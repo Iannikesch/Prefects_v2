@@ -20,6 +20,7 @@
   --site-ease-rail:  ease-in-out;                    /* Merkle, measured */
   --site-hover:      var(--pf-dur-hover);
   --site-nav-offset: var(--pf-nav-h);
+  --site-error:      #F08A8A;  /* form error edge; no red exists in the --pf-* palette */
 }
 @media (max-width: 600px) { :root { --site-gutter: 16px; } }
 
@@ -327,26 +328,75 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .form input:focus, .form textarea:focus { outline: 1px solid var(--pf-violet); }
 .form textarea { min-height: 140px; resize: vertical; }
-.chooser { border: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-.chooser legend { margin-bottom: 10px; }
-.chooser input { position: absolute; opacity: 0; width: 1px; }
-.chooser label { display: inline-flex; padding: 9px 14px; border-radius: var(--pf-r-pill); background: var(--pf-fill-tag); cursor: pointer; font: 500 var(--pf-fs-ui)/1.2 var(--pf-sans); color: var(--pf-white); transition: background-color var(--site-hover) var(--pf-ease); }
-.chooser input:checked + span { color: var(--pf-white); }
-.chooser label:has(input:checked) { background: var(--pf-fill-cta); }
-.chooser label:has(input:focus-visible) { outline: 1px solid var(--pf-violet); outline-offset: 2px; }
-/* Infinite Agency layout: 2-col placeholder-as-label fields, 52px tall,
-   30px row gap, 16px column gap; hover lifts the border, focus adds a ring. */
+/* Infinite Agency layout (kit/scouted/infinite-agency-contact-form.md):
+   one field per row, 52px filled boxes, 30px between rows, then the
+   "Choose a service" bar with the chips packed underneath it, then Submit. */
 .form--ia { gap: 30px; }
-.form__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px 16px; }
-.form__field--wide { grid-column: 1 / -1; }
-.form--ia input { height: 52px; padding: 0 16px; transition: box-shadow .15s var(--pf-ease); }
-.form--ia input::placeholder { color: var(--pf-text); opacity: .6; }
-.form--ia input:hover { box-shadow: inset 0 0 0 1px rgba(255,255,255,.3); }
+.form__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 30px; }
+.form--ia input:not([type="radio"]) {
+  height: 52px; padding: 0 18px; border-radius: var(--rw-r-btn);
+  background: var(--pf-surface-glass); box-shadow: inset 0 0 0 1px var(--pf-hairline);
+  font-size: var(--pf-fs-lead); transition: box-shadow .15s var(--pf-ease);
+}
+.form--ia input::placeholder { color: var(--pf-text); opacity: .7; }
+.form--ia input:hover { box-shadow: inset 0 0 0 1px rgba(255,255,255,.24); }
 .form--ia input:focus { outline: 0; box-shadow: inset 0 0 0 1px var(--pf-violet), 0 0 0 3px rgba(255,255,255,.12); }
-.form--ia .chooser label { padding: 0 16px; min-height: 44px; align-items: center; border-radius: var(--pf-r-chip); }
-@media (max-width: 600px) { .form__grid { grid-template-columns: 1fr; } .form--ia .pf-pill { width: 100%; justify-content: center; } }
+
+.chooser { border: 0; padding: 0; margin: 0; min-width: 0; }
+/* Closed, the bar reads as one more 52px field. Open, the chip panel slides
+   down from under it (grid 0fr to 1fr, so no measuring in JS). */
+.chooser__bar {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  height: 52px; padding: 0 18px; border: 0; cursor: pointer; text-align: left;
+  background: var(--pf-surface-glass); border-radius: var(--rw-r-btn);
+  box-shadow: inset 0 0 0 1px var(--pf-hairline);
+  font: 400 var(--pf-fs-lead)/1 var(--pf-sans); letter-spacing: var(--pf-ls-body); color: var(--pf-white);
+  transition: box-shadow .15s var(--pf-ease), border-radius .15s var(--pf-ease);
+}
+.chooser__bar:hover { box-shadow: inset 0 0 0 1px rgba(255,255,255,.24); }
+.chooser__bar:focus-visible { outline: 0; box-shadow: inset 0 0 0 1px var(--pf-violet), 0 0 0 3px rgba(255,255,255,.12); }
+.chooser__bar[aria-expanded="true"] { border-radius: var(--rw-r-btn) var(--rw-r-btn) 0 0; }
+.chooser__label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chooser:not(.is-picked) .chooser__label { color: var(--pf-text); opacity: .7; }
+.chooser__chev { flex: none; color: var(--pf-text); transition: transform .3s var(--pf-ease); }
+.chooser__bar[aria-expanded="true"] .chooser__chev { transform: rotate(180deg); }
+.chooser.is-error .chooser__bar { box-shadow: inset 0 0 0 1px var(--site-error); }
+.chooser.is-error .chooser__chev { color: var(--site-error); }
+.chooser__panel {
+  display: grid; grid-template-rows: 0fr; opacity: 0;
+  transition: grid-template-rows .3s var(--pf-ease), opacity .2s var(--pf-ease);
+}
+.chooser__panel.is-open { grid-template-rows: 1fr; opacity: 1; }
+.chooser__chips {
+  min-height: 0; overflow: hidden;
+  display: flex; flex-wrap: wrap; align-content: flex-start; gap: 6px;
+  background: var(--pf-surface-glass); border-radius: 0 0 var(--rw-r-btn) var(--rw-r-btn);
+}
+.chooser__panel.is-open .chooser__chips { padding: 10px; }
+.chooser__panel .chooser__chips { transition: padding .3s var(--pf-ease); }
+@media (prefers-reduced-motion: reduce) {
+  .chooser__bar, .chooser__chev, .chooser__panel, .chooser__panel .chooser__chips { transition: none; }
+}
+.chooser input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.chooser label {
+  display: inline-flex; align-items: center; height: 38px; padding: 0 14px; border-radius: var(--pf-r-chip);
+  background: var(--pf-fill-tag); cursor: pointer; font: 500 var(--pf-fs-ui)/1 var(--pf-sans); color: var(--pf-white);
+  transition: background-color var(--site-hover) var(--pf-ease);
+}
+.chooser label:hover { background: rgba(255,255,255,.2); }
+.chooser label:has(input:checked) { background: var(--pf-fill-cta); box-shadow: inset 0 0 0 1px var(--pf-violet); }
+.chooser label:has(input:focus-visible) { outline: 1px solid var(--pf-violet); outline-offset: 2px; }
+.form__submit .pf-pill { height: 48px; padding: 0 28px; border-radius: var(--rw-r-btn); background: var(--pf-violet); color: var(--pf-white); font-weight: 600; }
+@media (max-width: 600px) {
+  .form--ia .form__submit .pf-pill { width: 100%; justify-content: center; }
+  .chooser__panel.is-open .chooser__chips { padding: 8px; }
+  .chooser label { padding: 0 12px; font-size: 14px; }
+}
+/* In the pop-up the rows sit a little closer so it fits a laptop screen. */
+.modal .form--ia, .modal .form__grid { gap: 18px; }
 .form__hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .form__note { font: 400 12px/1.4 var(--pf-mono); color: var(--pf-text); }
+.form__note.is-error { color: var(--site-error); }
 @media (max-width: 600px) { .form__row { grid-template-columns: 1fr; } }
 
 .modal { margin: auto; border: 0; padding: 0; background: transparent; max-width: min(640px, calc(100vw - 32px)); width: 100%; color: var(--pf-text); }
@@ -354,8 +404,36 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .modal__panel { background: var(--pf-surface); padding: 40px 32px 32px; position: relative; max-height: calc(100svh - 48px); overflow-y: auto; }
 .modal__close { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 50%; background: var(--pf-fill-tag); }
 
-.contact { display: grid; grid-template-columns: 5fr 7fr; gap: 64px; align-items: start; }
-@media (max-width: 900px) { .contact { grid-template-columns: 1fr; gap: 40px; } }
+/* /contact: two columns (Infinite Agency layout), sized by content. */
+.contact-page { position: relative; overflow: hidden; padding: calc(var(--pf-nav-h) + 72px) 0 var(--site-pad-y); }
+.contact { position: relative; z-index: 2; width: var(--rw-container); max-width: none; padding-inline: 0; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(48px, 7vw, 110px); align-items: start; }
+.contact__side { display: grid; gap: 56px; align-content: start; }
+.contact__title { max-width: 9.5em; }
+.contact__block { display: grid; gap: 12px; justify-items: start; }
+.contact__kicker { font: 500 13px/1 var(--pf-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--rw-gold-300); }
+.contact__email { font: 400 20px/1.3 var(--pf-sans); color: var(--pf-white); text-decoration: none; }
+.contact__email:hover { text-decoration: underline; text-underline-offset: 4px; }
+.contact__sub { font: 400 var(--pf-fs-h3)/1.2 var(--pf-sans); color: var(--pf-white); }
+.contact__more p { font: 400 var(--pf-fs-lead)/1.6 var(--pf-sans); color: var(--pf-text); max-width: 30em; }
+.contact__outline {
+  display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 20px; margin-top: 12px;
+  border: 1px solid var(--pf-violet); border-radius: var(--rw-r-btn);
+  font: 500 var(--pf-fs-ui)/1 var(--pf-sans); color: var(--pf-white); text-decoration: none;
+  transition: background-color var(--site-hover) var(--pf-ease);
+}
+.contact__outline:hover { background: var(--pf-fill-cta); }
+/* The arch is pinned to the section's closed height (--contact-arch-h),
+   not a % of the live height, so opening the service chooser or showing
+   its error only reveals more black below. Same top (18%) and fade stops
+   (52% > 100%) as the shared aurora, worked out against that fixed height. */
+.contact-page { --contact-arch-h: 813px; }
+.contact-page .pm-aurora { top: calc(var(--contact-arch-h) * .18); }
+.contact-page .pf-aurora-fade { background: linear-gradient(rgba(0,0,0,0) calc(var(--contact-arch-h) * .52), #000 var(--contact-arch-h)); }
+@media (max-width: 900px) {
+  .contact-page { --contact-arch-h: 1212px; padding-top: calc(var(--pf-nav-h) + 40px); }
+  .contact { grid-template-columns: minmax(0, 1fr); gap: 48px; }
+  .contact__side { gap: 32px; }
+}
 
 /* ---------- Footer ---------- */
 .site-foot { position: relative; overflow: hidden; padding-top: clamp(140px, 16vw, 220px); }

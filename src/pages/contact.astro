@@ -5,21 +5,25 @@ import { SITE } from '../data/site.js';
 import Aurora from '../components/Aurora.astro';
 ---
 <Base title="Contact" description="Tell us what's not working. Start the conversation with Profectus.">
-  <section class="hero hero--page hero--left" style="padding-bottom:40px">
+  <!-- Two columns, after Infinite Agency's /contact
+       (kit/scouted/infinite-agency-contact-form.md): headline, contact and a
+       short note on the left, the form on the right. One column on phones. -->
+  <section class="contact-page">
     <Aurora />
-    <div class="wrap hero__inner">
-      <p class="pf-eyebrow">Your next customer is probably in our database. Let's go find them.</p>
-      <h1 class="t-h1">Let's Talk About What's <em>Not</em> Working.</h1>
-    </div>
-  </section>
-  <section class="section section--flush-top">
     <div class="wrap contact">
-      <div class="stack">
-        <p class="t-lead">Every engagement starts with something that isn't working. Tell us what it is, and we'll tell you honestly whether we can fix it.</p>
-        <p class="pf-eyebrow">Email</p>
-        <p class="t-soft">{SITE.contactEmail}</p>
+      <div class="contact__side">
+        <h1 class="t-h1 contact__title">Let's Talk About What's <em>Not</em> Working.</h1>
+        <div class="contact__block">
+          <p class="contact__kicker">Contact</p>
+          <a class="contact__email" href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>
+        </div>
+        <div class="contact__block contact__more">
+          <h2 class="contact__sub">Not sure where to start?</h2>
+          <p>Every engagement starts with something that isn't working. Tell us what it is, and we'll tell you honestly whether we can fix it. We reply within one business day.</p>
+          <a class="contact__outline" href="/capabilities">See what we do <span aria-hidden="true">→</span></a>
+        </div>
       </div>
-      <div class="pf-glass" style="padding:40px 32px"><ContactForm /></div>
+      <div class="contact__form"><ContactForm /></div>
     </div>
   </section>
 </Base>

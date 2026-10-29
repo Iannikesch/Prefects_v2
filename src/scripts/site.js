@@ -77,12 +77,82 @@ document.querySelectorAll('.rail').forEach((rail) => {
 });
 
 /* ---- Contact form: posts to /api/contact (Resend) ---- */
+/* ---- Service chooser: a click-to-open dropdown of radio chips (Infinite
+   Agency's "Choose A Service Offering"). One instance per form, so the /contact
+   form and the pop-up copy on the same page work independently. ---- */
+function setupChooser(form) {
+  const box = form.querySelector('[data-chooser]');
+  if (!box) return null;
+  const bar = box.querySelector('[data-chooser-bar]');
+  const panel = box.querySelector('[data-chooser-panel]');
+  const label = box.querySelector('[data-chooser-label]');
+  const radios = [...box.querySelectorAll('input[type="radio"]')];
+  const isOpen = () => bar.getAttribute('aria-expanded') === 'true';
+  const setOpen = (open) => {
+    bar.setAttribute('aria-expanded', String(open));
+    panel.classList.toggle('is-open', open);
+    panel.inert = !open;
+  };
+  const picked = () => radios.find((r) => r.checked);
+  const sync = () => {
+    const r = picked();
+    label.textContent = r ? r.value : label.dataset.placeholder;
+    box.classList.toggle('is-picked', !!r);
+    if (r && box.classList.contains('is-error')) {
+      box.classList.remove('is-error');
+      const note = form.querySelector('.form__note');
+      if (note) { note.textContent = ''; note.classList.remove('is-error'); }
+    }
+  };
+  const closeToBar = () => { setOpen(false); bar.focus(); };
+
+  bar.addEventListener('click', () => setOpen(!isOpen()));
+  // Arrow keys move the pick without closing; a pointer pick or Enter closes.
+  box.addEventListener('change', sync);
+  box.addEventListener('click', (e) => {
+    const chip = e.target.closest('label');
+    if (chip && e.target.tagName !== 'INPUT' && box.contains(chip)) setTimeout(closeToBar, 0);
+  });
+  box.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen()) { e.preventDefault(); e.stopPropagation(); closeToBar(); }
+    if (e.key === 'Enter' && e.target.type === 'radio') {
+      e.preventDefault(); // don't submit the form from a chip
+      e.target.checked = true; sync(); closeToBar();
+    }
+  });
+  document.addEventListener('click', (e) => { if (isOpen() && !box.contains(e.target)) setOpen(false); });
+  form.addEventListener('reset', () => setTimeout(() => { box.classList.remove('is-error'); sync(); setOpen(false); }, 0));
+  sync();
+
+  return {
+    // True when a service is picked; otherwise opens the panel and flags the bar.
+    check() {
+      if (picked()) return true;
+      box.classList.add('is-error');
+      setOpen(true);
+      bar.focus();
+      return false;
+    },
+  };
+}
+
 document.querySelectorAll('form[data-contact-form]').forEach((form) => {
   const opened = Date.now();
+  const chooser = setupChooser(form);
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const note = form.querySelector('.form__note');
     const btn = form.querySelector('button[type="submit"]');
+    note.classList.remove('is-error');
+    // Text fields first, in page order; then the service, which shows its own
+    // error (a hidden radio would only get an invisible browser bubble).
+    const bad = [...form.elements].find((el) => el.name !== 'topic' && el.willValidate && !el.checkValidity());
+    if (bad) { bad.reportValidity(); return; }
+    if (chooser && !chooser.check()) {
+      note.classList.add('is-error');
+      note.textContent = 'Please choose a service.';
+      return;
+    }
     if (!form.reportValidity()) return;
     const data = Object.fromEntries(new FormData(form));
     data.elapsed = Date.now() - opened;
@@ -95,6 +165,7 @@ document.querySelectorAll('form[data-contact-form]').forEach((form) => {
       form.reset();
       note.textContent = "Thanks, we've got your message and will be in touch within one business day.";
     } catch (err) {
+      note.classList.add('is-error');
       note.textContent = err.message || 'Something went wrong. Please email hello@profectusagency.com.';
     } finally {
       btn.disabled = false;

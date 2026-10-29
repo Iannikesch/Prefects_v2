@@ -5,6 +5,8 @@
 // /api/contact (see scripts/site.js).
 import { CAPABILITIES } from '../data/capabilities.js';
 const services = [...CAPABILITIES.map((c) => c.name), 'Not sure yet'];
+// The form renders twice on /contact (page + pop-up), so each copy needs its own id.
+const panelId = `svc-${Math.random().toString(36).slice(2, 8)}`;
 const fields = [
   { name: 'name', label: 'Full Name', autocomplete: 'name', required: true },
   { name: 'email', label: 'Email', type: 'email', autocomplete: 'email', required: true },
@@ -22,14 +24,24 @@ const fields = [
       </label>
     ))}
   </div>
-  <fieldset class="chooser">
-    <legend class="pf-eyebrow">Choose a service *</legend>
-    {services.map((s) => (
-      <label><input type="radio" name="topic" value={s} required /><span>{s}</span></label>
-    ))}
+  <fieldset class="chooser" data-chooser>
+    <legend class="sr-only">Choose a service</legend>
+    <!-- Closed by default: click the bar to open the chips (Infinite Agency's
+         "Choose A Service Offering" dropdown). Behaviour in scripts/site.js. -->
+    <button class="chooser__bar" type="button" aria-expanded="false" aria-controls={panelId} data-chooser-bar>
+      <span class="chooser__label" data-chooser-label data-placeholder="Choose a service *">Choose a service *</span>
+      <svg class="chooser__chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3.5 6l4.5 4.5L12.5 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    </button>
+    <div class="chooser__panel" id={panelId} inert data-chooser-panel>
+      <div class="chooser__chips">
+        {services.map((s) => (
+          <label><input type="radio" name="topic" value={s} required /><span>{s}</span></label>
+        ))}
+      </div>
+    </div>
   </fieldset>
   <!-- Honeypot: hidden from people, filled in by bots. -->
   <label class="form__hp" aria-hidden="true">Fax<input name="fax" tabindex="-1" autocomplete="off" /></label>
-  <div class="pills"><button class="pf-pill" type="submit">Submit</button></div>
+  <div class="pills form__submit"><button class="pf-pill" type="submit">Submit</button></div>
   <p class="form__note" role="status" aria-live="polite"></p>
 </form>
