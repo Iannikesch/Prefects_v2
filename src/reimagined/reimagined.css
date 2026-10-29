@@ -291,6 +291,8 @@
 .rm .board__detail { padding: 18px 20px; border-radius: 12px; background: rgba(156,147,255,.12); border: 1px solid rgba(156,147,255,.3); font-size: 15px; line-height: 1.5; color: rgba(255,255,255,.85); }
 .rm .card__desc { position: absolute; left: 20px; right: 20px; top: 104px; margin: 0; font-size: 14px; line-height: 1.5; color: var(--ink); opacity: 0; transform: translate3d(0, 30px, 0); transition: opacity .4s var(--curve), transform .4s var(--curve); }
 .rm .card:hover .card__desc, .rm .card:focus-visible .card__desc { opacity: 1; transform: none; }
+/* Owner, Oct 29: the preview line was cut off mid-sentence ("…"), so capability cards show just the name until hover, when the full text appears. Homepage cards have no full text, so they keep theirs. */
+.rm .card:has(.card__desc) .card__sum { display: none; }
 .rm .rmsvc__grid--all .card { height: 360px; }
 .rm .rmsvc__grid--all .card__name { font-size: 22px; }
 @media (hover: none) {
