@@ -287,9 +287,9 @@ export const SPINE = [
 
 // The services the spine runs through, in two groups.
 export const SERVICE_GROUPS = [
-  { title: 'Reach them', blurb: 'The channels where the next move lands.',
+  { title: 'Media', blurb: 'The channels where the next move lands.',
     slugs: ['paid-media-demand-generation', 'loyalty-lifecycle', 'direct-mail-offline-media', 'social-media-management'] },
-  { title: 'Win them', blurb: 'The story, the site and the team that close it.',
+  { title: 'Strategy', blurb: 'The story, the site and the team that close it.',
     slugs: ['strategy-go-to-market', 'brand-creative-storytelling', 'website-digital-experience', 'sales-enablement'] },
 ];
 

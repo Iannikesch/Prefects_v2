@@ -334,6 +334,18 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .chooser input:checked + span { color: var(--pf-white); }
 .chooser label:has(input:checked) { background: var(--pf-fill-cta); }
 .chooser label:has(input:focus-visible) { outline: 1px solid var(--pf-violet); outline-offset: 2px; }
+/* Infinite Agency layout: 2-col placeholder-as-label fields, 52px tall,
+   30px row gap, 16px column gap; hover lifts the border, focus adds a ring. */
+.form--ia { gap: 30px; }
+.form__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px 16px; }
+.form__field--wide { grid-column: 1 / -1; }
+.form--ia input { height: 52px; padding: 0 16px; transition: box-shadow .15s var(--pf-ease); }
+.form--ia input::placeholder { color: var(--pf-text); opacity: .6; }
+.form--ia input:hover { box-shadow: inset 0 0 0 1px rgba(255,255,255,.3); }
+.form--ia input:focus { outline: 0; box-shadow: inset 0 0 0 1px var(--pf-violet), 0 0 0 3px rgba(255,255,255,.12); }
+.form--ia .chooser label { padding: 0 16px; min-height: 44px; align-items: center; border-radius: var(--pf-r-chip); }
+@media (max-width: 600px) { .form__grid { grid-template-columns: 1fr; } .form--ia .pf-pill { width: 100%; justify-content: center; } }
+.form__hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .form__note { font: 400 12px/1.4 var(--pf-mono); color: var(--pf-text); }
 @media (max-width: 600px) { .form__row { grid-template-columns: 1fr; } }
 

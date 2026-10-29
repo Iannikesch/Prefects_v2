@@ -367,39 +367,46 @@ a { color: inherit; }
    /* no gold glow on white */
 
 
-/* ---------- Companies who trust us, on the hero's fade line ----------
-   Hero gets a full screen so the logos sit in the fade below the copy.
-   Fill: light at the top, dark at the bottom, crossing over quickly in the
-   middle: the reverse of the black-to-white fade behind it. The fill is baked
-   into each image (public/logos/baked-*.webp) so scrolling costs nothing.
-   Motion, measured on Silver Bullet: logos rest at 0.5504 opacity; hover
-   rolls each up to a copy of itself (0.4s cubic-bezier(.76,0,.24,1)) and
-   brightens to 1 (0.3s). Reveal once: rise 30px and fade in, 83ms apart. */
+/* ---------- Brands our team brings experience from (marquee) ----------
+   Sits on the solid black of the hero: the hero keeps room for its fade
+   below the row (padding-bottom = the blend), so the logos never land on
+   grey. Every logo is one solid white (flattened into public/logos/mono/),
+   sized for even visual weight. Two identical lists slide left by exactly
+   one list width, so the loop is seamless; the edges fade out. Hover pauses.
+   Reduced motion: no slide, the row scrolls sideways by hand instead. */
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .rhero { min-height: max(900px, 100svh); }
 .trusted {
-  position: absolute; z-index: 2; left: 50%; translate: -50% 0; bottom: calc(12% - 40px);
-  width: var(--rw-container); height: 80px; margin: 0; padding: 0; list-style: none;
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 24px 64px;
-}
-.tlogo {
-  position: relative; width: var(--w); height: var(--h); overflow: hidden; flex: none;
+  position: relative; z-index: 2; width: 100%; margin: 24px 0 0; overflow: hidden;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   opacity: 0; translate: 0 30px;
-  transition: opacity 650ms cubic-bezier(0.22, 1, 0.36, 1), translate 650ms cubic-bezier(0.22, 1, 0.36, 1);
-  transition-delay: calc(400ms + var(--i) * 83ms);
+  transition: opacity 650ms cubic-bezier(0.22, 1, 0.36, 1) 300ms, translate 650ms cubic-bezier(0.22, 1, 0.36, 1) 300ms;
 }
-.trusted.is-in .tlogo { opacity: 0.5504; translate: 0 0; }
-.trusted.is-done .tlogo { transition: opacity 300ms ease; transition-delay: 0ms; }
-.trusted.is-done .tlogo:hover { opacity: 1; }
-.tlogo__track { display: flex; flex-direction: column; transition: transform 400ms cubic-bezier(0.76, 0, 0.24, 1); }
-.tlogo:hover .tlogo__track { transform: translateY(-50%); }
-.tlogo__track img { display: block; width: var(--w); height: var(--h); }
-.tlogo { will-change: transform; }   /* each logo on its own GPU layer: scrolling just moves it */
-@media (max-width: 1100px) { .trusted { height: auto; bottom: 24px; gap: 18px 40px; } .tlogo { scale: 0.8; } }
-@media (max-width: 768px) { .tlogo { width: calc(var(--w) * 0.674); height: calc(var(--h) * 0.674); scale: 1; } .tlogo__track img { width: calc(var(--w) * 0.674); height: calc(var(--h) * 0.674); } }
+.trusted.is-in { opacity: 1; translate: 0 0; }
+.trusted__track { display: flex; width: max-content; animation: trusted-slide 110s linear infinite; }
+.trusted:hover .trusted__track { animation-play-state: paused; }
+.trusted__list { display: flex; align-items: center; gap: 64px; margin: 0; padding: 0 64px 0 0; list-style: none; }
+.tlogo { flex: none; display: flex; align-items: center; height: 56px; }
+.tlogo img { display: block; max-width: none; }
+.tlogo__text { color: var(--pf-white); font: 600 24px/1 var(--pf-sans); letter-spacing: -0.01em; white-space: nowrap; }
+/* With JS the script moves the track and it can be dragged (index.astro). */
+.trusted.is-drag { cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.trusted.is-drag .trusted__track { animation: none; }
+.trusted.is-grabbing { cursor: grabbing; }
+@keyframes trusted-slide { to { transform: translateX(-50%); } }
+@media (max-width: 768px) {
+  .trusted__list { gap: 40px; padding-right: 40px; }
+  .tlogo { height: 40px; }
+  .tlogo img { zoom: 0.72; }
+  .tlogo__text { font-size: 18px; }
+  .trusted__track { animation-duration: 80s; }
+}
 @media (prefers-reduced-motion: reduce) {
-  .tlogo { opacity: 0.5504; translate: none; transition: opacity 300ms ease; transition-delay: 0ms; }
-  .tlogo__track { transition: none; }
+  .trusted { opacity: 1; translate: none; transition: none; overflow-x: auto; -webkit-mask: none; mask: none; }
+  .trusted__track { animation: none; }
+  .trusted__list[aria-hidden="true"] { display: none; }
+  .trusted__list { padding-inline: var(--rw-gutter, 20px); }
 }
 
 
@@ -470,15 +477,12 @@ a { color: inherit; }
 /* Reach band sits under the hero, after Inbound's 90px gap. */
 .rhero + .reach { margin-top: var(--rw-after); }
 
-/* "Companies who trust Profectus": dead centre above the logo strip, 24px
-   above it (Inbound's heading gap). Pale lavender, like the logos' tops. */
+/* Marquee heading: dead centre, 24px above the row (Inbound's heading gap). */
 .trusted__label {
-  position: absolute; z-index: 2; left: 0; right: 0; text-align: center;
-  bottom: calc(12% - 40px + 80px + 24px);
+  position: relative; z-index: 2; text-align: center; margin: 0; padding-inline: 16px;
   font: 400 var(--pf-fs-mono)/1.2 var(--pf-mono); text-transform: uppercase; letter-spacing: 0.08em;
-  color: rgba(238, 234, 255, 0.75);
+  color: rgba(238, 234, 255, 0.75); text-wrap: balance;
 }
-@media (max-width: 1100px) { .trusted__label { position: relative; bottom: auto; margin-top: 24px; } }
 .trusted__label { font-size: calc(var(--pf-fs-mono) * 3); letter-spacing: 0.04em; }   /* 3x: 38.88px */
 @media (max-width: 760px) { .trusted__label { font-size: calc(var(--pf-fs-mono) * 1.8); } }
 
@@ -594,8 +598,9 @@ a { color: inherit; }
 /* Hero: no forced height. The trusted label and logos follow the buttons in
    the flow, one section gap below them, so there is no dead space. */
 .rhero, .rhero.rhero--page { min-height: 0; }
-.trusted__label { position: relative; bottom: auto; left: auto; right: auto; margin-top: var(--rw-sec); }
-.trusted { position: relative; left: auto; bottom: auto; translate: none; margin: 24px auto 0; height: auto; }
+.trusted__label { margin-top: var(--rw-sec); }
+/* Homepage hero: the fade happens below the logo row, so the row sits on black. */
+.rhero--rose { padding-bottom: var(--rw-hero-blend); }
 
 .uses, .edge, .spine, .svc, .casc, .why-light, .why-gold { padding-top: var(--rw-sec); padding-bottom: var(--rw-sec); }
 .mood-light, .close { padding-top: calc(var(--rw-sec) * 1.25); padding-bottom: calc(var(--rw-sec) * 1.25); }

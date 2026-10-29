@@ -6,7 +6,7 @@ import { bySlug, SPINE, SERVICE_GROUPS } from '../data/capabilities.js';
 import { SHOW_CASE_STUDIES } from '../data/site.js';
 // Capabilities dropdown (Epsilon-style menu): every capability page, grouped.
 const MENU = [
-  { title: 'Five steps forward', items: SPINE.map((s, i) => ({ slug: s.slug, name: bySlug(s.slug).name, tag: `0${i + 1} ${s.verb}` })) },
+  { title: 'Data', items: SPINE.map((s, i) => ({ slug: s.slug, name: bySlug(s.slug).name, tag: `0${i + 1} ${s.verb}` })) },
   ...SERVICE_GROUPS.map((g) => ({ title: g.title, items: g.slugs.map((slug) => ({ slug, name: bySlug(slug).name })) })),
 ];
 // On /contact the Get in Touch button would just reload the page, so it's hidden there.
@@ -41,7 +41,7 @@ const onContact = Astro.url.pathname.replace(/\/$/, '') === '/contact';
   <!-- Phones and narrow windows: the links move into a drop-down panel. -->
   <nav class="fnav__menu" id="fnav-menu" aria-label="Main (menu)">
     <a href="/capabilities">Capabilities</a>
-    <div class="fnav__menu-caps">{MENU.flatMap((c) => c.items).map((it) => <a href={`/capabilities/${it.slug}`}>{it.name}</a>)}</div>
+    <div class="fnav__menu-caps">{MENU.map((col) => <><p class="fnav__menu-h">{col.title}</p>{col.items.map((it) => <a href={`/capabilities/${it.slug}`}>{it.name}</a>)}</>)}</div>
     {SHOW_CASE_STUDIES && <a href="/case-studies">Case Studies</a>}
     <a href="/about">About</a>
     {!onContact && <a class="btn-gold" href="/contact">Get in Touch →</a>}

@@ -76,13 +76,29 @@ document.querySelectorAll('.rail').forEach((rail) => {
   go(0);
 });
 
-/* ---- Contact form: not wired to email yet ----
-   TODO: post to a Vercel function that sends to SITE.contactEmail. */
+/* ---- Contact form: posts to /api/contact (Resend) ---- */
 document.querySelectorAll('form[data-contact-form]').forEach((form) => {
-  form.addEventListener('submit', (e) => {
+  const opened = Date.now();
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const note = form.querySelector('.form__note');
-    if (note) note.textContent = 'Placeholder: this form is not connected yet. Nothing was sent.';
+    const btn = form.querySelector('button[type="submit"]');
+    if (!form.reportValidity()) return;
+    const data = Object.fromEntries(new FormData(form));
+    data.elapsed = Date.now() - opened;
+    btn.disabled = true;
+    note.textContent = 'Sending…';
+    try {
+      const r = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error);
+      form.reset();
+      note.textContent = "Thanks, we've got your message and will be in touch within one business day.";
+    } catch (err) {
+      note.textContent = err.message || 'Something went wrong. Please email hello@profectusagency.com.';
+    } finally {
+      btn.disabled = false;
+    }
   });
 });
 

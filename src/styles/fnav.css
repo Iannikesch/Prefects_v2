@@ -103,6 +103,9 @@
 @media (max-width: 900px) {.fnav__menu-caps { display: grid; padding: 4px 0 8px 16px; border-bottom: 1px solid rgba(11, 11, 12, 0.08); }
 .fnav__menu .fnav__menu-caps a { padding: 9px 0; border: 0; font: 500 15px/1.2 var(--pf-sans); letter-spacing: 0; text-transform: none; color: var(--rw-ink-2); }
 .fnav__menu { max-height: calc(100svh - var(--rw-nav-h)); overflow-y: auto; }
+/* Phone menu capabilities grouped under the same headings as the desktop dropdown (owner, Oct 29) */
+.fnav__menu-h { margin: 14px 0 2px; font: 400 var(--pf-fs-mono)/1.3 var(--pf-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--rw-gold-900); }
+.fnav__menu-h:first-child { margin-top: 6px; }
 }
 .fnav__drop-inner { width: 100%; }
 .fnav__col a span { width: 112px; white-space: nowrap; }

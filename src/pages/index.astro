@@ -20,18 +20,54 @@ const REACH = [
   ...CASE_STUDIES.map((c) => ({ client: c.client, title: c.title, href: `/case-studies/${c.slug}` })),
   { client: '[Client 5]', title: '[Case study headline]', href: '/case-studies' },
 ];
-// Clients cleared to name (owner, Oct 21). Sizes follow Silver Bullet's
-// measured logos at 1440; Sitka is a temporary wordmark until its logo arrives.
-// The images are pre-baked (fill already applied, 2x for Retina) so scrolling
-// never has to re-mask them; sources are the plain files beside them.
+// Brands our team brings experience from (owner, Oct 29): the original seven,
+// then the wider list, Lansing Moving Pros last. Every logo is the brand's
+// current official mark, flattened to one solid white so the row reads as a
+// set on the black hero. Sources sit in public/logos/; the white copies used
+// here are in public/logos/mono/ (2x for Retina). w/h are sized so each mark
+// carries about the same visual weight: wide wordmarks shorter, square marks
+// narrower.
 const CLIENTS = [
-  { name: 'OpenAI', src: '/logos/baked-openai.webp?v=4', w: 193, h: 38 },
-  { name: 'Smoothie King', src: '/logos/baked-smoothie-king.webp?v=4', w: 107, h: 80 },
-  { name: 'Essentials Provisions', src: '/logos/baked-essentials-mark.webp?v=4', w: 60, h: 60 },   // their E mark (Oct 22), source: essentials-provisions-mark.png
-  { name: 'Skyrizi', src: '/logos/baked-skyrizi.webp?v=4', w: 108, h: 49 },
-  { name: 'Marriott', src: '/logos/baked-marriott.webp?v=4', w: 130, h: 67 },
-  { name: 'General Motors', src: '/logos/baked-general-motors.webp?v=4', w: 60, h: 60 },
-  { name: 'Sitka', src: '/logos/baked-sitka.webp?v=4', w: 120, h: 33 },
+  { name: 'OpenAI', src: '/logos/mono/openai.webp', w: 132, h: 26 },
+  { name: 'Smoothie King', src: '/logos/mono/smoothie-king.webp', w: 67, h: 50 },
+  { name: 'Essentials Provisions', src: '/logos/mono/essentials-provisions.webp', w: 63, h: 54 },
+  { name: 'Skyrizi', src: '/logos/mono/skyrizi.webp', w: 87, h: 39 },
+  { name: 'Marriott', src: '/logos/mono/marriott.webp', w: 83, h: 41 },
+  { name: 'General Motors', src: '/logos/mono/general-motors.webp', w: 56, h: 56 },
+  { name: 'Sitka', src: '/logos/mono/sitka.webp', w: 132, h: 26 },
+  { name: 'Panera Bread', src: '/logos/mono/panera-bread.webp', w: 96, h: 35 },
+  { name: "McDonald's", src: '/logos/mono/mcdonalds.webp', w: 62, h: 55 },
+  { name: 'Disney', src: '/logos/mono/disney.webp', w: 91, h: 38 },
+  { name: 'ESPN', src: '/logos/mono/espn.webp', w: 117, h: 29 },
+  { name: 'Netflix', src: '/logos/mono/netflix.webp', w: 112, h: 30 },
+  { name: 'Hulu', src: '/logos/mono/hulu.webp', w: 102, h: 33 },
+  { name: 'Bed Bath & Beyond', src: '/logos/mono/bed-bath-beyond.webp', w: 95, h: 36 },
+  { name: 'CVS', src: '/logos/mono/cvs-health.webp', w: 167, h: 20 },
+  { name: 'Deloitte', src: '/logos/mono/deloitte.webp', w: 135, h: 25 },
+  { name: 'Publicis', src: '/logos/mono/publicis-groupe.webp', w: 60, h: 56 },
+  { name: 'LiveRamp', src: '/logos/mono/liveramp.webp', w: 137, h: 25 },
+  { name: 'Google', src: '/logos/mono/google.webp', w: 106, h: 32 },
+  { name: 'Meta', src: '/logos/mono/meta.webp', w: 130, h: 26 },
+  { name: 'PNC', src: '/logos/mono/pnc.webp', w: 107, h: 32 },
+  { name: 'The Golf Sock', src: '/logos/mono/the-golf-sock.webp', w: 57, h: 56 },
+  { name: 'Galway Bay Golf', src: '/logos/mono/galway-bay-golf.webp', w: 157, h: 22 },
+  { name: 'Buca di Beppo', src: '/logos/mono/buca-di-beppo.webp', w: 70, h: 49 },
+  { name: 'Southwest Airlines', src: '/logos/mono/southwest-airlines.webp', w: 152, h: 22 },
+  { name: 'Taco Time', src: '/logos/mono/taco-time.webp', w: 64, h: 53 },
+  { name: 'Supercuts', src: '/logos/mono/supercuts.webp', w: 152, h: 22 },
+  { name: 'The North Face', src: '/logos/mono/the-north-face.webp', w: 86, h: 40 },
+  { name: 'Pret A Manger', src: '/logos/mono/pret-a-manger.webp', w: 104, h: 33 },
+  { name: 'Benihana', src: '/logos/mono/benihana.webp', w: 131, h: 26 },
+  { name: 'Kiowa Casino', src: '/logos/mono/kiowa-casino.webp', w: 88, h: 39 },
+  { name: 'H-E-B', src: '/logos/mono/heb.webp', w: 102, h: 33 },
+  { name: 'Sports Illustrated', src: '/logos/mono/sports-illustrated.webp', w: 115, h: 30 },
+  { name: 'Oregon Symphony', text: true },
+  { name: 'St Pierre Bread', src: '/logos/mono/st-pierre.webp', w: 71, h: 48 },
+  { name: 'Golden Chick', src: '/logos/mono/golden-chick.webp', w: 100, h: 34 },
+  { name: 'Dairy Queen', src: '/logos/mono/dairy-queen.webp', w: 72, h: 47 },
+  { name: 'Taco Bueno', src: '/logos/mono/taco-bueno.webp', w: 60, h: 56 },
+  { name: 'Hill Country Dairies', src: '/logos/mono/hill-country-dairies.webp', w: 77, h: 44 },
+  { name: 'Lansing Moving Pros', src: '/logos/mono/lansing-moving-pros.webp', w: 66, h: 52 },
 ];
 ---
 <Fresh>
@@ -57,18 +93,25 @@ const CLIENTS = [
         </div>
       </div>
     </div>
-    <!-- Companies who trust us: sits on the hero's fade line. Each logo is
-         filled light at the top and dark at the bottom, the reverse of the
-         fade behind it. Hover rolls it up to a copy of itself (Silver Bullet). -->
-    <p class="trusted__label" id="trusted-label">Companies who trust Profectus</p>
-    <ul class="trusted" aria-labelledby="trusted-label" data-trusted>
-      {CLIENTS.map((c, i) => (
-        <li class="tlogo" style={`--logo:url(${c.src});--w:${c.w}px;--h:${c.h}px;--i:${i}`}>
-          <span class="tlogo__track" aria-hidden="true"><img src={c.src} alt="" width={c.w} height={c.h} decoding="async" /><img src={c.src} alt="" width={c.w} height={c.h} decoding="async" /></span>
-          <span class="sr-only">{c.name}</span>
-        </li>
-      ))}
-    </ul>
+    <!-- Brands our team brings experience from: an endless marquee on the
+         black part of the hero, every logo one solid white. Two identical
+         lists slide left together; the second is hidden from screen readers.
+         Hover pauses it, and it can be dragged either way (script below);
+         reduced motion gets a still row you can scroll. -->
+    <p class="trusted__label" id="trusted-label">Brands our team brings experience from</p>
+    <div class="trusted" data-trusted>
+      <div class="trusted__track">
+        {[0, 1].map((copy) => (
+          <ul class="trusted__list" aria-labelledby={copy === 0 ? 'trusted-label' : undefined} aria-hidden={copy === 1 ? 'true' : undefined}>
+            {CLIENTS.map((c) => (
+              <li class="tlogo">{c.text
+                ? <span class="tlogo__text" aria-hidden="true">{c.name}</span>
+                : <img src={c.src} alt="" width={c.w} height={c.h} decoding="async" draggable="false" />}{copy === 0 && <span class="sr-only">{c.name}</span>}</li>
+            ))}
+          </ul>
+        ))}
+      </div>
+    </div>
   </section>
 
   <!-- "Reach real people, drive real results": Epsilon's coverflow band,
@@ -185,7 +228,7 @@ const CLIENTS = [
       </div>
       <div class="edge__journey"><PeopleJourney /></div>
       <div class="edge__foot">
-        <p class="edge__line">Built for world-class brands. <em class="v">Sized for the business down the street.</em></p>
+        <p class="edge__line">Built for world-class brands <em class="v">looking to modernize the customer experience.</em></p>
         <a class="pf-pill btn-gold" href="/contact">Start the conversation →</a>
       </div>
     </div>
@@ -243,5 +286,40 @@ const CLIENTS = [
   </script>
 <script>
   import '../scripts/rose.js';
+</script>
+<script>
+  // Logo marquee: driven here instead of by the CSS animation so it can be
+  // dragged. Same speed as the CSS (one list per 110s, 80s on phones); the
+  // position wraps by one list width, so the loop stays seamless.
+  const strip = document.querySelector('[data-trusted]');
+  const track = strip?.querySelector('.trusted__track');
+  if (track && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    strip.classList.add('is-drag');
+    let x = 0, half = 0, last = performance.now(), hover = false, drag = null;
+    const measure = () => { half = track.scrollWidth / 2; };
+    const wrap = () => { if (half) x = ((x % half) - half) % half; };
+    const tick = (now) => {
+      const dt = Math.min(64, now - last); last = now;
+      if (!hover && !drag && half) x -= dt * half / ((innerWidth <= 768 ? 80 : 110) * 1000);
+      wrap();
+      track.style.transform = `translate3d(${x}px,0,0)`;
+      requestAnimationFrame(tick);
+    };
+    strip.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') hover = true; });
+    strip.addEventListener('pointerleave', () => { hover = false; });
+    strip.addEventListener('pointerdown', (e) => {
+      drag = { id: e.pointerId, from: e.clientX, x };
+      strip.setPointerCapture(e.pointerId);
+      strip.classList.add('is-grabbing');
+    });
+    strip.addEventListener('pointermove', (e) => { if (drag?.id === e.pointerId) x = drag.x + e.clientX - drag.from; });
+    const end = () => { drag = null; strip.classList.remove('is-grabbing'); };
+    strip.addEventListener('pointerup', end);
+    strip.addEventListener('pointercancel', end);
+    addEventListener('resize', measure);
+    addEventListener('load', measure);
+    measure();
+    requestAnimationFrame(tick);
+  }
 </script>
 </Fresh>

@@ -1,25 +1,35 @@
 ---
-// One form, used on /contact and in the pop-up. Merkle's "what's this about?"
-// chooser comes first. Not wired to email yet (see scripts/site.js).
-const { id = 'form' } = Astro.props;
-const topics = ['A new project', 'Our AI product', 'Press', 'Careers', 'Something else'];
+// One form, used on /contact and in the pop-up. Layout follows Infinite
+// Agency's "Work With Our Team" form (kit/scouted/infinite-agency-contact-form.md):
+// placeholder-as-label fields, then a one-pick service chooser. Submits to
+// /api/contact (see scripts/site.js).
+import { CAPABILITIES } from '../data/capabilities.js';
+const services = [...CAPABILITIES.map((c) => c.name), 'Not sure yet'];
+const fields = [
+  { name: 'name', label: 'Full Name', autocomplete: 'name', required: true },
+  { name: 'email', label: 'Email', type: 'email', autocomplete: 'email', required: true },
+  { name: 'phone', label: 'Phone', type: 'tel', autocomplete: 'tel', required: true },
+  { name: 'company', label: 'Company', autocomplete: 'organization', required: true },
+  { name: 'website', label: 'Website', autocomplete: 'url', wide: true },
+];
 ---
-<form class="form" data-contact-form novalidate>
+<form class="form form--ia" data-contact-form novalidate>
+  <div class="form__grid">
+    {fields.map((f) => (
+      <label class:list={['form__field', { 'form__field--wide': f.wide }]}>
+        <span class="sr-only">{f.label}</span>
+        <input name={f.name} type={f.type ?? 'text'} autocomplete={f.autocomplete} placeholder={f.required ? `${f.label} *` : f.label} required={f.required} />
+      </label>
+    ))}
+  </div>
   <fieldset class="chooser">
-    <legend class="pf-eyebrow">What's this about?</legend>
-    {topics.map((t, i) => (
-      <label><input type="radio" name="topic" value={t} checked={i === 0} /><span>{t}</span></label>
+    <legend class="pf-eyebrow">Choose a service *</legend>
+    {services.map((s) => (
+      <label><input type="radio" name="topic" value={s} required /><span>{s}</span></label>
     ))}
   </fieldset>
-  <div class="form__row">
-    <label><span class="pf-eyebrow">Name</span><input name="name" autocomplete="name" required /></label>
-    <label><span class="pf-eyebrow">Company</span><input name="company" autocomplete="organization" /></label>
-  </div>
-  <div class="form__row">
-    <label><span class="pf-eyebrow">Email</span><input name="email" type="email" autocomplete="email" required /></label>
-    <label><span class="pf-eyebrow">Phone</span><input name="phone" type="tel" autocomplete="tel" /></label>
-  </div>
-  <label><span class="pf-eyebrow">Message</span><textarea name="message" rows="5"></textarea></label>
-  <div class="pills"><button class="pf-pill" type="submit">Start the Conversation →</button></div>
+  <!-- Honeypot: hidden from people, filled in by bots. -->
+  <label class="form__hp" aria-hidden="true">Fax<input name="fax" tabindex="-1" autocomplete="off" /></label>
+  <div class="pills"><button class="pf-pill" type="submit">Submit</button></div>
   <p class="form__note" role="status" aria-live="polite"></p>
 </form>
