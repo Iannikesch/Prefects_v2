@@ -1,7 +1,6 @@
 ---
 // About. Copy from the live About page.
 import Base from '../layouts/Base.astro';
-import Confirm from '../components/Confirm.astro';
 import Mood from '../components/Mood.astro';
 import { PROCESS } from '../data/site.js';
 import Aurora from '../components/Aurora.astro';
@@ -10,7 +9,8 @@ import { LAYERS, mv } from '../data/layers.js';
 const FLOW = [['Website', 'events'], ['Point of sale', 'transactions'], ['Email', 'opens'], ['App', 'sessions'], ['One data layer', 'clean, labeled, yours']];
 const pad = (n) => String(n).padStart(2, '0');
 // The live About stats contradict the homepage (84% vs 94% SMS open rate,
-// 75% vs 85% occupancy), so they're flagged until the client confirms.
+// 75% vs 85% occupancy), so they stay as they are until Braxton and Ethan confirm (the visible
+// CONFIRM label came off Oct 29).
 const stats = [
   { value: '35%', label: 'Increase in repeat visit frequency for hospitality clients' },
   { value: '75%', label: 'Occupancy achieved within 6 months for a luxury launch', confirm: true },
@@ -58,7 +58,7 @@ const stats = [
   <section class="section">
     <div class="wrap">
       <div class="stat-row" style="--n:3">
-        {stats.map((s) => <div><span class="pf-stat">{s.value}</span><span class="pf-eyebrow">{s.label}</span>{s.confirm && <Confirm />}</div>)}
+        {stats.map((s) => <div><span class="pf-stat">{s.value}</span><span class="pf-eyebrow">{s.label}</span></div>)}
       </div>
     </div>
   </section>
