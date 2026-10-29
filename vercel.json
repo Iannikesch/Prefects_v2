@@ -10,6 +10,8 @@
     { "source": "/team", "destination": "/about", "permanent": true },
     { "source": "/newsroom", "destination": "/", "permanent": true },
     { "source": "/faq", "destination": "/contact", "permanent": true },
-    { "source": "/ai", "destination": "/capabilities/ai-automation", "permanent": false }
+    { "source": "/ai", "destination": "/capabilities/ai-automation", "permanent": false },
+    { "source": "/case-studies", "destination": "/", "permanent": false },
+    { "source": "/case-studies/:slug", "destination": "/", "permanent": false }
   ]
 }

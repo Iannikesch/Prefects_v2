@@ -5,7 +5,9 @@ export const AI_NAME = '[AI Product]';
 export const AI_PATH = '/ai';
 
 // Case studies are hidden until they're written (owner, Oct 27): no nav, footer
-// or homepage links. The pages still build. Set to true to bring them back.
+// or homepage links, and the URLs send visitors home (Oct 29, Braxton found
+// placeholders there). To bring them back: set this to true AND delete the two
+// /case-studies redirects at the end of vercel.json.
 export const SHOW_CASE_STUDIES = false;
 // The FAQ block on each capability page waits for Braxton's answers (Oct 28).
 export const SHOW_FAQS = false;

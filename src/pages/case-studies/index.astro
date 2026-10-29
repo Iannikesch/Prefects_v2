@@ -4,6 +4,9 @@ import Base from '../../layouts/Base.astro';
 import CaseCard from '../../components/CaseCard.astro';
 import { CASE_STUDIES } from '../../data/caseStudies.js';
 import Aurora from '../../components/Aurora.astro';
+import { SHOW_CASE_STUDIES } from '../../data/site.js';
+// Hidden while the case studies are still placeholders: send anyone with the URL home.
+if (!SHOW_CASE_STUDIES) return Astro.redirect('/');
 ---
 <Base title="Case Studies" description="Progress stories with real numbers from real clients: brand launches, expansions and go-to-market programs built on Profectus's own data.">
   <section class="hero hero--page hero--left">

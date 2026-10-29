@@ -13,6 +13,8 @@ import { LAYERS, mv } from '../../data/layers.js';
 export function getStaticPaths() {
   return CASE_STUDIES.map((c) => ({ params: { slug: c.slug } }));
 }
+import { SHOW_CASE_STUDIES } from '../../data/site.js';
+if (!SHOW_CASE_STUDIES) return Astro.redirect('/');
 const cs = caseBySlug(Astro.params.slug);
 const i = CASE_STUDIES.indexOf(cs);
 const next = CASE_STUDIES[(i + 1) % CASE_STUDIES.length];
