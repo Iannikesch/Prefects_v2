@@ -5,7 +5,9 @@
 import '../../kit/texture-pack/profectus-texture.css';
 import '../../kit/motion-system/motion-system.css';
 import '../styles/fresh.css';
-const { title = 'Profectus Agency' } = Astro.props;
+// description and canonical are optional; pages without them render as before.
+// Extra <head> tags (e.g. JSON-LD) go in a slot="head" child.
+const { title = 'Profectus Agency', description, canonical } = Astro.props;
 import FreshNav from '../components/FreshNav.astro';
 import FreshFooter from '../components/FreshFooter.astro';
 import CookieConsent from '../components/CookieConsent.astro';
@@ -16,6 +18,9 @@ import CookieConsent from '../components/CookieConsent.astro';
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{title}</title>
+  {description && <meta name="description" content={description} />}
+  {canonical && <link rel="canonical" href={canonical} />}
+  <slot name="head" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=erode@400,500&display=swap" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Instrument+Serif:ital@1&family=PT+Mono&display=swap" />

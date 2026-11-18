@@ -1,0 +1,87 @@
+/* Insights (the blog). Built only from values already on the site:
+   ink and grey text, #F6F5FA card fill, #6E62E6 purple, 15px card corners,
+   6px button corners, --rw-sec section spacing, the same card hover as .svc__card. */
+
+/* ---------- Hero: same black-to-white hero as the legal pages, sized by content ---------- */
+.rhero.rhero--page.ins-hero { min-height: 0; padding-bottom: var(--rw-hero-pb); }
+.ins-hero + .ins-list { padding-top: 0; }
+/* Post hero: room below the byline so it stays on black, not in the fade;
+   the artwork rides up into that room. */
+.rhero.rhero--page.ins-hero--post { padding-bottom: 160px; }
+.ins-hero--post + .ins-post .ins-post__img { margin-top: -110px; }
+.ins-hero .pf-eyebrow a { color: inherit; text-decoration: none; }
+.ins-hero .pf-eyebrow a:hover { text-decoration: underline; }
+.ins-post__title { font-size: clamp(36px, 24px + 2.4vw, 60px); line-height: 1.02; max-width: 18em; text-wrap: balance; text-shadow: 0 2px 30px rgba(0,0,0,.6); }
+.ins-post__meta { font: 400 var(--pf-fs-mono)/var(--pf-lh-mono) var(--pf-mono); letter-spacing: .04em; text-transform: uppercase; color: rgba(255,255,255,.75); }
+
+/* ---------- Listing ---------- */
+.ins-list { padding: var(--rw-sec) 0; background: var(--rw-paper); }
+.ins-list__inner { width: var(--rw-container); margin-inline: auto; }
+.ins-filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; }
+.ins-filter a { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: var(--rw-r-btn); background: #F6F5FA; color: var(--rw-ink); font: 500 var(--pf-fs-ui)/1 var(--pf-sans); text-decoration: none; transition: background-color 200ms ease, color 200ms ease; }
+.ins-filter a span { font: 400 12px/1 var(--pf-mono); color: var(--rw-ink-2); }
+/* Hover (owner, Nov 17): the button turns purple and grows 1.1x upward.
+   transform-origin sits on the text's baseline (padding 10px + ~3px below the
+   letters), so the words' baseline stays put and the button grows up and out.
+   transform doesn't touch layout, so the row never reflows; the grown button
+   sits on top of its neighbours. */
+.ins-filter a { position: relative; transform-origin: 50% calc(100% - 13px); transition: background-color 200ms ease, color 200ms ease, transform 300ms var(--pm-ease-step, cubic-bezier(0.16, 1, 0.3, 1)); }
+.ins-filter a:hover, .ins-filter a:focus-visible { z-index: 1; transform: scale(1.1); background: #6E62E6; color: var(--pf-white); }
+.ins-filter a:hover span, .ins-filter a:focus-visible span { color: rgba(255,255,255,.8); }
+@media (prefers-reduced-motion: reduce) { .ins-filter a:hover, .ins-filter a:focus-visible { transform: none; } }
+.ins-filter a[aria-current="page"] { background: #6E62E6; color: var(--pf-white); }
+.ins-filter a[aria-current="page"] span { color: rgba(255,255,255,.8); }
+
+.ins-grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px 24px; }
+.ins-card { display: grid; align-content: start; gap: 10px; height: 100%; text-decoration: none; color: var(--rw-ink); }
+.ins-card__img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 15px; background: #07060D; margin-bottom: 8px; transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1); }
+.ins-card:hover .ins-card__img { transform: translateY(-4px); }
+.ins-card__cat { font: 400 var(--pf-fs-mono)/var(--pf-lh-mono) var(--pf-mono); letter-spacing: .04em; text-transform: uppercase; color: #6E62E6; }
+.ins-card__title { font: 500 19px/1.25 var(--pf-sans); letter-spacing: -0.02em; text-wrap: balance; }
+.ins-card:hover .ins-card__title { color: #6E62E6; }
+.ins-card__sum { font-size: 15px; line-height: 1.45; color: var(--rw-ink-2); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+@media (max-width: 1100px) { .ins-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .ins-grid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .ins-card__img { transition: none; } .ins-card:hover .ins-card__img { transform: none; } }
+
+/* ---------- Post ---------- */
+.ins-post { padding: 0 0 var(--rw-sec); background: var(--rw-paper); }
+.ins-post__img { display: block; width: min(920px, 100% - 32px); height: auto; aspect-ratio: 16 / 9; margin: -60px auto 0; position: relative; z-index: 2; border-radius: 15px; background: #07060D; }
+.ins-prose { width: min(720px, 100% - 32px); margin: 56px auto 0; font-size: 18px; line-height: 1.6; color: var(--rw-ink); }
+.ins-prose > * + * { margin-top: 20px; }
+.ins-prose h2 { margin-top: 48px; font: 400 clamp(26px, 22px + 0.8vw, 32px)/1.15 var(--pf-serif); letter-spacing: -0.03em; text-wrap: balance; }
+.ins-prose h2 + * { margin-top: 16px; }
+.ins-prose h3 { margin-top: 32px; font: 600 19px/1.3 var(--pf-sans); }
+.ins-prose p, .ins-prose li { color: var(--rw-ink); }
+.ins-prose strong { font-weight: 600; color: var(--rw-ink); }
+.ins-prose a { color: #6E62E6; }
+.ins-prose ul, .ins-prose ol { padding-left: 22px; display: grid; gap: 10px; }
+.ins-prose li::marker { color: #6E62E6; }
+.ins-prose table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.45; display: block; overflow-x: auto; }
+.ins-prose th, .ins-prose td { padding: 10px 12px; border: 1px solid #ECEAF3; text-align: left; vertical-align: top; }
+.ins-prose th { background: #F6F5FA; font-weight: 600; color: var(--rw-ink); }
+@media (max-width: 600px) { .ins-prose { font-size: 17px; margin-top: 40px; } .ins-post__img { margin-top: -40px; } }
+
+/* ---------- Related ---------- */
+.ins-related { padding: var(--rw-sec) 0; background: #F6F5FA; }
+.ins-related__head { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; margin-bottom: 32px; }
+.ins-related__head a { font: 500 15px/1 var(--pf-sans); color: #6E62E6; text-decoration: none; }
+.ins-related__head a:hover { text-decoration: underline; }
+
+/* ---------- Row band (owner, Nov 17) ----------
+   A soft purple block behind the row of cards under the cursor, edge to edge,
+   like a section of the page. The purple fades in from the top and bottom
+   edges (no hard line, no glow). It slides between rows; it never moves the
+   cards. Position and height are set by the script in InsightsListing.astro. */
+.ins-list { position: relative; }
+.ins-list__inner { position: relative; z-index: 1; }
+.ins-band {
+  position: absolute; left: 0; right: 0; top: 0; height: 0; z-index: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(110, 98, 230, 0) 0%, rgba(110, 98, 230, 0.16) 14%, rgba(110, 98, 230, 0.16) 86%, rgba(110, 98, 230, 0) 100%);
+  opacity: 0;
+  transition: opacity 400ms ease, transform 500ms var(--pm-ease-step, cubic-bezier(0.16, 1, 0.3, 1)), height 500ms var(--pm-ease-step, cubic-bezier(0.16, 1, 0.3, 1));
+  will-change: transform;
+}
+.ins-band.is-on { opacity: 1; }
+.ins-band.is-jump { transition: opacity 400ms ease; }
+@media (prefers-reduced-motion: reduce) { .ins-band { transition: opacity 200ms ease; } }

@@ -32,6 +32,7 @@ const onContact = Astro.url.pathname.replace(/\/$/, '') === '/contact';
           </div>
         </li>
         {SHOW_CASE_STUDIES && <li><a href="/case-studies">Case Studies</a></li>}
+        <li><a href="/insights">Insights</a></li>
         <li><a href="/about">About</a></li>
       </ul>
     </nav>
@@ -43,6 +44,7 @@ const onContact = Astro.url.pathname.replace(/\/$/, '') === '/contact';
     <a href="/capabilities">Capabilities</a>
     <div class="fnav__menu-caps">{MENU.map((col) => <><p class="fnav__menu-h">{col.title}</p>{col.items.map((it) => <a href={`/capabilities/${it.slug}`}>{it.name}</a>)}</>)}</div>
     {SHOW_CASE_STUDIES && <a href="/case-studies">Case Studies</a>}
+    <a href="/insights">Insights</a>
     <a href="/about">About</a>
     {!onContact && <a class="btn-gold" href="/contact">Get in Touch →</a>}
   </nav>

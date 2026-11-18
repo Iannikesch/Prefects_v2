@@ -1,0 +1,17 @@
+---
+// /insights: every post, in the order of the source docs.
+import { getCollection } from 'astro:content';
+import InsightsListing from '../../components/InsightsListing.astro';
+import { INSIGHT_CATEGORIES, byNumber } from '../../data/insights.js';
+const posts = (await getCollection('insights')).sort(byNumber);
+const counts = Object.fromEntries(Object.keys(INSIGHT_CATEGORIES).map((k) => [k, posts.filter((p) => p.data.category === k).length]));
+---
+<InsightsListing
+  posts={posts}
+  counts={counts}
+  total={posts.length}
+  title="Insights · Profectus Agency"
+  description="Plain-English guides on marketing data, attribution, email and SMS, paid media and working with an agency, from the Profectus team."
+  heading={'Marketing, <em class="foil-text">measured</em>.'}
+  lead="Plain-English guides on data, attribution, retention and paid media, for businesses that want proof for every dollar."
+/>

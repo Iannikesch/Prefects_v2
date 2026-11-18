@@ -1,0 +1,25 @@
+---
+// /insights/category/<key>: one category's posts.
+import { getCollection } from 'astro:content';
+import InsightsListing from '../../../components/InsightsListing.astro';
+import { INSIGHT_CATEGORIES, byNumber } from '../../../data/insights.js';
+
+export async function getStaticPaths() {
+  return Object.keys(INSIGHT_CATEGORIES).map((category) => ({ params: { category } }));
+}
+const { category } = Astro.params;
+const all = (await getCollection('insights')).sort(byNumber);
+const posts = all.filter((p) => p.data.category === category);
+const counts = Object.fromEntries(Object.keys(INSIGHT_CATEGORIES).map((k) => [k, all.filter((p) => p.data.category === k).length]));
+const label = INSIGHT_CATEGORIES[category];
+---
+<InsightsListing
+  posts={posts}
+  counts={counts}
+  total={all.length}
+  current={category}
+  title={`${label} · Insights · Profectus Agency`}
+  description={`${posts.length} plain-English guides on ${label.toLowerCase()} from the Profectus team.`}
+  heading={label.replace(/&/g, '&amp;')}
+  lead={`${posts.length} guides from the Profectus team.`}
+/>

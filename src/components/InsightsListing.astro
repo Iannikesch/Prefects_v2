@@ -1,0 +1,96 @@
+---
+// The Insights listing, shared by /insights and /insights/category/[category].
+// The category filter is plain links, so every filtered view is its own page.
+import Fresh from '../layouts/Fresh.astro';
+import InsightCard from './InsightCard.astro';
+import { INSIGHT_CATEGORIES } from '../data/insights.js';
+import '../styles/insights.css';
+const { posts, counts, total, current = null, title, description, heading, lead } = Astro.props;
+---
+<Fresh title={title} description={description} canonical={new URL(Astro.url.pathname, Astro.site).href}>
+  <section class="rhero rhero--page ins-hero" data-hero>
+    <div class="rhero__inner">
+      <p class="pf-eyebrow">{current ? <a href="/insights">Insights</a> : 'Insights'}</p>
+      <h1 class="pf-display rhero__title" set:html={heading} />
+      <span class="foil-rule" aria-hidden="true"></span>
+      <p class="rhero__lead">{lead}</p>
+    </div>
+  </section>
+
+  <section class="ins-list light" aria-label="Posts" data-row-band>
+    <!-- Row band: a soft purple block behind the row under the cursor. -->
+    <span class="ins-band" aria-hidden="true"></span>
+    <div class="ins-list__inner">
+      <nav class="ins-filter" aria-label="Filter by category">
+        <a href="/insights" aria-current={current === null ? 'page' : undefined} data-track="insights-filter">All <span>{total}</span></a>
+        {Object.entries(INSIGHT_CATEGORIES).map(([key, label]) => (
+          <a href={`/insights/category/${key}`} aria-current={current === key ? 'page' : undefined} data-track="insights-filter">{label} <span>{counts[key]}</span></a>
+        ))}
+      </nav>
+      <ul class="ins-grid">
+        {posts.map((post, i) => <li><InsightCard post={post} eager={i < 3} /></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <script>
+    // Row band (owner, Nov 17): the row of cards under the cursor gets a soft
+    // purple block behind it, edge to edge. Scrolling moves rows under a still
+    // cursor, so it's re-checked on scroll as well as on mouse move. Phones
+    // (no cursor) use the row crossing the middle of the screen instead.
+    const list = document.querySelector('[data-row-band]');
+    const band = list?.querySelector('.ins-band');
+    const grid = list?.querySelector('.ins-grid');
+    if (list && band && grid) {
+      const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+      const PAD = 56;   // band reaches this far past the row, inside its faded edges
+      let x = -1, y = -1, queued = false, current = null;
+      const rowAt = (py) => {
+        // Cards in one row share a top edge. Group them, then find the row
+        // whose box (plus half the 32px row gap) holds py. Screen coordinates.
+        const top = list.getBoundingClientRect().top;
+        const rows = new Map();
+        for (const li of grid.children) {
+          const r = li.getBoundingClientRect();
+          const k = Math.round(r.top);
+          const row = rows.get(k) || { top: r.top, bottom: r.bottom };
+          row.bottom = Math.max(row.bottom, r.bottom);
+          rows.set(k, row);
+        }
+        for (const r of rows.values()) {
+          if (py >= r.top - 16 && py <= r.bottom + 16) return { top: Math.round(r.top - top), height: r.bottom - r.top };
+        }
+        return null;
+      };
+      const update = () => {
+        queued = false;
+        let row = null;
+        if (fine) {
+          const over = x >= 0 && list.contains(document.elementFromPoint(x, y));
+          row = over ? rowAt(y) : null;
+        } else {
+          row = rowAt(innerHeight / 2);
+        }
+        if (!row) { if (current !== null) { band.classList.remove('is-on'); current = null; } return; }
+        const key = row.top;
+        if (current === key) return;
+        const first = current === null;
+        current = key;
+        band.classList.toggle('is-jump', first);   // appear in place, then slide between rows
+        band.style.transform = `translate3d(0, ${row.top - PAD}px, 0)`;
+        band.style.height = `${row.height + PAD * 2}px`;
+        band.offsetHeight;
+        band.classList.remove('is-jump');
+        band.classList.add('is-on');
+      };
+      const queue = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+      if (fine) {
+        addEventListener('pointermove', (e) => { x = e.clientX; y = e.clientY; queue(); }, { passive: true });
+        document.addEventListener('pointerleave', () => { x = y = -1; queue(); });
+      }
+      addEventListener('scroll', queue, { passive: true });
+      addEventListener('resize', () => { current = null; queue(); });
+      queue();
+    }
+  </script>
+</Fresh>

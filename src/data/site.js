@@ -123,6 +123,7 @@ export const FOOTER = {
   links: [
     ['Capabilities', '/capabilities'],
     ['Case Studies', '/case-studies'],
+    ['Insights', '/insights'],
     ['About', '/about'],
     ['Contact', '/contact'],
   ],

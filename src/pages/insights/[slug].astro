@@ -1,0 +1,84 @@
+---
+// One Insights post: title, artwork, the article, three related posts from
+// the same category, and the closing call to action.
+import { getCollection, render } from 'astro:content';
+import { Image, getImage } from 'astro:assets';
+import Fresh from '../../layouts/Fresh.astro';
+import InsightCard from '../../components/InsightCard.astro';
+import { INSIGHT_CATEGORIES, related } from '../../data/insights.js';
+import { DEFAULT_CLOSE } from '../../data/capabilities.js';
+import { SITE } from '../../data/site.js';
+import '../../styles/insights.css';
+
+export async function getStaticPaths() {
+  const all = await getCollection('insights');
+  return all.map((post) => ({ params: { slug: post.id }, props: { post, all } }));
+}
+const { post, all } = Astro.props;
+const { title, description, category, image, author, pubDate } = post.data;
+const { Content } = await render(post);
+const more = related(post, all);
+const url = new URL(`/insights/${post.id}`, Astro.site).href;
+const words = post.body.split(/\s+/).length;
+const minutes = Math.max(1, Math.round(words / 230));
+const dateText = pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+const share = await getImage({ src: image, width: 1200, format: 'webp' });
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description,
+  image: new URL(share.src, Astro.site).href,
+  datePublished: pubDate.toISOString(),
+  dateModified: pubDate.toISOString(),
+  author: { '@type': 'Organization', name: author, url: SITE.url },
+  publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url, logo: { '@type': 'ImageObject', url: new URL('/img/brand/profectus-white@2x.png', Astro.site).href } },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+  articleSection: INSIGHT_CATEGORIES[category],
+  wordCount: words,
+};
+---
+<Fresh title={`${title} · Profectus Agency`} description={description} canonical={url}>
+  <Fragment slot="head">
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={new URL(share.src, Astro.site).href} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </Fragment>
+
+  <section class="rhero rhero--page ins-hero ins-hero--post" data-hero>
+    <div class="rhero__inner">
+      <p class="pf-eyebrow"><a href="/insights">Insights</a> / <a href={`/insights/category/${category}`}>{INSIGHT_CATEGORIES[category]}</a></p>
+      <h1 class="pf-display ins-post__title">{title}</h1>
+      <p class="ins-post__meta">By {author} · <time datetime={pubDate.toISOString().slice(0, 10)}>{dateText}</time> · {minutes} min read</p>
+    </div>
+  </section>
+
+  <article class="ins-post light">
+    <Image class="ins-post__img" src={image} alt={title} widths={[800, 1200, 1600]} sizes="(max-width: 960px) 100vw, 920px" loading="eager" fetchpriority="high" />
+    <div class="ins-prose">
+      <Content />
+    </div>
+  </article>
+
+  {more.length > 0 && (
+    <section class="ins-related light" aria-labelledby="ins-related-h">
+      <div class="ins-list__inner">
+        <div class="ins-related__head">
+          <h2 class="lh2" id="ins-related-h">More on <em class="v">{INSIGHT_CATEGORIES[category]}</em></h2>
+          <a href={`/insights/category/${category}`} data-track="insights-related-all">See all →</a>
+        </div>
+        <ul class="ins-grid">{more.map((p) => <li><InsightCard post={p} /></li>)}</ul>
+      </div>
+    </section>
+  )}
+
+  <section class="close" aria-labelledby="close-h">
+    <p class="pf-eyebrow">Built for world-class brands looking to modernize the customer experience.</p>
+    <h2 class="close__h" id="close-h">{DEFAULT_CLOSE[0]} <em class="foil-text">{DEFAULT_CLOSE[1]}</em></h2>
+    <a class="pf-pill btn-gold" href="/contact" data-track="insights-close-cta">{DEFAULT_CLOSE[2]}</a>
+  </section>
+</Fresh>

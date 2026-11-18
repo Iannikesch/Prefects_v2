@@ -1,0 +1,14 @@
+---
+// One Insights post as a card: artwork, category, title, one-line summary.
+// The artwork carries the title, so the alt text is the title.
+import { Image } from 'astro:assets';
+import { INSIGHT_CATEGORIES } from '../data/insights.js';
+const { post, eager = false } = Astro.props;
+const { title, description, category, image } = post.data;
+---
+<a class="ins-card" href={`/insights/${post.id}`} data-track="insights-card">
+  <Image class="ins-card__img" src={image} alt={title} widths={[480, 800]} sizes="(max-width: 600px) 100vw, (max-width: 1100px) 50vw, 420px" loading={eager ? 'eager' : 'lazy'} />
+  <span class="ins-card__cat">{INSIGHT_CATEGORIES[category]}</span>
+  <span class="ins-card__title">{title}</span>
+  <span class="ins-card__sum">{description}</span>
+</a>
