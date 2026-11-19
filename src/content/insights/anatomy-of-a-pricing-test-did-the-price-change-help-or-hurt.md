@@ -5,7 +5,7 @@ category: "campaign-playbooks"
 number: 79
 image: "../../assets/insights/079-anatomy-of-a-pricing-test-did-the-price-change-help-or-hurt.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Raising a price feels risky and lowering one feels generous, but most small businesses change prices by instinct and never learn what the change actually did. Revenue went up, or it didn't, and a dozen other things also happened that month. A structured pricing test is the way out of that fog.

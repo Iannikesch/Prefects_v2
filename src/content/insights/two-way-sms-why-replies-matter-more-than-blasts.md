@@ -5,7 +5,7 @@ category: "email-sms-retention"
 number: 67
 image: "../../assets/insights/067-two-way-sms-why-replies-matter-more-than-blasts.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Most businesses use text messaging as a megaphone. A promotion goes out to the whole list, replies get ignored, and the only response anyone tracks is the STOP keyword. That wastes the thing that makes SMS different from every other channel: people actually answer texts.

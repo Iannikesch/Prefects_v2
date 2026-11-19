@@ -5,7 +5,7 @@ category: "agency-marketing-strategy"
 number: 27
 image: "../../assets/insights/027-account-team-continuity-what-to-ask-about-before-you-sign.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A pitch often mentions the senior team that will be on the account. Months later, the account can end up with a different team after a promotion, a move or a change in workload. Nobody flags it as a problem exactly. It quietly resets the clock on everything the previous account manager had learned about the business.

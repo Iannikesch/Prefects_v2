@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 42
 image: "../../assets/insights/042-marketing-mix-vs-attribution-two-different-questions-businesses-confuse.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Attribution and marketing mix modeling get used interchangeably in a lot of conversations about measurement. They answer two different questions.

@@ -5,7 +5,7 @@ category: "agency-marketing-strategy"
 number: 93
 image: "../../assets/insights/093-what-full-service-means-and-how-to-check-what-you-re-getting.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 'Full-service' is one of the most common phrases on an agency website: strategy, creative, paid media, email, SEO, social, web development and analytics, all under one roof. The pitch is convenience, with one team, one invoice and coordinated work. It's an appealing model, and it works well when the depth behind each service is real. Here's how to check.

@@ -5,7 +5,7 @@ category: "campaign-playbooks"
 number: 60
 image: "../../assets/insights/060-building-a-customer-feedback-loop-that-changes-marketing-decisions.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Most businesses collect customer feedback constantly, through support tickets, post-purchase surveys, and the occasional review, and very little of it ever reaches the person actually making marketing decisions. It sits in a support platform, a survey tool, or a review site, technically collected but functionally invisible to whoever's writing next month's email campaign or building next quarter's ad creative.

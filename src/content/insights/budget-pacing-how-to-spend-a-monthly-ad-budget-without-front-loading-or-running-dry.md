@@ -5,7 +5,7 @@ category: "paid-media-performance"
 number: 72
 image: "../../assets/insights/072-budget-pacing-how-to-spend-a-monthly-ad-budget-without-front-loading-or-running-dry.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A business sets a $10,000 monthly ad budget and checks in on the 20th. It has spent $8,900. The rest of the month will be quiet, or the owner will need to decide whether to add money. Either way, the budget wasn't managed. It was just spent.

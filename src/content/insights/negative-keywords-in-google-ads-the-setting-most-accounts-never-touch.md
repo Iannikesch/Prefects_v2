@@ -5,7 +5,7 @@ category: "paid-media-performance"
 number: 56
 image: "../../assets/insights/056-negative-keywords-in-google-ads-the-setting-most-accounts-never-touch.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A Google Ads account bidding on the keyword plumber will, without a negative keyword list actively maintained, also show up for searches like plumber salary, plumber jokes, and how to become a plumber, none of which represent anyone remotely close to hiring a plumbing service. Every one of those irrelevant clicks costs real money and produces zero value, and it's one of the most common, most fixable sources of wasted paid search spend that most small and mid-market accounts simply never address.

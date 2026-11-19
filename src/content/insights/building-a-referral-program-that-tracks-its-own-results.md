@@ -5,7 +5,7 @@ category: "campaign-playbooks"
 number: 50
 image: "../../assets/insights/050-building-a-referral-program-that-tracks-its-own-results.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Referral programs get built with good intentions and abandoned within a year with surprising regularity, and the most common reason isn't that referrals don't work. It's that most referral programs get built without any real way to track whether they're actually working, which means nobody can tell if the program is succeeding, failing, or just quietly running in the background generating a handful of unmeasured sign-ups nobody's paying attention to.

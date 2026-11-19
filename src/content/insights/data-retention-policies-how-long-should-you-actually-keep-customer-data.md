@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 51
 image: "../../assets/insights/051-data-retention-policies-how-long-should-you-actually-keep-customer-data.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Most businesses keep customer data indefinitely by default, not because anyone decided that was the right policy, but because nobody ever decided anything at all. Data just accumulates, sitting in a CRM or an email platform for years past the point where it's actually useful, quietly increasing both storage cost and compliance risk with no corresponding benefit attached.

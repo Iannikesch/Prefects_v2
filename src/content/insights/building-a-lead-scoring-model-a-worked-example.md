@@ -5,7 +5,7 @@ category: "campaign-playbooks"
 number: 39
 image: "../../assets/insights/039-building-a-lead-scoring-model-a-worked-example.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Every lead a business generates gets treated the same by most sales teams by default: called in the order it came in, worked with roughly equal effort, regardless of how likely that specific lead actually is to close. Lead scoring exists to fix exactly that, by assigning each incoming lead a number based on behaviors and characteristics that correlate with an actual sale, so sales effort gets concentrated where it's statistically most likely to pay off.

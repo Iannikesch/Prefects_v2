@@ -5,7 +5,7 @@ category: "agency-marketing-strategy"
 number: 95
 image: "../../assets/insights/095-how-to-brief-an-agency-what-separates-a-useful-request-from-a-vague-one.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A weak brief produces weak work, and agencies sometimes get weak briefs. 'We want more leads.' 'We need a new website.' 'Help us grow on social.' These sentences describe a wish, not a problem, and an agency responding to them has to guess what success looks like. Sometimes it guesses wrong, and the business pays for the lesson.

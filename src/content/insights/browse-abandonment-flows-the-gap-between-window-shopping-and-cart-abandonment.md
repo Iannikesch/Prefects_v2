@@ -5,7 +5,7 @@ category: "email-sms-retention"
 number: 85
 image: "../../assets/insights/085-browse-abandonment-flows-the-gap-between-window-shopping-and-cart-abandonment.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Cart abandonment gets all the attention, and for good reason: someone who adds an item to a cart is close to buying. But most visitors never get that far. They look at a few products, maybe the same one twice, and leave. That large group of window shoppers sits in a gap that a browse abandonment flow is built to fill.

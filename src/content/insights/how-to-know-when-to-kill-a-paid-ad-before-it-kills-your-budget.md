@@ -5,7 +5,7 @@ category: "paid-media-performance"
 number: 13
 image: "../../assets/insights/013-how-to-know-when-to-kill-a-paid-ad-before-it-kills-your-budget.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Every media buyer has watched an ad limp along for weeks past its useful life, propped up by a hunch that it might turn around. That instinct costs real money. The fix is a written rule for when an ad gets cut, decided before launch, when emotions and sunk cost haven't started clouding the call.

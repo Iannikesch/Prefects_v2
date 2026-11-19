@@ -5,7 +5,7 @@ category: "campaign-playbooks"
 number: 99
 image: "../../assets/insights/099-anatomy-of-a-website-migration-how-to-protect-your-tracking-and-traffic.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A website redesign or platform change feels like a creative project, with new layouts, new photography, and a fresh look. It's also one of the riskiest moments in a business's marketing. Done carelessly, a migration can wipe out search traffic, break conversion tracking, and disconnect forms from the CRM, often all at once and sometimes without anyone noticing for weeks.

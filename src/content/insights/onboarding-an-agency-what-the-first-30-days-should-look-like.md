@@ -5,7 +5,7 @@ category: "agency-marketing-strategy"
 number: 73
 image: "../../assets/insights/073-onboarding-an-agency-what-the-first-30-days-should-look-like.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 The first month with a new agency sets the pattern for everything that follows. Done well, it produces a clear baseline, working tracking, and a shared definition of success. Done badly, it produces a flurry of activity, a polished kickoff deck, and nobody able to say, six months later, what the starting point was.

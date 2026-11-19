@@ -5,7 +5,7 @@ category: "agency-marketing-strategy"
 number: 28
 image: "../../assets/insights/028-what-a-real-marketing-audit-should-actually-look-at.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Most marketing audits are sales documents wearing an analytical costume. An agency trying to win new business runs a free audit on a prospect's current setup, and surprise, the audit finds serious problems that happen to be exactly the ones that agency specializes in fixing. That doesn't make every audit worthless. It does mean most businesses have never actually seen what an honest one looks like.

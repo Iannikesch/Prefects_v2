@@ -5,7 +5,7 @@ category: "email-sms-retention"
 number: 44
 image: "../../assets/insights/044-sms-opt-in-strategies-that-actually-grow-your-list-without-annoying-anyone.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Growing an SMS list the wrong way produces a list that looks impressive on paper and performs terribly in practice, full of people who opted in under pressure, forgot they did, and now mark every message as spam the moment it arrives. Growing it the right way takes longer and produces smaller numbers at first, but the list that results actually engages, which is the entire point of building one in the first place.

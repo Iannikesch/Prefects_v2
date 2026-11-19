@@ -5,7 +5,7 @@ category: "email-sms-retention"
 number: 53
 image: "../../assets/insights/053-re-engagement-campaigns-when-to-send-one-and-when-to-let-a-subscriber-go.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A subscriber who hasn't opened an email in eight months is sitting in most businesses' lists as dead weight, and the instinct is almost always the same: send a re-engagement campaign, usually built around a discount, to try to win them back before giving up entirely. That instinct is right often enough to be worth acting on, but it's wrong often enough that treating it as an automatic rule, applied to every dormant subscriber identically, wastes effort on people who were never coming back and, worse, actively damages deliverability for the subscribers who were.

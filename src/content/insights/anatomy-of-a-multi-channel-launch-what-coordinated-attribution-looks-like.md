@@ -5,7 +5,7 @@ category: "campaign-playbooks"
 number: 49
 image: "../../assets/insights/049-anatomy-of-a-multi-channel-launch-what-coordinated-attribution-looks-like.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A product launch running across email, SMS, paid social, and paid search simultaneously generates a lot of activity and, without deliberate planning, a confusing attribution picture once the dust settles. Every channel wants credit for the same early sales, and without a coordinated measurement plan built before launch day, the post-launch debrief usually turns into a debate about whose channel actually drove results rather than a clear, evidence-based read on what worked.

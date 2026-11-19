@@ -5,7 +5,7 @@ category: "agency-marketing-strategy"
 number: 94
 image: "../../assets/insights/094-why-marketing-budgets-shouldn-t-be-a-fixed-percentage-of-revenue.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Setting the marketing budget as a percentage of revenue is one of the most common practices in small business, and it has an appealing simplicity. Pick a number, often somewhere in a commonly quoted range for your industry, multiply it by last year's revenue, and you're done. The trouble is that it answers a question nobody should be asking.

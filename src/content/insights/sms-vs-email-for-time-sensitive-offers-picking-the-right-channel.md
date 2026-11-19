@@ -5,7 +5,7 @@ category: "email-sms-retention"
 number: 54
 image: "../../assets/insights/054-sms-vs-email-for-time-sensitive-offers-picking-the-right-channel.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A flash sale ending in six hours sent exclusively through email is likely to reach a meaningful share of its audience only after the sale has already ended, simply because email doesn't get read on the same timeline text messages do. Choosing the right channel for a time-sensitive offer isn't a minor stylistic decision, it's often the difference between a promotion that actually reaches people while it's still relevant and one that technically got sent but rarely got seen in time.

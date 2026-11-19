@@ -5,7 +5,7 @@ category: "paid-media-performance"
 number: 45
 image: "../../assets/insights/045-ad-fatigue-how-to-tell-when-your-creative-has-stopped-working.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Every ad, no matter how good, eventually stops working, not because the offer changed or the audience disappeared, but because the same people have simply seen it too many times. Ad fatigue is one of the most predictable patterns in paid media, and it's also one of the most commonly misread, since a fatiguing campaign often looks like a targeting problem or an offer problem long before anyone considers that the creative itself is just worn out.

@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 21
 image: "../../assets/insights/021-server-side-tracking-explained-the-fix-most-businesses-haven-t-heard-of-yet.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Most tracking still runs client side, from a snippet sitting in the visitor's own browser. That snippet is exactly what ad blockers, browser privacy settings, and iOS updates have spent the last several years quietly breaking. Server-side tracking moves that same job to a server a business controls, off to the side of the browser, where none of that interference happens. It sounds like a technical footnote. It is actually one of the bigger levers most small and mid-market businesses haven't pulled yet.

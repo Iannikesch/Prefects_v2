@@ -5,7 +5,7 @@ category: "campaign-playbooks"
 number: 77
 image: "../../assets/insights/077-anatomy-of-a-local-service-lead-funnel-from-click-to-booked-job.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 For a local service business, the real funnel doesn't end at the lead. It runs from an ad click to a phone call or form, through a conversation, an estimate, a booking, and finally a completed job. Marketing often gets judged at the first step, while the money is decided at the last. This walk through an illustrative funnel, with made-up numbers, shows where results disappear.

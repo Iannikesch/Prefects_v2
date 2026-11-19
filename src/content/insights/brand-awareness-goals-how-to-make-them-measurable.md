@@ -5,7 +5,7 @@ category: "brand-creative"
 number: 74
 image: "../../assets/insights/074-brand-awareness-goals-how-to-make-them-measurable.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Brand awareness is one of the most common goals in an agency scope, and one of the easiest to leave vague. Of course you want more people to know you exist. The trouble is that as a stated goal it can be called a success no matter what happened. The fix isn't to drop awareness. It's to attach numbers to it.

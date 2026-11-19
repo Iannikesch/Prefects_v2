@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 25
 image: "../../assets/insights/025-how-to-read-a-media-mix-model-without-a-data-science-degree.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Media mix models sound intimidating on purpose, or at least that's how a lot of agencies present them, as something too sophisticated for a client to actually question. Strip away the statistics jargon and a media mix model is answering one plain question: if you moved a dollar from one channel to another, what would happen to revenue? That's it. Everything else is math in service of that one answer.

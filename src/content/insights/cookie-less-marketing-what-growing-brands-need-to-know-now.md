@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 5
 image: "../../assets/insights/005-cookie-less-marketing-what-growing-brands-need-to-know-now.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 For years the plan for third-party cookies was simple: they'd disappear. They haven't, at least not everywhere. Safari and Firefox block them by default. Google decided to keep them in Chrome. But users can opt out, ad blockers strip them, and privacy rules keep tightening.

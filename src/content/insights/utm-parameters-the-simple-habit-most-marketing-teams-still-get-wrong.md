@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 32
 image: "../../assets/insights/032-utm-parameters-the-simple-habit-most-marketing-teams-still-get-wrong.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 UTM parameters are about as basic as marketing tracking gets, a handful of tags added to the end of a URL that tell an analytics platform where a click actually came from. And yet inconsistent UTM tagging is one of the most common reasons a business's own reporting contradicts itself from one dashboard to the next, campaign to campaign, person to person.

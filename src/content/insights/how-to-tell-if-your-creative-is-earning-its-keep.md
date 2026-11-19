@@ -5,7 +5,7 @@ category: "brand-creative"
 number: 16
 image: "../../assets/insights/016-how-to-tell-if-your-creative-is-earning-its-keep.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 There's a certain kind of pitch that sounds great in the room. Big ideas, confident talk, a reel of beautiful work. What's often missing is any commitment to proving the work moved the business.

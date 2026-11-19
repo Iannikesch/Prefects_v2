@@ -5,7 +5,7 @@ category: "email-sms-retention"
 number: 11
 image: "../../assets/insights/011-win-back-campaigns-that-actually-work-a-lifecycle-playbook.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Every customer list has a quiet graveyard of people who used to buy and stopped. Most brands send one generic "we miss you, here's 20% off" email to everyone who hasn't purchased in some arbitrary window. It rarely works well, because it treats very different customers as if they all left for the same reason.

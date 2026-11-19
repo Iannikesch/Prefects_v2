@@ -5,7 +5,7 @@ category: "email-sms-retention"
 number: 29
 image: "../../assets/insights/029-why-set-it-and-forget-it-automation-is-quietly-losing-you-customers.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Marketing automation earned its reputation as a time-saver, and it is one. The trouble starts when a business treats the initial setup as the finish line instead of the starting point. A welcome flow built two years ago, a cart abandonment sequence written before the last product line launched, an SMS win-back campaign nobody has touched since the platform migration. All of it still fires on schedule. None of it necessarily reflects the business as it actually exists today.

@@ -5,7 +5,7 @@ category: "agency-marketing-strategy"
 number: 38
 image: "../../assets/insights/038-retainer-hybrid-or-performance-based-choosing-an-agency-pricing-model-that-fits.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A flat monthly retainer pays an agency the same amount whether a campaign performs brilliantly or falls flat. That's worth understanding before you sign, because the way an agency is paid shapes what it pays attention to.

@@ -5,7 +5,7 @@ category: "email-sms-retention"
 number: 43
 image: "../../assets/insights/043-birthday-and-anniversary-email-flows-small-touch-real-retention.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A birthday email is one of the smallest, easiest automations a business can build, and it's also one of the more consistently underrated ones. Most businesses either skip it entirely or treat it as an afterthought, a generic happy birthday message with a small discount attached, sent to everyone identically regardless of purchase history or actual relationship with the brand. Done a bit more deliberately, this small flow does more retention work than its size would suggest.

@@ -5,7 +5,7 @@ category: "email-sms-retention"
 number: 12
 image: "../../assets/insights/012-segmentation-mistakes-that-are-killing-your-email-sms-roi.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Segmentation sounds advanced, but the idea is simple: not every customer should get the same message. Most brands agree with that and then send nearly every campaign to their entire list anyway. It wastes revenue on every send.

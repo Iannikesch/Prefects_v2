@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 37
 image: "../../assets/insights/037-why-reports-lean-on-impressions-and-shy-away-from-revenue-the-metric-ladder.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Impressions are the easiest number in marketing to make look impressive, and revenue is the hardest one to fake, which is why so many reports lean heavily on the first and lightly on the second. A campaign that generated two million impressions sounds like a triumph on a slide. Whether those two million impressions produced a single paying customer is a much less comfortable follow-up question, and one a lot of reports are quietly built to avoid inviting.

@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 82
 image: "../../assets/insights/082-self-reported-attribution-why-how-did-you-hear-about-us-still-matters.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A tracking pixel can tell you which ad a person clicked. It can't tell you that they heard your name on a podcast, got a recommendation from a neighbor, or saw your truck parked outside a house down the street. A single question on a form can. 'How did you hear about us?' sounds like a relic from the pre-digital era, and it's one of the most useful fields a business can add.

@@ -5,7 +5,7 @@ category: "agency-marketing-strategy"
 number: 75
 image: "../../assets/insights/075-why-small-businesses-should-be-selective-about-big-brand-marketing-tactics.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Plenty of small business marketing advice is a summary of what big brands do: run brand campaigns, build a distinctive identity, sponsor events, tell emotional stories. For a national company with a large budget, those moves make sense. For a local business with a small team, they can be worth doing eventually, but they usually shouldn't come first.

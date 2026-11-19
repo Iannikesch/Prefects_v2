@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 4
 image: "../../assets/insights/004-how-to-build-a-marketing-dashboard-that-actually-connects-spend-to-revenue.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Most marketing dashboards are built to look busy. Click-through rate, impressions, cost per click, engagement, all color-coded and trending the right way. None of it says whether the business made more money because of the spend.

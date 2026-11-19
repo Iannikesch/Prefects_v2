@@ -5,7 +5,7 @@ category: "email-sms-retention"
 number: 65
 image: "../../assets/insights/065-send-time-optimization-does-the-hour-you-send-actually-matter.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Every few months someone publishes a study declaring the best time to send an email, usually Tuesday at 10 a.m. or something close. Marketers copy the advice, send at the recommended hour, and feel responsible. The trouble is that the study measured somebody else's audience.

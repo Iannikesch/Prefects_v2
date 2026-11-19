@@ -5,7 +5,7 @@ category: "email-sms-retention"
 number: 10
 image: "../../assets/insights/010-when-your-sms-list-outgrows-your-email-list-and-what-to-do-about-it.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A growing number of eCommerce and retail brands are finding that their SMS list is catching up to their email list, or passing it. That doesn't happen everywhere, so check your own numbers first. When it does happen, most strategies haven't caught up, still defaulting to email-first thinking out of habit.

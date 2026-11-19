@@ -5,7 +5,7 @@ category: "campaign-playbooks"
 number: 97
 image: "../../assets/insights/097-anatomy-of-a-review-generation-campaign-how-a-local-business-builds-a-review-base.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Reviews are the closest thing a local business has to a storefront window online. Prospects read them before they call, search engines weigh them in local results, and ad platforms surface them next to listings. Yet many businesses with happy customers have a dozen reviews, simply because nobody ever asked in a systematic way. A walk through a composite campaign shows what changes when someone does.

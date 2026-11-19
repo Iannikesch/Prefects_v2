@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 81
 image: "../../assets/insights/081-customer-lifetime-value-the-number-that-decides-how-much-you-can-afford-to-spend.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Ask a business owner how much they can spend to acquire a customer, and the answer is usually a feeling. 'About fifty bucks, I guess.' Sometimes it's whatever the last campaign happened to cost. The better answer comes from a number most small businesses have never calculated: what a customer is actually worth over time.

@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 63
 image: "../../assets/insights/063-zero-party-data-what-customers-tell-you-on-purpose.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 First-party data is what a business observes. Which pages someone viewed, what they bought, which emails they opened. Zero-party data is different, and often more useful: it's what a customer tells you directly, on purpose. Their skin type. Their budget. Whether they're shopping for themselves or for a gift. Nothing to infer. They just said it.

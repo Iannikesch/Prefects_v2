@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 64
 image: "../../assets/insights/064-small-numbers-big-swings-why-your-weekly-marketing-data-keeps-bouncing-around.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A small business sees 7 leads one week, 3 the next, then 9. The owner asks what changed. Usually, nothing did. When the numbers are small, they bounce. That's not a sign something broke. It's what small counts do, and treating every wiggle as a story is one of the more expensive habits in marketing.

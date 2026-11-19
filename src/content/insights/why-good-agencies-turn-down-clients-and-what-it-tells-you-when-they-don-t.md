@@ -5,7 +5,7 @@ category: "agency-marketing-strategy"
 number: 96
 image: "../../assets/insights/096-why-good-agencies-turn-down-clients-and-what-it-tells-you-when-they-don-t.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Think of the last time an agency told a prospective client, 'We're not the right fit for this.' It happens rarely, and when it does, it can feel like a rejection. In many cases it's the best sign you could see. An agency willing to turn down revenue is telling you it cares about outcomes more than about closing every deal.

@@ -5,7 +5,7 @@ category: "email-sms-retention"
 number: 66
 image: "../../assets/insights/066-back-in-stock-and-price-drop-alerts-the-quiet-revenue-flow.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Some of the highest-intent shoppers on a website are the ones who can't buy anything. They landed on a product page, wanted it, and found it sold out. Most stores let that moment evaporate. A back-in-stock alert turns it into a sign-up, and later, into a sale.

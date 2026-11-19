@@ -5,7 +5,7 @@ category: "paid-media-performance"
 number: 35
 image: "../../assets/insights/035-creative-testing-101-how-to-actually-know-which-ad-variant-won.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Most businesses running paid ads test creative constantly without ever actually learning anything from it, because the test wasn't built to produce a clean answer in the first place. Two ad variants run side by side, one gets more clicks, someone declares it the winner, and the losing variant gets killed. That's not really a test. It's a guess with a chart attached.

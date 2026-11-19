@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 41
 image: "../../assets/insights/041-data-silos-why-your-marketing-sales-and-finance-teams-see-different-numbers.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Ask three people in the same building for last month's revenue number and there's a decent chance you get three different answers, each one confidently sourced from whichever system that person happens to trust. Marketing pulls from the ad platform's own conversion tracking. Sales pulls from the CRM's closed-deal total. Finance pulls from the accounting system's actual recognized revenue. None of them are lying. They're just each looking at a different definition of the same word.

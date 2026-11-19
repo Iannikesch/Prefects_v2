@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 3
 image: "../../assets/insights/003-the-attribution-lie-why-your-last-click-reporting-is-costing-you-money.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Last-click attribution gives 100% of the credit for a sale to whatever the customer clicked right before converting. It's the default in a lot of reporting, it's easy to explain in a meeting, and it is often wrong.

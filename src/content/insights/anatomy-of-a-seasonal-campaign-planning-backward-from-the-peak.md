@@ -5,7 +5,7 @@ category: "campaign-playbooks"
 number: 78
 image: "../../assets/insights/078-anatomy-of-a-seasonal-campaign-planning-backward-from-the-peak.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Most seasonal campaigns start too late. A business notices that demand is rising, builds a promotion in a hurry, and launches into the peak already behind. The better approach is to plan backward from the date demand peaks and work out what has to be true at each earlier stage.

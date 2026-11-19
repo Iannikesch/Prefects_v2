@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 83
 image: "../../assets/insights/083-cohort-analysis-why-averages-hide-your-best-and-worst-customers.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 An average can be true and useless at the same time. A subscription business reports that 58% of customers are still active after six months. That sounds fine. But if customers acquired in one month stay at 41% and customers acquired in another stay at 71%, the average is hiding the single most important fact about the business: some customers are worth far more than others, and you can see which ones if you look.

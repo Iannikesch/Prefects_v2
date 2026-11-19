@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 6
 image: "../../assets/insights/006-multi-touch-attribution-explained-without-the-jargon.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Multi-touch attribution sounds like something only a data scientist should touch. The idea underneath is simple. Instead of giving all the credit for a sale to one channel, you spread it across every meaningful touchpoint the customer had before buying.

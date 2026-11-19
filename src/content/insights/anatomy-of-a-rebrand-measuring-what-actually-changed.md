@@ -5,7 +5,7 @@ category: "brand-creative"
 number: 59
 image: "../../assets/insights/059-anatomy-of-a-rebrand-measuring-what-actually-changed.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A rebrand produces a new logo, a new color palette, and a lot of internal enthusiasm about how much better everything looks, and none of that tells a business whether the rebrand actually moved the needle on anything that matters commercially. Measuring a rebrand's real impact requires looking past the visual refresh entirely and asking a harder, less immediately satisfying question: did this change how customers actually behave, or did it just change how the business looks to itself.

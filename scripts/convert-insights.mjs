@@ -17,7 +17,7 @@ const SRC = path.join(ROOT, 'blog-source');
 const OUT_MD = path.join(ROOT, 'src/content/insights');
 const OUT_IMG = path.join(ROOT, 'src/assets/insights');
 // No dates in the docs: every post goes out on the launch date.
-const PUB_DATE = process.env.INSIGHTS_DATE || '2026-11-17';
+const PUB_DATE = process.env.INSIGHTS_DATE || '2026-11-19';
 
 const fail = (msg) => { console.error('STOP: ' + msg); process.exit(1); };
 const decode = (s) => s

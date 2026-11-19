@@ -5,7 +5,7 @@ category: "paid-media-performance"
 number: 90
 image: "../../assets/insights/090-audience-exclusions-stop-paying-to-advertise-to-people-who-already-bought.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Open the ad account and look at who's actually seeing the ads. Many businesses are surprised to find that a meaningful share of their impressions go to people who already bought, who are already in the pipeline, or who work at the company. Those impressions cost money and rarely produce a new customer.

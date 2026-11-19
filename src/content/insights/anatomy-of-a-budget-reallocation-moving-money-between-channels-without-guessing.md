@@ -5,7 +5,7 @@ category: "campaign-playbooks"
 number: 98
 image: "../../assets/insights/098-anatomy-of-a-budget-reallocation-moving-money-between-channels-without-guessing.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Eventually every marketing team asks the same question: should we move money from one channel to another? The usual answer comes from a hunch or from whichever channel report looks best that week. A structured reallocation takes more discipline, and it's much less likely to produce a quarter you regret.

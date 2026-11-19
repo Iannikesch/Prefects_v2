@@ -5,7 +5,7 @@ category: "email-sms-retention"
 number: 34
 image: "../../assets/insights/034-post-purchase-email-sequences-the-flow-most-brands-skip.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A lot of email strategy attention goes toward the front half of the customer relationship, welcome flows, cart abandonment, first-purchase incentives, and comparatively little goes toward what happens in the days and weeks right after someone actually buys. That's backward in a specific way: a customer who just made a purchase is at one of the highest points of trust and attention they'll ever have with a business, and most brands let that window pass with nothing but a shipping confirmation.

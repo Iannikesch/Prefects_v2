@@ -5,7 +5,7 @@ category: "paid-media-performance"
 number: 92
 image: "../../assets/insights/092-cost-per-lead-isn-t-the-goal-how-to-optimize-for-lead-quality.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A low cost per lead feels like a win. The number goes down, the report looks good, and everyone relaxes. But cost per lead measures how cheaply you can generate form fills, not how cheaply you can generate customers. When the two diverge, optimizing for the first can quietly make the second worse.

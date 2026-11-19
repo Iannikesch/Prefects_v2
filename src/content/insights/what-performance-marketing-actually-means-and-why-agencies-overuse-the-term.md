@@ -5,7 +5,7 @@ category: "paid-media-performance"
 number: 15
 image: "../../assets/insights/015-what-performance-marketing-actually-means-and-why-agencies-overuse-the-term.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 "Performance marketing" shows up in nearly every agency pitch deck, usually with little explanation beyond "marketing we say works." The term has a real definition. Knowing it helps you tell an agency using it accurately from one using it as a buzzword.

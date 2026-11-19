@@ -5,7 +5,7 @@ category: "email-sms-retention"
 number: 8
 image: "../../assets/insights/008-sms-marketing-compliance-101-what-you-can-and-can-t-text-customers.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 SMS works because it's direct. That directness also comes with legal weight that email never carried in quite the same way. The Telephone Consumer Protection Act (TCPA) governs commercial texting in the United States. Statutory damages can reach $500 per message, and up to $1,500 per message if a court finds the violation willful. Class actions over unwanted texts are common, and some law firms specialize in them.

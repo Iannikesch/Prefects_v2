@@ -5,7 +5,7 @@ category: "campaign-playbooks"
 number: 40
 image: "../../assets/insights/040-anatomy-of-a-churn-prevention-campaign-a-worked-example.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Most churn prevention efforts amount to a single generic email sent to everyone who looks like they might cancel, offering the same discount regardless of why that specific customer is actually at risk. It's better than doing nothing. It's also a long way from what a well-built churn prevention campaign actually looks like when the underlying data gets taken seriously.

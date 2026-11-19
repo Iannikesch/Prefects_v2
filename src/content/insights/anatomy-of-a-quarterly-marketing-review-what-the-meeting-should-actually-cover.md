@@ -5,7 +5,7 @@ category: "campaign-playbooks"
 number: 100
 image: "../../assets/insights/100-anatomy-of-a-quarterly-marketing-review-what-the-meeting-should-actually-cover.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Most quarterly marketing reviews are slide shows. Someone presents a deck full of charts, the room nods, and the meeting ends without a single decision. The data was reviewed but nothing changed, which means the meeting was an expensive way to feel informed. A useful review is structured around decisions instead of presentations.

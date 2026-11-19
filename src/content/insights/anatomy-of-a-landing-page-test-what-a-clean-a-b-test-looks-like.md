@@ -5,7 +5,7 @@ category: "campaign-playbooks"
 number: 80
 image: "../../assets/insights/080-anatomy-of-a-landing-page-test-what-a-clean-a-b-test-looks-like.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Anyone can run an A/B test. Doing it so the result means something is harder. A clean test has a hypothesis, one change, a fair split, enough traffic, and a decision rule made before the results come in. Skip any of those, and the outcome is a chart that feels scientific and isn't.

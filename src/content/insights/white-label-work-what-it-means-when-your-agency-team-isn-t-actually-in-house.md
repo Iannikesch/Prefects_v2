@@ -5,7 +5,7 @@ category: "agency-marketing-strategy"
 number: 48
 image: "../../assets/insights/048-white-label-work-what-it-means-when-your-agency-team-isn-t-actually-in-house.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A business signs with an agency after a strong pitch, meets a friendly account manager, and assumes the actual campaign work, the ad building, the reporting, the strategic optimization, happens inside that same agency's walls. For a meaningful share of small and mid-market agency relationships, that assumption doesn't hold. A lot of agencies white-label parts of the actual execution to a separate outsourced team or subcontracted vendor, and the client rarely finds out unless they ask directly.

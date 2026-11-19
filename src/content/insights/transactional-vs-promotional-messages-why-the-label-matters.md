@@ -5,7 +5,7 @@ category: "email-sms-retention"
 number: 68
 image: "../../assets/insights/068-transactional-vs-promotional-messages-why-the-label-matters.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 An order confirmation and a sale announcement can arrive in the same inbox from the same address, but they aren't the same kind of message. One is transactional. The other is promotional. The line between them affects legal obligations, deliverability, and even how carriers treat your texts, and it gets blurred more often than businesses realize.

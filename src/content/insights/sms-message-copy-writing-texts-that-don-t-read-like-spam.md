@@ -5,7 +5,7 @@ category: "email-sms-retention"
 number: 87
 image: "../../assets/insights/087-sms-message-copy-writing-texts-that-don-t-read-like-spam.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A text message has about one sentence to work with. There's no subject line, no header image, no space for a long pitch. That constraint is a gift for businesses that know what they want to say, and a trap for those that don't. The difference between a text that gets read and one that gets deleted often comes down to a few choices in the copy.

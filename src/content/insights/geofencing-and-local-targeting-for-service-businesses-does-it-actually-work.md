@@ -5,7 +5,7 @@ category: "paid-media-performance"
 number: 46
 image: "../../assets/insights/046-geofencing-and-local-targeting-for-service-businesses-does-it-actually-work.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Geofencing draws a virtual boundary around a specific place, such as a competitor's location, a neighborhood or an event venue, and serves ads to people who enter it. It sounds precise, and for the right use case it is. Whether it's worth the spend depends on the business and how the tactic is used.

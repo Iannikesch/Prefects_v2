@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 7
 image: "../../assets/insights/007-what-is-intent-data-and-is-it-worth-paying-for.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Intent data is information that signals someone is actively researching a purchase. It comes from behavior like searches, content downloads and browsing, and it gets packaged into an alert: this person or company is showing buying signals right now.

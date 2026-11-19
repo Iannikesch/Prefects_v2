@@ -5,7 +5,7 @@ category: "paid-media-performance"
 number: 14
 image: "../../assets/insights/014-meta-ads-vs-google-ads-for-local-service-businesses-a-real-comparison.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Plumbers, HVAC companies, movers and dentists get pitched Meta and Google ads constantly, sometimes by an agency that specializes in one platform. The two platforms solve different problems. Most local businesses need both, just not in equal proportion or at the same stage.

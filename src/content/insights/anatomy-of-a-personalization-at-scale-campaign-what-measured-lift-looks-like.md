@@ -5,7 +5,7 @@ category: "campaign-playbooks"
 number: 20
 image: "../../assets/insights/020-anatomy-of-a-personalization-at-scale-campaign-what-measured-lift-looks-like.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 "Personalization at scale" gets thrown around constantly in pitches. Here is what it looks like when it's built properly, from the data foundation up to the measurement that proves it worked. The example is illustrative, and the numbers are made up to show the method.

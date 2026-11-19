@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 1
 image: "../../assets/insights/001-vibes-vs-data-how-to-tell-if-your-agency-actually-knows-what-s-working.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Every agency pitch deck has a slide about data. Very few show what that means day to day. Some agencies mention analytics in meetings. Others build their whole process around proving what worked. Most businesses find out which kind they hired about eighteen months and a lot of invoices later.

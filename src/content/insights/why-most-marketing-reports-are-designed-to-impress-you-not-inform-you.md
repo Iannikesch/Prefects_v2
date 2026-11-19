@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 17
 image: "../../assets/insights/017-why-most-marketing-reports-are-designed-to-impress-you-not-inform-you.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Open almost any monthly marketing report and you'll find the same formula: green arrows, percentage increases and very little that tells you whether the business made more money. That isn't an accident. Reports get built to protect the relationship, and the easiest way to look good is to lead with metrics that almost always look decent.

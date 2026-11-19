@@ -5,7 +5,7 @@ category: "paid-media-performance"
 number: 70
 image: "../../assets/insights/070-branded-search-campaigns-are-you-paying-for-clicks-you-d-get-free.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Someone searches for your company by name, clicks your ad and buys. The dashboard records a conversion and the campaign looks cheap and efficient. But that person was already looking for you. Would they have found you anyway? That's the debate over branded search advertising, and the answer is: sometimes.

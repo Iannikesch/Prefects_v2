@@ -5,7 +5,7 @@ category: "agency-marketing-strategy"
 number: 18
 image: "../../assets/insights/018-marketing-in-2027-four-shifts-worth-planning-for-and-three-to-ignore.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Every year brings a wave of "what's changing in marketing" content, and much of it is recycled hype that exists to sell you a tool. Heading into 2027, here is what deserves planning time and money, and what you can leave alone.

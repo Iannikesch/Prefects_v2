@@ -5,7 +5,7 @@ category: "agency-marketing-strategy"
 number: 22
 image: "../../assets/insights/022-what-happens-to-your-marketing-data-when-you-fire-your-agency.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Somewhere around month eight of a bad agency relationship, a business owner finally pulls the plug. Relief lasts about a week. Then someone asks a simple question in a meeting: who actually owns the pixel data, the audience lists, and the eighteen months of campaign history sitting inside that agency's ad accounts? Often, nobody in the room knows the answer, and that's an expensive gap to discover after the relationship has already ended.

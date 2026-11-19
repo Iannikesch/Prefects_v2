@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 23
 image: "../../assets/insights/023-the-real-cost-of-a-bad-crm-to-ad-platform-connection.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A CRM and an ad platform that don't talk to each other cleanly is one of the most common, least discussed money leaks in small and mid-market marketing. Not a dramatic failure. Just a quiet, steady drip of wasted spend and missed signal that rarely shows up as a single line item anyone notices.

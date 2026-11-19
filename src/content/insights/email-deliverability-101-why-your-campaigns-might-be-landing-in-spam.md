@@ -5,7 +5,7 @@ category: "email-sms-retention"
 number: 24
 image: "../../assets/insights/024-email-deliverability-101-why-your-campaigns-might-be-landing-in-spam.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 An email campaign with a good subject line, sharp copy, and a useful offer can still fail completely, for a reason that has nothing to do with any of that. If deliverability is broken, none of it matters, because the email never reaches an inbox in the first place. It lands in spam, or worse, gets filtered before a recipient's mail server even bothers to sort it.

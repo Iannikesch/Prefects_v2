@@ -5,7 +5,7 @@ category: "paid-media-performance"
 number: 91
 image: "../../assets/insights/091-lookalike-audiences-why-they-re-less-magic-and-more-math.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Lookalike audiences are among the most-hyped tools in paid social. Give the platform a list of your customers, and it finds people who resemble them. That sounds like magic. It's actually pattern-matching, and like any pattern-matching, the quality of the result depends on the quality of what you feed it.

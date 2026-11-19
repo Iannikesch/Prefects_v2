@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 2
 image: "../../assets/insights/002-first-party-data-101-what-it-is-and-why-your-business-needs-it-before-2027.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 First-party data is information you collect directly from your own customers and prospects. Purchase history, email opens, form submissions, loyalty activity, what someone browsed on your site last Tuesday. It's yours. You didn't rent it from Meta or buy it from a broker, and no platform can take it back when a policy changes.

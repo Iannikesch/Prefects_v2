@@ -5,7 +5,7 @@ category: "paid-media-performance"
 number: 71
 image: "../../assets/insights/071-landing-page-speed-and-ad-cost-how-a-slow-page-raises-what-you-pay.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A business spends $6,000 a month on ads and sends every click to a landing page that takes five seconds to load. Some visitors leave before it finishes. Those clicks were paid for, and nothing came of them. That's the obvious cost of a slow page. There's a less obvious one: on some platforms, a poor landing page experience can raise what you pay per click in the first place.

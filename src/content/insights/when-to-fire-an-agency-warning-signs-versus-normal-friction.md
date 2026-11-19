@@ -5,7 +5,7 @@ category: "agency-marketing-strategy"
 number: 76
 image: "../../assets/insights/076-when-to-fire-an-agency-warning-signs-versus-normal-friction.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Every agency relationship hits rough patches. A slow month, a creative disagreement, an awkward report. Most of them are ordinary friction and don't mean the relationship is failing. A few are real warning signs. The difficulty is telling them apart before frustration makes the decision for you.

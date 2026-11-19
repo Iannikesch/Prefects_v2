@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 84
 image: "../../assets/insights/084-crm-data-hygiene-duplicates-typos-and-why-your-records-quietly-lie.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Most CRMs start clean and degrade slowly. A contact gets entered twice. A salesperson types 'Texas' in one record and 'TX' in another. A lead source field is left blank because the form didn't make it required. None of this causes a visible failure, and that's exactly why it accumulates until the records no longer reflect reality.

@@ -5,7 +5,7 @@ category: "paid-media-performance"
 number: 36
 image: "../../assets/insights/036-retargeting-windows-why-30-days-might-be-costing-you-money.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A retargeting window, the length of time someone stays in a retargeting audience after visiting a site, defaults to 30 days on most ad platforms, and most businesses never touch that setting again after the initial campaign gets built. That default wasn't chosen based on any particular business's actual sales cycle. It's just the number the platform ships with, and treating it as correct without checking is one of the quieter ways retargeting budget gets wasted.

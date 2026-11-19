@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 31
 image: "../../assets/insights/031-cross-device-tracking-why-your-attribution-breaks-between-phone-and-desktop.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A customer browses a product on their phone during a lunch break, closes the tab, then finishes the purchase two days later on a laptop at home. Ask most attribution setups which channel gets credit for that sale, and the honest answer is: it depends entirely on whether the tracking system recognized those two visits as the same person, which most don't, by default.

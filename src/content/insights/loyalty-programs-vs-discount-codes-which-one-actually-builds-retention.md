@@ -5,7 +5,7 @@ category: "email-sms-retention"
 number: 26
 image: "../../assets/insights/026-loyalty-programs-vs-discount-codes-which-one-actually-builds-retention.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Discount codes are the easiest retention tool to launch and, most of the time, the worst one at actually building retention. They work in the short term because they work in the short term for everyone, competitors included, which is exactly the problem. A 15% off code trains a customer to wait for a discount before buying again, and once that expectation sets in, it rarely reverses.

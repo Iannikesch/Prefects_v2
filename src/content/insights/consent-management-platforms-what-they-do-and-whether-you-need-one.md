@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 52
 image: "../../assets/insights/052-consent-management-platforms-what-they-do-and-whether-you-need-one.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A consent management platform sounds like enterprise software built for businesses with legal departments and compliance teams, and for a while, that was mostly true. It's worth reconsidering that assumption now, since the actual function these tools perform, tracking exactly what a specific customer has and hasn't agreed to receive, has become relevant to businesses of a much smaller size than the category's reputation suggests.

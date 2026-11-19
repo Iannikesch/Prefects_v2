@@ -5,7 +5,7 @@ category: "data-analytics"
 number: 61
 image: "../../assets/insights/061-conversion-tracking-audits-how-to-check-whether-your-numbers-are-even-right.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Before anyone argues about which channel is performing best, someone should check whether the numbers are right in the first place. Most businesses skip that step. They open a dashboard, see a conversion count, and treat it as fact, when the count might be inflated by duplicates, deflated by a broken tag, or quietly counting things nobody meant it to count.

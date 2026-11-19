@@ -5,7 +5,7 @@ category: "email-sms-retention"
 number: 86
 image: "../../assets/insights/086-replenishment-reminders-timing-the-reorder-to-how-the-product-is-actually-used.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Some products run out. Coffee, pet food, contact lenses, skincare, printer ink, vitamins. For these, the most valuable email a business can send is the one that arrives just before the customer runs out, when the need is real and the decision is easy. Most businesses send a generic 'we miss you' message weeks later, or nothing at all.

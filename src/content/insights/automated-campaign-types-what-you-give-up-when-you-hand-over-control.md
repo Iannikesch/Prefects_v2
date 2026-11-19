@@ -5,7 +5,7 @@ category: "paid-media-performance"
 number: 69
 image: "../../assets/insights/069-automated-campaign-types-what-you-give-up-when-you-hand-over-control.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Ad platforms increasingly want to run the show. Choose a goal, supply some creative and a budget, and the system decides where ads appear, who sees them, and how much to bid. Google's Performance Max and Meta's Advantage+ campaigns are the best-known examples. They can work well. But they come with a trade-off that's easy to overlook on the setup screen: you give up visibility and control in exchange for convenience and machine-driven optimization.

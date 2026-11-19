@@ -5,7 +5,7 @@ category: "email-sms-retention"
 number: 88
 image: "../../assets/insights/088-vip-segments-why-your-top-10-of-customers-deserve-their-own-strategy.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 In most businesses, a small group of customers accounts for a disproportionate share of revenue. The exact split varies, and you should look at your own numbers rather than trust a rule of thumb, but the pattern is common enough that it's worth checking. Yet the typical marketing program treats everyone the same, sending the best customers the same discounts as a first-time browser.

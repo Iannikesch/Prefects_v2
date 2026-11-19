@@ -5,7 +5,7 @@ category: "paid-media-performance"
 number: 89
 image: "../../assets/insights/089-local-service-ads-vs-search-ads-where-a-local-business-s-money-goes-further.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A local service business in Google's ecosystem has two main paid options that look similar and work very differently. Traditional search ads charge by the click and let the business control keywords, copy, and landing pages. Local Services Ads charge by the lead and show up in a distinct box at the top of the results, with a trust badge. Which one deserves the budget depends on how each performs for a specific business.

@@ -5,7 +5,7 @@ category: "agency-marketing-strategy"
 number: 58
 image: "../../assets/insights/058-in-house-vs-agency-what-the-decision-comes-down-to.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 The in-house versus agency debate gets framed constantly as a binary choice with a universally correct answer, and it isn't one. The right answer depends heavily on a business's specific scale, the complexity of what it's trying to accomplish, and how much control versus flexibility actually matters for that particular situation, none of which have a single answer that applies identically across every business asking the question.

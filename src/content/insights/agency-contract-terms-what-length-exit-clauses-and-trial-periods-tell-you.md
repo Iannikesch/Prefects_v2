@@ -5,7 +5,7 @@ category: "agency-marketing-strategy"
 number: 47
 image: "../../assets/insights/047-agency-contract-terms-what-length-exit-clauses-and-trial-periods-tell-you.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Twelve-month contracts with an early termination fee are common at marketing agencies. Whether yours is reasonable depends on the work, the exit terms and what you can verify early. Here's how to read an agency agreement before you sign.

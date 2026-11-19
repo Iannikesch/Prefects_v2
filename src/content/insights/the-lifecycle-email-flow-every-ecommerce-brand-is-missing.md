@@ -5,7 +5,7 @@ category: "email-sms-retention"
 number: 9
 image: "../../assets/insights/009-the-lifecycle-email-flow-every-ecommerce-brand-is-missing.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Most eCommerce brands have the basics: a welcome series, an abandoned cart email and an order confirmation. What almost nobody runs is a post-purchase flow that treats a first-time buyer differently from a fifth-time buyer. That gap costs brands repeat revenue every month.

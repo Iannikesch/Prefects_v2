@@ -5,7 +5,7 @@ category: "agency-marketing-strategy"
 number: 19
 image: "../../assets/insights/019-how-to-vet-a-marketing-agency-8-questions-that-expose-the-fluff.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Agency pitches are built to sound impressive, and most business owners don't have the background to tell substance from polish. A handful of pointed questions will cut through most of it faster than any case study slide. Ask them early. It saves the much more expensive discovery that comes after the contract is signed.

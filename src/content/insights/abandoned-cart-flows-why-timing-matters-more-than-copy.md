@@ -5,7 +5,7 @@ category: "email-sms-retention"
 number: 33
 image: "../../assets/insights/033-abandoned-cart-flows-why-timing-matters-more-than-copy.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 Most businesses spend far more time obsessing over the wording of an abandoned cart email than the timing of when it actually sends, which is backward, given how much the data suggests timing matters more. A perfectly written email sent six hours too late is competing with a dozen other things that showed up in someone's inbox since they left the site. A mediocre email sent at the right moment often outperforms it easily.

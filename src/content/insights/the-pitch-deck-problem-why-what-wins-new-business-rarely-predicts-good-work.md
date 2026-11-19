@@ -5,7 +5,7 @@ category: "agency-marketing-strategy"
 number: 57
 image: "../../assets/insights/057-the-pitch-deck-problem-why-what-wins-new-business-rarely-predicts-good-work.png"
 author: "The Profectus Team"
-pubDate: 2026-11-17
+pubDate: 2026-11-19
 ---
 
 A polished pitch deck, a confident presenter, and a handful of impressive-looking case study slides are what win most agency pitches, and none of those three things reliably predict whether the agency will actually do good work once the contract gets signed. The skills required to win new business and the skills required to execute a marketing campaign well overlap less than most businesses assume when they're sitting through a compelling first meeting.
